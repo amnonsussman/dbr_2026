@@ -477,6 +477,15 @@ function acceptDisclaimer() {
   }
   window.location.href = _disclaimerTarget;
 }
+
+// אם הגיעו עם redirect מדף פנימי — פתח הסכמה עם היעד
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get('redirect');
+  if (redirect && localStorage.getItem('dbr_disclaimer_accepted') !== 'yes') {
+    openDisclaimer(redirect);
+  }
+})();
 </script>
 
 </body></html>

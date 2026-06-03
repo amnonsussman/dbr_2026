@@ -1,0 +1,330 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ד.ב.ר | דמוקרטים בוחרים רציונלית</title><style>
+
+:root {
+  --blue-dark: #12355b;
+  --blue-main: #1d5fa7;
+  --blue-soft: #eaf3ff;
+  --blue-card: #f7fbff;
+  --text-main: #1f2933;
+  --text-muted: #5f6b7a;
+  --border-soft: #d7e3f3;
+  --white: #ffffff;
+  --warning-bg: #fffdf5;
+  --warning-border: #eadca8;
+  --shadow: 0 16px 38px rgba(18, 53, 91, 0.14);
+  --radius-large: 24px;
+  --radius-medium: 18px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Hebrew", sans-serif;
+  background: linear-gradient(180deg, #f4f8ff 0, #ffffff 42%, #f8fbff 100%);
+  color: var(--text-main);
+  line-height: 1.78;
+}
+a { color: var(--blue-main); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.page { max-width: 1180px; margin: 0 auto; padding: 24px; }
+.topbar {
+  padding: 14px 0 10px;
+  text-align: center;
+}
+.hero-copy {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  direction: ltr;
+  text-align: center;
+  padding: 6px 20px 0;
+}
+.site-title {
+  display: block;
+  font-size: clamp(1.55rem, 6.5vw, 2.6rem);
+  font-weight: 900;
+  color: #8fb0ce;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+.site-title:hover { opacity: 0.85; }
+.init {
+  color: var(--blue-dark);
+  font-size: 1.22em;
+  font-weight: 900;
+}
+.image-caption {
+  text-align: center;
+  padding: 14px 20px 4px;
+}
+.image-caption-main {
+  font-size: clamp(1.15rem, 4vw, 1.45rem);
+  font-weight: 900;
+  color: var(--blue-dark);
+  letter-spacing: -0.01em;
+  display: block;
+}
+.image-caption-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: block;
+  margin-top: 3px;
+}
+.topbar-sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.about-link {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--blue-main);
+  padding: 5px 13px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.86);
+}
+.site-copy {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  direction: ltr;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.hero {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-large);
+  padding: 0 0 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  position: relative;
+}
+.hero-text {
+  padding: 22px 28px 0;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -90px;
+  top: -90px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(29,95,167,0.16), rgba(29,95,167,0));
+  border-radius: 50%;
+}
+.portrait-card {
+  position: relative;
+  border-radius: 22px;
+  background: var(--blue-soft);
+  border: 1px solid var(--border-soft);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.portrait-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 22px;
+}
+.portrait-fallback {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--blue-dark);
+  letter-spacing: 0.05em;
+  text-align: center;
+  direction: ltr;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(1.4rem, 4.5vw, 2.1rem);
+  line-height: 1.15;
+  color: var(--blue-dark);
+  letter-spacing: -0.02em;
+}
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  margin: 0 0 18px;
+  text-align: center;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.tag {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 6px 11px;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 17px;
+  border-radius: 14px;
+  font-weight: 800;
+  border: 1px solid transparent;
+}
+.button.primary { background: white; color: var(--blue-main); border-color: var(--blue-main); box-shadow: 0 4px 14px rgba(29,95,167,0.12); }
+.button.secondary { background: white; color: var(--blue-main); border-color: var(--blue-main); box-shadow: 0 4px 14px rgba(29,95,167,0.12); }
+.button.tertiary { background: transparent; color: var(--text-muted); border: 1px solid var(--border-soft); font-size: 0.82rem; font-weight: 700; padding: 7px 11px; box-shadow: none; border-radius: 10px; }
+.notice {
+  margin-top: 20px;
+  border-radius: var(--radius-medium);
+  padding: 18px 20px;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: #584719;
+}
+.quick-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.quick-card {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-medium);
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(18, 53, 91, 0.08);
+}
+.quick-card .label { color: var(--text-muted); font-size: 0.85rem; font-weight: 800; }
+.quick-card .value { color: var(--blue-dark); font-size: 1.05rem; font-weight: 900; margin-top: 4px; }
+.layout {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+.toc {
+  position: sticky;
+  top: 16px;
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-medium);
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(18, 53, 91, 0.08);
+}
+.toc h2 { margin: 0 0 12px; font-size: 1.06rem; color: var(--blue-dark); }
+.toc a {
+  display: block;
+  padding: 8px 0;
+  color: var(--text-main);
+  border-bottom: 1px solid #edf3fb;
+  font-weight: 700;
+  font-size: 0.93rem;
+}
+.toc a:last-child { border-bottom: 0; }
+.content { min-width: 0; }
+.summary-box, .sources-box {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-medium);
+  padding: 24px;
+  box-shadow: 0 10px 24px rgba(18, 53, 91, 0.08);
+  margin-bottom: 18px;
+}
+.summary-box h2, .sources-box h2 { color: var(--blue-dark); margin: 0 0 10px; font-size: 1.35rem; }
+.summary-box p { margin: 0; color: var(--text-main); }
+.profile-section {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-medium);
+  padding: 26px;
+  box-shadow: 0 10px 24px rgba(18, 53, 91, 0.08);
+  margin-bottom: 18px;
+}
+.profile-section h2 {
+  margin: 0 0 16px;
+  color: var(--blue-dark);
+  font-size: 1.65rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.profile-section h3 { color: var(--blue-dark); margin: 24px 0 10px; font-size: 1.16rem; }
+.profile-section p { margin: 0 0 12px; }
+ul { padding: 0 22px 0 0; margin: 8px 0 14px; }
+li { margin-bottom: 7px; }
+strong { color: #142f50; }
+.source-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.source-chips span {
+  background: var(--blue-card);
+  border: 1px solid var(--border-soft);
+  color: var(--blue-dark);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  direction: ltr;
+}
+.page-end {
+  margin-top: 20px;
+  padding-bottom: 16px;
+  border-top: 1px solid var(--border-soft);
+}
+@media (max-width: 950px) {
+  .hero, .layout, .quick-grid { grid-template-columns: 1fr; }
+  .toc { position: static; }
+  .portrait-card { min-height: unset; }
+}
+@media (max-width: 560px) {
+  .page { padding: 16px; }
+  .hero-text { padding: 16px 18px 0; }
+  .profile-section, .summary-box, .sources-box { padding: 22px; }
+  .hero-actions { flex-direction: row; }
+  .hero-actions .button { flex: 1; text-align: center; }
+  .portrait-card { aspect-ratio: 4/3; }
+  .portrait-card img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+  </style></head>
+<body><main class="page"><header class="topbar">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script><a href="dbr_P_01_index.html" class="site-title"><span class="init">ד</span>מוקרטים <span class="init">ב</span>וחרים <span class="init">ר</span>ציונלית</a><span class="site-copy">© 2026 Silvertel Online ltd | כל הזכויות שמורות</span></header>
+<div style="background:#fffbeb;border:1.5px solid #f0c040;border-radius:14px;padding:14px 18px;margin-bottom:20px;font-size:.92rem;line-height:1.65;color:#5a4200">
+  תהליך איסוף המידע על המועמדים שהתבצע אורגן ושוקלל ע"י הבינות השונות עדכני לסוף 2025.<br>
+  עם פרסום מועד הפריימריז ושמות המועמדים הסופיים, נחזור על תהליך זה שוב.
+</div>
+<section class="hero"><div class="portrait-card"><img src="images/team-field.jpg.png" alt="בחירת הנבחרת — דמוקרטים בוחרים רציונלית"></div><div class="image-caption"><span class="image-caption-main">לקראת הפריימריז של הדמוקרטים 2026</span></div><div class="hero-text"><p class="subtitle">מערכת תומכת החלטה מבוססת בינה מלאכותית לבחירה רציונלית של סגל המפלגה לכנסת, הבחירה היא שלכם על פי שיקול דעתכם והחלטתכם — אמנון זוסמן, יוני 2026.</p><div class="hero-actions"><a class="button primary" href="dbr_P_01_process.html">בחר את סגל המפלגה</a><a class="button secondary" href="dbr_P_01_list.html">הצג את הנבחרת</a><a href="dbr_P_01_about.html" style="font-size:.75rem;color:var(--text-muted);font-weight:700;padding:4px 8px;border:1px solid var(--border-soft);border-radius:8px;background:transparent;text-decoration:none;">אודות</a></div></div></section><div class="page-end"></div></main></body></html>

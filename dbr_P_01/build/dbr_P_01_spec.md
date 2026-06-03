@@ -156,16 +156,46 @@ dbr_P_01/
 
 ---
 
-## 8. ריפו
+## 8. ריפואים
 
+שני ריפואים מחוברים לאותה תיקייה:
+
+### ציבורי (origin)
 - GitHub: amnonsussman/dbr_2026
-- התיקייה המקורית מחוברת ל-Git
+- מכיל רק את תיקיית run/ — מה שהמשתמש צריך
 - הקבצים הישנים ("הבלגן") נשארים — ערפול בחינם
-- תיקיית dbr_P_01/ נוספת כתיקייה נקייה בתוך הריפו
+- פקודה: `git push origin master`
+
+### פרטי (private)
+- GitHub: amnonsussman/dbr_P_01_private
+- מכיל הכל — build/ + run/
+- גיבוי מלא: סקריפטים, מפרט, ארכיטקטורה, פרומפטים
+- רק אתה רואה
+- פקודה: `git push private master`
+
+### כלל עבודה
+- build/ → עולה רק ל-private
+- run/ → עולה לשניהם
+- לעולם לא לדחוף build/ ל-origin
 
 ---
 
-## 9. פתוחים (מארכיטקטורה)
+## 9. מפת דפי HTML — מקור → יעד
+
+| # | מקור | יעד dbr_P_01 |
+|---|---|---|
+| 1 | index.html | dbr_P_01_index.html |
+| 2 | process.html | dbr_P_01_process.html |
+| 3 | shiryun_v2.html | dbr_P_01_shiryun.html |
+| 4 | dbr_v2.html | dbr_P_01_main.html |
+| 5 | dbr_primeris_state_v1.html | dbr_P_01_state.html |
+| 6 | dbr_game_theory_primaries.html | dbr_P_01_game.html |
+| 7 | candidate_home.html | dbr_P_01_candidates.html |
+| 8 | candidate_v2.html | dbr_P_01_candidate.html |
+| 9 | candidates.html | dbr_P_01_list.html |
+| 10 | about.html | dbr_P_01_about.html |
+
+## 10. פתוחים (מארכיטקטורה)
 
 1. פקטור הרוחב על נושאי הליבה — בפנים/בחוץ?
 2. מוכח מול פוטנציאל — תלוי תיקוף

@@ -1,0 +1,605 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>על המערכת | ד.ב.ר — דמוקרטים בוחרים רציונלית</title>
+  <style>
+    :root {
+      --blue-dark: #12355b;
+      --blue-main: #1d5fa7;
+      --blue-soft: #eaf3ff;
+      --blue-card: #f7fbff;
+      --text-main: #1f2933;
+      --text-muted: #5f6b7a;
+      --border-soft: #d7e3f3;
+      --white: #ffffff;
+      --warning-bg: #fffdf5;
+      --warning-border: #eadca8;
+      --shadow: 0 16px 38px rgba(18, 53, 91, 0.14);
+      --radius-large: 24px;
+      --radius-medium: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Hebrew", sans-serif;
+      background: linear-gradient(180deg, #f4f8ff 0, #ffffff 42%, #f8fbff 100%);
+      color: var(--text-main);
+      line-height: 1.78;
+    }
+
+    a { color: var(--blue-main); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 0 26px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      color: var(--blue-dark);
+      font-size: 1.08rem;
+    }
+
+    .brand-mark {
+      height: 40px;
+      padding: 0 13px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #3730a3, #1e1b4b);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      box-shadow: 0 4px 14px rgba(55,48,163,.3);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .header-end {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .brand-en {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--blue-main);
+      font-style: italic;
+      letter-spacing: 0.04em;
+      direction: ltr;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .nav a {
+      padding: 8px 14px;
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
+
+    .nav a.active {
+      background: var(--blue-main);
+      color: white;
+      border-color: var(--blue-main);
+    }
+
+    .hero {
+      background: var(--white);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-large);
+      padding: 38px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: -90px;
+      top: -90px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(29,95,167,0.16), rgba(29,95,167,0));
+      border-radius: 50%;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.08;
+      color: var(--blue-dark);
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      font-size: 1.18rem;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: 800px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 16px;
+      background: var(--white);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(18, 53, 91, 0.08);
+    }
+
+    .toc h2 {
+      margin: 0 0 12px;
+      font-size: 1.06rem;
+      color: var(--blue-dark);
+    }
+
+    .toc a {
+      display: block;
+      padding: 8px 0;
+      color: var(--text-main);
+      border-bottom: 1px solid #edf3fb;
+      font-weight: 700;
+      font-size: 0.93rem;
+    }
+
+    .toc a:last-child { border-bottom: 0; }
+
+    .content { min-width: 0; }
+
+    .about-section,
+    .note-box {
+      background: var(--white);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 26px;
+      box-shadow: 0 10px 24px rgba(18, 53, 91, 0.08);
+      margin-bottom: 18px;
+    }
+
+    .about-section h2 {
+      margin: 0 0 14px;
+      color: var(--blue-dark);
+      font-size: 1.55rem;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .about-section h3 {
+      color: var(--blue-dark);
+      margin: 22px 0 8px;
+      font-size: 1.12rem;
+    }
+
+    .about-section p,
+    .note-box p {
+      margin: 0 0 13px;
+    }
+
+    .about-section p:last-child,
+    .note-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul {
+      padding: 0 22px 0 0;
+      margin: 8px 0 14px;
+    }
+
+    li { margin-bottom: 7px; }
+
+    strong { color: #142f50; }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .principle-card {
+      background: var(--blue-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .principle-card strong {
+      display: block;
+      color: var(--blue-dark);
+      margin-bottom: 5px;
+      font-size: 1.02rem;
+    }
+
+    .principle-card span {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .note-box {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: #584719;
+    }
+
+    .signature {
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--blue-dark);
+      font-weight: 800;
+      line-height: 1.7;
+    }
+
+    .footer {
+      margin-top: 42px;
+      padding: 28px 0 10px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 950px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static; }
+      .topbar { flex-wrap: nowrap; }
+      .brand span:last-child { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    }
+
+    @media (max-width: 601px) {
+      .page { padding: 16px; }
+      .hero,
+      .about-section,
+      .note-box {
+        padding: 22px;
+      }
+      .brand-en { display: none; }
+      .brand-sub { display: none; }
+      .brand-name { font-size: 0.92rem; }
+      .brand-mark {
+        font-size: 0.88rem;
+        min-width: 58px;
+      }
+      .header-end { align-items: flex-start; }
+      .nav { gap: 6px; }
+      .nav a {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+      }
+      .principles { grid-template-columns: 1fr; }
+      .subtitle {
+        font-size: 1.04rem;
+        line-height: 1.65;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .page { padding: 10px; }
+      .hero,
+      .about-section,
+      .note-box {
+        padding: 16px;
+        border-radius: 18px;
+      }
+      h1 { font-size: 2.05rem; }
+      .subtitle { font-size: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+      
+
+      <div style="display:flex;flex-direction:column;width:100%;gap:6px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <a class="brand" href="dbr_P_01_index.html" style="min-width:0;flex-shrink:1"><span class="brand-mark">ד.ב.ר</span><span>דמוקרטים בוחרים רציונלית</span></a>
+          <a href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+        </div>
+        <div style="text-align:center;font-size:.72rem;color:var(--text-muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        
+        <h2>דמוקרטים בוחרים רציונלית</h2>
+        <p class="subtitle">
+          מערכת תומכת החלטה שנועדה לעזור למתפקדות ולמתפקדים בפריימריז לבחור מועמדים
+          באופן מסודר יותר: פחות לפי רעש, שמועות או היכרות מקרית ויותר לפי מידע,
+          השוואה, שיטה והעדפות אישיות של הבוחר או הבוחרת.
+        </p>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc" aria-label="תוכן עניינים">
+        
+        <a href="#what">מהי המערכת?</a>
+        <a href="#why">למה היא נבנתה?</a>
+        <a href="#football">אנלוגיית הסגל וההרכב</a>
+        <a href="#profiles">כיצד נבנו הפרופילים?</a>
+        <a href="#axes">שלושת צירי הבחירה</a>
+        <a href="#ai">השימוש בבינה מלאכותית</a>
+        <a href="#candidate-updates">עדכוני מועמדים</a>
+        <a href="#privacy">פרטיות</a>
+        <a href="#limits">מגבלות ושקיפות</a>
+      </aside>
+
+      <section class="content">
+        <section class="about-section" id="what">
+          <h2>מהי מערכת ד.ב.ר?</h2>
+          <p>
+             דמוקרטים בוחרים רציונלית היא מערכת תומכת החלטה לבחירת מועמדים
+            בפריימריז. היא אינה באה להחליף את שיקול הדעת של הבוחר, אלא לסייע לו
+            לארגן את המידע, להשוות בין מועמדים, ולבנות לעצמו רשימת בחירה שמתאימה
+            לערכים, להעדפות ולסדרי העדיפויות שלו.
+          </p>
+          <p>
+            הרעיון המרכזי פשוט: כאשר יש רשימה רחבה של מועמדות ומועמדים, קשה מאוד
+            להכיר את כולם לעומק. לעיתים הבחירה נשענת על שם מוכר, המלצה אקראית,
+            קמפיין בולט, פוסט ברשת או תחושת בטן. המערכת מנסה להוסיף לתהליך הזה
+            שכבה שיטתית יותר של מידע, השוואה וחשיבה.
+          </p>
+        </section>
+
+        <section class="about-section" id="why">
+          <h2>למה היא נבנתה?</h2>
+          <p>
+            בחירה בפריימריז היא החלטה חשובה: היא משפיעה על זהות הרשימה, על סדר היום
+            הציבורי שלה, ועל האנשים שייצגו את המחנה הפוליטי בשנים הבאות. דווקא משום
+            כך, יש ערך לכלי שמאפשר לבוחר לראות את התמונה הרחבה ולא להסתפק במועמדים
+            שהוא כבר מכיר.
+          </p>
+          <p>
+            המערכת נבנתה מתוך רצון להפוך את הבחירה לפחות מקרית ויותר מודעת: לאפשר
+            בחירה לפי עמדות, יכולות, ניסיון, תדמית ציבורית, התאמה לערכים אישיים,
+            וגם לפי שיקולים של איזון והרכב כולל של הסגל הנבחר.
+          </p>
+        </section>
+        <section class="about-section" id="football">
+          <h2>אנלוגיית הסגל וההרכב</h2>
+          <p>
+            דרך אחת להבין את מטרת המערכת היא באמצעות אנלוגיה מעולם הכדורגל. בקבוצת
+            כדורגל יש נבחרת רחבה של שחקנים, מתוכה נבחר סגל למשחק מסוים, ומתוך הסגל
+            נבחר בסופו של דבר ההרכב הפותח שעולה למגרש.
+          </p>
+          <p>
+            באופן דומה, גם בפריימריז יש נבחרת רחבה של מועמדות ומועמדים כולם מצויינים, ומתוכה
+            נדרש לבחור את סגל המפלגה לבחירות הקרובות. הבחירה האישית של כל מתפקדת ומתפקד
+            משפיעה על הסגל הזה — מי יהיו האנשים שייכנסו לרשימה הרשמית , אילו יכולות ועמדות
+            ייוצגו בה, ואיזה איזון פוליטי וציבורי ייווצר בתוכה.
+          </p>
+          <p>
+            ההרכב הפותח בפועל ייקבע בסופו של דבר משילוב של תוצאות הבחירות בפועל כמה מנדטיםתקבל המפלגה, שיטת
+            הריץ־רץ המגדרית, וכללי ההרכבה והאיזון של המפלגה, ובכלל זה שיקול הדעת
+            הסופי של יו״ר המפלגה. לכן ד.ב.ר אינה מנסה לקבוע לבוחר מי “חייב” להיות
+            בהרכב, אלא לעזור לו לבחור בצורה מושכלת את הסגל שהוא רוצה לחזק.
+          </p>
+        </section>
+
+        <section class="about-section" id="profiles">
+          <h2>כיצד נבנו פרופילי המועמדים?</h2>
+          <p>
+            פרופילי המועמדים במערכת נבנו בסיוע מלא של שלושת מערכות בינה מלאכותית
+            מתקדמות: GPT, Perplexity ו-Claude. תהליך הבנייה התבסס על מידע ציבורי גלוי מהרשת,
+            ועל ניסיון ליצור פרופיל אחיד, שיטתי ובלתי־אישי ככל האפשר לכל מועמדת
+            ומועמד.
+          </p>
+          <p>
+            השימוש בשלוש בינות שונות הוא חלק מחוזקת המערכת: הוא מאפשר איסוף רחב יותר
+            של מידע, הצלבת התרשמויות, ניסוח מסודר, זיהוי פערים, ובנייה של מבנה השוואתי
+            אחיד. במקום להסתמך על היכרות אישית או על העדפה מוקדמת, המערכת מנסה
+            להעמיד את כלל המועמדים מול אותה שיטת עבודה.
+          </p>
+          <p>
+            יחד עם זאת, חשוב לדייק: גם מערכות בינה מלאכותית אינן חסינות מטעויות,
+            חוסרי מידע, מידע מיושן או הטיות שמקורן במידע הזמין ברשת. לכן הפרופילים
+            אינם מוצגים כאמת מוחלטת, אלא כתשתית שיטתית להשוואה, לבדיקה ולחשיבה
+            עצמאית של המשתמש.
+          </p>
+        </section>
+
+        <section class="about-section" id="axes">
+          <h2>שלושת צירי הבחירה</h2>
+          <p>
+            המערכת מארגנת את המידע על המועמדים בשלושה צירים מרכזיים:
+          </p>
+
+          <div class="principles">
+            <div class="principle-card">
+              <strong>דעות ועמדות</strong>
+              <span>עמדות פוליטיות, חברתיות, דמוקרטיות, מדיניות ואזרחיות.</span>
+            </div>
+            <div class="principle-card">
+              <strong>יכולות וכישורים</strong>
+              <span>ניסיון ציבורי, יכולת ביצוע, עבודת צוות, מנהיגות ויכולת השפעה.</span>
+            </div>
+            <div class="principle-card">
+              <strong>תדמית ציבורית</strong>
+              <span>האופן שבו המועמד נתפס בציבור, בתקשורת, במחנה הפוליטי ובקהילות שונות.</span>
+            </div>
+            <div class="principle-card">
+              <strong>התאמה אישית</strong>
+              <span>המשתמש יכול לקבוע בעצמו אילו צירים חשובים לו יותר בתהליך הבחירה.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="about-section" id="ai">
+          <h2>השימוש בבינה מלאכותית</h2>
+          <p>
+            מערכת ד.ב.ר פותחה בעזרת כלי AI, והדבר אינו מוסתר — להפך. השימוש בבינה
+            מלאכותית הוא חלק מהרעיון של המערכת: להשתמש בכלים החדשים כדי לאסוף,
+            לארגן, להשוות ולנסח מידע ציבורי בצורה יעילה, עקבית ושיטתית יותר.
+          </p>
+          <p>
+            כלי ה־AI שימשו לבניית פרופילי מועמדים, לארגון המידע לפי צירים,
+            לניסוח היגדים, להשוואה בין מקורות, ולבדיקת עקביות פנימית. התהליך כולו
+            נשען על מידע גלוי, ועל ניסיון לצמצם ככל האפשר הטיות שמקורן בהיכרות אישית,
+            ביחסי קרבה, בהעדפה מוקדמת או ברושם נקודתי.
+          </p>
+          <p>
+            האחריות על מבנה המערכת, על בחירת צירי ההשוואה, על אופן הצגת המידע ועל
+            ההחלטה כיצד להשתמש בתוצרים נשארת אנושית. לכן נכון לראות בד.ב.ר כלי
+            עזר לחשיבה ולבחירה, ולא מערכת שמחליטה במקום המשתמש.
+          </p>
+        </section>
+
+        <section class="about-section" id="candidate-updates">
+          <h2>אפשרות לעדכון מצד מועמדים</h2>
+          <p>
+            ככל שיתאפשר, תינתן למועמדות ולמועמדים אפשרות להעיר על המידע המופיע
+            עליהם, להצביע על טעויות, להשלים מידע חסר, או להפנות למקורות ציבוריים
+            נוספים.
+          </p>
+          <p>
+            עדכונים כאלה לא נועדו להפוך את הפרופיל לטקסט יחצני מטעם המועמד, אלא
+            לשפר את רמת הדיוק, ההוגנות והעדכניות של המידע. אם פרופיל מסוים יעודכן
+            בעקבות פנייה של מועמד או מטעמו, הדבר יצוין במידת האפשר בתהליך הבחירה
+            או בפרופיל עצמו.
+          </p>
+        </section>
+
+        <section class="about-section" id="privacy">
+          <h2>פרטיות המשתמש</h2>
+          <p>
+            המערכת נועדה לפעול ככל האפשר בצד המשתמש. הבחירות, הסימונים וההעדפות
+            האישיות מיועדים להישמר בדפדפן המקומי של המשתמש, ולא להישלח למאגר מרכזי.
+          </p>
+          <p>
+            המשמעות היא שהרשימה האישית היא כלי עבודה פרטי של המשתמש. מטרת המערכת
+            היא לעזור לחשוב, להשוות ולבחור — לא לאסוף מידע פוליטי אישי.
+          </p>
+        </section>
+
+        <section class="note-box" id="limits">
+          <h2>מגבלות, שקיפות ואחריות</h2>
+          <p>
+            ד.ב.ר היא מערכת עזר עצמאית וניסיונית. ייתכנו טעויות, חוסרים, מידע לא
+            עדכני, פרשנויות שניתן לחלוק עליהן, או פערים בין מקורות שונים.
+          </p>
+          <p>
+            לכן מומלץ להשתמש במערכת כנקודת פתיחה לחשיבה, להשוואה ולבדיקה נוספת —
+            ולא כאמת סופית או כהמלצה מחייבת. הבחירה הסופית נשארת תמיד בידי
+            המשתמש.
+          </p>
+
+          <div class="signature">
+            אמנון זוסמן<br>
+            סילברטל און ליין
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© 2026 Silvertel Online ltd | כל הזכויות שמורות</span>
+        <span style="font-style:italic;color:var(--blue-main);font-size:0.85rem;direction:ltr;">
+          Democrats Choose Wisely · דמוקרטים בוחרים רציונלית
+        </span>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
+

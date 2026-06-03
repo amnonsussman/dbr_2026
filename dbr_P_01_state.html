@@ -1,0 +1,608 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הרשימה שלי | מערכת תומכת החלטה לפריימריז</title>
+  <style>
+    :root {
+      --blue-dark: #12355b;
+      --blue-main: #1d5fa7;
+      --blue-soft: #eaf3ff;
+      --blue-card: #f7fbff;
+      --green: #2e7d4f;
+      --green-soft: #e6f4eb;
+      --green-border: #b8dcc5;
+      --red: #a23a2a;
+      --red-soft: #fef2f0;
+      --red-border: #e0bfb9;
+      --text-main: #1f2933;
+      --text-muted: #5f6b7a;
+      --border-soft: #d7e3f3;
+      --white: #ffffff;
+      --shadow: 0 16px 38px rgba(18,53,91,.13);
+      --shadow-soft: 0 4px 16px rgba(18,53,91,.07);
+      --radius-large: 24px;
+      --radius-medium: 18px;
+      --radius-small: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Hebrew", sans-serif;
+      background: #f4f8ff;
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+
+    /* ── Top bar ── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 0 28px;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 36px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      color: var(--blue-dark);
+      font-size: 1.1rem;
+      min-width: 0;
+      flex-shrink: 1;
+    }
+    .brand span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      height: 40px;
+      padding: 0 13px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #3730a3, #1e1b4b);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      box-shadow: 0 4px 14px rgba(55,48,163,.3);
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      font-size: .9rem;
+    }
+
+    .nav a {
+      padding: 7px 14px;
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      background: white;
+      color: var(--text-muted);
+      font-weight: 600;
+      transition: border-color .15s, color .15s;
+    }
+
+    .nav a:hover { border-color: var(--blue-main); color: var(--blue-main); }
+    .nav a.active { background: var(--blue-main); color: white; border-color: var(--blue-main); }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: white;
+      color: var(--blue-dark);
+      font-weight: 700;
+      font-size: .9rem;
+      margin-bottom: 28px;
+      transition: border-color .15s, color .15s;
+    }
+
+    .back-link:hover { border-color: var(--blue-main); color: var(--blue-main); }
+
+    /* ── Page title ── */
+    .page-title {
+      margin-bottom: 28px;
+    }
+
+    .page-title h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--blue-dark);
+      letter-spacing: -.02em;
+      line-height: 1.25;
+    }
+
+    .page-title p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 640px;
+    }
+
+    /* ── Summary bar ── */
+    .summary-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: white;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 14px 20px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .summary-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .9rem;
+      border: 1px solid var(--border-soft);
+      background: var(--blue-card);
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .pill strong { font-weight: 900; font-size: 1.05rem; color: var(--blue-main); }
+    .pill.green { background: var(--green-soft); border-color: var(--green-border); }
+    .pill.green strong { color: var(--green); }
+    .pill.muted { background: white; }
+    .pill.muted strong { color: var(--text-muted); }
+
+    .last-updated-text {
+      font-size: .83rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Lists ── */
+    .section-label {
+      font-size: .78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .lists-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .list-card {
+      background: white;
+      border: 1.5px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 22px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .list-card.approved {
+      border-color: var(--green-border);
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .list-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .list-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 9px;
+      border-radius: 13px;
+      background: var(--blue-soft);
+      color: var(--blue-main);
+      font-size: .88rem;
+      font-weight: 900;
+    }
+
+    .list-card.approved .list-badge {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .list-status {
+      font-size: .85rem;
+      color: var(--text-muted);
+    }
+
+    .list-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      min-height: 72px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 14px;
+      background: var(--blue-card);
+      border-radius: var(--radius-small);
+      border: 1px solid transparent;
+    }
+
+    .list-card.approved .list-item {
+      background: var(--green-soft);
+      border-color: var(--green-border);
+    }
+
+    .list-item .name {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: .97rem;
+    }
+
+    .list-item .actions { display: flex; gap: 6px; }
+
+    .item-btn {
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 700;
+      border: 1px solid var(--border-soft);
+      background: white;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .15s;
+    }
+
+    .item-btn:hover { opacity: .7; }
+    .item-btn.approve { color: var(--green); border-color: var(--green-border); }
+    .item-btn.remove  { color: var(--red);  border-color: var(--red-border); }
+
+    .empty-list {
+      text-align: center;
+      padding: 28px 16px;
+      color: var(--text-muted);
+      font-size: .92rem;
+      background: var(--blue-card);
+      border-radius: var(--radius-small);
+      border: 1px dashed var(--border-soft);
+    }
+
+    /* ── Finish bar ── */
+    .finish-bar {
+      background: white;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 28px;
+    }
+
+    .finish-bar p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: .95rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--blue-main);
+      color: white;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: .9rem;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform .15s, box-shadow .15s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(29,95,167,.25); }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 56px 24px;
+      background: white;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-large);
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .empty-icon {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+    }
+
+    .empty-state h2 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      color: var(--blue-dark);
+    }
+
+    .empty-state p {
+      margin: 0 0 22px;
+      color: var(--text-muted);
+      font-size: .97rem;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      font-size: .85rem;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 760px) {
+      .lists-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .topbar { flex-wrap: nowrap; }
+      .brand span:last-child { font-size: .85rem; }
+      .summary-bar { flex-direction: column; align-items: stretch; }
+      .finish-bar { flex-direction: column; align-items: stretch; }
+      .btn-primary { text-align: center; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+      <div style="display:flex;flex-direction:column;width:100%;gap:6px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <a class="brand" href="dbr_P_01_index.html" style="min-width:0;flex-shrink:1">
+            <span class="brand-mark">ד.ב.ר</span>
+            <span>דמוקרטים בוחרים רציונלית</span>
+          </a>
+          <a href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+        </div>
+        <div style="text-align:center;font-size:.72rem;color:var(--text-muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+      </div>
+    </header>
+
+    <section class="page-title">
+      <h1>הרשימה שלי</h1>
+      <p>מועמדים שנבחרו לדיון ומועמדים שאושרו לרשימה הסופית.</p>
+    </section>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="empty-state" style="display:none;">
+      <div class="empty-icon">🗳️</div>
+      <h2>הרשימה ריקה</h2>
+      <p>עדיין לא נוספו מועמדים. חזרו לתהליך הבחירה ועברו באחד המסלולים.</p>
+      <a href="dbr_P_01_process.html"><button class="btn-primary">חזרה לתהליך הבחירה</button></a>
+    </div>
+
+    <!-- Summary bar — shown when candidates exist -->
+    <div id="summary-bar" class="summary-bar" style="display:none;">
+      <div class="summary-pills">
+        <span class="pill"><strong id="counter-selected">0</strong> נבחרו לדיון</span>
+        <span class="pill green"><strong id="counter-approved">0</strong> אושרו לרשימה</span>
+      </div>
+      <span id="last-updated" class="last-updated-text"></span>
+    </div>
+
+    <!-- Lists -->
+    <div id="lists-label" style="display:none;"></div>
+    <div id="lists-section" class="lists-grid" style="display:none;">
+      <div class="list-card">
+        <div class="list-header">
+          <div class="list-title">
+            נבחרו לדיון
+            <span class="list-badge" id="badge-selected">0</span>
+          </div>
+          <div class="list-status">ממתינים להחלטה</div>
+        </div>
+        <ul class="list-items" id="selected-list"></ul>
+      </div>
+
+      <div class="list-card approved">
+        <div class="list-header">
+          <div class="list-title">
+            אושרו לרשימה
+            <span class="list-badge" id="badge-approved">0</span>
+          </div>
+          <div class="list-status">החלטה סופית</div>
+        </div>
+        <ul class="list-items" id="approved-list"></ul>
+      </div>
+    </div>
+
+    <!-- Finish bar -->
+    <div id="finish-bar" class="finish-bar" style="display:none;">
+      <p>לאחר אישור הרשימה הסופית ניתן להפיק אותה ולהדפיסה.</p>
+      <button class="btn-primary" onclick="finishProcess()">סיום והפקת הרשימה הסופית</button>
+    </div>
+
+    <footer class="footer">
+      מערכת תומכת החלטה לפריימריז של מפלגת הדמוקרטים · הנתונים נשמרים מקומית בדפדפן בלבד.
+    </footer>
+  </div>
+
+  <script>
+    const STATE_KEY = 'primeris_state_v1';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STATE_KEY);
+        return raw ? JSON.parse(raw) : { selected: [], approved: [], meta: {} };
+      } catch(e) { return { selected: [], approved: [], meta: {} }; }
+    }
+
+    function saveState(s) {
+      try {
+        s.meta = s.meta || {};
+        s.meta.last_updated = new Date().toISOString();
+        localStorage.setItem(STATE_KEY, JSON.stringify(s));
+      } catch(e) {}
+    }
+
+    function candidateName(id) { return id.replace(/_/g, ' '); }
+
+    function escapeHtml(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    let state = loadState();
+
+    function renderAll() {
+      state = loadState();
+      const hasAny = (state.selected || []).length > 0;
+
+      document.getElementById('empty-state').style.display    = hasAny ? 'none' : '';
+      document.getElementById('summary-bar').style.display    = hasAny ? '' : 'none';
+      document.getElementById('lists-label').style.display    = hasAny ? '' : 'none';
+      document.getElementById('lists-section').style.display  = hasAny ? '' : 'none';
+      document.getElementById('finish-bar').style.display     = hasAny ? '' : 'none';
+
+      if (!hasAny) return;
+
+      document.getElementById('counter-selected').textContent = state.selected.length;
+      document.getElementById('counter-approved').textContent = (state.approved || []).length;
+      document.getElementById('badge-selected').textContent   = state.selected.length;
+      document.getElementById('badge-approved').textContent   = (state.approved || []).length;
+
+      if (state.meta && state.meta.last_updated) {
+        const d = new Date(state.meta.last_updated);
+        document.getElementById('last-updated').textContent = 'עודכן ' + d.toLocaleString('he-IL');
+      }
+
+      const notApproved = state.selected.filter(id => !(state.approved || []).includes(id));
+      const selUL = document.getElementById('selected-list');
+      const appUL = document.getElementById('approved-list');
+
+      selUL.innerHTML = notApproved.length
+        ? notApproved.map(id => `<li class="list-item">
+            <span class="name">${escapeHtml(candidateName(id))}</span>
+            <div class="actions">
+              <button class="item-btn approve" onclick="approve('${escapeHtml(id)}')">אשר</button>
+              <button class="item-btn remove"  onclick="removeSelected('${escapeHtml(id)}')">הסר</button>
+            </div>
+          </li>`).join('')
+        : '<li class="empty-list">כל הנבחרים אושרו, או שהרשימה ריקה.</li>';
+
+      appUL.innerHTML = (state.approved || []).length
+        ? state.approved.map(id => `<li class="list-item">
+            <span class="name">${escapeHtml(candidateName(id))}</span>
+            <div class="actions">
+              <button class="item-btn remove" onclick="unapprove('${escapeHtml(id)}')">בטל אישור</button>
+            </div>
+          </li>`).join('')
+        : '<li class="empty-list">עדיין לא אושרו מועמדים.</li>';
+    }
+
+    function approve(id) {
+      state.approved = state.approved || [];
+      if (!state.approved.includes(id)) state.approved.push(id);
+      saveState(state);
+      renderAll();
+    }
+
+    function unapprove(id) {
+      state.approved = (state.approved || []).filter(x => x !== id);
+      saveState(state);
+      renderAll();
+    }
+
+    function removeSelected(id) {
+      state.selected = state.selected.filter(x => x !== id);
+      state.approved = (state.approved || []).filter(x => x !== id);
+      saveState(state);
+      renderAll();
+    }
+
+    function finishProcess() {
+      if (!(state.approved || []).length) {
+        if (!confirm('עדיין לא אושרו מועמדים. להמשיך לסיום בכל זאת?')) return;
+      }
+      state.meta = state.meta || {};
+      state.meta.status = 'completed';
+      saveState(state);
+      alert('הרשימה הסופית נשמרה. בקרוב תתווסף כאן אפשרות להפקה ולהדפסה.');
+    }
+
+    renderAll();
+    window.addEventListener('focus', renderAll);
+  </script>
+</body>
+</html>
+

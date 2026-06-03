@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תהליך הבחירה | מערכת תומכת החלטה לפריימריז</title>
+  <style>
+    :root {
+      --blue-dark: #12355b;
+      --blue-main: #1d5fa7;
+      --blue-soft: #eaf3ff;
+      --blue-card: #f7fbff;
+      --green: #2e7d4f;
+      --green-soft: #e6f4eb;
+      --green-border: #b8dcc5;
+      --text-main: #1f2933;
+      --text-muted: #5f6b7a;
+      --border-soft: #d7e3f3;
+      --white: #ffffff;
+      --shadow: 0 16px 38px rgba(18,53,91,.13);
+      --shadow-soft: 0 4px 16px rgba(18,53,91,.07);
+      --radius-large: 24px;
+      --radius-medium: 18px;
+      --radius-small: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Hebrew", sans-serif;
+      background: #f4f8ff;
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+
+    /* ── Top bar ── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 0 28px;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 36px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      color: var(--blue-dark);
+      font-size: 1.1rem;
+    }
+
+    .brand-mark {
+      height: 40px;
+      padding: 0 13px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #3730a3, #1e1b4b);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      box-shadow: 0 4px 14px rgba(55,48,163,.3);
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      font-size: .9rem;
+    }
+
+    .nav a {
+      padding: 7px 14px;
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      background: white;
+      color: var(--text-muted);
+      font-weight: 600;
+      transition: border-color .15s, color .15s;
+    }
+
+    .nav a:hover { border-color: var(--blue-main); color: var(--blue-main); }
+    .nav a.active { background: var(--blue-main); color: white; border-color: var(--blue-main); }
+
+    /* ── Page title ── */
+    .page-title {
+      margin-bottom: 32px;
+    }
+
+    .page-title h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--blue-dark);
+      letter-spacing: -.02em;
+      line-height: 1.25;
+    }
+
+    .page-title p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 640px;
+    }
+
+    /* ── Status bar (when candidates exist) ── */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: white;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 14px 20px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .status-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .9rem;
+      border: 1px solid var(--border-soft);
+      background: var(--blue-card);
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .pill strong { font-weight: 900; font-size: 1.05rem; color: var(--blue-main); }
+    .pill.green { background: var(--green-soft); border-color: var(--green-border); }
+    .pill.green strong { color: var(--green); }
+    .pill.muted { background: white; }
+    .pill.muted strong { color: var(--text-muted); }
+
+    .manage-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      background: var(--blue-main);
+      color: white;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: .9rem;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      white-space: nowrap;
+    }
+
+    .manage-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(29,95,167,.25); }
+
+    /* ── Section header ── */
+    .section-label {
+      font-size: .78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* ── Path cards ── */
+    .paths-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .path-card {
+      background: white;
+      border: 1.5px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 24px 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      cursor: pointer;
+    }
+
+    /* כרטיסי מסלול בולטים */
+    a.path-card {
+      border: 2px solid var(--blue-main);
+      box-shadow: 0 4px 18px rgba(29,95,167,.1);
+    }
+
+    a.path-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: var(--blue-dark);
+    }
+
+    /* כרטיס סטטוס — עדין יותר */
+    div.path-card {
+      border: 1px solid var(--border-soft);
+      background: var(--blue-card);
+      box-shadow: none;
+    }
+
+    .path-icon {
+      font-size: 1.3rem;
+      display: inline;
+      margin-left: 6px;
+    }
+
+    .path-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      line-height: 1.3;
+    }
+
+    .path-desc {
+      font-size: .96rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex-grow: 1;
+    }
+
+    .path-cta { display: none; }
+
+    /* ── Empty hint ── */
+    .empty-hint {
+      background: white;
+      border: 1px dashed var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 18px 22px;
+      color: var(--text-muted);
+      font-size: .95rem;
+      margin-bottom: 24px;
+    }
+
+    .empty-hint strong { color: var(--blue-dark); display: block; margin-bottom: 4px; }
+
+    /* ── Methodology link ── */
+    .methodology-link {
+      padding-top: 28px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      font-size: .92rem;
+    }
+
+    .methodology-link a {
+      color: var(--blue-main);
+      font-weight: 700;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      font-size: .85rem;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .paths-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 620px) {
+      .topbar { flex-wrap: nowrap; }
+      .brand span:last-child { font-size: .85rem; }
+      .paths-grid { grid-template-columns: 1fr; }
+      .status-bar { flex-direction: column; align-items: stretch; }
+      .manage-btn { text-align: center; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+      <div style="display:flex;flex-direction:column;width:100%;gap:6px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <a class="brand" href="dbr_P_01_index.html" style="min-width:0;flex-shrink:1">
+            <span class="brand-mark">ד.ב.ר</span>
+            <span>דמוקרטים בוחרים רציונלית</span>
+          </a>
+          <a href="dbr_P_01_index.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+        </div>
+        <div style="text-align:center;font-size:.72rem;color:var(--text-muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+      </div>
+    </header>
+
+    <!-- Status bar — shown only when there are candidates -->
+    <!-- Path cards -->
+    <div class="paths-grid">
+      <a class="path-card" href="dbr_P_01_shiryun.html" onclick="trackPath('shiryun')">
+        <div class="path-title"><span class="path-icon">🎯</span> שיריון ישיר של מועמדים/ות</div>
+        <div class="path-desc" id="shiryun-desc">בחירה ידנית של מועמד מתוך רשימת המועמדים המלאה, על פי שיקול הדעת שלך.</div>
+        <span class="path-cta">כניסה</span>
+      </a>
+
+      <a class="path-card" href="dbr_P_01_main.html" onclick="trackPath('squad')">
+        <div class="path-title"><span class="path-icon">⚖️</span> בחירה על פי הקריטריונים שלך</div>
+        <div class="path-desc" id="dbr-desc">על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.</div>
+        <span class="path-cta">כניסה</span>
+      </a>
+
+      <div class="path-card" id="status-card" style="cursor:default;display:none;">
+        <div class="path-title"><span class="path-icon">📋</span> לקראת סיכום תהליך הבחירה</div>
+        <p style="font-size:.95rem;color:var(--text-muted);line-height:1.55;margin:0 0 14px">רגע לפני האישור הסופי, אפשר לראות איך נקבעה הרשימה שבחרת, אילו שיקולים היו למערכת, מה חיזק ומה החליש את צורת הדירוג.</p>
+
+        <!-- שני לחצנים -->
+        <div id="status-actions" style="display:none;gap:8px;">
+          <a href="dbr_P_01_state.html" style="flex:1;">
+            <button style="width:100%;padding:8px 10px;background:white;color:var(--blue-main);border:1.5px solid var(--blue-main);border-radius:9px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;">עבור לסיום התהליך</button>
+          </a>
+          <a href="dbr_P_01_candidate.html?filter=selected" style="flex:1;">
+            <button style="width:100%;padding:8px 10px;background:white;color:var(--blue-main);border:1.5px solid var(--blue-main);border-radius:9px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;">שקיפות הבחירה ←</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-bottom:12px">
+      <button onclick="resetAllSelections()" style="background:none;border:none;color:var(--text-muted);font-size:.82rem;cursor:pointer;text-decoration:underline;font-family:inherit">איפוס כל הבחירות</button>
+    </div>
+
+    <div class="methodology-link">
+      על הרציונל של תהליך הבחירה ואופן פעולת המערכת —
+      <a href="dbr_P_01_game.html">קראו כאן</a>
+      &nbsp;·&nbsp;
+      <a href="dbr_P_01_state.html">מסך הסיכום</a>
+    </div>
+
+    <footer class="footer">
+      מערכת תומכת החלטה לפריימריז של מפלגת הדמוקרטים · הנתונים נשמרים מקומית בדפדפן בלבד.
+    </footer>
+  </div>
+
+  <script>
+    if (!localStorage.getItem('dbr_intro_seen')) {
+      window.location.replace('dbr_P_01_game.html');
+    }
+
+    const STATE_KEY = 'primeris_state_v1';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STATE_KEY);
+        if (!raw) return { selected: [], approved: [], meta: { path_visit_counts: {} } };
+        return JSON.parse(raw);
+      } catch(e) {
+        return { selected: [], approved: [], meta: { path_visit_counts: {} } };
+      }
+    }
+
+    function saveState(s) {
+      try {
+        s.meta = s.meta || {};
+        s.meta.last_updated = new Date().toISOString();
+        localStorage.setItem(STATE_KEY, JSON.stringify(s));
+      } catch(e) {}
+    }
+
+    let primState = loadState();
+
+    function selectionText(namesArr) {
+      const list = namesArr.map(n => `<div style="font-weight:900;color:#12355b;font-size:.95rem;line-height:1.4;margin-bottom:2px">· ${n}</div>`).join('');
+      return `אלה המועמדים/ות שבחרתם:<br>${list}<span style="font-size:.88rem;color:#5f6b7a;margin-top:6px;display:block">עליכם עוד לאשר אותם במסך הסיכום.</span>`;
+    }
+
+    const SHIRYUN_DESC_HTML = 'בחירה ישירה של מועמדים/ות מתוך רשימת המועמדים המלאה, על פי השיקולים שלך.<br><span style="font-size:.88rem;color:#5f6b7a;margin-top:6px;display:block">גם אם בחרתם בשריון ישיר את כל השמונה, מומלץ ללכת למסלול השני, כדי להבדיל בין התרשמות לעובדות.</span>';
+    const DBR_DESC     = 'על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.';
+
+    function renderAll() {
+      primState = loadState();
+      const shiryun   = primState.shiryun   || [];
+      const dbrPicks  = primState.dbr_picks || [];
+      const nSel = (primState.selected || []).length;
+
+      // כרטיסית שריון
+      const shiryunEl = document.getElementById('shiryun-desc');
+      if (shiryunEl) shiryunEl.innerHTML = shiryun.length > 0
+        ? selectionText(shiryun)
+        : SHIRYUN_DESC_HTML;
+
+      // כרטיסית מושכלת
+      const dbrEl = document.getElementById('dbr-desc');
+      if (dbrEl) dbrEl.innerHTML = dbrPicks.length > 0
+        ? selectionText(dbrPicks)
+        : DBR_DESC;
+
+      // כרטיסית סטטוס
+      document.getElementById('status-card').style.display    = nSel > 0 ? '' : 'none';
+      document.getElementById('status-actions').style.display = nSel > 0 ? 'flex' : 'none';
+    }
+
+    function trackPath(path) {
+      primState.meta = primState.meta || {};
+      primState.meta.path_visit_counts = primState.meta.path_visit_counts || {};
+      primState.meta.path_visit_counts[path] = (primState.meta.path_visit_counts[path] || 0) + 1;
+      saveState(primState);
+    }
+
+    function resetAllSelections() {
+      if (!confirm('לאפס את כל הבחירות?')) return;
+      const shared = loadState();
+      shared.shiryun   = [];
+      shared.dbr_picks = [];
+      shared.selected  = [];
+      saveState(shared);
+      renderAll();
+    }
+
+    renderAll();
+    window.addEventListener('focus', renderAll);
+    window.addEventListener('pageshow', renderAll);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') renderAll();
+    });
+  </script>
+</body>
+</html>
+

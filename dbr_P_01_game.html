@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<script>if(localStorage.getItem('dbr_disclaimer_accepted')!=='yes'){window.location.href='dbr_P_01_index.html?redirect='+encodeURIComponent(location.pathname.split('/').pop()+location.search)}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תורת המשחקים של הפריימריז — פרדוקס הנבחרת — ד.ב.ר</title>
+  <style>
+    :root{
+      --bg:#f5f7fb; --paper:#ffffff; --ink:#162033; --muted:#667085; --line:#d9e1ee;
+      --brand:#2f5fbb; --brand-dark:#1e3f87; --brand-soft:#eaf0ff;
+      --red:#9b2c2c; --red-soft:#fff0f0; --green:#157a52; --green-soft:#e7f6ef;
+      --shadow:0 18px 46px rgba(16,24,40,.10);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,"Noto Sans Hebrew","Segoe UI",sans-serif;background:radial-gradient(circle at top right,rgba(47,95,187,.13),transparent 34%),linear-gradient(180deg,#fff 0%,var(--bg) 38%,#eef2f8 100%);color:var(--ink);line-height:1.72}
+    .page{max-width:1120px;margin:0 auto;padding:34px 18px 64px}
+    .hero{background:linear-gradient(135deg,rgba(47,95,187,.96),rgba(31,63,135,.97));color:#fff;border-radius:32px;padding:42px 42px 34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;width:330px;height:330px;border-radius:50%;background:rgba(255,255,255,.08);left:-120px;top:-110px}
+    .hero:after{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(255,255,255,.22);border-radius:42px;transform:rotate(18deg);right:-42px;bottom:-38px}
+    .hero-inner{position:relative;z-index:1}.tag{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:.9rem;margin-bottom:16px}
+    h1{margin:0;font-size:clamp(1.65rem,3.8vw,2.95rem);line-height:1.08;letter-spacing:-.025em;max-width:930px}.subtitle{margin:16px 0 0;font-size:clamp(1.15rem,2.4vw,1.65rem);line-height:1.38;max-width:900px;color:rgba(255,255,255,.92);font-weight:700}.dbr-line{margin-top:24px;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.42);border-radius:20px;padding:18px 22px;max-width:850px;font-size:1.18rem;font-weight:800;box-shadow:0 10px 24px rgba(0,0,0,.10)}.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;color:rgba(255,255,255,.82);font-size:.93rem}.meta span{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 11px}
+    .layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:22px;margin-top:24px;align-items:start}aside{position:sticky;top:18px;background:var(--paper);border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 28px rgba(16,24,40,.07);padding:18px}aside h2{font-size:1rem;margin:0 0 10px;color:var(--brand-dark)}.toc{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:.94rem}.toc a{color:var(--ink);text-decoration:none;display:block;padding:8px 10px;border-radius:12px;border:1px solid transparent}.toc a:hover{background:var(--brand-soft);border-color:#cbd8ff;color:var(--brand-dark)}
+    article{background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.article-inner{padding:34px 40px 44px}.lead{font-size:1.24rem;line-height:1.75;color:#26344f;margin:0 0 24px;font-weight:500}h2{margin:42px 0 12px;font-size:clamp(1.45rem,2.7vw,2.05rem);line-height:1.22;letter-spacing:-.02em;color:var(--brand-dark)}h3{margin:28px 0 8px;font-size:1.22rem;color:#27364f}p{margin:0 0 17px;font-size:1.06rem}strong{font-weight:800}
+    .callout,.warning,.good{margin:26px 0;padding:20px 22px;border-radius:20px}.callout{border:1px solid #cbd8ff;background:var(--brand-soft)}.warning{border:1px solid #ffd2d2;background:var(--red-soft)}.good{border:1px solid #b8e3ce;background:var(--green-soft)}.callout h3,.warning h3,.good h3{margin-top:0}.quote{margin:28px 0;border-right:6px solid var(--brand);background:#fbfcff;border-radius:18px 0 0 18px;padding:20px 24px;color:#27364f;font-size:1.18rem;font-weight:700;line-height:1.65}.compare,.terms{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:24px 0}.box,.term-card{border:1px solid var(--line);background:#fbfcff;border-radius:18px;padding:18px}.box .label{display:inline-block;font-size:.82rem;font-weight:900;color:var(--brand);background:var(--brand-soft);border-radius:999px;padding:4px 10px;margin-bottom:10px}.box h3,.term-card h3{margin:0 0 8px;font-size:1.08rem;color:var(--brand-dark)}.term-card p{margin:0;color:var(--muted);font-size:.97rem}.flow{display:grid;gap:10px;margin:24px 0}.flow-row{display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:stretch}.flow-key{background:var(--brand-dark);color:#fff;border-radius:16px;padding:13px 15px;font-weight:900;display:flex;align-items:center}.flow-text{background:#fbfcff;border:1px solid var(--line);border-radius:16px;padding:13px 15px}.closing{background:linear-gradient(135deg,var(--brand-soft),#ffffff);border-top:1px solid var(--line);padding:30px 40px}.closing p{margin:0;font-size:1.18rem;font-weight:700;color:var(--brand-dark)}.footer{margin-top:20px;color:var(--muted);text-align:center;font-size:.9rem}
+    @media(max-width:920px){.layout{grid-template-columns:1fr}aside{position:relative;top:auto}.compare,.terms{grid-template-columns:1fr}.article-inner,.closing{padding:26px 22px}.hero{padding:32px 24px}}@media(max-width:620px){.page{padding:18px 12px 42px}.hero{border-radius:24px}article{border-radius:22px}.flow-row{grid-template-columns:1fr}h1{font-size:1.75rem}.subtitle{font-size:1.05rem}.dbr-line{font-size:1.04rem}}@media print{body{background:#fff}.page{max-width:none;padding:0}aside{display:none}.hero,article{box-shadow:none;border-radius:0}.layout{display:block}.hero{background:#fff;color:#000;border-bottom:2px solid #000}.subtitle,.meta{color:#222}.dbr-line{border:1px solid #888;color:#000;background:#fff}}
+
+    /* ── System nav ── */
+    .sys-nav{background:#fff;border-bottom:1px solid #d7e3f3}
+    .sys-nav-inner{max-width:1120px;margin:0 auto;padding:0 18px;display:flex;justify-content:space-between;align-items:center;gap:20px;height:58px}
+    .sys-brand{display:flex;align-items:center;gap:11px;font-weight:800;color:#12355b;font-size:1rem;text-decoration:none}
+    .sys-brand-mark{height:36px;padding:0 11px;border-radius:10px;background:linear-gradient(135deg,#3730a3,#1e1b4b);display:grid;place-items:center;color:#fff;font-size:.8rem;font-weight:900;letter-spacing:.06em;box-shadow:0 4px 12px rgba(55,48,163,.28)}
+    .sys-skip{font-size:.87rem;color:#5f6b7a;font-weight:600;text-decoration:none;padding:6px 14px;border:1px solid #d7e3f3;border-radius:999px;background:#fff;transition:border-color .15s,color .15s;cursor:pointer}
+    .sys-skip:hover{border-color:#1d5fa7;color:#1d5fa7}
+
+    /* ── Floating CTA bar ── */
+    .float-bar{position:fixed;bottom:0;right:0;left:0;z-index:100;background:linear-gradient(90deg,#1e3f87,#2f5fbb);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 24px rgba(18,53,91,.22);animation:slideUp .4s ease}
+    @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+    .float-bar-text{color:rgba(255,255,255,.88);font-size:.97rem;font-weight:600}
+    .float-bar-text strong{color:#fff;font-weight:900}
+    .start-btn{display:inline-flex;align-items:center;gap:9px;padding:12px 28px;background:#fff;color:#1e3f87;border-radius:12px;font-weight:900;font-size:.97rem;border:none;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s,box-shadow .15s;white-space:nowrap}
+    .start-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.22)}
+    body{padding-bottom:68px}
+  </style>
+</head>
+<body>
+  <nav class="sys-nav">
+    <div class="sys-nav-inner">
+      <a class="sys-brand" href="dbr_P_01_index.html">
+        <span class="sys-brand-mark">ד.ב.ר</span>
+        <span>מערכת AI תומכת החלטה לפריימריז</span>
+      </a>
+      <a class="sys-skip" onclick="markAndGo();return false;" href="#">כבר קראת? דלג לבחירה ←</a>
+    </div>
+  </nav>
+  <div class="page">
+    <header class="hero">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script><div class="hero-inner"><div class="tag">ד.ב.ר — דמוקרטים בוחרים רציונלית</div><h1>תורת המשחקים של הפריימריז</h1><p class="subtitle">פרדוקס הנבחרת — למרות שקבוצות ויחידים בוחרים בצורה רציונלית, הסיכוי לקבל נבחרת אופטימלית קטן מאוד.</p><div class="dbr-line">ד.ב.ר — הכלי שמנסה לצמצם את הפרדוקס</div><div class="meta"><span>אמנון זוסמן</span><span>מאי 2026</span><span>מאמר מסגרת רעיוני</span></div></div></header>
+    <div class="layout"><aside><h2>מפת הקריאה</h2><ul class="toc"><li><a href="#paradox">הפרדוקס</a></li><li><a href="#members">חברי המפלגה</a></li><li><a href="#organization">הדימוי הארגוני</a></li><li><a href="#not-best">מגבלות השיטה</a></li><li><a href="#uri">אורי כנרות: נבחרת</a></li><li><a href="#dbr">ד.ב.ר בתוך השיטה</a></li><li><a href="#players">השחקנים במשחק</a></li><li><a href="#pressure">קבוצות לחץ וייצוג</a></li><li><a href="#interest">האינטרס של המפלגה</a></li><li><a href="#what">מה ד.ב.ר עושה</a></li></ul></aside>
+      <article><div class="article-inner"><p class="lead">פריימריז נראים כמו פעולה פשוטה: חברי מפלגה מסמנים שמות של מועמדים. אבל מבחינה מערכתית זו פעולה מורכבת הרבה יותר. כל בחירה אישית מצטרפת לאלפי בחירות אחרות, והתוצאה אינה רק הצלחה או כישלון של מועמד יחיד — אלא הרכב רשימה שלמה.</p>
+        <section id="paradox"><h2>פרדוקס הנבחרת: כולם יכולים לבחור נכון ככלל, אך התוצאה שגויה</h2><p>חבר מפלגה יכול לבחור מועמד שהוא מעריך. קבוצה יכולה לקדם מועמדת שמייצגת אותה. פעיל יכול להמליץ על אדם שהוא מכיר מקרוב. כל אחת מן הבחירות האלה יכולה להיות הגיונית, מוסרית ואף מוצדקת מנקודת המבט של מי שמבצע אותה.</p><p>אבל בפריימריז יש פער מובנה בין פעולת הבחירה לבין התוצאה. הפעולה היא סימון שמות של מועמדים יחידים. התוצאה היא הרכב רשימה שלם. לכן ייתכן שכל אחד מן המשתתפים יפעל נכון מבחינתו, ובכל זאת תתקבל רשימה כפולה מדי, חסרה מדי, לא מאוזנת, או חלשה מבחינת המשימות שהמפלגה צריכה לבצע.</p><div class="quote">הבעיה אינה בהכרח שהבוחרים אינם רציונליים. לעיתים הבעיה היא שכל אחד רציונלי בתוך המידע, הלחצים והאינטרסים שלו — אבל איש אינו רואה מספיק את התמונה הכוללת.</div><p>זהו פרדוקס הנבחרת במונחי תורת המשחקים: רציונליות מקומית של יחידים וקבוצות אינה מבטיחה תוצאה מערכתית טובה.</p></section>
+        <section id="members"><h2>מי הם המשתתפים? לא ).replace(", הציבור הרחב", אלא חברי מפלגה</h2><p>בפריימריז אין מדובר בבחירות כלליות לכנסת. המשתתפים הם חברי מפלגה: אנשים שהצטרפו לארגון פוליטי, קיבלו בו מעמד פורמלי, ובזמן הפריימריז מקבלים זכות להשתתף בבחירת נציגיו.</p><p>הם אינם עובדים של המפלגה, אינם הנהלת המפלגה, ואינם הציבור הרחב. אבל בשיטת הפריימריז הם מקבלים סמכות זמנית ומשמעותית: להשפיע על זהות האנשים שייכנסו לשכבת ההנהגה והייצוג הבאה של המפלגה.</p><div class="callout"><h3>הגדרה זהירה</h3><p>חברי המפלגה הם מעין <strong>ועדת איתור מבוזרת</strong>: לא ועדת איתור מקצועית, ניטרלית וממושמעת, אלא ועדת איתור פוליטית, רגשית, ערכית, מחנאית ולעיתים אישית.</p></div></section>
+        <section id="organization"><h2>הדימוי הארגוני: מפלגה כארגון שמאתר שכבת הנהגה</h2><p>מפלגה אינה חברה עסקית רגילה. אבל היא כן ארגון. כמו עמותה, מוסד אקדמי, גוף ציבורי או ארגון ללא מטרת רווח, גם מפלגה זקוקה לאנשים שימלאו תפקידי הנהגה, ייצוג, ביצוע, חקיקה, מאבק ציבורי, גישור ובניית אמון.</p><p>בארגון רגיל, איתור בכירים נעשה בדרך כלל בידי הנהלה, ועדת איתור, דירקטוריון או גוף מקצועי. במפלגה שמקיימת פריימריז, חלק מכוח הבחירה מועבר לחברי המפלגה. הם אינם מגייסים מקצועיים, אבל בפועל הם משתתפים בתהליך איתור רחב של שכבת הנהגה עתידית.</p><p>כאן חשוב לדייק: המועמדים עדיין אינם ).replace(", בכירי המפלגה". הם מתמודדים על הזכות להפוך לחלק משכבת ההנהגה או הייצוג של המפלגה. לכן האנלוגיה אינה מושלמת, אבל היא מועילה: היא מזכירה שהשאלה אינה רק מי מוצא חן בעינינו, אלא איזה הרכב אנושי יכול לשרת את מטרות הארגון הפוליטי.</p></section>
+        <section id="not-best"><h2>פריימריז אינם הוכחה לשיטה הטובה ביותר</h2><p>העובדה שמפלגה בוחרת לקיים פריימריז אינה מוכיחה שזו שיטת הבחירה הטובה ביותר. זו בחירה מוסדית־פוליטית, לא אמת ניהולית מוכחת. אין סיבה להניח מראש שפריימריז רגילים תמיד מייצרים רשימה טובה יותר מוועדה מסדרת, מרכז מפלגה, שריונים, מנגנון אזורי, או שיטה משולבת.</p><div class="warning"><h3>הסתייגות מרכזית</h3><p>ד.ב.ר אינו טוען שהפריימריז הם השיטה האידיאלית. הוא נולד דווקא מתוך הכרה בכך שהשיטה הקיימת מוגבלת: היא מבקשת מחברי המפלגה לבחור יחידים, בזמן שהתוצאה הפוליטית היא רשימה שלמה.</p></div><p>לכן השאלה אינה האם פריימריז הם שיטה מושלמת. השאלה המעשית יותר היא: אם זו השיטה שנקבעה, איך אפשר לעזור לחבר המפלגה לקבל החלטה מודעת יותר בתוכה?</p></section>
+        <section id="uri"><h2>אורי כנרות: לחשוב על ).replace(", נבחרת"</h2><p>אורי כנרות עוסק בשיטות בחירה פנימיות במפלגות, ובשיחה עלה אצלו המושג <strong>נבחרת</strong>. הרעיון הבסיסי חד: אם התוצאה הרצויה היא רשימה שלמה, ייתכן שגם פעולת הבחירה צריכה להיות בין נבחרות שלמות, ולא בין מועמדים יחידים. את הפרויקט המלא של כנרות בנושא <a href="https://urikinrot.org/BetterPrimariesVoting.html" target="_blank" rel="noopener" style="color:#2f5fbb;font-weight:700;text-decoration:underline">ניתן לקרוא כאן ↗</a>.</p><p>זו ביקורת עמוקה על השיטה עצמה. במקום לצפות מאלפי חברי מפלגה להרכיב בעצמם, כל אחד בנפרד, תמונה כוללת של הרשימה, אפשר היה להציע להם לבחור בין הרכבים שלמים. כך השאלה הייתה עוברת מ).replace(", מי המועמדים שאני מסמן?" ל).replace(", איזו נבחרת נראית לי מתאימה יותר להנהגת המפלגה?".</p><div class="terms"><div class="term-card"><h3>רשימה</h3><p>המונח הפוליטי־פורמלי: התוצאה הסופית שמוצגת לציבור.</p></div><div class="term-card"><h3>נבחרת</h3><p>המושג של אורי כנרות: בחירה בין הרכבים שלמים במקום בחירה ביחידים.</p></div><div class="term-card"><h3>סגל</h3><p>המושג של ד.ב.ר: דרך לעזור לחבר המפלגה לבנות פתק בחירה שרואה גם את ההרכב הכולל.</p></div></div></section>
+        <section id="dbr"><h2>ד.ב.ר אינו משנה את השיטה — הוא פועל בתוכה</h2><p>ד.ב.ר מקבל את האבחנה שמאחורי רעיון הנבחרת, אבל אינו מחליף את מנגנון הבחירה שנקבע. הוא אינו קובע כמה מועמדים יסומנו בפתק, כמה שריונים יהיו, כיצד יופעל הזיגזג המגדרי, או כיצד ישפיעו כללי שריון והקפצה על הרשימה הסופית.</p><p>ד.ב.ר פועל במקום צנוע יותר: הוא מנסה לעזור לחבר המפלגה לחשוב על פתק הבחירה שלו לא רק כאוסף שמות, אלא כהשפעה על הרכב רחב יותר. אם אורי כנרות מציע לשנות את מנגנון הבחירה עצמו, ד.ב.ר מנסה לשפר את איכות החשיבה של הבוחר בתוך מנגנון הבחירה הקיים.</p><div class="compare"><div class="box"><span class="label">שיטה קיימת</span><h3>בחירה ביחידים</h3><p>חבר המפלגה מסמן מועמדים בודדים, לפי כללי הפריימריז שנקבעו.</p></div><div class="box"><span class="label">הצעת כנרות</span><h3>בחירה בין נבחרות</h3><p>שינוי עמוק יותר: לבחור הרכבים שלמים ולא שמות בודדים.</p></div><div class="box"><span class="label">ד.ב.ר</span><h3>בניית סגל אישי</h3><p>לא לשנות את השיטה, אלא לעזור לחשוב על פתק הבחירה כחלק מהרכב כולל.</p></div></div></section>
+        <section id="players"><h2>מי השחקנים במשחק?</h2><p>בפריימריז פועלים כמה שחקנים, וכל אחד מהם מחזיק אינטרס שונה. זו הסיבה שהדיון בתורת המשחקים אינו קישוט, אלא כלי להבנת המערכת.</p><div class="flow"><div class="flow-row"><div class="flow-key">הנהלת המפלגה</div><div class="flow-text">קובעת את כללי המשחק, לוחות הזמנים, השריונים והאיזונים. כלפי חוץ היא שומרת הליך, אך יש לה גם אינטרסים מוסדיים.</div></div><div class="flow-row"><div class="flow-key">חברי המפלגה</div><div class="flow-text">מקבלים את זכות הבחירה, אך פועלים תחת מידע חלקי, קמפיינים, המלצות, זהויות, רגשות ולחצים.</div></div><div class="flow-row"><div class="flow-key">המועמדים</div><div class="flow-text">עדיין אינם בכירי המפלגה; הם מתחרים על הכניסה לשכבת ההנהגה והייצוג הבאה.</div></div><div class="flow-row"><div class="flow-key">קבוצות תמיכה</div><div class="flow-text">מקדמות נשים, מיעוטים, מחנות, יחידים, אג׳נדות או זהויות. לעיתים הן מתקנות עיוורון; לעיתים הן מעצימות פיצול.</div></div></div><p>כל אחד מן השחקנים האלה יכול לפעול באופן הגיוני מבחינתו. אבל הצירוף של כל הפעולות האלה אינו מבטיח רשימה טובה. כאן בדיוק נוצרת בעיית הפעולה הקולקטיבית של הפריימריז.</p></section>
+        <section id="pressure"><h2>קבוצות לחץ אינן הבעיה — אובדן התמונה הכוללת הוא הבעיה</h2><p>במפלגה דמוקרטית טבעי שיהיו קבוצות שמבקשות לקדם ייצוג של נשים, בני מיעוטים, אזורים, מחנות או רעיונות. עצם קיומן של קבוצות כאלה אינו פסול. לעיתים הן חיוניות כדי לוודא שקולות חשובים לא יישארו מחוץ לרשימה.</p><p>הבעיה מתחילה כאשר כל קבוצה מקדמת את שלה, כל יחיד בוחר את הקרוב אליו, וכל קמפיין מושך לכיוון שלו — בלי שמישהו עוצר ושואל: מה מתקבל בסוף? האם הרשימה מכסה את תחומי המשימה המרכזיים של המפלגה? האם יש כפילות? האם חסרים כישורים? האם יש איזון בין מאבק, מומחיות, ייצוג ויכולת ביצוע?</p><div class="callout"><h3>הניסוח המדויק</h3><p>הבעיה אינה ייצוג. הבעיה היא אופטימיזציה מקומית: כל יחיד או קבוצה מנסים לקדם יעד נכון מבחינתם, אבל בלי מבט על הרכב הרשימה כולה התוצאה עלולה להיות חלשה מבחינת המפלגה.</p></div></section>
+        <section id="interest"><h2>למה זה אינטרס של המפלגה כארגון?</h2><p>ד.ב.ר אינו רק כלי לטובת חבר המפלגה הבודד. הוא עשוי לשרת גם את טובת המפלגה כארגון. מפלגה שרוצה לצאת מפריימריז עם רשימה אמינה, מגוונת, כשירה, מאוזנת ומובנת לציבור, צריכה שחבריה יחשבו לא רק על שמות, אלא גם על ההרכב הכולל שהם עוזרים ליצור.</p><p>עם זאת, צריך להבחין בין טובת המפלגה כארגון לבין האינטרסים של השחקנים שבתוכה. טובת המפלגה אינה בהכרח זהה לאינטרס של כל מועמד, כל קבוצת לחץ, כל מחנה או אפילו כל גורם בהנהלת המפלגה.</p><div class="good"><h3>הטענה הצנועה</h3><p>ד.ב.ר לא מבטיח רשימה טובה. הוא לא מחליף שיקול דעת פוליטי. הוא רק מנסה לשפר את תנאי החשיבה של השחקן הכי מבוזר במערכת: חבר המפלגה הבודד.</p></div></section>
+        <section id="what"><h2>מה ד.ב.ר כן עושה — ומה הוא לא עושה</h2><p>ד.ב.ר אינו שיטת בחירה חלופית. הוא אינו ועדה מסדרת, אינו מנגנון שריונים, ואינו מערכת שמחליטה במקום חברי המפלגה. הוא גם אינו יכול להבטיח שהפתק האישי של חבר מפלגה יהפוך לרשימה הסופית, משום שהתוצאה תושפע גם מכללי המשחק: מספר הסימונים בפתק, זיגזג מגדרי, שריונים, הקפצות וכללי מיקום.</p><p>מה שהוא כן עושה הוא להחזיר לתהליך רגע של חשיבה רציונלית: לעזור לחבר המפלגה להבין מה הוא מקדם כשהוא מסמן שמות. האם הוא בוחר רק מועמדים שהוא אוהב? האם הוא משלים יכולות חסרות? האם הוא יוצר כפילות? האם הוא מחזק תחום משימה חשוב? האם הוא תורם להרכב רשימה רחב יותר?</p><div class="quote">ד.ב.ר אינו אומר לחבר המפלגה במי לבחור. הוא מנסה לעזור לו לראות שהבחירה שלו אינה רק אישית — היא חלק ממשחק קבוצתי שמייצר תוצאה כוללת.</div><p>זו מהות הכלי: לצמצם את פרדוקס הפריימריז. לא לבטל את הפוליטיקה, לא להעלים אינטרסים, ולא להחליף את השיטה. רק להוסיף שכבת חשיבה שמזכירה כי מאחורי כל שם בפתק מסתתרת שאלה גדולה יותר: איזו רשימה הבחירה הזאת עוזרת לבנות?</p></section>
+      </div><div class="closing"><p>ד.ב.ר נולד מתוך הכרה פשוטה: בפריימריז, בחירה רציונלית של יחידים וקבוצות אינה מספיקה. צריך גם מבט על התוצאה הכוללת.</p></div></article>
+    </div><div class="footer">ד.ב.ר — דמוקרטים בוחרים רציונלית · מאמר מסגרת רעיוני</div>
+  </div>
+
+  <div class="float-bar">
+    <span class="float-bar-text"><strong>ד.ב.ר</strong> — קראת את הרציונל. עכשיו אפשר לבנות את הרשימה שלך.</span>
+    <button class="start-btn" onclick="markAndGo()">סיימתי, אני מוכן — נתחיל ←</button>
+  </div>
+
+  <script>
+    function markAndGo() {
+      localStorage.setItem('dbr_intro_seen', '1');
+      window.location.href = 'dbr_P_01_process.html';
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,738 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<script>if(localStorage.getItem('dbr_disclaimer_accepted')!=='yes'){window.location.href='dbr_P_01_index.html?redirect='+encodeURIComponent(location.pathname.split('/').pop()+location.search)}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>פרופיל מועמד/ת — ד.ב.ר</title>
+  <style>
+    :root {
+      --blue-dark:#12355b; --blue-main:#1d5fa7; --blue-soft:#eaf3ff; --blue-card:#f7fbff;
+      --green:#2e7d4f; --green-soft:#e6f4eb; --green-border:#b8dcc5;
+      --text:#1f2933; --muted:#5f6b7a; --border:#d7e3f3; --white:#fff;
+      --shadow:0 16px 38px rgba(18,53,91,.13); --shadow-s:0 4px 16px rgba(18,53,91,.07);
+      --r-lg:24px; --r-md:18px; --r-sm:12px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Arial,"Noto Sans Hebrew",sans-serif;background:linear-gradient(180deg,#f4f8ff 0,#fff 42%,#f8fbff 100%);color:var(--text);line-height:1.75}
+    a{color:var(--blue-main);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .page{max-width:1180px;margin:0 auto;padding:20px 22px 60px}
+
+    /* topbar */
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0 22px;border-bottom:1px solid var(--border);margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--blue-dark);font-size:1.05rem}
+    .brand-mark{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#3730a3,#1e1b4b);display:grid;place-items:center;color:#fff;font-size:.78rem;font-weight:900;letter-spacing:.05em;box-shadow:0 4px 14px rgba(55,48,163,.3)}
+    .nav{display:flex;gap:6px;font-size:.88rem}
+    .nav a{padding:6px 13px;border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--muted);font-weight:600;transition:.12s}
+    .nav a:hover{border-color:var(--blue-main);color:var(--blue-main);text-decoration:none}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:280px 1fr;gap:28px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .portrait{width:100%;aspect-ratio:3/4;border-radius:var(--r-md);overflow:hidden;background:var(--blue-soft);display:flex;align-items:center;justify-content:center}
+    .portrait img{width:100%;height:100%;object-fit:cover}
+    .portrait-fallback{font-size:4rem;font-weight:900;color:var(--blue-dark)}
+    .hero-body{display:flex;flex-direction:column;gap:12px}
+    .eyebrow{display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;background:var(--blue-soft);color:var(--blue-dark);font-weight:800;font-size:.85rem}
+    .hero-name{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:var(--blue-dark);line-height:1.15}
+    .hero-sub{font-size:1rem;color:var(--muted);max-width:680px}
+    .tags{display:flex;flex-wrap:wrap;gap:7px}
+    .tag{background:var(--blue-soft);color:var(--blue-dark);border:1px solid var(--border);border-radius:999px;padding:5px 11px;font-size:.83rem;font-weight:800}
+    .notice{background:#fffdf5;border:1px solid #eadca8;color:#584719;border-radius:var(--r-sm);padding:11px 14px;font-size:.92rem}
+    .hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:4px}
+    .btn-p{display:inline-flex;align-items:center;padding:10px 18px;border-radius:13px;font-weight:800;font-size:.9rem;background:var(--blue-main);color:#fff;border:none;cursor:pointer;transition:.12s;text-decoration:none}
+    .btn-s{display:inline-flex;align-items:center;padding:9px 16px;border-radius:13px;font-weight:800;font-size:.9rem;background:var(--blue-soft);color:var(--blue-main);border:1px solid var(--blue-main);cursor:pointer;text-decoration:none}
+
+    /* quick grid */
+    .quick-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+    .qcard{background:var(--white);border:1px solid var(--border);border-radius:999px;padding:6px 14px;box-shadow:none;display:flex;align-items:center;gap:6px;white-space:nowrap}
+    .qcard .ql{color:var(--muted);font-size:.78rem;font-weight:700}
+    .qcard .ql::after{content:":"}
+    .qcard .qv{color:var(--blue-dark);font-size:.82rem;font-weight:900}
+
+    /* portrait scores */
+    .scores-section{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow-s);margin-bottom:20px}
+    .scores-section h2{color:var(--blue-dark);font-size:1.25rem;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .topic-header{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;padding:6px 0;border-bottom:2px solid var(--border);font-size:.75rem;font-weight:800;color:var(--muted)}
+    .topic-header span:first-child{grid-column:1}
+    .topic-row{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #edf3fb}
+    .topic-row:last-child{border-bottom:none}
+    .topic-scores{display:flex;gap:10px;flex-wrap:wrap}
+    .score-cell{display:flex;align-items:center;gap:5px;min-width:70px;flex:1}
+    @media(max-width:600px){
+      .topic-header{display:none}
+      .topic-row{grid-template-columns:1fr;gap:4px;padding:10px 0}
+      .topic-name{font-weight:900;font-size:.9rem;margin-bottom:4px}
+      .topic-scores{gap:8px}
+      .anchor-chip{display:none}
+    }
+    .topic-name{font-weight:700;color:var(--blue-dark)}
+    .score-cell{display:flex;flex-direction:column;gap:3px}
+    .score-label{font-size:.7rem;color:var(--muted);font-weight:700}
+    .bar-wrap{height:5px;background:#edf1f7;border-radius:999px;overflow:hidden;width:100%}
+    .bar-fill{height:100%;border-radius:999px}
+    .score-num{font-size:.82rem;font-weight:900;color:var(--blue-dark);width:22px;text-align:center}
+    .anchor-chip{font-size:.72rem;background:var(--blue-soft);color:var(--blue-dark);border-radius:999px;padding:3px 8px;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
+
+    /* layout: toc + content */
+    .layout{display:grid;grid-template-columns:220px 1fr;gap:20px}
+    .toc{position:sticky;top:16px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;box-shadow:var(--shadow-s);align-self:start}
+    .toc h3{margin:0 0 10px;font-size:.95rem;color:var(--blue-dark)}
+    .toc a{display:block;padding:7px 0;color:var(--text);border-bottom:1px solid #edf3fb;font-weight:600;font-size:.87rem}
+    .toc a:last-child{border-bottom:none}
+    .toc a:hover{color:var(--blue-main);text-decoration:none}
+    .content-col{min-width:0}
+
+    /* profile sections */
+    .summary-box,.sources-box,.profile-section{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:22px 24px;box-shadow:var(--shadow-s);margin-bottom:14px}
+    .summary-box h2,.sources-box h2{color:var(--blue-dark);font-size:1.2rem;margin-bottom:10px}
+    .profile-section h2{color:var(--blue-dark);font-size:1.2rem;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .profile-section h3{color:var(--blue-dark);margin:18px 0 8px;font-size:1rem}
+    .profile-section p{margin:0 0 10px;color:var(--text)}
+    .profile-section ul{padding:0 20px 0 0;margin:6px 0 12px}
+    .profile-section li{margin-bottom:6px}
+    .profile-section strong{color:#142f50}
+
+    /* identity card */
+    .identity-card{background:var(--blue-card);border:1px solid var(--border);border-radius:var(--r-md);padding:20px 22px;margin-bottom:14px}
+    .identity-card h2{color:var(--blue-dark);font-size:1.2rem;margin-bottom:12px}
+    .identity-text{font-size:.95rem;line-height:1.75;color:var(--text)}
+    .evidence-list{margin-top:12px;display:grid;gap:6px}
+    .evidence-item{font-size:.84rem;color:var(--muted);padding:6px 10px;background:#fff;border-radius:8px;border:1px solid var(--border)}
+
+    /* no-data */
+    .no-data{color:var(--muted);font-style:italic;font-size:.9rem;padding:14px 0}
+
+    /* tabs */
+    .tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+    .tab-btn{padding:8px 16px;border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--muted);font-weight:700;font-size:.86rem;cursor:pointer;font-family:inherit;transition:.12s}
+    .tab-btn:hover,.tab-btn.active{border-color:var(--blue-main);color:var(--blue-main);background:var(--blue-soft)}
+    .tab-pane{display:block}
+
+    /* footer */
+    footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:.88rem;text-align:center}
+
+    .cat-btn{padding:6px 11px;border:1.5px solid var(--border);border-radius:999px;background:#fff;color:var(--muted);font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit;transition:.12s;white-space:nowrap;flex-shrink:0}
+    .cat-btn:hover{border-color:var(--blue-main);color:var(--blue-main)}
+    .cat-btn.active{border-color:var(--blue-main);background:var(--blue-main);color:#fff}
+
+    /* ribbon */
+    /* loading */
+    #loading{position:fixed;inset:0;background:rgba(255,255,255,.92);z-index:20;display:grid;place-items:center;font-size:1rem;color:var(--blue-main);font-weight:700}
+
+    @media(max-width:960px){
+      .hero{grid-template-columns:1fr}.portrait{aspect-ratio:16/9;max-height:280px}
+      .layout{grid-template-columns:1fr}.toc{position:static}
+    }
+    @media(max-width:580px){
+      .topic-row{grid-template-columns:1fr 1fr;gap:4px}
+      .topic-row .score-cell:nth-child(4),.topic-row .anchor-chip{display:none}
+    }
+  </style>
+</head>
+<body>
+<div id="loading">טוען…</div>
+
+<!-- מסך בחירת מועמד -->
+<div id="picker" style="display:none" class="page">
+  <header class="topbar">
+    <div style="display:flex;flex-direction:column;width:100%;gap:6px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <a class="brand" href="dbr_P_01_index.html" style="min-width:0;flex-shrink:1">
+          <span class="brand-mark">ד.ב.ר</span>
+          <span>דמוקרטים בוחרים רציונלית</span>
+        </a>
+        <a href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+      </div>
+      <div style="text-align:center;font-size:.72rem;color:var(--muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+    </div>
+  </header>
+  <h1 style="color:var(--blue-dark);font-size:1.5rem;margin-bottom:6px">שיקולי המערכת בדירוג המועמדים</h1>
+  <p style="color:var(--muted);margin-bottom:16px">בחר מועמד שנבחר כדי לצפות מדוע דורג כפי שדורג בהתאם לתשובותיך.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+    <button class="cat-btn" data-group="cat" data-val="נשים" onclick="radioFilter(this)">נשים</button>
+    <button class="cat-btn" data-group="cat" data-val="גברים" onclick="radioFilter(this)">גברים</button>
+  </div>
+  <hr style="border:none;border-top:1px solid var(--border);margin-bottom:16px">
+  <div id="picker-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px"></div>
+</div>
+
+<div class="page" id="app" style="display:none">
+  <header class="topbar">
+    <div style="display:flex;flex-direction:column;width:100%;gap:6px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <a class="brand" href="dbr_P_01_index.html" style="min-width:0;flex-shrink:1">
+          <span class="brand-mark">ד.ב.ר</span>
+          <span>דמוקרטים בוחרים רציונלית</span>
+        </a>
+        <a href="javascript:history.back()" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+      </div>
+      <div style="text-align:center;font-size:.72rem;color:var(--muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div id="top" style="margin-bottom:14px">
+    <h2 id="hero-name" style="font-size:1.4rem;font-weight:900;color:var(--blue-dark)"></h2>
+    <div class="tags" id="hero-tags" style="margin-top:6px"></div>
+    <p id="hero-sub" style="display:none"></p>
+    <div id="hero-notice" style="display:none"></div>
+    <div id="portrait-wrap" style="display:none"><div id="portrait-fallback"></div></div>
+  </div>
+
+  <!-- Quick grid -->
+  <div class="quick-grid" id="quick-grid"></div>
+
+  <!-- Tabs: דיוקן / פרופיל -->
+
+  <!-- Tab: דיוקן -->
+  <div id="tab-portrait" class="tab-pane active">
+    <!-- בלוק שקיפות -->
+    <div id="transparency-block" class="scores-section" style="margin-bottom:14px">
+      <h2>כיצד חושב הדירוג?</h2>
+      <!-- סטטוס שריון -->
+      <div id="shiryun-notice" style="display:none;background:#fff0f3;border:1.5px solid #f4a0b0;border-radius:14px;padding:14px 18px;align-items:center;gap:10px">
+        <span style="font-size:1.4rem">🎯</span>
+        <div>
+          <div style="font-weight:900;color:#8b1a1a;font-size:.95rem">לא רלוונטי — מועמד/ת משוריינ/ת</div>
+          <div style="font-size:.85rem;color:#a0263a">המועמד/ת נמצא/ת ברשימת השריון שלך.</div>
+        </div>
+      </div>
+      <div id="transparency-content"></div>
+    </div>
+    <!-- ציוני נושאים -->
+    <div id="topics-block" class="scores-section">
+      <h2>ציוני דיוקן לפי נושא</h2>
+      <div id="topics-table"></div>
+    </div>
+  </div>
+
+  <!-- placeholders hidden — used only in home mode -->
+  <div id="tab-profile" style="display:none"><div id="toc"></div><div id="profile-content"></div></div>
+  <div id="tab-identity" style="display:none"><p id="identity-text"></p><div id="evidence-list"></div></div>
+
+  <footer>
+    מערכת תומכת החלטה לפריימריז הדמוקרטים · הנתונים מבוססים על מחקר ציבורי
+  </footer>
+</div>
+
+<script>
+function scoreColor(v) {
+  if (v >= 8) return '#10b981';
+  if (v >= 6) return '#3b82f6';
+  if (v >= 4) return '#f59e0b';
+  return '#ef4444';
+}
+
+// ── State ─────────────────────────────────────────────────────────────────
+const SK = 'dbr_v2';
+let cfg = null, topicDB = {}, sumDB = {}, allNames = [];
+const state = { style:{}, topics:[], dirs:{}, picked:new Set() };
+
+function saveState() {
+  try {
+    localStorage.setItem(SK, JSON.stringify({ style:state.style, topics:state.topics, dirs:state.dirs, picked:[...state.picked] }));
+    const shared = JSON.parse(localStorage.getItem('primeris_state_v1') || '{}');
+    shared.selected = [...state.picked];
+    shared.meta = Object.assign(shared.meta||{}, { last_updated:new Date().toISOString(), source:'dbr_v2' });
+    localStorage.setItem('primeris_state_v1', JSON.stringify(shared));
+  } catch(e){}
+}
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(SK)||'null');
+    if (!d) return;
+    if (d.style)  state.style  = d.style;
+    if (d.topics) state.topics = d.topics;
+    if (d.dirs)   state.dirs   = d.dirs;
+    if (d.picked) state.picked = new Set(d.picked);
+  } catch(e){}
+}
+
+// ── Load data ──────────────────────────────────────────────────────────────
+async function loadAll() {
+  const [cfgR, masterR] = await Promise.all([
+    fetch('data/dbr_squad_portrait_config_v0_2.json'),
+    fetch('data/candidates_master.json')
+  ]);
+  if (!cfgR.ok)    throw new Error('config.json — ' + cfgR.status);
+  if (!masterR.ok) throw new Error('candidates_master.json — ' + masterR.status);
+  cfg = await cfgR.json();
+  const data = await masterR.json();
+  allNames = [];
+  for (const c of (data.candidates||[])) {
+    allNames.push(c['שם']);
+    sumDB[c['שם']] = c;
+    topicDB[c['שם']] = {};
+    for (const t of (c['נושאים']||[])) {
+      const code = 'D' + String(t['מספר']).padStart(2,'0');
+      topicDB[c['שם']][code] = {
+        'עמדות_ציון':   t['עמדות']?.['ציון']   ?? '',
+        'עמדות_ביטחון': t['עמדות']?.['ביטחון'] ?? '',
+        'ביצוע_ציון':   t['ביצוע']?.['ציון']   ?? '',
+        'ביצוע_ביטחון': t['ביצוע']?.['ביטחון'] ?? '',
+        'תדמית_ציון':   t['תדמית']?.['ציון']   ?? '',
+        'תדמית_ביטחון': t['תדמית']?.['ביטחון'] ?? '',
+        'עוגן': t['עוגן'] ?? ''
+      };
+    }
+  }
+  return data.candidates || [];
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function getParam() {
+  const p = new URLSearchParams(window.location.search);
+  return p.get('name') || p.get('id') || '';
+}
+
+let allCandidates = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function renderPicker(candidates) {
+  allCandidates = candidates;
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('picker').style.display = 'block';
+  renderPickerGrid(shuffle(candidates));
+}
+
+function getShiryunSet() {
+  try {
+    const s = JSON.parse(localStorage.getItem('primeris_state_v1') || '{}');
+    return new Set(s.shiryun || []);
+  } catch(e) { return new Set(); }
+}
+
+function imageUrl(name) {
+  return 'images/' + name.replace(/ /g, '_') + '.webp';
+}
+
+function renderPickerGrid(list) {
+  const shiryun = getShiryunSet();
+  document.getElementById('picker-grid').innerHTML = list.map((c, idx) => {
+    const src = c['תמונה'] || imageUrl(c['שם']);
+    const img = `<img src="${src}" alt="${c['שם']}" style="width:100%;height:100%;object-fit:cover"
+      onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;display:grid;place-items:center;font-size:2rem;font-weight:900;color:#12355b\\'>${c['שם'].charAt(0)}</div>'">`;
+    return `
+      <a href="dbr_P_01_candidate.html?name=${encodeURIComponent(c['שם'])}${getMode()==='home'?'&mode=home':''}" style="text-decoration:none">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-s);transition:.12s;cursor:pointer"
+          onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow)'"
+          onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow-s)'">
+          <div style="height:160px;background:var(--blue-soft);overflow:hidden">${img}</div>
+          <div style="padding:10px 12px">
+            <div style="font-weight:800;font-size:.92rem;color:var(--blue-dark)">${c['שם']}</div>
+          </div>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+const activeFilters = { cat: '', fam: '' };
+
+function famLevel(c) {
+  const n = parseInt((c['נושאים_מכוסים'] || '0/12').split('/')[0]) || 0;
+  if (n >= 8) return 'מוכרים';
+  if (n >= 4) return 'פחות מוכרים';
+  return 'מועט מידע';
+}
+
+function radioFilter(btn) {
+  const group = btn.dataset.group;
+  const val   = btn.dataset.val;
+  // לחיצה על כפתור שכבר פעיל — מבטלת
+  if (activeFilters[group] === val) {
+    activeFilters[group] = '';
+    btn.classList.remove('active');
+  } else {
+    // בטל את הנבחר הקודם באותה קבוצה
+    document.querySelectorAll(`.cat-btn[data-group="${group}"]`)
+      .forEach(b => b.classList.remove('active'));
+    activeFilters[group] = val;
+    btn.classList.add('active');
+  }
+  filterCandidates();
+}
+
+function filterCandidates() {
+  const q = (document.getElementById('search-box')?.value || '').trim();
+  let list = allCandidates;
+  if (activeFilters.cat) list = list.filter(c => c['קטגוריה'] === activeFilters.cat);
+  if (activeFilters.fam) list = list.filter(c => famLevel(c) === activeFilters.fam);
+  if (q) list = list.filter(c => c['שם'].includes(q));
+  renderPickerGrid(list);
+}
+
+function renderPortraitFull(c) {
+  document.title = c['שם'] + ' — ד.ב.ר';
+  const hero = document.getElementById('top');
+  const html = c['דף_html'] || {};
+  const sub  = html['כותרת_משנה'] || c['תעודת_זהות_פוליטית']?.slice(0,160) || '';
+  const tags = html['תגיות']?.length ? [...html['תגיות']] : (() => {
+    const t = [];
+    if (c['סגנון'] && c['סגנון'] !== '—') t.push(c['סגנון']);
+    if (c['תחומי_חוזק']) c['תחומי_חוזק'].split(',').slice(0,3).forEach(x => { const cl = x.trim().replace(/["״]/g,''); if(cl) t.push(cl); });
+    return t;
+  })();
+  const imgSrc = c['תמונה'] || '';
+  hero.innerHTML = `
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:24px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow);margin-bottom:16px">
+      <div style="border-radius:var(--r-md);overflow:hidden;background:var(--blue-soft);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center">
+        ${imgSrc ? `<img src="${imgSrc}" alt="${c['שם']}" style="width:100%;height:100%;object-fit:cover">`
+          : `<div style="font-size:4rem;font-weight:900;color:var(--blue-dark)">${c['שם'].charAt(0)}</div>`}
+      </div>
+      <div>
+        <div style="font-size:.82rem;font-weight:800;color:var(--blue-main);margin-bottom:6px">מועמד/ת לפריימריז — הדמוקרטים</div>
+        <h1 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:var(--blue-dark);margin-bottom:8px">${c['שם']}</h1>
+        ${sub ? `<p style="color:var(--muted);font-size:.96rem;margin-bottom:10px">${sub}</p>` : ''}
+        <div style="display:flex;flex-wrap:wrap;gap:7px">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        ${html['הצעת_ערך'] ? `<div style="margin-top:12px;background:#fffdf5;border:1px solid #eadca8;color:#584719;border-radius:var(--r-sm);padding:10px 13px;font-size:.9rem">${html['הצעת_ערך']}</div>` : ''}
+      </div>
+    </div>`;
+}
+
+function renderPortrait(c) {
+  document.title = c['שם'] + ' — ד.ב.ר';
+  document.getElementById('hero-name').textContent = c['שם'];
+
+  // תמונה
+  const wrap = document.getElementById('portrait-wrap');
+  const fb = document.getElementById('portrait-fallback');
+  if (c['תמונה']) {
+    const img = document.createElement('img');
+    img.src = c['תמונה'];
+    img.alt = c['שם'];
+    img.onerror = () => { img.style.display='none'; fb.style.display=''; };
+    wrap.appendChild(img);
+    fb.style.display = 'none';
+  }
+  fb.textContent = c['שם'].charAt(0);
+
+  // hero sub
+  const html = c['דף_html'] || {};
+  const sub = html['כותרת_משנה'] || c['תעודת_זהות_פוליטית']?.slice(0,160) || '';
+  document.getElementById('hero-sub').textContent = sub;
+
+  // תגיות — מהדף הישן אם קיים, אחרת אוטומטי מהנתונים
+  let tags = html['תגיות'] && html['תגיות'].length ? [...html['תגיות']] : [];
+
+  if (!tags.length) {
+    // בנייה אוטומטית
+    if (c['סגנון'] && c['סגנון'] !== '—') tags.push(c['סגנון']);
+    if (c['תחומי_חוזק']) {
+      c['תחומי_חוזק'].split(',').slice(0, 3).forEach(t => {
+        const clean = t.trim().replace(/["״]/g, '');
+        if (clean) tags.push(clean);
+      });
+    }
+  }
+
+
+  document.getElementById('hero-tags').innerHTML = tags.map(t =>
+    `<span class="tag">${t}</span>`).join('');
+
+  // notice
+  if (html['הצעת_ערך']) {
+    const n = document.getElementById('hero-notice');
+    n.textContent = html['הצעת_ערך'];
+    n.style.display = '';
+  }
+}
+
+function renderQuickGrid(c) {
+  const html = c['דף_html'] || {};
+  const kv = html['כרטיס_מהיר'] || {};
+  const defaults = {
+    'סגנון ציבורי': c['סגנון'] || '—',
+    'ביטחון בסגנון': c['סגנון_ביטחון'] || '—',
+    'כיסוי נושאים': c['נושאים_מכוסים'] || '—',
+    'ממוצע עמדות': c['ממוצע_עמדות'] ? (+c['ממוצע_עמדות']).toFixed(1) : '—'
+  };
+  const cards = Object.keys(kv).length ? kv : defaults;
+  document.getElementById('quick-grid').innerHTML = Object.entries(cards).map(([k,v]) =>
+    `<div class="qcard"><div class="ql">${k}</div><div class="qv">${v}</div></div>`
+  ).join('');
+}
+
+function renderTopicsTable(c) {
+  const topics = c['נושאים'] || [];
+  if (!topics.length) {
+    document.getElementById('topics-table').innerHTML = '<p class="no-data">אין נתוני ציון לנושאים.</p>';
+    return;
+  }
+
+  const bar = (v, lbl) => v != null
+    ? `<div class="score-cell"><span class="score-label">${lbl}</span><div class="bar-wrap"><div class="bar-fill" style="width:${v*10}%;background:${scoreColor(v)}"></div></div><span style="font-size:.78rem;font-weight:900">${v}</span></div>`
+    : '';
+
+  document.getElementById('topics-table').innerHTML = `
+    <div class="topic-header">
+      <span>נושא</span><span>עמדות</span><span>ביצוע</span><span>תדמית</span><span>עוגן</span>
+    </div>
+    ${topics.map(t => {
+      const op = t['עמדות']?.['ציון'];
+      const ex = t['ביצוע']?.['ציון'];
+      const im = t['תדמית']?.['ציון'];
+      return `<div class="topic-row">
+        <span class="topic-name">${t['נושא']}</span>
+        <div class="topic-scores">
+          ${bar(op,'עמדות')}${bar(ex,'ביצוע')}${bar(im,'תדמית')}
+        </div>
+        <span class="anchor-chip" title="${t['עוגן']||''}">${t['עוגן']||'—'}</span>
+      </div>`;
+    }).join('')}`;
+}
+
+function renderProfile(c) {
+  const html = c['דף_html'] || {};
+  const sections = html['פרקים'] || {};
+  const toc = document.getElementById('toc');
+  const content = document.getElementById('profile-content');
+
+  if (!Object.keys(sections).length) {
+    content.innerHTML = '<p class="no-data">אין פרופיל מפורט למועמד זה עדיין.</p>';
+    return;
+  }
+
+  // תמצית
+  let html_out = '';
+  if (html['תמצית']) {
+    html_out += `<div class="summary-box"><h2>תמצית</h2><p>${html['תמצית']}</p></div>`;
+  }
+
+  // 7 פרקים
+  let toc_html = '<h3>תוכן עניינים</h3>';
+  Object.entries(sections).forEach(([key, sec], idx) => {
+    const id = 'section-' + (idx+1);
+    toc_html += `<a href="#${id}">${sec.title}</a>`;
+    html_out += `<section class="profile-section" id="${id}">
+      <h2>${sec.title}</h2>
+      <div>${sec.html || '<p>' + (sec.text||'') + '</p>'}</div>
+    </section>`;
+  });
+  toc.innerHTML = toc_html;
+  content.innerHTML = html_out;
+}
+
+const DIR_LABELS = {
+  identity_anchor:         'מי שמזוהה עם הנושא',
+  capability_operator:     'מי שיכול לקדם בפועל',
+  identity_and_capability: 'שילוב הזדהות ויכולת',
+  squad_representation:    'ייצוג חזק בסגל'
+};
+const DIR_WEIGHTS_LABELS = {
+  identity_anchor:         { op:'38%', im:'42%', ex:'20%' },
+  capability_operator:     { op:'28%', im:'12%', ex:'60%' },
+  identity_and_capability: { op:'33%', im:'25%', ex:'42%' },
+  squad_representation:    { op:'38%', im:'42%', ex:'20%' }
+};
+
+function renderTransparency() {
+  if (!cfg) return;
+  const w = cfg.runtime_scoring?.personal_score_weights || {};
+  const userState = (() => { try { return JSON.parse(localStorage.getItem('dbr_v2') || 'null'); } catch(e){ return null; } })();
+  const hasSelection = userState && userState.topics && userState.topics.length > 0;
+
+  // משקלי ציון אישי
+  const weights = [
+    { lbl: 'נושאים שבחרת',      val: w.topic_fit,             pct: Math.round((w.topic_fit||0.8)*100) },
+    { lbl: 'תפקיד בכנסת',       val: w.knesset_role,          pct: Math.round((w.knesset_role||0.06)*100) },
+    { lbl: 'אופי ציבורי',        val: w.public_tone,           pct: Math.round((w.public_tone||0.05)*100) },
+    { lbl: 'מוכח מול פוטנציאל', val: w.proven_vs_potential,   pct: Math.round((w.proven_vs_potential||0.05)*100) },
+    { lbl: 'כמות מידע קיים',     val: w.information_tolerance, pct: Math.round((w.information_tolerance||0.04)*100) }
+  ];
+
+  const weightsHtml = weights.map(row => `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px">
+      <div style="width:36px;text-align:center;font-size:1rem;font-weight:900;color:var(--blue-dark)">${row.pct}%</div>
+      <div style="flex:1">
+        <div style="font-size:.85rem;font-weight:700;margin-bottom:3px">${row.lbl}</div>
+        <div style="height:6px;background:#edf1f7;border-radius:999px;overflow:hidden">
+          <div style="height:100%;width:${row.pct}%;background:var(--blue-main);border-radius:999px"></div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // כיוון בחירה לנושאים
+  let topicsHtml = '';
+  if (hasSelection && cfg) {
+    const dirs = userState.dirs || {};
+    const selected = userState.topics || [];
+    const topicsList = selected.map(code => {
+      const t = cfg?.topics?.find(x => x.code === code);
+      const dirKey = dirs[code] || 'identity_anchor';
+      const dw = DIR_WEIGHTS_LABELS[dirKey] || {};
+      return `<div style="padding:7px 0;border-bottom:1px solid #edf3fb;font-size:.85rem">
+        <div style="font-weight:700;margin-bottom:3px">${t ? t.short_title : code}</div>
+        <div style="color:var(--muted);font-size:.78rem">
+          ביקשת: <strong>${DIR_LABELS[dirKey]||dirKey}</strong> —
+          עמדות ${dw.op} · תדמית ${dw.im} · ביצוע ${dw.ex}
+        </div>
+      </div>`;
+    }).join('');
+    topicsHtml = `<div style="margin-top:14px">
+      <div style="font-size:.82rem;font-weight:800;color:var(--muted);margin-bottom:6px">כיוון בחירה לפי נושא</div>
+      ${topicsList}
+    </div>`;
+  }
+
+  document.getElementById('transparency-content').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div style="font-size:.82rem;font-weight:800;color:var(--muted);margin-bottom:10px">מה השפיע על הדירוג</div>
+        ${weightsHtml}
+      </div>
+      <div>
+        <div style="font-size:.82rem;font-weight:800;color:var(--muted);margin-bottom:6px">
+          ${hasSelection ? 'הנושאים שבחרת' : 'לא נמצאו בחירות — הצג ציונים גולמיים'}
+        </div>
+        ${hasSelection ? topicsHtml : '<p style="color:var(--muted);font-size:.85rem">כדי לראות כיצד הנושאים השפיעו — <a href="dbr_P_01_main.html">עבור למסך הבחירה</a> תחילה.</p>'}
+      </div>
+    </div>
+    <p style="margin-top:12px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border);padding-top:8px">
+      המערכת אינה מדרגת מי "הכי טוב" — היא מדרגת מי מתאים יותר <strong>לסרגל הבחירה שלך</strong>.
+    </p>`;
+}
+
+function renderIdentity(c) {
+  document.getElementById('identity-text').textContent = c['תעודת_זהות_פוליטית'] || 'אין מידע.';
+  const evidence = c['בקרת_ראיות'] || [];
+  document.getElementById('evidence-list').innerHTML = evidence.length
+    ? evidence.map(e => `<div class="evidence-item">${e}</div>`).join('')
+    : '';
+}
+
+function getMode() {
+  return new URLSearchParams(window.location.search).get('mode') || 'selection';
+}
+
+function renderAll(c) {
+  const mode = getMode();
+
+  // סטטוס שריון
+  const isShiryun = getShiryunSet().has(c['שם']);
+  const shiryunNotice = document.getElementById('shiryun-notice');
+  const transparencyBlock = document.getElementById('transparency-block');
+  const topicsBlock = document.getElementById('topics-block');
+  if (shiryunNotice)     shiryunNotice.style.display     = isShiryun ? 'flex' : 'none';
+  const transCont = document.getElementById('transparency-content');
+  if (transCont)         transCont.style.display         = isShiryun ? 'none' : '';
+  if (topicsBlock)       topicsBlock.style.display       = isShiryun ? 'none' : '';
+
+  if (mode === 'home') {
+    renderPortraitFull(c);
+    renderQuickGrid(c);
+    renderProfile(c);
+    renderIdentity(c);
+    document.getElementById('tab-portrait').style.display = 'none';
+  } else {
+    renderPortrait(c);
+    renderQuickGrid(c);
+    renderTransparency();
+    renderTopicsTable(c);
+  }
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+async function init() {
+  try {
+    const candidates = await loadAll();
+    loadState();
+    const param = getParam();
+
+    // אין פרמטר — הצג מסך בחירה
+    const idxParam   = new URLSearchParams(window.location.search).get('i');
+    const nameParam  = new URLSearchParams(window.location.search).get('name');
+    const filterSel  = new URLSearchParams(window.location.search).get('filter') === 'selected';
+
+    if (!param && idxParam === null && nameParam === null) {
+      if (filterSel) {
+        try {
+          const shared = JSON.parse(localStorage.getItem('primeris_state_v1')||'{}');
+          const selected = new Set(shared.selected||[]);
+          const filtered = selected.size
+            ? candidates.filter(c => selected.has(c['שם']))
+            : candidates;
+          renderPicker(filtered);
+        } catch(e) { renderPicker(candidates); }
+      } else {
+        renderPicker(candidates);
+      }
+      return;
+    }
+
+    // גישה לפי שם
+    if (nameParam) {
+      const c = candidates.find(x => x['שם'] === decodeURIComponent(nameParam));
+      if (c) { renderAll(c); return; }
+    }
+
+    // גישה לפי אינדקס (לתאימות אחורה)
+    if (idxParam !== null) {
+      const idx = parseInt(idxParam);
+      const c = candidates[idx];
+      if (c) { renderAll(c); return; }
+    }
+
+    const rev = s => [...s].reverse().join(''); // תיקון RTL flip
+    const norm = s => s.replace(/-/g,' ').replace(/_/g,' ').trim();
+
+    let c = candidates.find(x => {
+      const name = x['שם'];
+      return name === param ||
+        norm(name) === norm(param) ||
+        rev(name) === param ||
+        rev(param) === name ||
+        norm(rev(param)) === norm(name);
+    });
+
+    if (!c) {
+      const normP = norm(rev(param));
+      c = candidates.find(x => norm(x['שם']).includes(normP) || normP.includes(norm(x['שם']).split(' ')[0]));
+    }
+
+    if (!c) {
+      document.getElementById('loading').innerHTML =
+        `<div style="text-align:center"><p>מועמד לא נמצא: <strong>${param}</strong></p>
+         <p style="margin-top:10px"><a href="dbr_P_01_list.html">חזרה לרשימת המועמדים</a></p></div>`;
+      return;
+    }
+    renderAll(c);
+
+  } catch(err) {
+    document.getElementById('loading').innerHTML =
+      `<div style="text-align:center;padding:20px">
+        <p style="color:#c0392b">שגיאה בטעינה: ${err.message}</p>
+        <p style="margin-top:8px;color:#667085;font-size:.85rem">יש להריץ דרך שרת מקומי</p>
+      </div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>

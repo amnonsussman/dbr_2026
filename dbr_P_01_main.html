@@ -1,0 +1,2110 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<script>if(localStorage.getItem('dbr_disclaimer_accepted')!=='yes'){window.location.href='dbr_P_01_index.html?redirect='+encodeURIComponent(location.pathname.split('/').pop()+location.search)}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TJNJTZQF1F');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ד.ב.ר — מסלול בחירה לפי נושאים</title>
+  <style>
+    :root {
+      --bg:#f6f7fb; --card:#fff; --ink:#162033; --muted:#667085; --line:#d9e1ee;
+      --brand:#2f5fbb; --brand-soft:#eaf0ff; --green:#157a52; --green-soft:#e7f6ef;
+      --orange:#a45b00; --shadow:0 12px 28px rgba(16,24,40,.08); --r:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,"Noto Sans Hebrew",sans-serif;background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);color:var(--ink);line-height:1.6}
+    .page{max-width:1100px;margin:0 auto;padding:0 16px 72px}
+
+    /* Header */
+    header{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--line);padding:8px 24px 6px;box-shadow:0 2px 8px rgba(16,24,40,.06)}
+    .header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-bottom:6px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:#12355b;font-size:1.08rem;text-decoration:none}
+    .brand-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#3730a3,#1e1b4b);display:grid;place-items:center;color:white;font-size:.7rem;font-weight:900;letter-spacing:.04em;box-shadow:0 2px 8px rgba(55,48,163,.25)}
+    .steps{display:none}
+
+    /* Bottom progress bar */
+    .prog-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:#fff;border-top:1px solid var(--line);padding:0;box-shadow:0 -4px 16px rgba(16,24,40,.06)}
+    .prog-title{position:absolute;top:-11px;right:50%;transform:translateX(50%);background:#fff;padding:0 14px;font-size:.74rem;font-weight:800;color:var(--brand);white-space:nowrap;letter-spacing:.02em}
+    .prog-track{display:flex;height:38px;align-items:stretch}
+    .prog-step{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;font-size:.78rem;font-weight:600;color:var(--muted);transition:.2s;position:relative;cursor:default}
+    .prog-step.done{color:#157a52;background:#f0faf5}
+    .prog-step.active{color:var(--brand);font-weight:800;background:var(--brand-soft)}
+    .prog-step .prog-dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex-shrink:0;transition:.2s}
+    .prog-step.done .prog-dot{background:#157a52}
+    .prog-step.active .prog-dot{background:var(--brand);box-shadow:0 0 0 3px rgba(47,95,187,.2)}
+    .prog-fill{position:absolute;bottom:0;left:0;height:3px;background:var(--brand);border-radius:0 3px 3px 0;transition:width .3s}
+
+    /* Screens */
+    @keyframes screen-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .screen{display:none}.screen.active{display:block;animation:screen-in .22s ease-out both}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:14px}
+    h2{font-size:clamp(1.15rem,2.5vw,1.55rem);margin-bottom:6px}
+    h3{font-size:1rem;margin-bottom:5px}
+    .lead{color:var(--muted);margin-bottom:16px;max-width:860px}
+
+    /* Style questions */
+    .q-grid{display:grid;grid-template-columns:1fr;gap:8px}
+
+    /* שאלה פעילה */
+    .q-card{border:1px solid var(--line);border-right:4px solid var(--brand);border-radius:14px;padding:18px 20px;background:#fff;box-shadow:0 4px 16px rgba(47,95,187,.08)}
+    .q-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:13px}
+    .q-num{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-weight:900;font-size:.78rem;display:grid;place-items:center;flex-shrink:0;margin-top:1px}
+    .q-title{font-size:1.12rem;font-weight:900;color:var(--ink);line-height:1.35}
+    .q-desc{color:var(--muted);font-size:.9rem;margin-top:4px}
+    .q-done .q-title,.q-pending .q-title{font-size:.88rem;font-weight:700}
+    .q-done .q-desc,.q-pending .q-desc{font-size:.8rem}
+    .q-opts{display:flex;flex-direction:column;gap:8px;padding-right:38px}
+    .opt{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;cursor:pointer;font-weight:600;font-size:.88rem;color:var(--muted);font-family:inherit;white-space:nowrap;transition:.12s}
+    .opt:hover{border-color:var(--brand);color:var(--ink);background:#fff}
+    .opt.sel{border-color:var(--brand);color:var(--brand);background:var(--brand-soft);font-weight:800;box-shadow:none}
+    .opt.sel:hover{background:#dce6f8}
+
+    /* שאלה שנענתה — מקופלת */
+    .q-done{display:flex;align-items:center;gap:10px;border:1px solid #b8e3ce;border-radius:12px;padding:10px 16px;background:var(--green-soft);cursor:pointer;transition:.12s}
+    .q-done:hover{background:#d4f0e4}
+    .q-done-num{width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:.7rem;font-weight:900;display:grid;place-items:center;flex-shrink:0}
+    .q-done-txt{flex:1;font-size:.88rem;color:var(--muted)}
+    .q-done-ans{font-weight:800;color:var(--ink)}
+    .q-done-change{font-size:.78rem;color:var(--green);font-weight:700}
+
+    /* שאלה עתידית — עמומה */
+    .q-pending{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 16px;background:#fafafa;opacity:.55}
+    .q-pending-num{width:22px;height:22px;border-radius:50%;background:#e2e8f0;color:#94a3b8;font-size:.7rem;font-weight:900;display:grid;place-items:center;flex-shrink:0}
+    .q-pending-title{font-size:.88rem;color:var(--muted)}
+
+    /* Topics */
+    .topics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .t-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .t-card:hover{border-color:var(--brand);background:#fff}
+    .t-card.sel{border-color:var(--brand);background:var(--brand-soft)}
+    .t-card.sel h3{color:var(--brand);font-weight:800}
+    .t-code{display:none}
+    .t-card h3{font-size:.88rem;font-weight:700;margin:0;flex:1}
+    .t-info-btn{background:none;border:1.5px solid var(--line);border-radius:50%;width:22px;height:22px;font-size:.7rem;font-weight:900;color:var(--muted);cursor:pointer;flex-shrink:0;display:grid;place-items:center;transition:.12s}
+    .t-info-btn:hover{border-color:var(--brand);color:var(--brand)}
+    #topic-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;place-items:center}
+    #topic-modal.open{display:grid}
+    .tm-box{background:#fff;border-radius:18px;padding:24px;max-width:480px;width:90%;box-shadow:0 24px 60px rgba(0,0,0,.2)}
+    .tm-box h3{margin:0 0 10px;font-size:1.1rem;color:var(--ink)}
+    .tm-box p{color:var(--muted);font-size:.92rem;line-height:1.6;margin:0 0 18px}
+    .tm-close{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:9px 20px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit}
+    .counter{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:.86rem;color:var(--muted);background:#fbfcff;margin-bottom:11px}
+    .counter.full{color:var(--green);background:var(--green-soft);border-color:#b8e3ce}
+
+    /* Directions */
+    .dir-block{border:1px solid var(--line);border-right:4px solid transparent;border-radius:14px;padding:16px 18px;background:#fff;margin-bottom:10px;transition:.15s}
+    .dir-block.answered{border-right-color:var(--brand);background:#fafbff}
+    .dir-opts{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+
+    /* Buttons */
+    .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+    .btn-p{background:var(--brand);color:#fff;border:none;border-radius:13px;padding:11px 20px;font-weight:800;font-size:.92rem;cursor:pointer;font-family:inherit;box-shadow:0 6px 14px rgba(47,95,187,.2);transition:.12s}
+    .btn-p:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+    .btn-s{background:var(--brand-soft);color:var(--brand);border:none;border-radius:13px;padding:10px 17px;font-weight:800;font-size:.92rem;cursor:pointer;font-family:inherit}
+    .btn-g{background:#fff;color:var(--muted);border:1px solid var(--line);border-radius:13px;padding:10px 15px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit}
+
+    /* Decision point */
+    .decide-opt{text-align:right;padding:13px 16px;border:1.5px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;font-family:inherit;transition:.12s;display:block;width:100%}
+    .decide-opt:hover{border-color:var(--brand);background:var(--brand-soft)}
+    .decide-opt-t{display:block;font-size:1rem;font-weight:800;color:var(--ink)}
+    .decide-opt-d{display:block;font-size:.82rem;color:var(--muted);margin-top:2px}
+    .fac{border-radius:12px;padding:12px 14px;margin-bottom:8px}
+    .fac-hdr{display:flex;align-items:center;gap:10px}
+    .fac-ic{font-size:1.1rem;flex-shrink:0}
+    .fac-name{flex:1;font-size:.92rem;font-weight:800}
+    .fac-sub{font-size:.78rem;margin-top:1px;font-weight:400}
+    .fac-pct{font-size:.98rem;font-weight:900}
+    .fac-box{font-size:.74rem;border-radius:8px;padding:4px 10px;min-width:34px;text-align:center;background:#fff;font-weight:700}
+    .fac-sub-row{display:flex;align-items:center;gap:8px;border-radius:9px;padding:6px 10px;margin-top:6px}
+    .fac-sub-row .nm{flex:1;font-size:.8rem}
+    .fac-sub-row .pc{font-size:.8rem;font-weight:700}
+    .fac-sub-box{font-size:.7rem;border-radius:6px;padding:3px 8px;min-width:30px;text-align:center;font-weight:700}
+
+    /* Summary */
+    .sum-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}
+    .sum-list{display:grid;gap:7px;margin-top:8px}
+    .sum-item{border:1px solid var(--line);border-radius:11px;padding:8px 12px;background:#fff}
+    .sum-item small{color:var(--muted);display:block;font-size:.8rem;margin-top:2px}
+
+    /* Loader */
+    .ldr-box{background:#fbfcff;border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px}
+    .ldr-bar-shell{height:7px;background:rgba(47,95,187,.1);border-radius:999px;overflow:hidden;margin:9px 0 13px}
+    .ldr-bar-fill{height:100%;width:0%;background:var(--brand);border-radius:999px;transition:width .4s}
+    .ldr-row{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:7px;opacity:.4;background:#fff;transition:all .2s}
+    .ldr-row.act{opacity:1;border-color:var(--brand)}
+    .ldr-row.done{opacity:1;border-color:#b8e3ce;background:var(--green-soft)}
+    .ldr-ic{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);background:#fff;display:grid;place-items:center;font-size:.72rem;font-weight:900;color:var(--brand);flex-shrink:0}
+    .ldr-row.done .ldr-ic{background:var(--green);color:#fff;border-color:var(--green)}
+    .ldr-spin{width:14px;height:14px;border:2px solid rgba(47,95,187,.15);border-top-color:var(--brand);border-radius:50%;animation:spin .9s linear infinite;display:none;flex-shrink:0}
+    .ldr-row.act .ldr-spin{display:block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .ldr-nm{font-weight:800;font-size:.86rem}
+    .ldr-nt{color:var(--muted);font-size:.79rem}
+
+    /* Results table */
+    .res-table{width:100%;border-collapse:collapse;margin-top:10px}
+    .res-table thead th{text-align:right;padding:7px 10px;border-bottom:2px solid var(--line);color:var(--muted);font-size:.78rem;font-weight:700}
+    .res-table tbody tr{border-bottom:1px solid var(--line);transition:background .1s}
+    .res-table tbody tr:hover{background:#f5f8ff}
+    .res-table td{padding:9px 10px;vertical-align:middle}
+    .rnk{font-weight:900;color:var(--muted);font-size:.88rem;width:30px}
+    .rnk.top{color:var(--brand);font-size:1rem}
+    .nm-cell{font-weight:700;font-size:.92rem}
+    .badge{display:inline-block;padding:2px 7px;border-radius:999px;font-size:.72rem;font-weight:700;margin-top:2px}
+    .b-f{background:#f3e8ff;color:#6b21a8}
+    .b-m{background:#dbeafe;color:#1d4ed8}
+    .b-ar{background:#dcfce7;color:#15803d}
+    .b-x{background:#f1f5f9;color:#475569}
+    .sc-cell{width:110px}
+    .sc-val{font-weight:700;font-size:.82rem;margin-bottom:2px}
+    .sc-bar{height:4px;border-radius:999px;background:#edf1f7;overflow:hidden;width:60px}
+    .sc-fill{height:100%;border-radius:999px}
+    .bd-cell{font-size:.78rem;color:var(--muted)}
+    .bd-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+    .bd-tag{padding:2px 6px;border-radius:999px;border:1px solid var(--line);background:#f8f9fb;font-size:.72rem}
+    .act-cell{white-space:nowrap;display:flex;gap:5px;align-items:center}
+    .ic-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer;display:inline-grid;place-items:center;font-size:.88rem;transition:.1s}
+    .ic-btn:hover{border-color:var(--brand);background:var(--brand-soft)}
+    .ic-btn.picked{background:var(--green-soft);border-color:var(--green)}
+
+    /* Modal */
+    .mbk{display:none;position:fixed;inset:0;background:rgba(23,32,51,.45);z-index:10;align-items:center;justify-content:center;padding:16px}
+    .mbk.open{display:flex}
+    .mbox{background:#fff;border-radius:22px;padding:22px;max-width:680px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 28px 70px rgba(16,24,40,.25)}
+    .mhdr{display:flex;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:14px}
+    .close{width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:11px;cursor:pointer;font-weight:900;font-size:1rem;display:grid;place-items:center}
+    .sc-detail{display:grid;gap:7px;margin-top:8px}
+    .sc-row{display:grid;grid-template-columns:165px 1fr 38px;gap:8px;align-items:center;font-size:.86rem}
+    .bar-bg{height:8px;background:#edf1f7;border-radius:999px;overflow:hidden}
+    .bar-fg{height:100%;border-radius:999px}
+
+    /* Loading overlay */
+    #overlay{position:fixed;inset:0;background:rgba(255,255,255,.93);z-index:20;display:grid;place-items:center;font-size:1rem;color:var(--brand);font-weight:700}
+    #finish-bar{display:none;background:#e6f4eb;border:1px solid var(--green-soft);color:var(--green);border-radius:14px;padding:12px 20px;align-items:center;justify-content:space-between;gap:12px}
+    #finish-bar.visible{display:flex}
+    #finish-bar .fb-count{font-weight:900;font-size:1.05rem}
+    #finish-bar button{background:var(--green);color:#fff;border:none;border-radius:10px;padding:8px 18px;font-weight:900;font-size:.9rem;cursor:pointer;font-family:inherit;white-space:nowrap}
+    @keyframes nudge{0%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}100%{transform:translateX(0)}}
+    @keyframes idle-pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,95,187,.5);transform:scale(1)}50%{box-shadow:0 0 0 8px rgba(47,95,187,0);transform:scale(1.08)}}
+    .idle-hint{animation:idle-pulse 1.2s ease-in-out infinite}
+    #finish-bar.nudge{animation:nudge .4s ease}
+
+    @media(max-width:900px){.q-grid{grid-template-columns:1fr}.topics-grid{grid-template-columns:repeat(2,1fr)}.sum-grid{grid-template-columns:1fr}}
+    @media(max-width:600px){.topics-grid,.dir-opts,.q-opts{grid-template-columns:1fr}.page{padding:110px 12px 40px}}
+  </style>
+</head>
+<body>
+
+<div id="overlay">טוען נתונים…</div>
+
+<div class="page" id="app" style="display:none">
+  <header>
+    <div class="header-top">
+      <a class="brand" href="dbr_P_01_index.html"><span class="brand-mark">ד.ב.ר</span><span style="margin-right:10px">דמוקרטים בוחרים רציונלית</span></a>
+      <a id="btn-back" href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+    </div>
+    <div style="text-align:center;font-size:.68rem;color:var(--muted);padding:3px 0">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+    <div style="border-top:1px solid var(--line);margin:4px 0"></div>
+    <div class="steps" id="steps"></div>
+  </header>
+
+  <!-- מסך 1: תמונות + שלושה לחצנים -->
+  <section id="s-squad" class="screen card active">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px">
+      <p style="font-size:1.3rem;font-weight:900;color:var(--ink);margin:0;text-align:center">איזה סגל אתה רוצה?</p>
+      <button onclick="document.getElementById('squad-info-modal').classList.add('open')" style="background:none;border:1.5px solid var(--line);border-radius:50%;width:24px;height:24px;font-size:.72rem;font-weight:900;color:var(--muted);cursor:pointer;display:grid;place-items:center" title="הסבר">i</button>
+    </div>
+
+    <div id="squad-photos" onclick="if(_squadPhotoTimer)stopSquadPhotos()" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:280px;margin:14px auto;cursor:pointer;padding:22px;border:3px solid var(--brand);border-radius:50%;aspect-ratio:1;place-items:center;min-height:140px">
+    </div>
+
+    <div id="squad-stop-btn" style="display:none;text-align:center;margin-top:4px">
+      <button onclick="stopSquadPhotos()" style="background:none;border:1.5px solid var(--line);border-radius:50%;width:28px;height:28px;cursor:pointer;display:inline-grid;place-items:center;color:var(--muted);font-size:.8rem;transition:.12s" title="הפסק החלפה">⏸</button>
+    </div>
+
+    <div id="squad-choice" style="display:flex;flex-direction:column;gap:6px;margin-top:12px">
+      <label onclick="setSquadChoice('best')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;transition:.12s" id="sq-opt-best">
+        <span id="sq-radio-best" style="width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex-shrink:0"></span>
+        <span style="font-size:.95rem;font-weight:800;color:var(--ink)">הסגל הטוב והאיכותי האפשרי</span>
+      </label>
+      <label onclick="setSquadChoice('explain')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;transition:.12s" id="sq-opt-explain">
+        <span id="sq-radio-explain" style="width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex-shrink:0"></span>
+        <span style="font-size:.92rem;font-weight:700;color:var(--ink)">מה הכוונה, הסבר ופרט</span>
+      </label>
+      <label onclick="setSquadChoice('custom')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;transition:.12s" id="sq-opt-custom">
+        <span id="sq-radio-custom" style="width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex-shrink:0"></span>
+        <span style="font-size:.92rem;font-weight:700;color:var(--ink)">אני רוצה לכתוב לך בשפה שלי</span>
+      </label>
+    </div>
+    <div class="actions" style="margin-top:10px">
+      <button id="btn-squad-next" class="btn-p" onclick="goSquadNext()" disabled>המשך ←</button>
+    </div>
+  </section>
+
+  <!-- מסך 1-best: הסגל הטוב ביותר -->
+  <section id="s-squad-best" class="screen card">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px">
+      <p style="font-size:1.3rem;font-weight:900;color:var(--ink);margin:0;text-align:center">הסגל הטוב והאיכותי האפשרי</p>
+    </div>
+    <p style="font-size:.92rem;color:var(--muted);text-align:center;margin:0 0 18px;line-height:1.6">
+      בחרת במסלול המהיר — המערכת תדרג את המועמדים לפי איזון בין כל הקריטריונים.
+    </p>
+
+    <div style="display:grid;gap:8px;max-width:480px;margin:0 auto 18px">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:#eaf0ff;border:1px solid #c7d9f8">
+        <span style="font-size:1.1rem">⚖️</span>
+        <div>
+          <div style="font-size:.88rem;font-weight:800;color:#0C447C">סגנון ציבורי</div>
+          <div style="font-size:.8rem;color:#3b6ebb">מגוון — לא מעדיפים סגנון אחד</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:#e7f6ef;border:1px solid #b8e3ce">
+        <span style="font-size:1.1rem">🏛️</span>
+        <div>
+          <div style="font-size:.88rem;font-weight:800;color:#085041">תפקיד בכנסת</div>
+          <div style="font-size:.8rem;color:#0F6E56">גם וגם וגם — כל התפקידים חשובים</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:#f0edff;border:1px solid #d4cff8">
+        <span style="font-size:1.1rem">🎯</span>
+        <div>
+          <div style="font-size:.88rem;font-weight:800;color:#3C3489">משקל שווה לכל הצירים</div>
+          <div style="font-size:.8rem;color:#534AB7">עמדות, יכולת ותדמית — באיזון</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:.88rem;color:var(--muted);text-align:center;margin:0 0 18px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto">
+      מכאן תוכל להמשיך להתאים את המועמדים על מעורבותם בנושאי הליבה של המפלגה, או לדלג גם על שלב זה, ולקבל דירוג של המועמדים על פי ברירות המחדל של המערכת ומאפייני המועמדים.
+    </p>
+
+    <div class="actions" style="justify-content:center">
+      <button class="btn-p" onclick="selectBestSquad()">המשך התאמה</button>
+      <button class="btn-s" onclick="skipToRanking()">חשב התאמה</button>
+      <button class="btn-g" onclick="showScreen('s-squad')">חזרה</button>
+    </div>
+  </section>
+
+  <!-- מסך 1-explain: למה אתה מתכוון — שתי שאלות פתוחות -->
+  <section id="s-squad-explain" class="screen card">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px">
+      <p style="font-size:1.3rem;font-weight:900;color:var(--ink);margin:0;text-align:center">מה מאפיין את הסגל שאתה מחפש?</p>
+    </div>
+    <p style="font-size:.92rem;color:var(--muted);margin:0 0 10px;text-align:center">שתי שאלות על האופי הכללי של הסגל שלך</p>
+    <div id="squad-qs" class="q-grid"></div>
+    <div class="actions">
+      <button id="btn-to-candidate" class="btn-p" onclick="goCandidateStyle()" disabled>עכשיו נדבר על המועמד שאתה מחפש ←</button>
+      <button class="btn-g" onclick="showScreen('s-squad')">← חזרה</button>
+    </div>
+  </section>
+
+  <!-- מסך 1-custom: תן לי להגדיר בשפה שלי -->
+  <section id="s-squad-custom" class="screen card">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px">
+      <p style="font-size:1.3rem;font-weight:900;color:var(--ink);margin:0;text-align:center">ספר לנו מה אתה מחפש</p>
+    </div>
+    <p style="font-size:.92rem;color:var(--muted);text-align:center;margin:0 0 16px;line-height:1.6">
+      כתוב במילים שלך — איזה סוג סגל אתה רוצה לראות בכנסת? מה חשוב לך?
+    </p>
+
+    <div style="max-width:540px;margin:0 auto">
+      <textarea id="custom-freetext" placeholder="לדוגמה: אני רוצה סגל שיודע להילחם בכנסת אבל גם לדבר עם אנשים מהצד השני. חשוב לי שיהיו אנשים עם ניסיון אמיתי, לא רק שמות..."
+        oninput="onCustomTextInput()"
+        style="width:100%;min-height:120px;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-family:inherit;font-size:.92rem;color:var(--ink);resize:vertical;line-height:1.6"></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+        <span id="custom-char-count" style="font-size:.76rem;color:var(--muted)">0 תווים</span>
+        <span style="font-size:.76rem;color:var(--muted)">הטקסט נשמר ומשפיע על הדירוג</span>
+      </div>
+
+      <div id="custom-hints" style="margin-top:16px;display:none">
+        <p style="font-size:.84rem;font-weight:700;color:var(--ink);margin:0 0 8px">זיהינו מהטקסט שלך:</p>
+        <div id="custom-hints-list" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:18px;justify-content:center">
+      <button id="btn-custom-next" class="btn-p" onclick="submitCustomSquad()" disabled>המשך ←</button>
+      <button class="btn-g" onclick="showScreen('s-squad')">← חזרה</button>
+    </div>
+  </section>
+
+  <!-- מודל הסבר — שאלות סגל -->
+  <div id="squad-info-modal" class="mbk">
+    <div class="mbox" style="max-width:500px">
+      <div class="mhdr">
+        <h3 style="font-size:1.05rem;font-weight:900;margin:0">על מה השאלות האלה?</h3>
+        <button class="close" onclick="document.getElementById('squad-info-modal').classList.remove('open')">✕</button>
+      </div>
+      <p style="font-size:.92rem;color:var(--muted);line-height:1.7;margin:0">
+        בשלב זה אתה מגדיר את האופי הכללי של הסגל — הסגנון הציבורי שאתה מחפש והתפקיד שהסגל צריך למלא בכנסת.
+        <br><br>
+        התשובות האלה משפיעות על כל המועמדים באותה מידה — הן לא קשורות לנושא ספציפי.
+      </p>
+    </div>
+  </div>
+
+  <!-- מסך 1ב: שאלות מועמד — אישיות -->
+  <section id="s-style" class="screen card">
+    <p id="style-lead-main" style="font-size:1.3rem;font-weight:900;color:var(--ink);margin:0 0 6px;text-align:center"></p>
+    <p id="style-lead-sub" style="font-size:.92rem;color:var(--muted);margin:0 0 16px;text-align:center"></p>
+    <div id="style-qs" class="q-grid"></div>
+    <div class="actions">
+      <button id="btn-topics" class="btn-p" onclick="goTopics()" disabled>המשך לבחירת נושאים</button>
+      <button class="btn-g" onclick="resetStyleScreen()">איפוס מסך</button>
+    </div>
+  </section>
+
+  <!-- מסך 2: נושאים -->
+  <section id="s-topics" class="screen card">
+    <h2>אילו נושאים הכי חשובים לך?</h2>
+    <p class="lead">בחרו עד 8 נושאים אותם תכוונו למועמדים מתאימים.</p>
+    <div id="t-counter" class="counter">0 / 8 נושאים נבחרו</div>
+    <div id="t-grid" class="topics-grid"></div>
+    <div class="actions">
+      <button id="btn-dir" class="btn-p" onclick="goDirections()" disabled>המשך לכיוון בחירה ←</button>
+    </div>
+  </section>
+
+  <!-- מסך 3: כיוון בחירה -->
+  <section id="s-dir" class="screen card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <h2 style="margin:0">איזו מעורבות נדרשת מהמועמד בכל נושא?</h2>
+      <button onclick="document.getElementById('dir-order-info').classList.toggle('open')" style="background:none;border:1.5px solid var(--line);border-radius:50%;width:24px;height:24px;font-size:.72rem;font-weight:900;color:var(--muted);cursor:pointer;display:grid;place-items:center;flex-shrink:0" title="הסבר">i</button>
+    </div>
+    <p style="font-size:.84rem;color:var(--muted);margin:0 0 12px">סדר הכוונון משפיע על הדירוג — הנושא שתכוון ראשון יקבל משקל גבוה יותר. המספר על הירוק מראה את סדר המשקל. לשינוי סדר — נקה וכוון מחדש.</p>
+    <div id="dir-order-info" class="mbk">
+      <div class="mbox" style="max-width:440px">
+        <div class="mhdr">
+          <h3 style="font-size:1.05rem;font-weight:900;margin:0">למה הסדר חשוב?</h3>
+          <button class="close" onclick="document.getElementById('dir-order-info').classList.remove('open')">✕</button>
+        </div>
+        <p style="font-size:.9rem;color:var(--muted);line-height:1.7;margin:0">
+          הנושא שאתה פותח ומכוון ראשון מקבל את המשקל הגבוה ביותר בדירוג המועמדים. הנושא השני מקבל קצת פחות, וכן הלאה.
+          <br><br>
+          המספר הירוק על כל נושא שכוון מראה את סדר המשקל שלו — ① הוא החשוב ביותר.
+          <br><br>
+          רוצה לשנות סדר? לחץ "נקה" על נושאים שכבר כוונו, ואז כוון אותם מחדש בסדר הרצוי. המספרים יתעדכנו אוטומטית.
+        </p>
+      </div>
+    </div>
+    <div id="dir-list"></div>
+    <div class="actions">
+      <button class="btn-p" onclick="runRanking()">חשב התאמה</button>
+    </div>
+  </section>
+
+  <!-- מסך 4: סיכום -->
+  <section id="s-sum" class="screen card">
+    <h2>שלב 4 — סיכום הפרופיל שלך</h2>
+    <div class="sum-grid">
+      <div><h3>נושאים שנבחרו</h3><div id="sum-topics" class="sum-list"></div></div>
+      <div><h3>אופי הסגל</h3><div id="sum-style" class="sum-list"></div></div>
+    </div>
+    <div class="actions" style="margin-top:16px">
+      <button class="btn-p" onclick="runRanking()">חשב התאמה</button>
+      <button class="btn-s" onclick="showScreen('s-dir')">← חזור לכיוון</button>
+      <button class="btn-g" onclick="resetAll()">התחל מחדש</button>
+    </div>
+  </section>
+
+  <!-- מסך 5: תוצאות -->
+  <section id="s-final" class="screen card">
+    <div id="ldr" class="ldr-box"></div>
+    <div id="final-out" style="display:none">
+      <p class="lead" id="final-desc"></p>
+      <div id="res-wrap"></div>
+      <div id="finish-bar" style="margin-top:16px">
+        <div>
+          <div class="fb-count" id="fb-count">0 נבחרו</div>
+        </div>
+        <a href="dbr_P_01_process.html"><button>סיים שלב זה</button></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- בר תחתון להתקדמות -->
+<div class="prog-bar" id="prog-bar">
+  <span class="prog-title">ההתקדמות שלך</span>
+  <div class="prog-track" id="prog-track"></div>
+</div>
+
+<!-- דיאלוג אזהרת הסרת משוריין -->
+<div id="shiryun-warn" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;place-items:center">
+  <div style="background:#fff;border-radius:18px;padding:24px;max-width:400px;width:90%;box-shadow:0 24px 60px rgba(0,0,0,.2)">
+    <p style="font-weight:800;font-size:1rem;color:#c0392b;margin:0 0 8px">⚠️ שים לב</p>
+    <p style="font-size:.92rem;color:#333;line-height:1.6;margin:0 0 20px">נא תשומת ליבך — פעולה זו תוריד מועמד/ת משוריין/ת מבחירתך המוקדמת.</p>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button onclick="cancelShiryunRemove()" style="border:1px solid #ddd;background:#fff;border-radius:10px;padding:8px 18px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit">ביטול</button>
+      <button onclick="confirmShiryunRemove()" style="background:#c0392b;color:#fff;border:none;border-radius:10px;padding:8px 18px;font-weight:800;font-size:.9rem;cursor:pointer;font-family:inherit">הורד מהרשימה</button>
+    </div>
+  </div>
+</div>
+
+<!-- מודאל נושא -->
+<div id="topic-modal" onclick="closeTopicModal()">
+  <div class="tm-box" onclick="event.stopPropagation()">
+    <h3 id="tm-title"></h3>
+    <p id="tm-desc"></p>
+    <button class="tm-close" onclick="closeTopicModal()">סגור ↓</button>
+  </div>
+</div>
+
+<!-- מודאל פרופיל -->
+<div id="modal" class="mbk" onclick="closeModal(event)">
+  <div class="mbox" onclick="event.stopPropagation()">
+    <div class="mhdr">
+      <div>
+        <p style="color:var(--brand);font-weight:800;font-size:.86rem;margin-bottom:3px">פרופיל מועמד/ת</p>
+        <h2 id="m-name"></h2>
+        <p style="color:var(--muted);margin-top:2px;font-size:.86rem" id="m-sub"></p>
+      </div>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div id="m-body"></div>
+  </div>
+</div>
+
+<script>
+// ── CSV parser ──────────────────────────────────────────────────────────────
+function parseCSV(txt) {
+  txt = txt.replace(/^﻿/, '');
+  const lines = txt.split(/\r?\n/);
+  const headers = parseLine(lines[0]);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const vals = parseLine(lines[i]);
+    const r = {};
+    headers.forEach((h, j) => { r[h.trim()] = (vals[j] || '').trim(); });
+    rows.push(r);
+  }
+  return rows;
+}
+function parseLine(line) {
+  const out = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+    else if (c === ',' && !inQ) { out.push(cur); cur = ''; }
+    else cur += c;
+  }
+  out.push(cur);
+  return out;
+}
+function enc(...parts) { return parts.map(encodeURIComponent).join('/'); }
+
+// ── State ───────────────────────────────────────────────────────────────────
+const SK = 'dbr_v2';
+const state = { style: {}, topics: [], dirs: {}, picked: new Set(), priorities: [], dirOrder: [] };
+let cfg = null, topicDB = {}, sumDB = {}, allNames = [];
+let sumSource = {}, topicSource = {};
+let topicDBBase = null, sumDBBase = null, topicDB2026 = null, sumDB2026 = null;
+let viewingBase = false;
+let flatDB = {};
+let useV2 = false;
+
+function saveState() {
+  try {
+    localStorage.setItem(SK, JSON.stringify({ style:state.style, topics:state.topics, dirs:state.dirs, picked:[...state.picked], priorities:state.priorities, dirOrder:state.dirOrder }));
+    const shared = JSON.parse(localStorage.getItem('primeris_state_v1') || '{}');
+    shared.dbr_picks = [...state.picked];
+    const shiryun = Array.isArray(shared.shiryun) ? shared.shiryun : [];
+    shared.selected = [...new Set([...shiryun, ...shared.dbr_picks])];
+    shared.meta = shared.meta || {};
+    shared.meta.last_updated = new Date().toISOString();
+    shared.meta.source = 'dbr_v2';
+    localStorage.setItem('primeris_state_v1', JSON.stringify(shared));
+  } catch(e) {}
+}
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(SK) || 'null');
+    if (!d) return;
+    if (d.style)  state.style  = d.style;
+    if (d.topics) state.topics = d.topics;
+    if (d.dirs)   state.dirs   = d.dirs;
+    if (d.picked) state.picked = new Set(d.picked);
+    if (d.priorities) state.priorities = d.priorities;
+    if (d.dirOrder) state.dirOrder = d.dirOrder;
+  } catch(e) {}
+}
+
+// ── Load data ───────────────────────────────────────────────────────────────
+async function loadAll() {
+  const [cfgR, topR, sumR, top26R, sum26R] = await Promise.all([
+    fetch('data/dbr_squad_portrait_config_v0_2.json'),
+    fetch('data/ntm.csv'),
+    fetch('data/sm.csv'),
+    fetch('data/ntm2026.csv').catch(() => null),
+    fetch('data/sm2026.csv').catch(() => null),
+  ]);
+  if (!cfgR.ok) throw new Error(`config.json — ${cfgR.status} (${window.location.href})`);
+  if (!topR.ok)  throw new Error(`ntm.csv — ${topR.status}`);
+  if (!sumR.ok)  throw new Error(`sm.csv — ${sumR.status}`);
+  cfg = await cfgR.json();
+
+  // ── בסיס 2025 ──
+  const topRows = parseCSV(await topR.text());
+  const sumRows = parseCSV(await sumR.text());
+  for (const r of topRows) {
+    const name = r['מועמד'], num = +r['מספר_נושא'];
+    if (!name || !num) continue;
+    const code = 'D' + String(num).padStart(2, '0');
+    if (!topicDB[name]) topicDB[name] = {};
+    if (!topicSource[name]) topicSource[name] = {};
+    topicDB[name][code] = r;
+    topicSource[name][code] = '2025';
+  }
+  for (const r of sumRows) {
+    if (r['מועמד']) { sumDB[r['מועמד']] = r; sumSource[r['מועמד']] = '2025'; }
+  }
+  allNames = Object.keys(sumDB);
+  topicDBBase = JSON.parse(JSON.stringify(topicDB));
+  sumDBBase   = JSON.parse(JSON.stringify(sumDB));
+
+  // ── שכבת 2026 (ברירת מחדל כאשר קיים מידע) ──
+  if (top26R && top26R.ok) {
+    for (const r of parseCSV(await top26R.text())) {
+      const name = r['מועמד'], num = +r['מספר_נושא'];
+      if (!name || !num) continue;
+      if (!(r['עמדות_ציון'] || r['ביצוע_ציון'] || r['תדמית_ציון'])) continue;
+      const code = 'D' + String(num).padStart(2, '0');
+      if (!topicDB[name]) topicDB[name] = {};
+      if (!topicSource[name]) topicSource[name] = {};
+      topicDB[name][code] = r;
+      topicSource[name][code] = '2026';
+    }
+  }
+  if (sum26R && sum26R.ok) {
+    for (const r of parseCSV(await sum26R.text())) {
+      if (!r['מועמד']) continue;
+      if (!(r['סגנון'] || r['תפקיד_מאבק'] || r['נושאים_מכוסים'])) continue;
+      sumDB[r['מועמד']] = r;
+      sumSource[r['מועמד']] = '2026';
+    }
+  }
+  topicDB2026 = topicDB;
+  sumDB2026   = sumDB;
+
+  // ── קובץ מאוחד (V2) ──
+  const flatR = await fetch('dbr_P_01_data.csv');
+  if (flatR.ok) {
+    for (const r of parseCSV(await flatR.text())) {
+      if (r['id1']) flatDB[r['id1']] = r;
+    }
+  }
+}
+
+function hasFallback(name) {
+  if (viewingBase) return false;
+  if (sumSource[name] === '2026') return false;
+  return sumSource[name] === '2025' || Object.values(topicSource[name] || {}).some(v => v === '2025');
+}
+
+function toggleBaseView() {
+  viewingBase = !viewingBase;
+  topicDB = viewingBase ? topicDBBase : topicDB2026;
+  sumDB   = viewingBase ? sumDBBase   : sumDB2026;
+  renderResults(false);
+}
+
+// ── Scoring ─────────────────────────────────────────────────────────────────
+// Direction weights: map to עמדות/ביצוע/תדמית columns from CSV
+const DW = {
+  identity_anchor:         { א: .38, ת: .42, ב: .20 },
+  capability_operator:     { א: .28, ת: .12, ב: .60 },
+  identity_and_capability: { א: .33, ת: .25, ב: .42 },
+  squad_representation:    { א: .38, ת: .42, ב: .20 }
+};
+
+function adjScore(valStr, confStr) {
+  const v = parseFloat(valStr);
+  if (isNaN(v)) return null;
+  const c = parseFloat(confStr) / 100;
+  return v * (0.6 + 0.4 * (isNaN(c) ? 0.72 : c));
+}
+
+function topicScore(row, dirKey) {
+  const w = DW[dirKey] || DW.identity_anchor;
+  const op = adjScore(row['עמדות_ציון'], row['עמדות_ביטחון']);
+  const ex = adjScore(row['ביצוע_ציון'],  row['ביצוע_ביטחון']);
+  const im = adjScore(row['תדמית_ציון'],  row['תדמית_ביטחון']);
+  let s = 0, ws = 0;
+  if (op !== null) { s += op * w.א; ws += w.א; }
+  if (ex !== null) { s += ex * w.ב; ws += w.ב; }
+  if (im !== null) { s += im * w.ת; ws += w.ת; }
+  return ws === 0 ? 35 : Math.max(0, Math.min(100, (s / ws) * 10));
+}
+
+function getTopicWeights() {
+  const n = state.topics.length;
+  if (n <= 1) return state.topics.map(() => 1);
+  const ordered = state.dirOrder.filter(c => state.topics.includes(c));
+  const unordered = state.topics.filter(c => !ordered.includes(c));
+  const seq = [...ordered, ...unordered];
+  const raw = seq.map((_, i) => Math.pow(0.75, i));
+  const total = raw.reduce((s, v) => s + v, 0);
+  const wMap = {};
+  seq.forEach((code, i) => { wMap[code] = raw[i] / total * n; });
+  return state.topics.map(code => wMap[code] || 1);
+}
+
+function sTopicFit(name) {
+  const db = topicDB[name] || {};
+  const tw = getTopicWeights();
+  let sum = 0, wSum = 0;
+  state.topics.forEach((code, i) => {
+    const score = db[code] ? topicScore(db[code], state.dirs[code] || 'identity_anchor') : 35;
+    sum += score * tw[i];
+    wSum += tw[i];
+  });
+  return wSum ? sum / wSum : 50;
+}
+
+const STYLE_MAP = { combative_clear:'לוחם וברור', statesmanlike_responsible:'ממלכתי ואחראי', bridging_calming:'מגשר ורגוע', mixed_tone:'שילוב' };
+const CONF_M    = { 'גבוה':1.0, 'בינוני':.88, 'נמוך-בינוני':.77, 'נמוך':.65, '—':.72, '': .72 };
+
+function sPublicTone(name) {
+  const s = sumDB[name]; if (!s) return 55;
+  const choice = state.style.public_tone;
+  if (choice === 'mixed_tone') return 72;
+  const target = STYLE_MAP[choice];
+  const cand   = s['סגנון'];
+  const mat = {
+    'לוחם וברור':    { 'לוחם וברור':94, 'ממלכתי ואחראי':52, 'מגשר ורגוע':47, 'שילוב':68 },
+    'ממלכתי ואחראי': { 'ממלכתי ואחראי':94,'לוחם וברור':52, 'מגשר ורגוע':63, 'שילוב':72 },
+    'מגשר ורגוע':    { 'מגשר ורגוע':94, 'ממלכתי ואחראי':63,'לוחם וברור':47, 'שילוב':68 }
+  };
+  const row = mat[target]; if (!row) return 65;
+  const base = row[cand] !== undefined ? row[cand] : 55;
+  return Math.round(Math.max(0, Math.min(100, base * (CONF_M[s['סגנון_ביטחון']] || .78))));
+}
+
+function sKnessetRole(name) {
+  const s = sumDB[name];
+  if (!s || s['תפקיד_מאבק'] === '') return 55;
+  const ma = +s['תפקיד_מאבק'] || 5;
+  const ch = +s['תפקיד_חקיקה'] || 5;
+  const ci = +s['תפקיד_חיבור'] || 5;
+  const m = { public_campaigner: ma, legislation_policy_operator: ch, trust_builder_bridge: ci, multi_function: (ma+ch+ci)/3 };
+  return Math.round(Math.max(0, Math.min(100, (m[state.style.knesset_role] ?? (ma+ch+ci)/3) * 10)));
+}
+
+function sInfoTol(name) {
+  const s = sumDB[name]; if (!s) return 55;
+  const parts = (s['נושאים_מכוסים'] || '0/12').split('/');
+  const frac = +parts[0] / (+parts[1] || 12);
+  const cm = { very_low:{b:0,m:100}, medium:{b:30,m:70}, high:{b:55,m:45}, potential_dependent:{b:45,m:55} };
+  const c = cm[state.style.missing_information_tolerance] || cm.medium;
+  return Math.round(Math.max(0, Math.min(100, c.b + frac * c.m)));
+}
+
+function sProvenPot(name) {
+  const s = sumDB[name]; if (!s) return 55;
+  const parts = (s['נושאים_מכוסים'] || '0/12').split('/');
+  const frac = +parts[0] / (+parts[1] || 12);
+  const avg  = parseFloat(s['ממוצע_עמדות']) || 0;
+  const proven = Math.min(100, frac * avg * 12);
+  const pot    = Math.min(100, avg * 10);
+  const bl = { proven_safe:{p:.85,o:.15}, balanced:{p:.55,o:.45}, interesting_potential:{p:.25,o:.75}, topic_dependent:{p:.5,o:.5} };
+  const b = bl[state.style.proven_vs_potential] || bl.balanced;
+  return Math.round(b.p * proven + b.o * pot);
+}
+
+function computeScore(name) {
+  const w = cfg.runtime_scoring.personal_score_weights;
+  const tf = sTopicFit(name);
+  const pt = sPublicTone(name);
+  const kr = sKnessetRole(name);
+  const it = sInfoTol(name);
+  const pp = sProvenPot(name);
+  return {
+    total:      Math.round(tf*w.topic_fit + pt*w.public_tone + kr*w.knesset_role + it*w.information_tolerance + pp*w.proven_vs_potential),
+    topicFit:   Math.round(tf),
+    publicTone: Math.round(pt),
+    knessetRole:Math.round(kr),
+    infoTol:    Math.round(it),
+    provenPot:  Math.round(pp)
+  };
+}
+
+// ── V2 Scoring — flat file ─────────────────────────────────────────────────
+const TOPIC_NUMS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+
+function getPriorityWeights() {
+  const p = state.priorities;
+  const w = { opinions: .34, capability: .33, image: .33, loyalty: 0 };
+  if (p.length === 0) return w;
+
+  const LOYALTY_CAP = .25;
+  const LOYALTY_BY_RANK = [.25, .18, .12, .08];
+
+  const hasLoyalty = p.includes('loyalty');
+  const loyaltyRank = p.indexOf('loyalty');
+  if (hasLoyalty) {
+    w.loyalty = LOYALTY_BY_RANK[loyaltyRank] || .08;
+  }
+
+  const remaining = 1 - w.loyalty;
+  const axes = ['opinions', 'capability', 'image'];
+  const active = p.filter(k => axes.includes(k));
+
+  if (active.length === 0) {
+    axes.forEach(a => w[a] = remaining / 3);
+  } else {
+    const profiles = {
+      1: [.52, .24, .24],
+      2: [.46, .34, .20],
+      3: [.42, .33, .25]
+    };
+    const shares = profiles[active.length] || profiles[3];
+    axes.forEach(a => w[a] = 0);
+    active.forEach((k, i) => { w[k] = shares[i] * remaining; });
+    const unassigned = axes.filter(a => !active.includes(a));
+    const used = active.reduce((s, k) => s + w[k], 0);
+    const leftover = remaining - used;
+    unassigned.forEach(a => w[a] = leftover / Math.max(1, unassigned.length));
+  }
+  return w;
+}
+
+function v2TopicScore(row, topicNum, dirKey) {
+  const pw = getPriorityWeights();
+  const hasUserPriorities = state.priorities.filter(k => k !== 'loyalty').length > 0;
+  // אם המשתמש קבע עדיפויות — להשתמש בהן; אחרת — כיוון הנושא
+  let wOp, wEx, wIm;
+  if (hasUserPriorities) {
+    wOp = pw.opinions;
+    wEx = pw.capability;
+    wIm = pw.image;
+  } else {
+    const dw = DW[dirKey] || DW.identity_anchor;
+    wOp = dw.א;
+    wEx = dw.ב;
+    wIm = dw.ת;
+  }
+  const op = adjScore(row['sud' + topicNum], row['sud' + topicNum + 'e']);
+  const ex = adjScore(row['suc' + topicNum], row['suc' + topicNum + 'e']);
+  const im = adjScore(row['sut' + topicNum], row['sut' + topicNum + 'e']);
+  let s = 0, ws = 0;
+  if (op !== null) { s += op * wOp; ws += wOp; }
+  if (ex !== null) { s += ex * wEx; ws += wEx; }
+  if (im !== null) { s += im * wIm; ws += wIm; }
+  return ws === 0 ? 35 : Math.max(0, Math.min(100, (s / ws) * 10));
+}
+
+function v2TopicFit(name) {
+  const row = flatDB[name];
+  if (!row) return 50;
+  const tw = getTopicWeights();
+  let sum = 0, wSum = 0;
+  state.topics.forEach((code, i) => {
+    const num = code.replace('D', '');
+    const score = v2TopicScore(row, num, state.dirs[code] || 'identity_anchor');
+    sum += score * tw[i];
+    wSum += tw[i];
+  });
+  return wSum ? sum / wSum : 50;
+}
+
+function v2PublicTone(name) {
+  const row = flatDB[name];
+  if (!row) return 55;
+  const choice = state.style.public_tone;
+  if (choice === 'mixed_tone') return 72;
+  const target = STYLE_MAP[choice];
+  const cand = row['zps'];
+  const mat = {
+    'לוחם וברור':    { 'לוחם וברור':94, 'ממלכתי ואחראי':52, 'מגשר ורגוע':47, 'שילוב':68 },
+    'ממלכתי ואחראי': { 'ממלכתי ואחראי':94,'לוחם וברור':52, 'מגשר ורגוע':63, 'שילוב':72 },
+    'מגשר ורגוע':    { 'מגשר ורגוע':94, 'ממלכתי ואחראי':63,'לוחם וברור':47, 'שילוב':68 }
+  };
+  const r = mat[target]; if (!r) return 65;
+  const base = r[cand] !== undefined ? r[cand] : 55;
+  return Math.round(Math.max(0, Math.min(100, base * (CONF_M[row['zpc']] || .78))));
+}
+
+function v2KnessetRole(name) {
+  const row = flatDB[name];
+  if (!row || row['zr1'] === '') return 55;
+  const ma = +row['zr1'] || 5;
+  const ch = +row['zr2'] || 5;
+  const ci = +row['zr3'] || 5;
+  const m = { public_campaigner: ma, legislation_policy_operator: ch, trust_builder_bridge: ci, multi_function: (ma+ch+ci)/3 };
+  return Math.round(Math.max(0, Math.min(100, (m[state.style.knesset_role] ?? (ma+ch+ci)/3) * 10)));
+}
+
+function v2CoveredCount(row) {
+  let count = 0;
+  for (const num of TOPIC_NUMS) {
+    if (row['sud' + num] || row['suc' + num] || row['sut' + num]) count++;
+  }
+  return count;
+}
+
+function v2InfoTol(name) {
+  const row = flatDB[name];
+  if (!row) return 55;
+  const frac = v2CoveredCount(row) / 12;
+  const cm = { very_low:{b:0,m:100}, medium:{b:30,m:70}, high:{b:55,m:45}, potential_dependent:{b:45,m:55} };
+  const c = cm[state.style.missing_information_tolerance] || cm.medium;
+  return Math.round(Math.max(0, Math.min(100, c.b + frac * c.m)));
+}
+
+function v2ProvenPot(name) {
+  const row = flatDB[name];
+  if (!row) return 55;
+  const frac = v2CoveredCount(row) / 12;
+  const avg = parseFloat(row['zcca']) || 0;
+  const proven = Math.min(100, frac * avg * 12);
+  const pot = Math.min(100, avg * 10);
+  const bl = { proven_safe:{p:.85,o:.15}, balanced:{p:.55,o:.45}, interesting_potential:{p:.25,o:.75}, topic_dependent:{p:.5,o:.5} };
+  const b = bl[state.style.proven_vs_potential] || bl.balanced;
+  return Math.round(b.p * proven + b.o * pot);
+}
+
+function v2Loyalty(name) {
+  const row = flatDB[name];
+  if (!row || !row['zcrg0'] || row['zcrg0'] === '') return 55;
+  return Math.round(Math.max(0, Math.min(100, parseFloat(row['zcrg0']) * 10)));
+}
+
+function computeScoreV2(name) {
+  const pw = getPriorityWeights();
+  const w = cfg.runtime_scoring.personal_score_weights;
+  const tf = v2TopicFit(name);
+  const pt = v2PublicTone(name);
+  const kr = v2KnessetRole(name);
+  const it = v2InfoTol(name);
+  const pp = v2ProvenPot(name);
+  const ly = v2Loyalty(name);
+  // משקל הנאמנות נלקח מהעדיפויות; השאר מתחלק כמו קודם בתוך מה שנשאר
+  const loyaltyW = pw.loyalty;
+  const restW = 1 - loyaltyW;
+  return {
+    total:      Math.round(
+      tf * w.topic_fit * restW +
+      pt * w.public_tone * restW +
+      kr * w.knesset_role * restW +
+      it * w.information_tolerance * restW +
+      pp * w.proven_vs_potential * restW +
+      ly * loyaltyW
+    ),
+    topicFit:   Math.round(tf),
+    publicTone: Math.round(pt),
+    knessetRole:Math.round(kr),
+    infoTol:    Math.round(it),
+    provenPot:  Math.round(pp),
+    loyalty:    Math.round(ly)
+  };
+}
+
+function toggleV2() {
+  useV2 = !useV2;
+  renderResults(false);
+}
+
+// ── Progress steps ──────────────────────────────────────────────────────────
+const STEP_IDS    = ['s-squad','s-style','s-topics','s-dir','s-final'];
+const STEP_LABELS = ['סגל','מועמד','נושאים','כיוון','דירוג'];
+
+function updateProgress(activeId) {
+  const idx = STEP_IDS.indexOf(activeId);
+  const track = document.getElementById('prog-track');
+  if (!track) return;
+  track.innerHTML = STEP_LABELS.map((lbl, i) => {
+    const cls = i < idx ? 'done' : i === idx ? 'active' : '';
+    const check = i < idx ? '✓ ' : '';
+    return `<div class="prog-step ${cls}"><span class="prog-dot"></span>${check}${lbl}</div>`;
+  }).join('');
+}
+
+const BACK_MAP = {
+  's-squad':         { href: 'dbr_P_01_process.html' },
+  's-squad-best':    { screen: 's-squad' },
+  's-squad-explain': { screen: 's-squad' },
+  's-squad-custom':  { screen: 's-squad' },
+  's-style':         { screen: 's-squad' },
+  's-topics': { screen: 's-style'  },
+  's-dir':    { screen: 's-topics' },
+  's-sum':    { screen: 's-dir'    },
+  's-final':  { screen: 's-dir' },
+};
+
+function updateBackBtn(id) {
+  const btn = document.getElementById('btn-back');
+  if (!btn) return;
+  const b = BACK_MAP[id];
+  if (!b) return;
+  btn.textContent = '⬅️';
+  if (b.href) {
+    btn.href = b.href;
+    btn.onclick = null;
+  } else {
+    btn.href = '#';
+    btn.onclick = (e) => { e.preventDefault(); showScreen(b.screen); };
+  }
+}
+
+// ── Idle hint ────────────────────────────────────────────────────────────────
+let _idleTimer = null;
+
+function clearIdleHints() {
+  document.querySelectorAll('.idle-hint').forEach(el => el.classList.remove('idle-hint'));
+}
+
+let _idleSeqTimer = null;
+
+function hasScreenSelection(screenId) {
+  if (screenId === 's-squad')  return SQUAD_KEYS.some(k => state.style[k]);
+  if (screenId === 's-style')  return Object.keys(state.style).length > 0;
+  if (screenId === 's-topics') return state.topics.length > 0;
+  if (screenId === 's-dir')    return Object.keys(state.dirs).length > 0;
+  if (screenId === 's-final')  return state.picked.size > 0;
+  return false;
+}
+
+function startIdleTimer(screenId) {
+  clearTimeout(_idleTimer);
+  clearTimeout(_idleSeqTimer);
+  clearIdleHints();
+  _idleTimer = setTimeout(() => {
+    if (hasScreenSelection(screenId)) return;
+    const screen = document.getElementById(screenId);
+    if (!screen) return;
+    const btns = [...screen.querySelectorAll('button:not([disabled]), .t-card, .opt, .ic-btn')].slice(0, 4);
+    if (!btns.length) return;
+
+    const BTN_MS   = 2000;
+    const PAUSE_MS = 20000;
+    const MAX_ROUNDS = 3;
+    let i = 0, round = 0;
+
+    function nextBtn() {
+      clearIdleHints();
+      btns[i].classList.add('idle-hint');
+      i++;
+      if (i < btns.length) {
+        _idleSeqTimer = setTimeout(nextBtn, BTN_MS);
+      } else {
+        round++;
+        // נקה מיד בסוף הסיבוב
+        _idleSeqTimer = setTimeout(() => {
+          clearIdleHints();
+          if (round < MAX_ROUNDS) {
+            i = 0;
+            _idleSeqTimer = setTimeout(nextBtn, PAUSE_MS);
+          }
+        }, BTN_MS);
+      }
+    }
+    nextBtn();
+  }, 15000);
+}
+
+function resetIdle() {
+  clearTimeout(_idleSeqTimer);
+  clearIdleHints();
+  if (_currentScreen) startIdleTimer(_currentScreen);
+}
+
+let _currentScreen = null;
+
+['click','keydown','scroll','touchstart'].forEach(ev =>
+  document.addEventListener(ev, resetIdle, { passive: true })
+);
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  updateProgress(id);
+  updateBackBtn(id);
+  _currentScreen = id;
+  startIdleTimer(id);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Screen 1a: squad questions (סגנון + תפקיד) ─────────────────────────────
+const SQUAD_KEYS = ['public_tone', 'knesset_role'];
+
+let expandedSquadQ = 0;
+
+// ── Squad photo animation ──────────────────────────────────────────────────
+const SQUAD_PHOTOS = [
+  'אבי_דבוש.webp','אומיימה_חאמד.webp','איהאב_שליאן.webp','איילת-השחר_סיידוף.webp',
+  'אמילי_מואטי.webp','אמיר_ח\'ניפס.webp','אפרת_רייטן.webp','גאלב_סלאמנה.webp',
+  'גבי_לסקי.webp','גלעד_קריב.webp','דני_אלגרט.webp','הדס_רגולסקי.webp',
+  'יאיא_פינק.webp','יאיר_רובינשטיין.webp','יעל_כהן-פארן.webp','יריב_אופנהימר.webp',
+  'לי_הופמן-אגיב.webp','מאלק_בדר.webp','מהרטה_ברוך-רון.webp','מוסי_רז.webp',
+  'מורן_מישל.webp','מיכל_רוזין.webp','משה_רדמן.webp','נאור_נרקיס.webp',
+  'נדאל_מסאלחה.webp','נמרוד_שפר.webp','נעמה_לזימי.webp','סומיה_בשיר.webp',
+  'עאיד_בדיר.webp','עלי_סלאלחה.webp','ענבל_וורטמן-שהם.webp','ענבר_בזק.webp',
+  'ערן_עציון.webp','קטי_פיאסצקי.webp','רונן_צור.webp','רותם_סיון_הופמן.webp',
+  'רם_שפע.webp','תומר_אביטל.webp'
+];
+
+let _squadPhotoTimer = null;
+let _squadPhotoRound = 0;
+const SQUAD_PHOTO_COUNT = 8;
+const SQUAD_PHOTO_ROUNDS = 7;
+const SQUAD_PHOTO_MS = 4000;
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildGenderedSlots(pattern, size) {
+  const shiryun = [...getShiryunPicks()];
+  const maleQ = shiryun.filter(n => GENDER_MAP[n] === 'ז');
+  const femaleQ = shiryun.filter(n => GENDER_MAP[n] === 'נ');
+  let mi = 0, fi = 0;
+  return pattern.map(g => {
+    if (g === 'ז' && mi < maleQ.length) return { html: candidateImg(maleQ[mi++], size), fixed: true };
+    if (g === 'נ' && fi < femaleQ.length) return { html: candidateImg(femaleQ[fi++], size), fixed: true };
+    return { html: null, fixed: false, gender: g };
+  });
+}
+
+function renderSquadPhotos() {
+  const el = document.getElementById('squad-photos');
+  const pattern = ['ז','נ','ז','נ','ז','נ','ז','נ','ז','נ','ז','נ'];
+  const slots = buildGenderedSlots(pattern, 44);
+  const available = shuffleArray(SQUAD_PHOTOS);
+  let ai = 0;
+
+  const htmlSlots = slots.map(s => {
+    if (s.fixed) return s.html;
+    // בחר תמונה אקראית שלא משוריינת
+    while (ai < available.length) {
+      const f = available[ai++];
+      return `<img src="images/${encodeURIComponent(f)}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--line);transition:opacity .3s" alt="">`;
+    }
+    return anonImg(44, s.gender);
+  });
+
+  const yairImg = `<img src="images/${encodeURIComponent('יאיר_גולן.webp')}" style="width:68px;height:68px;border-radius:50%;object-fit:cover;border:3px solid var(--brand);flex-shrink:0" alt="יאיר גולן">`;
+
+  const row1 = `<div style="display:flex;gap:6px;justify-content:center">${htmlSlots.slice(0,4).join('')}</div>`;
+  const rowMid = `<div style="display:flex;gap:8px;align-items:center;justify-content:center">
+    ${htmlSlots.slice(4,6).join('')}${yairImg}${htmlSlots.slice(6,8).join('')}
+  </div>`;
+  const row3 = `<div style="display:flex;gap:6px;justify-content:center">${htmlSlots.slice(8,12).join('')}</div>`;
+  el.innerHTML = row1 + rowMid + row3;
+}
+
+const ANON_M_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <circle cx="20" cy="20" r="20" fill="#dce4ed"/>
+  <circle cx="20" cy="14" r="7" fill="#94a3b8"/>
+  <rect x="10" y="24" width="20" height="14" rx="4" fill="#94a3b8"/>
+</svg>`;
+const ANON_F_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <circle cx="20" cy="20" r="20" fill="#ede4f0"/>
+  <circle cx="20" cy="14" r="7" fill="#a78bba"/>
+  <ellipse cx="20" cy="32" rx="11" ry="10" fill="#a78bba"/>
+  <path d="M14 10 Q20 4 26 10" stroke="#a78bba" stroke-width="2" fill="none"/>
+</svg>`;
+const ANON_M_SRC = 'data:image/svg+xml,' + encodeURIComponent(ANON_M_SVG);
+const ANON_F_SRC = 'data:image/svg+xml,' + encodeURIComponent(ANON_F_SVG);
+
+// מגדר מועמדים — נ=נקבה, ז=זכר
+const GENDER_MAP = {
+  'אבי דבוש':'ז','אבתיסאם מראענה-מנוחין':'נ','אומיימה חאמד':'נ','אורי זכי':'ז',
+  'איהאב שליאן':'ז','איילת השחר סיידוף':'נ','אמילי מואטי':'נ','אמיר חניפס':'ז',
+  'אפרת רייטן':'נ','גאלב סלאמנה':'ז','גבי לסקי':'נ','גלעד קריב':'ז',
+  'דני אלגרט':'ז','הדס רגולסקי':'נ','יאיא פינק':'נ','יאיר רובינשטיין':'ז',
+  'יעל כהן-פארן':'נ','יריב אופנהימר':'ז','לי הופמן אגיב':'נ','מאלק בדר':'ז',
+  'מהרטה ברוך רון':'נ','מוסי רז':'ז','מורן זר כצשטיין':'נ','מורן מישל':'נ',
+  'מיכל רוזין':'נ','משה רדמן':'ז','נאווה רוזוליו':'נ','נאור נרקיס':'ז',
+  'נדאל מסאלחה':'ז','נמרוד שפר':'ז','נעמה לזימי':'נ','סומיה בשיר':'נ',
+  'עאיד בדיר':'ז','עלי סלאלחה':'ז','ענבל וורטמן שוהם':'נ','ענבר בזק':'נ',
+  'ערן עציון':'ז','קטי פיאסצקי':'נ','רונן צור':'ז','רותם סיון הופמן':'נ',
+  'רם שפע':'ז','תומר אביטל':'ז','חן אריאלי':'נ'
+};
+
+function anonImg(size, gender) {
+  const src = gender === 'נ' ? ANON_F_SRC : ANON_M_SRC;
+  return `<img src="${src}" style="width:${size}px;height:${size}px;border-radius:50%;flex-shrink:0;border:1.5px solid var(--line)" alt="">`;
+}
+
+function lastName(name) {
+  const parts = name.split(' ');
+  return parts.length > 1 ? parts[parts.length - 1] : name;
+}
+
+function candidateImg(name, size) {
+  const fname = name.replace(/ /g, '_') + '.webp';
+  return `<div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+    <img src="images/${encodeURIComponent(fname)}" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;border:2px solid var(--green);flex-shrink:0" alt="${name}" title="${name}">
+    <span style="font-size:.62rem;color:var(--green);font-weight:700;white-space:nowrap">${lastName(name)}</span>
+  </div>`;
+}
+
+function renderAnonPhotos() {
+  const el = document.getElementById('squad-photos');
+  el.style.cursor = 'default';
+  el.style.display = 'flex';
+  el.style.flexDirection = 'column';
+  el.style.alignItems = 'center';
+  el.style.gridTemplateColumns = '';
+  el.style.gap = '16px';
+  el.style.padding = '20px 16px';
+  el.style.maxWidth = '340px';
+  el.style.borderRadius = '22px';
+  el.style.border = '2.5px solid var(--brand)';
+  el.style.aspectRatio = '';
+  el.style.minHeight = '';
+  el.style.background = '#fbfcff';
+  el.onclick = null;
+
+  const pattern = ['ז','נ','ז','נ','ז','נ','ז','נ','ז','נ','ז','נ'];
+  const slots = buildGenderedSlots(pattern, 44);
+  const htmlSlots = slots.map(s => s.fixed ? s.html : anonImg(44, s.gender));
+
+  const yairImg = `<img src="images/${encodeURIComponent('יאיר_גולן.webp')}" style="width:68px;height:68px;border-radius:50%;object-fit:cover;border:3px solid var(--brand);flex-shrink:0" alt="יאיר גולן">`;
+
+  const row1 = `<div style="display:flex;gap:6px;justify-content:center">${htmlSlots.slice(0,4).join('')}</div>`;
+  const rowMid = `<div style="display:flex;gap:8px;align-items:center;justify-content:center">
+    ${htmlSlots.slice(4,6).join('')}${yairImg}${htmlSlots.slice(6,8).join('')}
+  </div>`;
+  const row3 = `<div style="display:flex;gap:6px;justify-content:center">${htmlSlots.slice(8,12).join('')}</div>`;
+  el.innerHTML = row1 + rowMid + row3;
+}
+
+function startSquadPhotos() {
+  _squadPhotoRound = 0;
+  renderSquadPhotos();
+  document.getElementById('squad-stop-btn').style.display = 'block';
+  // סיבוב ראשון אחרי חצי זמן
+  _squadPhotoTimer = setTimeout(function tick() {
+    _squadPhotoRound++;
+    if (_squadPhotoRound >= SQUAD_PHOTO_ROUNDS) {
+      stopSquadPhotos();
+      return;
+    }
+    renderSquadPhotos();
+    _squadPhotoTimer = setTimeout(tick, SQUAD_PHOTO_MS);
+  }, SQUAD_PHOTO_MS / 2);
+}
+
+function stopSquadPhotos() {
+  clearTimeout(_squadPhotoTimer);
+  _squadPhotoTimer = null;
+  document.getElementById('squad-stop-btn').style.display = 'none';
+  renderAnonPhotos();
+}
+
+let _squadChoice = null;
+
+function setSquadChoice(val) {
+  if (_squadPhotoTimer) {
+    clearTimeout(_squadPhotoTimer);
+    _squadPhotoTimer = null;
+    document.getElementById('squad-stop-btn').style.display = 'none';
+    renderAnonPhotos();
+  }
+  // לחיצה נוספת על אותו לחצן מבטלת
+  if (_squadChoice === val) {
+    _squadChoice = null;
+  } else {
+    _squadChoice = val;
+  }
+  // עדכן רדיו ויזואלי
+  ['best','explain','custom'].forEach(k => {
+    const radio = document.getElementById('sq-radio-' + k);
+    const opt = document.getElementById('sq-opt-' + k);
+    if (k === _squadChoice) {
+      radio.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;background:var(--brand)"></span>';
+      radio.style.borderColor = 'var(--brand)';
+      opt.style.borderColor = 'var(--brand)';
+      opt.style.background = 'var(--brand-soft)';
+    } else {
+      radio.innerHTML = '';
+      radio.style.borderColor = 'var(--line)';
+      opt.style.borderColor = 'var(--line)';
+      opt.style.background = '#fff';
+    }
+  });
+  document.getElementById('btn-squad-next').disabled = !_squadChoice;
+}
+
+function goSquadNext() {
+  if (_squadChoice === 'best') showScreen('s-squad-best');
+  else if (_squadChoice === 'explain') { renderSquad(); showScreen('s-squad-explain'); }
+  else if (_squadChoice === 'custom') showScreen('s-squad-custom');
+}
+
+function selectBestSquad() {
+  state.style.public_tone = 'mixed_tone';
+  state.style.knesset_role = 'multi_function';
+  saveState();
+  goTopics();
+}
+
+function skipToRanking() {
+  state.style.public_tone = state.style.public_tone || 'mixed_tone';
+  state.style.knesset_role = state.style.knesset_role || 'multi_function';
+  state.style.missing_information_tolerance = state.style.missing_information_tolerance || 'medium';
+  state.style.proven_vs_potential = state.style.proven_vs_potential || 'balanced';
+  if (state.topics.length === 0) {
+    state.topics = cfg.topics.map(t => t.code);
+    for (const code of state.topics) {
+      state.dirs[code] = state.dirs[code] || 'identity_and_capability';
+    }
+  }
+  saveState();
+  runRanking();
+}
+
+// ── Custom squad free text ─────────────────────────────────────────────────
+const CUSTOM_KEYWORDS = {
+  public_tone: {
+    'combative_clear':          ['לוחם','לוחמני','חד','תוקפני','נחוש','עז','ברור','לוחמים'],
+    'statesmanlike_responsible': ['ממלכתי','אחראי','רציני','מקצועי','שקול','בוגר','מנהיג'],
+    'bridging_calming':         ['מגשר','רגוע','מחבר','דיאלוג','שיח','מאחד','גישור','סובלני'],
+    'mixed_tone':               ['מגוון','שילוב','שונים','מיקס','גם וגם']
+  },
+  knesset_role: {
+    'public_campaigner':           ['מאבק','מחאה','רחוב','ציבורי','תקשורת','נלחם','נאבק'],
+    'legislation_policy_operator': ['חקיקה','חוק','ועדה','מקצועי','עבודה פרלמנטרית','פרלמנט'],
+    'trust_builder_bridge':        ['חיבור','גשר','אמון','קונצנזוס','הסכמה','ביחד'],
+    'multi_function':              ['גם וגם','הכל','רב תכליתי','מגוון']
+  }
+};
+
+function detectCustomHints(text) {
+  const hints = [];
+  const lower = text;
+  for (const [category, options] of Object.entries(CUSTOM_KEYWORDS)) {
+    for (const [optionId, keywords] of Object.entries(options)) {
+      for (const kw of keywords) {
+        if (lower.includes(kw)) {
+          const catLabel = category === 'public_tone' ? 'סגנון' : 'תפקיד';
+          const ROLE_LABELS = { public_campaigner:'מאבק ציבורי', legislation_policy_operator:'חקיקה ומדיניות', trust_builder_bridge:'חיבור ואמון', multi_function:'רב תפקידי' };
+          const optLabel = STYLE_MAP[optionId] || ROLE_LABELS[optionId] || LABEL_OVERRIDE[optionId] || optionId;
+          hints.push({ category, optionId, label: `${catLabel}: ${optLabel}`, keyword: kw });
+          break;
+        }
+      }
+    }
+  }
+  // deduplicate by category — keep first match per category
+  const seen = {};
+  return hints.filter(h => {
+    if (seen[h.category]) return false;
+    seen[h.category] = true;
+    return true;
+  });
+}
+
+function onCustomTextInput() {
+  const ta = document.getElementById('custom-freetext');
+  const text = ta.value;
+  const charEl = document.getElementById('custom-char-count');
+  charEl.textContent = text.length + ' תווים';
+  document.getElementById('btn-custom-next').disabled = text.length < 10;
+
+  state.style.custom_freetext = text;
+  saveState();
+
+  const hints = detectCustomHints(text);
+  const hintsEl = document.getElementById('custom-hints');
+  const listEl = document.getElementById('custom-hints-list');
+  if (hints.length > 0) {
+    hintsEl.style.display = 'block';
+    listEl.innerHTML = hints.map(h =>
+      `<span style="background:var(--brand-soft);color:var(--brand);padding:5px 12px;border-radius:999px;font-size:.82rem;font-weight:700;border:1px solid #c7d9f8">${h.label}</span>`
+    ).join('');
+  } else {
+    hintsEl.style.display = 'none';
+  }
+}
+
+function submitCustomSquad() {
+  const text = (document.getElementById('custom-freetext').value || '').trim();
+  if (text.length < 10) return;
+
+  const hints = detectCustomHints(text);
+  for (const h of hints) {
+    state.style[h.category] = h.optionId;
+  }
+  if (!state.style.public_tone) state.style.public_tone = 'mixed_tone';
+  if (!state.style.knesset_role) state.style.knesset_role = 'multi_function';
+  saveState();
+  goCandidateStyle();
+}
+
+function renderSquad() {
+  const squadQs = cfg.squad_style_questions.filter(q => SQUAD_KEYS.includes(q.key));
+  document.getElementById('squad-qs').innerHTML =
+    squadQs.map((q, i) => {
+    return `
+    <div class="q-card" style="margin-bottom:6px">
+      <div class="q-hdr" style="margin-bottom:6px">
+        <div>
+          <div class="q-title" style="font-size:1rem">${q.title}</div>
+        </div>
+      </div>
+      <div class="q-opts" style="gap:4px;padding-right:0;display:flex;flex-wrap:wrap;flex-direction:row">
+        ${q.options.map(o => {
+          const lbl = LABEL_OVERRIDE[o.id] || o.label;
+          return `<button class="opt ${state.style[q.key] === o.id ? 'sel' : ''}"
+            style="padding:6px 14px;font-size:.84rem"
+            onclick="setSquadStyle('${q.key}','${o.id}')">${lbl}</button>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('') +
+    `<div style="margin-top:8px">
+      <textarea id="squad-freetext" placeholder="רוצה לתאר במילים שלך? כתוב כאן..."
+        oninput="state.style.squad_freetext=this.value;saveState()"
+        style="width:100%;min-height:48px;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font-family:inherit;font-size:.86rem;color:var(--ink);resize:vertical">${state.style.squad_freetext || ''}</textarea>
+    </div>`;
+
+  document.getElementById('btn-to-candidate').disabled = false;
+}
+
+function setSquadStyle(key, val) {
+  if (state.style[key] === val) {
+    delete state.style[key];
+  } else {
+    state.style[key] = val;
+  }
+  saveState();
+  const squadQs = cfg.squad_style_questions.filter(q => SQUAD_KEYS.includes(q.key));
+  const next = squadQs.findIndex((q, i) => i > expandedSquadQ && !state.style[q.key]);
+  expandedSquadQ = next >= 0 ? next : -1;
+  renderSquad();
+}
+
+function goCandidateStyle() {
+  renderStyle();
+  showScreen('s-style');
+}
+
+// ── Screen 1b: candidate questions (עדיפויות + מידע + פוטנציאל) ────────────
+const CANDIDATE_KEYS = ['missing_information_tolerance', 'proven_vs_potential'];
+
+function renderStyle() {
+  const active = cfg.squad_style_questions.filter(q => CANDIDATE_KEYS.includes(q.key));
+  document.getElementById('style-lead-main').textContent = 'מה חשוב לך במועמד עצמו?';
+  document.getElementById('style-lead-sub').textContent  = '';
+
+  const prioOpts = [
+    { id: 'opinions', label: 'שיהיו לו עמדות ברורות בנושאים שחשובים לי' },
+    { id: 'capability', label: 'שיהיה מסוגל לעשות עבודה בכנסת' },
+    { id: 'image', label: 'שייצג את המחנה בצורה טובה בציבור הרחב' },
+    { id: 'loyalty', label: 'נאמן למפלגה ולערכיה' }
+  ];
+
+  document.getElementById('style-qs').innerHTML =
+    `<div class="q-card" style="padding:12px 16px;margin-bottom:6px">
+      <div class="q-title" style="font-size:.95rem;margin-bottom:6px">מה חשוב לך במועמד?</div>
+      <div class="q-desc" style="margin-bottom:6px;font-size:.82rem">סדר הסימון = סדר העדיפויות, לחצני בחירה מרובה</div>
+      <div class="q-opts" style="gap:4px;padding-right:0">
+        ${prioOpts.map(o => {
+          const idx = state.priorities.indexOf(o.id);
+          const isOn = idx >= 0;
+          const badge = isOn ? `<span style="background:#e2e8f0;color:#333;border-radius:50%;width:18px;height:18px;display:inline-grid;place-items:center;font-size:.65rem;font-weight:900;margin-left:6px">${idx+1}</span>` : '';
+          return `<button class="opt ${isOn ? 'sel' : ''}" style="padding:6px 14px;font-size:.84rem;text-align:right;width:100%" onclick="togglePriority('${o.id}')">${badge} ${o.label}</button>`;
+        }).join('')}
+      </div>
+    </div>` +
+    active.map(q => `
+    <div class="q-card" style="padding:12px 16px;margin-bottom:6px">
+      <div class="q-title" style="font-size:.95rem;margin-bottom:6px">${q.title}</div>
+      <div class="q-opts" style="gap:4px;padding-right:0;display:flex;flex-wrap:wrap;flex-direction:row">
+        ${q.options.map(o => {
+          const lbl = LABEL_OVERRIDE[o.id] || o.label;
+          return `<button class="opt ${state.style[q.key] === o.id ? 'sel' : ''}"
+            style="padding:6px 14px;font-size:.84rem"
+            onclick="setStyle('${q.key}','${o.id}')">${lbl}</button>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+
+  document.getElementById('btn-topics').disabled = false;
+}
+
+function resetStyleScreen() {
+  state.priorities = [];
+  CANDIDATE_KEYS.forEach(k => delete state.style[k]);
+  saveState();
+  renderStyle();
+}
+
+function togglePriority(id) {
+  const idx = state.priorities.indexOf(id);
+  if (idx >= 0) {
+    state.priorities.splice(idx, 1);
+  } else {
+    state.priorities.push(id);
+  }
+  saveState();
+  renderStyle();
+}
+
+function setStyle(key, val) {
+  if (state.style[key] === val) {
+    delete state.style[key];
+  } else {
+    state.style[key] = val;
+  }
+  saveState();
+  const active = cfg.squad_style_questions.filter(q => q.scoring_role === 'personal_factor');
+  const next = active.findIndex((q, i) => i > expandedQ && !state.style[q.key]);
+  expandedQ = next >= 0 ? next : -1;
+  renderStyle();
+}
+
+// ── Screen 2: topics ────────────────────────────────────────────────────────
+function showTopicInfo(code, e) {
+  e.stopPropagation();
+  const t = cfg.topics.find(x => x.code === code);
+  if (!t) return;
+  document.getElementById('tm-title').textContent = t.title || t.short_title;
+  document.getElementById('tm-desc').textContent = t.description;
+  document.getElementById('topic-modal').classList.add('open');
+}
+
+function closeTopicModal() {
+  document.getElementById('topic-modal').classList.remove('open');
+}
+
+function renderTopics() {
+  document.getElementById('t-grid').innerHTML = cfg.topics.map(t => `
+    <div class="t-card ${state.topics.includes(t.code) ? 'sel' : ''}" onclick="toggleTopic('${t.code}')">
+      <h3>${t.short_title || t.title}</h3>
+      <button class="t-info-btn" onclick="showTopicInfo('${t.code}', event)" title="מידע נוסף">i</button>
+    </div>
+  `).join('');
+  const n = state.topics.length;
+  const c = document.getElementById('t-counter');
+  c.textContent = `${n} / 8 נושאים נבחרו`;
+  c.className = 'counter' + (n === 8 ? ' full' : '');
+  document.getElementById('btn-dir').disabled = n === 0;
+  document.getElementById('btn-dir').textContent = n === 0 ? 'יש לבחור לפחות נושא אחד' : 'המשך לכיוון בחירה ←';
+}
+function toggleTopic(code) {
+  const i = state.topics.indexOf(code);
+  if (i >= 0) { state.topics.splice(i, 1); delete state.dirs[code]; state.dirOrder = state.dirOrder.filter(c => c !== code); }
+  else { if (state.topics.length >= 8) return; state.topics.push(code); }
+  saveState(); renderTopics();
+}
+
+// ── Screen 3: directions ────────────────────────────────────────────────────
+function renderDirs() {
+  const chosen = state.topics.map(code => cfg.topics.find(t => t.code === code)).filter(Boolean);
+  document.getElementById('dir-list').innerHTML = chosen.map((t, i) => {
+    const answered = !!state.dirs[t.code];
+    const isExpanded = (i === expandedDir);
+
+    if (isExpanded) {
+      return `
+      <div class="q-card" style="margin-bottom:6px">
+        <div class="q-hdr">
+          <div>
+            <div class="q-title">${t.title}</div>
+          </div>
+        </div>
+        <div class="dir-opts">
+          ${cfg.topic_direction_options.map(d => `
+            <button class="opt ${state.dirs[t.code] === d.id ? 'sel' : ''}"
+              onclick="setDir('${t.code}','${d.id}')">${d.label}</button>
+          `).join('')}
+        </div>
+      </div>`;
+    }
+
+    if (answered) {
+      const dir = cfg.topic_direction_options.find(d => d.id === state.dirs[t.code]);
+      const orderIdx = state.dirOrder.indexOf(t.code);
+      const orderNum = orderIdx >= 0 ? `<span style="background:#e2e8f0;color:#333;border-radius:50%;width:18px;height:18px;display:inline-grid;place-items:center;font-size:.65rem;font-weight:900;flex-shrink:0;margin-left:6px">${orderIdx+1}</span>` : '';
+      return `
+      <div class="q-done" style="margin-bottom:6px;align-items:center">
+        <div class="q-done-txt" onclick="expandedDir=${i};renderDirs()" style="flex:1;cursor:pointer"><span style="font-size:.92rem;font-weight:800;color:var(--ink)">${orderNum} ${t.short_title || t.title}</span><br><span style="font-size:.8rem;font-weight:500;color:var(--muted)">${dir ? dir.label : ''}</span></div>
+        <div class="q-done-change" onclick="event.stopPropagation();delete state.dirs['${t.code}'];state.dirOrder=state.dirOrder.filter(c=>c!=='${t.code}');saveState();renderDirs()" style="cursor:pointer">נקה</div>
+      </div>`;
+    }
+
+    return `
+    <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin-bottom:6px;cursor:pointer" onclick="expandedDir=${i};renderDirs()">
+      <span style="font-size:.92rem;font-weight:700;color:var(--ink);flex:1">${t.short_title || t.title}</span>
+      <span style="font-size:.78rem;color:var(--muted)">בחר</span>
+    </div>`;
+  }).join('');
+}
+
+function setDir(code, val) {
+  if (state.dirs[code] === val) {
+    delete state.dirs[code];
+    state.dirOrder = state.dirOrder.filter(c => c !== code);
+  } else {
+    state.dirs[code] = val;
+    state.dirOrder = state.dirOrder.filter(c => c !== code);
+    state.dirOrder.push(code);
+  }
+  expandedDir = -1;
+  saveState();
+  renderDirs();
+}
+
+// ── Screen 4: summary ───────────────────────────────────────────────────────
+function renderSummary() {
+  const topics = cfg.topics.filter(t => state.topics.includes(t.code));
+  document.getElementById('sum-topics').innerHTML = topics.map(t => {
+    const d = cfg.topic_direction_options.find(x => x.id === state.dirs[t.code]);
+    return `<div class="sum-item"><strong>${t.short_title||t.title}</strong><small>${d ? d.label : 'לא נבחר כיוון'}</small></div>`;
+  }).join('') || '<p style="color:var(--muted)">לא נבחרו נושאים.</p>';
+
+  const qs = cfg.squad_style_questions.filter(q => q.scoring_role === 'personal_factor');
+  document.getElementById('sum-style').innerHTML = qs.map(q => {
+    const o = q.options.find(x => x.id === state.style[q.key]);
+    return `<div class="sum-item"><strong>${q.title}</strong><small>${o ? o.label : 'לא נענה'}</small></div>`;
+  }).join('');
+}
+
+// ── Screen 5: final ─────────────────────────────────────────────────────────
+const LDR_STEPS = [
+  { key:'a', nm:'קורא נושאים וכיוונים',    nt:'סורק את הנושאים שבחרת וכיוון הבחירה.' },
+  { key:'b', nm:'מחשב התאמת נושאים',       nt:'topic_fit_score לכל אחד מ-43 המועמדים.' },
+  { key:'c', nm:'מחשב פקטורים אישיים',     nt:'אופי ציבורי, תפקיד, כיסוי מידע, רקורד.' },
+  { key:'d', nm:'משקלל ציון סופי',         nt:'80% נושאים + 20% שאלות רוחביות.' },
+  { key:'e', nm:'מדרג ומכין טבלה',         nt:'מסדר לפי ציון התאמה אישי.' }
+];
+
+async function runLoader(stepMs = 250) {
+  const ldr = document.getElementById('ldr');
+  ldr.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+      <span style="font-weight:800;font-size:.92rem">מחשב רשימת Best &amp; Final…</span>
+      <span id="ldr-st" style="color:var(--muted);font-size:.8rem;font-weight:700">מתחיל</span>
+    </div>
+    <div class="ldr-bar-shell"><div class="ldr-bar-fill" id="ldr-fill"></div></div>
+    ${LDR_STEPS.map((s,i) => `
+      <div class="ldr-row" id="lr-${s.key}">
+        <div class="ldr-ic" id="li-${s.key}">${i+1}</div>
+        <div style="flex:1"><div class="ldr-nm">${s.nm}</div><div class="ldr-nt">${s.nt}</div></div>
+        <div class="ldr-spin"></div>
+      </div>`).join('')}`;
+  ldr.style.display = 'block';
+  document.getElementById('final-out').style.display = 'none';
+
+  for (let i = 0; i < LDR_STEPS.length; i++) {
+    LDR_STEPS.forEach((s, j) => {
+      const el = document.getElementById('lr-'+s.key);
+      const ic = document.getElementById('li-'+s.key);
+      el.className = 'ldr-row' + (j < i ? ' done' : j === i ? ' act' : '');
+      ic.textContent = j < i ? '✓' : j+1;
+    });
+    document.getElementById('ldr-fill').style.width = (i / LDR_STEPS.length * 100) + '%';
+    document.getElementById('ldr-st').textContent = LDR_STEPS[i].nm;
+    await new Promise(r => setTimeout(r, stepMs));
+  }
+  LDR_STEPS.forEach(s => {
+    document.getElementById('lr-'+s.key).className = 'ldr-row done';
+    document.getElementById('li-'+s.key).textContent = '✓';
+  });
+  document.getElementById('ldr-fill').style.width = '100%';
+  document.getElementById('ldr-st').textContent = 'הושלם';
+  await new Promise(r => setTimeout(r, 200));
+  ldr.style.display = 'none';
+  renderResults(false);
+  updateFinishBar();
+  document.getElementById('final-out').style.display = 'block';
+}
+
+let scored = [];
+let scoreRankMap = {};  // מיקום אמיתי לפי ציון בלבד
+let visibleCount = 10;
+let expandedQ = 0;
+let expandedDir = 0;
+
+const LABEL_OVERRIDE = {
+  mixed_tone:     'רב גוני',
+  multi_function: 'גם וגם וגם'
+};
+
+function scoreColor(v) {
+  if (v >= 80) return '#10b981';
+  if (v >= 65) return '#3b82f6';
+  if (v >= 50) return '#f59e0b';
+  return '#ef4444';
+}
+
+function catBadge(cat) {
+  if (cat === 'נשים')           return `<span class="badge b-f">${cat}</span>`;
+  if (cat === 'גברים')          return `<span class="badge b-m">${cat}</span>`;
+  if (cat && cat.includes('מיעוט')) return `<span class="badge b-ar">${cat}</span>`;
+  if (cat && cat !== 'לא רלוונטי') return `<span class="badge b-x">${cat}</span>`;
+  return '';
+}
+
+function getShiryunPicks() {
+  try {
+    const shared = JSON.parse(localStorage.getItem('primeris_state_v1') || '{}');
+    return new Set(Array.isArray(shared.shiryun) ? shared.shiryun : []);
+  } catch(e) { return new Set(); }
+}
+
+function renderResults(resetVisible) {
+  if (resetVisible) visibleCount = 10;
+  const scoreFn = useV2 ? computeScoreV2 : computeScore;
+  scored = allNames.map(name => ({ name, ...scoreFn(name) }));
+  scored.sort((a, b) => b.total - a.total);
+  // שמירת מיקום אמיתי לפי ציון בלבד
+  scoreRankMap = {};
+  scored.forEach((c, i) => { scoreRankMap[c.name] = i; });
+  // מיון מחדש עם משוריינים ראשונים
+  const shiryun = getShiryunPicks();
+  scored.sort((a, b) => {
+    const sa = shiryun.has(a.name), sb = shiryun.has(b.name);
+    if (sa && !sb) return -1;
+    if (!sa && sb) return 1;
+    return 0;
+  });
+  renderTable();
+}
+
+function renderTable() {
+  const w    = cfg.runtime_scoring.personal_score_weights;
+  const show = scored.slice(0, visibleCount);
+  const remaining = scored.length - visibleCount;
+
+  const topicNumHe = ['','נושא ליבה אחד','שני נושאי הליבה','שלושת נושאי הליבה','ארבעת נושאי הליבה','חמשת נושאי הליבה','ששת נושאי הליבה','שבעת נושאי הליבה','שמונת נושאי הליבה'];
+  const topicPhrase = topicNumHe[state.topics.length] || `${state.topics.length} נושאי הליבה`;
+  const el = document.getElementById('final-desc');
+  el.innerHTML = `הדירוג נקבע בהתאם לתשובותיך על אופי הסגל ולפי ${topicPhrase} שהתמקדת בהם.
+    <button onclick="toggleBaseView()" title="${viewingBase ? 'חזור לנתוני 2026' : 'הצג דירוג לפי נתוני הבסיס (2025)'}"
+      style="margin-right:12px;padding:4px 12px;border-radius:999px;border:1px solid ${viewingBase ? '#2f5fbb' : 'var(--line)'};
+             background:${viewingBase ? '#eaf0ff' : '#fff'};color:${viewingBase ? 'var(--brand)' : 'var(--muted)'};
+             font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle">
+      ${viewingBase ? '↩ 2026' : '⟳ בסיס 2025'}
+    </button>
+    <button onclick="toggleV2()" title="${useV2 ? 'חזור לשיטה הישנה (שני קבצים)' : 'דרג לפי השיטה החדשה (קובץ מאוחד)'}"
+      style="margin-right:8px;padding:4px 12px;border-radius:999px;border:1px solid ${useV2 ? '#157a52' : 'var(--line)'};
+             background:${useV2 ? '#e7f6ef' : '#fff'};color:${useV2 ? '#157a52' : 'var(--muted)'};
+             font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle">
+      ${useV2 ? '⟳ V1' : '⚡ V2'}
+    </button>`;
+  el.style.cssText = 'font-size:1.15rem;font-weight:900;color:#12355b;margin-bottom:18px;line-height:1.5';
+
+  const anyFallback = show.some(c => hasFallback(c.name));
+
+  document.getElementById('res-wrap').innerHTML = `
+    <table class="res-table">
+      <thead><tr><th>מועמד/ת</th><th>ציון</th><th></th></tr></thead>
+      <tbody>
+        ${show.map((c, idx) => {
+          const s      = sumDB[c.name] || {};
+          const pk     = state.picked.has(c.name);
+          const shiryunMark = getShiryunPicks().has(c.name) ? ' 🎯' : '';
+          const trueRank = scoreRankMap[c.name] ?? idx;
+          const shift    = shiryunMark ? (trueRank - idx) : 0;
+          const col    = shift > 4  ? '#ef4444'
+                       : shift > 0  ? '#f59e0b'
+                       : idx < 8   ? '#10b981'
+                       : idx < 25  ? '#f59e0b'
+                       :             '#ef4444';
+          const fallbackMark = !shiryunMark && hasFallback(c.name)
+            ? '<span title="חלק מהנתונים מבוסס על פרופיל 2025" style="color:#ef4444;font-size:.78rem;cursor:help"> *</span>'
+            : '';
+          return `<tr>
+            <td class="nm-cell">${c.name}${shiryunMark}${fallbackMark}</td>
+            <td class="sc-cell">
+              <div class="sc-val" style="color:${col}">${c.total}</div>
+              <div class="sc-bar"><div class="sc-fill" style="width:${c.total}%;background:${col}"></div></div>
+            </td>
+            <td><div class="act-cell">
+              <button class="ic-btn ${pk ? 'picked' : ''}" data-idx="${idx}" onclick="togglePick(${idx})">${pk ? '✓' : shiryunMark ? '✓' : '+'}</button>
+              <button class="ic-btn" onclick="openProfile(${idx})">📋</button>
+            </div></td>
+          </tr>`;
+        }).join('')}
+        ${remaining > 0 ? `
+        <tr>
+          <td colspan="4" style="text-align:center;padding:10px">
+            <button onclick="showMore()" style="border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 16px;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit">הצג עוד</button>
+          </td>
+        </tr>` : ''}
+      </tbody>
+    </table>
+    ${anyFallback ? `<p style="margin-top:10px;font-size:.8rem;color:var(--muted)">* פרופיל זה מבוסס על נתוני 2025 — עדכון יוני 2026 טרם הוזן.</p>` : ''}
+  `;
+}
+
+function showMore() {
+  visibleCount += 10;
+  renderTable();
+}
+
+let _pendingRemoveName = null;
+
+function togglePick(idx) {
+  const name = scored[idx].name;
+  const shiryun = getShiryunPicks();
+  if (shiryun.has(name) && !state.picked.has(name)) {
+    _pendingRemoveName = name;
+    document.getElementById('shiryun-warn').style.display = 'grid';
+    return;
+  }
+  if (state.picked.has(name)) state.picked.delete(name); else state.picked.add(name);
+  saveState();
+  renderTable();
+  updateFinishBar(true);
+}
+
+function cancelShiryunRemove() {
+  _pendingRemoveName = null;
+  document.getElementById('shiryun-warn').style.display = 'none';
+}
+
+function confirmShiryunRemove() {
+  document.getElementById('shiryun-warn').style.display = 'none';
+  if (!_pendingRemoveName) return;
+  try {
+    const shared = JSON.parse(localStorage.getItem('primeris_state_v1') || '{}');
+    shared.shiryun = (shared.shiryun || []).filter(x => x !== _pendingRemoveName);
+    shared.dbr_picks = (shared.dbr_picks || []).filter(x => x !== _pendingRemoveName);
+    shared.selected = [...new Set([...shared.shiryun, ...shared.dbr_picks])];
+    localStorage.setItem('primeris_state_v1', JSON.stringify(shared));
+  } catch(e) {}
+  state.picked.delete(_pendingRemoveName);
+  saveState();
+  _pendingRemoveName = null;
+  document.getElementById('final-out').style.display = 'none';
+  runLoader(500);
+  updateFinishBar(true);
+}
+
+function updateFinishBar(animate) {
+  const bar = document.getElementById('finish-bar');
+  const el  = document.getElementById('fb-count');
+  if (!bar) return;
+  try {
+    const shared = JSON.parse(localStorage.getItem('primeris_state_v1') || '{}');
+    const all = new Set([...(shared.shiryun||[]), ...(shared.dbr_picks||[])]);
+    const n = all.size;
+    if (n === 0) { bar.classList.remove('visible'); return; }
+    bar.classList.add('visible');
+    const numHe = ['','','שני','שלושה','ארבעה','חמישה','שישה','שבעה','שמונה','תשעה','עשרה'];
+    const nStr = numHe[n] || n;
+    if (el) el.textContent = n === 1
+      ? 'מועמד אחד נבחר'
+      : `${nStr} מועמדים נבחרו`;
+  } catch(e) { bar.classList.remove('visible'); return; }
+  if (animate) {
+    bar.classList.remove('nudge');
+    void bar.offsetWidth; // reflow to restart animation
+    bar.classList.add('nudge');
+    beep();
+  }
+}
+
+function beep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = 520;
+    osc.type = 'sine';
+    gain.gain.setValueAtTime(.18, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .18);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + .18);
+  } catch(e) {}
+}
+
+function openProfile(idx) {
+  const c = scored[idx];
+  const s = sumDB[c.name] || {};
+  const w = cfg.runtime_scoring.personal_score_weights;
+
+  document.getElementById('m-name').textContent = c.name;
+  document.getElementById('m-sub').textContent =
+    [s['קטגוריה'], s['סגנון'], s['תחומי_חוזק_בולטים']].filter(Boolean).join(' · ');
+
+  const topicRows = state.topics.map(code => {
+    const t   = cfg.topics.find(x => x.code === code);
+    const row = (topicDB[c.name] || {})[code];
+    const dir = cfg.topic_direction_options.find(d => d.id === state.dirs[code]);
+    const op  = row ? row['עמדות_ציון']  : '—';
+    const ex  = row ? row['ביצוע_ציון']  : '—';
+    const im  = row ? row['תדמית_ציון']  : '—';
+    const ts  = row ? Math.round(topicScore(row, state.dirs[code] || 'identity_anchor')) : 35;
+    const tc  = scoreColor(ts);
+    const src = (topicSource[c.name] || {})[code];
+    const srcTag = src === '2025'
+      ? '<span style="font-size:.68rem;color:var(--muted);background:#f0ece5;border-radius:4px;padding:1px 4px;margin-right:3px">2025</span>'
+      : '';
+    return `<tr style="border-bottom:1px solid var(--line)">
+      <td style="padding:5px 8px;font-size:.82rem;font-weight:700">${srcTag}${t ? t.short_title : code}</td>
+      <td style="padding:5px 8px;font-size:.75rem;color:var(--muted)">${dir ? dir.label : '—'}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${op}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${ex}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${im}</td>
+      <td style="padding:5px 8px;text-align:center;font-weight:800;color:${tc};font-size:.82rem">${ts}</td>
+    </tr>`;
+  }).join('');
+
+  const factors = [
+    { lbl:`התאמת נושאים (${(w.topic_fit*100).toFixed(0)}%)`, val: c.topicFit },
+    { lbl:`אופי ציבורי (${(w.public_tone*100).toFixed(0)}%)`, val: c.publicTone },
+    { lbl:`תפקיד כנסת (${(w.knesset_role*100).toFixed(0)}%)`, val: c.knessetRole },
+    { lbl:`כיסוי מידע (${(w.information_tolerance*100).toFixed(0)}%)`, val: c.infoTol },
+    { lbl:`רקורד/פוטנציאל (${(w.proven_vs_potential*100).toFixed(0)}%)`, val: c.provenPot }
+  ];
+
+  document.getElementById('m-body').innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;background:var(--brand-soft);border-radius:12px;padding:12px 14px;margin-bottom:14px">
+      <div style="font-size:2.2rem;font-weight:900;color:${scoreColor(c.total)}">${c.total}</div>
+      <div>
+        <div style="font-weight:800">ציון התאמה אישי</div>
+        <div style="color:var(--muted);font-size:.83rem">מתוך ${state.topics.length} נושאים ושאלות הסגל</div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:8px">פירוק ציון</h3>
+    <div class="sc-detail">
+      ${factors.map(f => `
+        <div class="sc-row">
+          <span style="font-size:.84rem">${f.lbl}</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:${f.val}%;background:${scoreColor(f.val)}"></div></div>
+          <span style="font-weight:800;text-align:center;font-size:.88rem">${f.val}</span>
+        </div>`).join('')}
+    </div>
+
+    ${state.topics.length > 0 ? `
+    <h3 style="margin:14px 0 7px">ציונים לפי נושא</h3>
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr style="border-bottom:2px solid var(--line)">
+        <th style="text-align:right;padding:5px 8px;color:var(--muted);font-size:.75rem">נושא</th>
+        <th style="text-align:right;padding:5px 8px;color:var(--muted);font-size:.75rem">כיוון</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">עמדות</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">ביצוע</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">תדמית</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">ציון</th>
+      </tr></thead>
+      <tbody>${topicRows}</tbody>
+    </table>` : ''}
+
+    ${s['תחומי_חוזק_בולטים'] ? `
+    <div style="margin-top:12px;padding:9px 12px;border-radius:11px;background:var(--green-soft);border:1px solid #b8e3ce;font-size:.84rem">
+      <strong>תחומי חוזק: </strong>${s['תחומי_חוזק_בולטים']}
+    </div>` : ''}
+
+    <div class="actions" style="margin-top:14px">
+      <button class="btn-g" onclick="closeModal()">סגור</button>
+    </div>`;
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target.id === 'modal') document.getElementById('modal').classList.remove('open');
+}
+
+// ── Navigation ──────────────────────────────────────────────────────────────
+function goTopics()     { renderTopics(); showScreen('s-topics'); }
+function goDirections() { expandedDir = -1; renderDirs(); showScreen('s-dir'); }
+function goSummary()    { renderSummary();showScreen('s-sum');    }
+
+// צומת ההכרעה — נכנס לפני הדירוג
+function goFinal() {
+  const topicChips = state.topics.map(code => {
+    const t = cfg.topics.find(x => x.code === code);
+    const lbl = t ? (t.short_title || t.title) : code;
+    return `<span style="background:#eaf0ff;color:#0C447C;padding:4px 12px;border-radius:999px;font-size:.82rem;font-weight:700;border:1px solid #c7d9f8">${lbl}</span>`;
+  }).join('');
+
+  document.getElementById('decide-intro').innerHTML = `
+    <p style="font-size:1.45rem;font-weight:900;color:var(--ink);margin:0 0 14px;line-height:1.35">סיימת את כיול הדירוג, עכשיו לקראת הצגת המועמדים, יש לקבל החלטה בנושא שקלול ההנחיות שלך ⚖️</p>
+    ${topicChips ? `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">${topicChips}</div>` : ''}
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button class="decide-opt" onclick="decideGo('continue')" style="border-color:var(--brand);background:var(--brand-soft)">
+        <span class="decide-opt-t" style="color:var(--brand)">המשך לדירוג ←</span>
+        <span class="decide-opt-d">דרג לפי מה שבחרתי</span>
+      </button>
+      <button class="decide-opt" onclick="decideGo('explain')">
+        <span class="decide-opt-t">הסבר</span>
+        <span class="decide-opt-d">איך הבחירות הופכות לדירוג</span>
+      </button>
+      <button class="decide-opt" onclick="decideGo('adjust')">
+        <span class="decide-opt-t">כוונון ושקלול</span>
+        <span class="decide-opt-d">אני רוצה להשפיע על השקלול</span>
+      </button>
+    </div>`;
+
+  document.getElementById('decide-detail').style.display = 'none';
+  document.getElementById('decide-detail').innerHTML = '';
+  showScreen('s-decide');
+}
+
+// הדירוג בפועל (ללא שינוי בחישוב) — כל המסלולים מגיעים לכאן
+function runRanking() { visibleCount = 10; showScreen('s-final'); runLoader(); }
+
+// ── צומת ההכרעה: גורמי השקלול (דינמי לפי state) ──
+function getDecideFactors() {
+  const topics = state.topics;
+
+  function topicLabel(code) {
+    const t = cfg.topics.find(x => x.code === code);
+    return t ? (t.short_title || t.title) : code;
+  }
+  function dirLabel(code) {
+    const d = cfg.topic_direction_options.find(x => x.id === state.dirs[code]);
+    return d ? d.label : '';
+  }
+
+  // sub-שורות נושאים: ראשון, סיכום אמצע, אחרון
+  const topicSubs = [];
+  if (topics.length > 0) {
+    const first = topics[0];
+    const dl = dirLabel(first);
+    topicSubs.push({ nm: topicLabel(first) + (dl ? ' · ' + dl : ''), pc: '' });
+  }
+  if (topics.length > 2) {
+    topicSubs.push({ nm: `… ${topics.length - 2} נושאים נוספים`, pc: '' });
+  }
+  if (topics.length > 1) {
+    const last = topics[topics.length - 1];
+    const dl = dirLabel(last);
+    topicSubs.push({ nm: topicLabel(last) + (dl ? ' · ' + dl : ''), pc: '' });
+  }
+
+  // sub-שורות סגל: תשובות אמיתיות לשאלות
+  const staffSubs = [];
+  const activeQs = cfg.squad_style_questions.filter(q => q.scoring_role === 'personal_factor');
+  for (const q of activeQs) {
+    const chosen = state.style[q.key];
+    if (chosen) {
+      const opt = q.options.find(o => o.id === chosen);
+      if (opt) staffSubs.push({ nm: `${q.title}: ${LABEL_OVERRIDE[chosen] || opt.label}`, pc: '' });
+    }
+  }
+
+  return [
+    { ic:'🎯', name:'הנושאים שבחרת', pct:'65%', bg:'#eaf0ff', col:'#0C447C', subCol:'#185FA5',
+      subs: topicSubs },
+    { ic:'👥', name:'התאמה לאופי הסגל', sub:'הסגנון והתפקיד שביקשת', pct:'21.5%', bg:'#e7f6ef', col:'#085041', subCol:'#0F6E56',
+      subs: staffSubs },
+    { ic:'🕐', name:'ותיק מול חדש', sub:'כמה ניסיון ונוכחות יש למועמד', pct:'6%', bg:'#fef3e2', col:'#633806', subCol:'#854F0B' },
+    { ic:'🏆', name:'מוכח מול פוטנציאל', sub:'הפער בין מה שאמר למה שעשה', pct:'7.5%', bg:'#f0edff', col:'#3C3489', subCol:'#534AB7' }
+  ];
+}
+
+function facHTML(f, adjust) {
+  const boxMain = adjust ? `<span class="fac-box" style="color:${f.col};border:1px solid ${f.col}55">XX</span>` : '';
+  let subRows = '';
+  if (f.subs && f.subs.length > 0) {
+    subRows = '<div style="margin-top:8px">' + f.subs.map(s => {
+      const boxSub = adjust ? `<span class="fac-sub-box" style="color:${f.col};border:1px solid ${f.col}55;background:#fff">XX</span>` : '';
+      return `<div class="fac-sub-row" style="background:#ffffffaa">
+        <span class="nm" style="color:${f.col}">${s.nm}</span>
+        ${s.pc ? `<span class="pc" style="color:${f.col}">${s.pc}</span>` : ''}${boxSub}
+      </div>`;
+    }).join('') + '</div>';
+  }
+  return `<div class="fac" style="background:${f.bg}">
+    <div class="fac-hdr">
+      <span class="fac-ic">${f.ic}</span>
+      <span class="fac-name" style="color:${f.col}">${f.name}${f.sub ? `<span class="fac-sub" style="color:${f.subCol};display:block">${f.sub}</span>` : ''}</span>
+      <span class="fac-pct" style="color:${f.col}">${f.pct}</span>${boxMain}
+    </div>
+    ${subRows}
+  </div>`;
+}
+
+function decideGo(mode) {
+  if (mode === 'continue') { runRanking(); return; }
+
+  const adjust = (mode === 'adjust');
+  const title  = adjust ? 'כוונון ושקלול' : 'איך הבחירות שלך הופכות לדירוג';
+  const lead   = adjust
+    ? 'שנה את המשקל של כל גורם בתיבה שלצדו. הערך הנוכחי מוצג מימין.'
+    : 'לכל מועמד המערכת בוחנת כמה גורמים ומשקללת ביניהם לציון אחד. כך מתחלק המשקל:';
+  const footL  = adjust ? 'הסכום חייב להגיע ל-100%' : 'המשקלים כאן הם דוגמה';
+
+  document.getElementById('decide-intro').style.display = 'none';
+  const d = document.getElementById('decide-detail');
+  d.style.display = 'block';
+  d.innerHTML = `
+    <p style="font-size:1.05rem;font-weight:900;color:var(--ink);margin:0 0 4px">${title}</p>
+    <p style="color:var(--muted);font-size:.88rem;margin:0 0 14px;line-height:1.6">${lead}</p>
+    ${getDecideFactors().map(f => facHTML(f, adjust)).join('')}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;border-top:1px solid var(--line);padding-top:12px">
+      <span style="font-size:.78rem;color:var(--muted)">${footL}</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn-g" onclick="decideBack()">← חזרה</button>
+        <button class="btn-p" onclick="runRanking()">המשך לדירוג ←</button>
+      </div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function decideBack() {
+  document.getElementById('decide-detail').style.display = 'none';
+  document.getElementById('decide-detail').innerHTML = '';
+  document.getElementById('decide-intro').style.display = 'block';
+}
+
+function resetAll() {
+  state.style = {}; state.topics = []; state.dirs = {}; state.picked = new Set(); state.priorities = []; state.dirOrder = [];
+  expandedSquadQ = 0; expandedQ = 0; expandedDir = 0;
+  saveState();
+  clearTimeout(_squadPhotoTimer);
+  renderSquad(); renderStyle(); renderTopics(); showScreen('s-squad');
+  // startSquadPhotos();
+  renderAnonPhotos();
+  document.getElementById('squad-stop-btn').style.display = 'none';
+}
+
+// ── Init ────────────────────────────────────────────────────────────────────
+async function init() {
+  try {
+    await loadAll();
+    loadState();
+    renderSquad();
+    renderStyle();
+    renderTopics();
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    updateProgress('s-squad');
+    updateBackBtn('s-squad');
+    _currentScreen = 's-squad';
+    startIdleTimer('s-squad');
+    // startSquadPhotos(); // אנימציה מושבתת — ישר למצב יציב
+    renderAnonPhotos();
+    document.getElementById('squad-stop-btn').style.display = 'none';
+    const hdr = document.querySelector('header');
+    if (hdr) document.querySelector('.page').style.paddingTop = (hdr.offsetHeight + 4) + 'px';
+    window.addEventListener('resize', () => {
+      if (hdr) document.querySelector('.page').style.paddingTop = (hdr.offsetHeight + 4) + 'px';
+    });
+  } catch(err) {
+    document.getElementById('overlay').innerHTML =
+      `<div style="text-align:center;padding:20px"><div style="color:#c0392b;font-size:1rem;margin-bottom:8px">שגיאה בטעינת קבצים</div>
+       <div style="color:#667085;font-size:.85rem;max-width:400px">${err.message}</div>
+       <div style="color:#667085;font-size:.82rem;margin-top:10px">יש להריץ את הקובץ דרך שרת מקומי:<br><code>python -m http.server 8000</code></div></div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
+

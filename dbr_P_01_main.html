@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<script>if(localStorage.getItem('dbr_disclaimer_accepted')!=='yes'){window.location.href='dbr_P_01_index.html?redirect='+encodeURIComponent(location.pathname.split('/').pop()+location.search)}</script>
+<script>/* disclaimer check disabled in dev */</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
 <script>
@@ -24,7 +24,8 @@
     .page{max-width:1100px;margin:0 auto;padding:0 16px 72px}
 
     /* Header */
-    header{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--line);padding:8px 24px 6px;box-shadow:0 2px 8px rgba(16,24,40,.06)}
+    header{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--line);padding:8px 0 6px;box-shadow:0 2px 8px rgba(16,24,40,.06)}
+    .header-inner{max-width:1100px;margin:0 auto;padding:0 16px}
     .header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-bottom:6px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:#12355b;font-size:1.08rem;text-decoration:none}
     .brand-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#3730a3,#1e1b4b);display:grid;place-items:center;color:white;font-size:.7rem;font-weight:900;letter-spacing:.04em;box-shadow:0 2px 8px rgba(55,48,163,.25)}
@@ -207,13 +208,15 @@
 
 <div class="page" id="app" style="display:none">
   <header>
-    <div class="header-top">
-      <a class="brand" href="dbr_P_01_index.html"><span class="brand-mark">ד.ב.ר</span><span style="margin-right:10px">דמוקרטים בוחרים רציונלית</span></a>
-      <a id="btn-back" href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+    <div class="header-inner">
+      <div class="header-top">
+        <a class="brand" href="dbr_P_01_index.html"><span class="brand-mark">ד.ב.ר</span><span style="margin-right:10px">דמוקרטים בוחרים רציונלית</span></a>
+        <a id="btn-back" href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+      </div>
+      <div style="text-align:center;font-size:.68rem;color:var(--muted);padding:3px 0">© 2026 Silvertel Online ltd | כל הזכויות שמורות | v3.1</div>
+      <div style="border-top:1px solid var(--line);margin:4px 0"></div>
+      <div class="steps" id="steps"></div>
     </div>
-    <div style="text-align:center;font-size:.68rem;color:var(--muted);padding:3px 0">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
-    <div style="border-top:1px solid var(--line);margin:4px 0"></div>
-    <div class="steps" id="steps"></div>
   </header>
 
   <!-- מסך 1: תמונות + שלושה לחצנים -->
@@ -244,8 +247,11 @@
         <span style="font-size:.92rem;font-weight:700;color:var(--ink)">אני רוצה לכתוב לך בשפה שלי</span>
       </label>
     </div>
-    <div class="actions" style="margin-top:10px">
+    <div class="actions" style="margin-top:10px;flex-direction:column;gap:8px">
       <button id="btn-squad-next" class="btn-p" onclick="goSquadNext()" disabled>המשך ←</button>
+      <button class="btn-s" onclick="skipToRanking()" style="background:#fff8f0;border-color:#f0d8b8;color:#b45309">
+        🏛️ דירוג ועדות מסדרות
+      </button>
     </div>
   </section>
 
@@ -287,9 +293,9 @@
     </p>
 
     <div class="actions" style="justify-content:center">
-      <button class="btn-p" onclick="selectBestSquad()">המשך התאמה</button>
+      <button class="btn-s" onclick="selectBestSquad()">המשך התאמה</button>
       <button class="btn-s" onclick="skipToRanking()">חשב התאמה</button>
-      <button class="btn-g" onclick="showScreen('s-squad')">חזרה</button>
+      <button class="btn-s" onclick="showScreen('s-squad')">חזרה</button>
     </div>
   </section>
 
@@ -420,8 +426,33 @@
     <div id="ldr" class="ldr-box"></div>
     <div id="final-out" style="display:none">
       <p class="lead" id="final-desc"></p>
+
+      <!-- sim panel -->
+      <div id="sim-panel" style="display:none;background:#f8faff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:.84rem">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px">
+            <label style="font-weight:700;color:var(--muted)">השפעת בוחר</label>
+            <input id="sim-tilt" type="number" min="0" max="1" step="0.05" value="0.35"
+              style="width:64px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;font-size:.88rem;font-weight:700;text-align:center">
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <label style="font-weight:700;color:var(--muted)">לא מכוסה</label>
+            <select id="sim-null" style="padding:4px 10px;border:1.5px solid var(--line);border-radius:8px;font-size:.85rem;font-weight:700">
+              <option value="0">0 — דלג</option>
+              <option value="1">1 — ניטרלי (5)</option>
+              <option value="2">2 — ממוצע מועמד</option>
+            </select>
+          </div>
+          <button onclick="rerank()" style="padding:5px 16px;border-radius:999px;border:none;background:var(--brand);color:#fff;font-size:.84rem;font-weight:800;cursor:pointer;font-family:inherit">דרג מחדש</button>
+          <span id="sim-mode-label" style="font-size:.78rem;color:var(--muted)"></span>
+        </div>
+      </div>
+
       <div id="res-wrap"></div>
-      <div id="finish-bar" style="margin-top:16px">
+      <div style="margin-top:12px;text-align:left">
+        <button onclick="resetAll()" style="padding:5px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">↺ איפוס</button>
+      </div>
+      <div id="finish-bar" style="margin-top:10px">
         <div>
           <div class="fb-count" id="fb-count">0 נבחרו</div>
         </div>
@@ -463,7 +494,6 @@
   <div class="mbox" onclick="event.stopPropagation()">
     <div class="mhdr">
       <div>
-        <p style="color:var(--brand);font-weight:800;font-size:.86rem;margin-bottom:3px">פרופיל מועמד/ת</p>
         <h2 id="m-name"></h2>
         <p style="color:var(--muted);margin-top:2px;font-size:.86rem" id="m-sub"></p>
       </div>
@@ -511,6 +541,8 @@ let topicDBBase = null, sumDBBase = null, topicDB2026 = null, sumDB2026 = null;
 let viewingBase = false;
 let flatDB = {};
 let useV2 = false;
+let activeCommittee = 'g'; // g=gemini, o=gpt, c=claude
+let resumeDB = {};
 
 function saveState() {
   try {
@@ -588,7 +620,7 @@ async function loadAll() {
     for (const r of parseCSV(await sum26R.text())) {
       if (!r['מועמד']) continue;
       if (!(r['סגנון'] || r['תפקיד_מאבק'] || r['נושאים_מכוסים'])) continue;
-      sumDB[r['מועמד']] = r;
+      sumDB[r['מועמד']] = { ...(sumDB[r['מועמד']] || {}), ...r };
       sumSource[r['מועמד']] = '2026';
     }
   }
@@ -596,12 +628,23 @@ async function loadAll() {
   sumDB2026   = sumDB;
 
   // ── קובץ מאוחד (V2) ──
-  const flatR = await fetch('dbr_P_01_data.csv');
+  const flatR = await fetch('dbr_P_01_data.csv?v=' + Date.now());
   if (flatR.ok) {
     for (const r of parseCSV(await flatR.text())) {
       if (r['id1']) flatDB[r['id1']] = r;
     }
   }
+
+  // ── Resume & motivation data ──
+  try {
+    const resR = await fetch('data/resume_motivation.json');
+    if (resR.ok) {
+      const resData = await resR.json();
+      for (const m of resData['מועמדים'] || []) {
+        if (m['שם']) resumeDB[m['שם']] = m;
+      }
+    }
+  } catch(e) { console.warn('resume_motivation.json not loaded', e); }
 }
 
 function hasFallback(name) {
@@ -908,8 +951,300 @@ function computeScoreV2(name) {
   };
 }
 
+// ── Base Layer Scoring (Layer 1) ───────────────────────────────────────────
+// Executive Search readiness score: resume + motivation only.
+// The 36 topic cells are still collected for profile display, but they do NOT
+// affect the active base ranking in this version.
+
+const BASE_READINESS_WEIGHTS = {
+  resume: 0.80,
+  motivation: 0.20
+};
+
+// Simulation parameters (editable via sim panel)
+let SIM_TILT = 0.35;       // voter influence weight (0 = base only, 1 = topics only)
+let SIM_NULL = 0;           // uncovered topic handling: 0=skip, 1=neutral(5), 2=candidate avg
+
+// Zipper mode
+let zipperActive = false;
+
+function getGender(name) {
+  return (flatDB[name] || {})['id2'] || '';
+}
+
+function applyZipper(list) {
+  const males   = list.filter(c => getGender(c.name) === 'זכר');
+  const females = list.filter(c => getGender(c.name) === 'נקבה');
+  const other   = list.filter(c => { const g = getGender(c.name); return g !== 'זכר' && g !== 'נקבה'; });
+
+  const first = list[0];
+  const firstGender = first ? getGender(first.name) : 'זכר';
+  const [lead, follow] = firstGender === 'נקבה' ? [females, males] : [males, females];
+
+  const zipped = [];
+  const len = Math.max(lead.length, follow.length);
+  for (let i = 0; i < len; i++) {
+    if (i < lead.length)   zipped.push(lead[i]);
+    if (i < follow.length) zipped.push(follow[i]);
+  }
+  return [...zipped, ...other];
+}
+
+function toggleZipper() {
+  zipperActive = !zipperActive;
+  const btn = document.getElementById('btn-zipper');
+  if (btn) {
+    btn.style.background = zipperActive ? 'var(--brand)' : '#fff';
+    btn.style.color = zipperActive ? '#fff' : 'var(--muted)';
+    btn.style.borderColor = zipperActive ? 'var(--brand)' : 'var(--line)';
+  }
+  // Debug
+  const sample = scored.slice(0,3).map(c => c.name + ':' + (getGender(c.name)||'?'));
+  console.log('zipper:', zipperActive, 'sample:', sample);
+  const k = 'גלעד קריב';
+  const fk = flatDB[k];
+  console.log('flatDB[קריב] id1-id4:', fk ? [fk.id1, fk.id2, fk.id3, fk.id4] : 'NOT FOUND');
+  console.log('flatDB keys sample:', Object.keys(flatDB).slice(0,3));
+  renderTable();
+}
+
+const MOTIVATION_SCORE_MAP = {
+  'שליחות': 9.0,
+  'תיקון': 8.5,
+  'מומחיות': 8.2,
+  'קריירה': 7.0,
+  'הזדמנות': 6.0,
+  'לא_ברור': 5.0,
+  'לא ברור': 5.0,
+  '': 5.0
+};
+
+function motivationBaseScore(type) {
+  return MOTIVATION_SCORE_MAP[type] !== undefined ? MOTIVATION_SCORE_MAP[type] : 5.0;
+}
+
+function motivationConfidenceFactor(confPct) {
+  const c = parseFloat(confPct);
+  const frac = isNaN(c) ? 0.60 : Math.max(0, Math.min(100, c)) / 100;
+  return 0.70 + 0.30 * frac;
+}
+
+function weightedAverageAvailable(parts) {
+  const active = parts.filter(p => p.val !== null && p.val !== undefined && !isNaN(p.val));
+  if (!active.length) return null;
+  const wSum = active.reduce((s, p) => s + p.w, 0);
+  return active.reduce((s, p) => s + p.val * p.w, 0) / wSum;
+}
+
+function getTopicDisplayStats(name) {
+  const row = flatDB[name];
+  const topicDetail = {}; // תצוגה בלבד — לא חלק מציון הבסיס
+  let opinionsSum = 0, opinionsN = 0;
+  let capabilitySum = 0, capabilityN = 0;
+  let imageSum = 0, imageN = 0;
+  let coverage = 0;
+
+  for (const num of TOPIC_NUMS) {
+    const detail = { opinions: null, capability: null, image: null };
+
+    if (row) {
+      const opVal = parseFloat(row['sud' + num]);
+      if (!isNaN(opVal) && opVal > 0) {
+        detail.opinions = opVal;
+        opinionsSum += opVal;
+        opinionsN++;
+        coverage++;
+      }
+
+      const capVal = parseFloat(row['suc' + num]);
+      if (!isNaN(capVal) && capVal > 0) {
+        detail.capability = capVal;
+        capabilitySum += capVal;
+        capabilityN++;
+        coverage++;
+      }
+
+      const imVal = parseFloat(row['sut' + num]);
+      if (!isNaN(imVal) && imVal > 0) {
+        detail.image = imVal;
+        imageSum += imVal;
+        imageN++;
+        coverage++;
+      }
+    }
+
+    topicDetail[num] = detail;
+  }
+
+  return {
+    opinionsAvg: opinionsN > 0 ? Math.round(opinionsSum / opinionsN * 10) : null,
+    capabilityAvg: capabilityN > 0 ? Math.round(capabilitySum / capabilityN * 10) : null,
+    imageAvg: imageN > 0 ? Math.round(imageSum / imageN * 10) : null,
+    coverage,
+    topicDetail
+  };
+}
+
+function computeBaseScore(name) {
+  const row = flatDB[name];
+  const displayStats = getTopicDisplayStats(name);
+
+  // --- Resume score: 0-10 from flat CSV (zccc) ---
+  const resumeRaw = row ? row['zccc'] : null;
+  const resumeVal = (resumeRaw !== null && resumeRaw !== undefined && resumeRaw !== '')
+    ? parseFloat(resumeRaw)
+    : null;
+
+  // --- Motivation score: type score softened by confidence ---
+  const motivationType = row ? (row['zccd'] || 'לא_ברור') : 'לא_ברור';
+  const motivationAnchor = row ? (row['zccg'] || '') : '';
+  const motivationConfidenceRaw = row ? row['zcce'] : null;
+  const motivationTypeScore = motivationBaseScore(motivationType);
+  const motivationFactor = motivationConfidenceFactor(motivationConfidenceRaw);
+  const motivationEffective = motivationTypeScore * motivationFactor;
+  const hasMotivation = !!row && motivationType !== null && motivationType !== undefined && motivationType !== '';
+
+  // --- Active basic route: Executive Search readiness only ---
+  // This route intentionally ignores voter answers, selected topics, and the 36 topic cells.
+  const baseVal = weightedAverageAvailable([
+    { val: resumeVal, w: BASE_READINESS_WEIGHTS.resume },
+    { val: hasMotivation ? motivationEffective : null, w: BASE_READINESS_WEIGHTS.motivation }
+  ]);
+
+  const total = baseVal !== null ? Math.round(baseVal * 10) : 50;
+
+  // --- Security 6.1/6.2 from flat CSV ---
+  const s61 = row ? parseFloat(row['zs61']) : null;
+  const s62 = row ? parseFloat(row['zs62']) : null;
+  const committeeSource = row ? (row['zccs'] || '') : '';
+
+  // --- GPT parallel data for comparison ---
+  const gptResume = row && row['zccc_o'] ? parseFloat(row['zccc_o']) : null;
+  const gptMot = row ? (row['zccd_o'] || '') : '';
+  const gptConf = row && row['zcce_o'] ? parseFloat(row['zcce_o']) : null;
+  const gptAnchor = row ? (row['zccg_o'] || '') : '';
+
+  return {
+    total,
+    resumeDisplay: resumeVal !== null && !isNaN(resumeVal) ? Math.round(resumeVal * 10) : null,
+    motivDisplay: hasMotivation ? Math.round(motivationEffective * 10) : null,
+    motivationType,
+    motivationTypeDisplay: Math.round(motivationTypeScore * 10),
+    motivationConfidenceDisplay: motivationConfidenceRaw !== null && motivationConfidenceRaw !== undefined && motivationConfidenceRaw !== ''
+      ? Math.round(parseFloat(motivationConfidenceRaw))
+      : null,
+    motivationAnchor,
+    resumeWeight: Math.round(BASE_READINESS_WEIGHTS.resume * 100),
+    motivationWeight: Math.round(BASE_READINESS_WEIGHTS.motivation * 100),
+    // Security split
+    s61: !isNaN(s61) ? s61 : null,
+    s62: !isNaN(s62) ? s62 : null,
+    committeeSource,
+    // GPT comparison
+    gptResume: !isNaN(gptResume) ? gptResume : null,
+    gptMot,
+    gptConf: !isNaN(gptConf) ? gptConf : null,
+    gptAnchor,
+
+    // The following fields are display-only and are not used by the active base score.
+    ...displayStats
+  };
+}
+
+function computeVoterFit(name) {
+  // Returns 0-100 topic fit based on user's selected topics
+  // Only relevant when state.topics.length > 0 (not fast track)
+  if (!state.topics.length) return null;
+  const row = flatDB[name];
+  const candidateAvg = row ? (() => {
+    let s = 0, n = 0;
+    for (const num of TOPIC_NUMS) {
+      ['sud','suc','sut'].forEach(axis => {
+        const v = parseFloat(row[axis + num]);
+        if (!isNaN(v) && v > 0) { s += v; n++; }
+      });
+    }
+    return n > 0 ? s / n : 5;
+  })() : 5;
+
+  let sum = 0, count = 0;
+  for (const code of state.topics) {
+    const num = code.replace('D','');
+    const dir = state.dirs[code] || 'identity_and_capability';
+    // axis weights by direction
+    const DW2 = {
+      identity_anchor:       { op:.50, ex:.20, im:.30 },
+      capability_operator:   { op:.20, ex:.60, im:.20 },
+      identity_and_capability:{ op:.38, ex:.38, im:.24 },
+      squad_representation:  { op:.30, ex:.20, im:.50 }
+    };
+    const dw = DW2[dir] || DW2.identity_and_capability;
+
+    let cellSum = 0, cellW = 0;
+    [['sud','op'],['suc','ex'],['sut','im']].forEach(([axis, key]) => {
+      const v = row ? parseFloat(row[axis + num]) : NaN;
+      const conf = row ? parseFloat(row[axis + num + 'e']) : NaN;
+      const w = dw[key];
+      if (!isNaN(v) && v > 0) {
+        const adj = v * (0.6 + 0.4 * (isNaN(conf) ? 0.72 : conf / 100));
+        cellSum += adj * w;
+        cellW += w;
+      } else {
+        // Uncovered topic handling
+        if (SIM_NULL === 1) { cellSum += 5 * w; cellW += w; }          // neutral
+        else if (SIM_NULL === 2) { cellSum += candidateAvg * w; cellW += w; } // candidate avg
+        // SIM_NULL === 0: skip (do nothing)
+      }
+    });
+    if (cellW > 0) { sum += (cellSum / cellW) * 10; count++; }
+    else if (SIM_NULL !== 0) { sum += 50; count++; } // fully uncovered topic
+  }
+  return count > 0 ? Math.round(sum / count) : null;
+}
+
+function computeFinalScore(name) {
+  const base = computeBaseScore(name);
+  // Fast track — base only
+  if (!state.topics.length || SIM_TILT === 0) return base;
+  const voterFit = computeVoterFit(name);
+  if (voterFit === null) return base;
+  const total = Math.round(base.total * (1 - SIM_TILT) + voterFit * SIM_TILT);
+  return { ...base, total, voterFit };
+}
+
+function rerank() {
+  SIM_TILT = parseFloat(document.getElementById('sim-tilt').value) || 0;
+  SIM_NULL = parseInt(document.getElementById('sim-null').value) || 0;
+  const label = document.getElementById('sim-mode-label');
+  if (label) label.textContent = `בסיס ${Math.round((1-SIM_TILT)*100)}% | נושאים ${Math.round(SIM_TILT*100)}%`;
+  renderResults(false);
+}
+
 function toggleV2() {
   useV2 = !useV2;
+  renderResults(false);
+}
+
+const COMMITTEE_NAMES = { g: 'ועדת ג׳מיני', o: 'ועדת GPT', c: 'ועדת קלוד' };
+const COMMITTEE_ORDER = ['g', 'o'];
+
+function toggleCommittee() {
+  const idx = COMMITTEE_ORDER.indexOf(activeCommittee);
+  activeCommittee = COMMITTEE_ORDER[(idx + 1) % COMMITTEE_ORDER.length];
+
+  // Swap active fields from parallel columns
+  const suffix = activeCommittee === 'g' ? '_g' : '_o';
+  const fields = ['zccc', 'zccd', 'zcce', 'zccf', 'zccg', 'zs61', 'zs62'];
+  for (const name of Object.keys(flatDB)) {
+    const row = flatDB[name];
+    for (const f of fields) {
+      if (row[f + suffix] !== undefined && row[f + suffix] !== '') {
+        row[f] = row[f + suffix];
+      }
+    }
+    row['zccs'] = activeCommittee;
+  }
+
   renderResults(false);
 }
 
@@ -937,7 +1272,7 @@ const BACK_MAP = {
   's-topics': { screen: 's-style'  },
   's-dir':    { screen: 's-topics' },
   's-sum':    { screen: 's-dir'    },
-  's-final':  { screen: 's-dir' },
+  's-final':  { screen: null }, // dynamic — see goBack()
 };
 
 function updateBackBtn(id) {
@@ -951,7 +1286,18 @@ function updateBackBtn(id) {
     btn.onclick = null;
   } else {
     btn.href = '#';
-    btn.onclick = (e) => { e.preventDefault(); showScreen(b.screen); };
+    btn.onclick = (e) => {
+      e.preventDefault();
+      // Fast track: go back to squad screen without touching topic selections
+      if (id === 's-final' && state._fastTrack) {
+        state._fastTrack = false;
+        saveState();
+        showScreen('s-squad');
+        return;
+      }
+      if (b.screen) showScreen(b.screen);
+      else showScreen('s-squad');
+    };
   }
 }
 
@@ -1255,16 +1601,10 @@ function selectBestSquad() {
 }
 
 function skipToRanking() {
-  state.style.public_tone = state.style.public_tone || 'mixed_tone';
-  state.style.knesset_role = state.style.knesset_role || 'multi_function';
-  state.style.missing_information_tolerance = state.style.missing_information_tolerance || 'medium';
-  state.style.proven_vs_potential = state.style.proven_vs_potential || 'balanced';
-  if (state.topics.length === 0) {
-    state.topics = cfg.topics.map(t => t.code);
-    for (const code of state.topics) {
-      state.dirs[code] = state.dirs[code] || 'identity_and_capability';
-    }
-  }
+  // Fast track — base score only (resume + motivation), no topic selection
+  state.topics = [];
+  state.dirs = {};
+  state._fastTrack = true;
   saveState();
   runRanking();
 }
@@ -1546,6 +1886,14 @@ function renderDirs() {
       <span style="font-size:.78rem;color:var(--muted)">בחר</span>
     </div>`;
   }).join('');
+
+  // Lock "חשב התאמה" until all topics have a direction
+  const allDirected = state.topics.every(code => !!state.dirs[code]);
+  const btnCalc = document.querySelector('#s-dir .btn-p');
+  if (btnCalc) {
+    btnCalc.disabled = !allDirected;
+    btnCalc.title = allDirected ? '' : 'יש לכוון את כל הנושאים לפני החישוב';
+  }
 }
 
 function setDir(code, val) {
@@ -1662,8 +2010,11 @@ function getShiryunPicks() {
 
 function renderResults(resetVisible) {
   if (resetVisible) visibleCount = 10;
-  const scoreFn = useV2 ? computeScoreV2 : computeScore;
-  scored = allNames.map(name => ({ name, ...scoreFn(name) }));
+  // Show sim panel only in full voter flow (not fast track)
+  const panel = document.getElementById('sim-panel');
+  const isFullFlow = state.topics.length > 0 && !state._fastTrack;
+  if (panel) panel.style.display = isFullFlow ? 'block' : 'none';
+  scored = allNames.map(name => ({ name, ...computeFinalScore(name) }));
   scored.sort((a, b) => b.total - a.total);
   // שמירת מיקום אמיתי לפי ציון בלבד
   scoreRankMap = {};
@@ -1680,29 +2031,29 @@ function renderResults(resetVisible) {
 }
 
 function renderTable() {
-  const w    = cfg.runtime_scoring.personal_score_weights;
-  const show = scored.slice(0, visibleCount);
-  const remaining = scored.length - visibleCount;
+  const display = zipperActive ? applyZipper(scored) : scored;
+  const show = display.slice(0, visibleCount);
+  const remaining = display.length - visibleCount;
 
-  const topicNumHe = ['','נושא ליבה אחד','שני נושאי הליבה','שלושת נושאי הליבה','ארבעת נושאי הליבה','חמשת נושאי הליבה','ששת נושאי הליבה','שבעת נושאי הליבה','שמונת נושאי הליבה'];
-  const topicPhrase = topicNumHe[state.topics.length] || `${state.topics.length} נושאי הליבה`;
   const el = document.getElementById('final-desc');
-  el.innerHTML = `הדירוג נקבע בהתאם לתשובותיך על אופי הסגל ולפי ${topicPhrase} שהתמקדת בהם.
-    <button onclick="toggleBaseView()" title="${viewingBase ? 'חזור לנתוני 2026' : 'הצג דירוג לפי נתוני הבסיס (2025)'}"
-      style="margin-right:12px;padding:4px 12px;border-radius:999px;border:1px solid ${viewingBase ? '#2f5fbb' : 'var(--line)'};
-             background:${viewingBase ? '#eaf0ff' : '#fff'};color:${viewingBase ? 'var(--brand)' : 'var(--muted)'};
-             font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle">
-      ${viewingBase ? '↩ 2026' : '⟳ בסיס 2025'}
+  el.innerHTML = `
+    <button id="btn-committee" onclick="toggleCommittee()"
+      style="margin-left:10px;padding:4px 14px;border-radius:999px;border:1px solid #f0d8b8;
+             background:#fff8f0;
+             color:#b45309;
+             font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle;transition:.15s">
+      🏛️ ${COMMITTEE_NAMES[activeCommittee]}
     </button>
-    <button onclick="toggleV2()" title="${useV2 ? 'חזור לשיטה הישנה (שני קבצים)' : 'דרג לפי השיטה החדשה (קובץ מאוחד)'}"
-      style="margin-right:8px;padding:4px 12px;border-radius:999px;border:1px solid ${useV2 ? '#157a52' : 'var(--line)'};
-             background:${useV2 ? '#e7f6ef' : '#fff'};color:${useV2 ? '#157a52' : 'var(--muted)'};
-             font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle">
-      ${useV2 ? '⟳ V1' : '⚡ V2'}
+    <button id="btn-zipper" onclick="toggleZipper()"
+      style="padding:4px 14px;border-radius:999px;border:1px solid var(--line);
+             background:${zipperActive ? 'var(--brand)' : '#fff'};
+             color:${zipperActive ? '#fff' : 'var(--muted)'};
+             font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle;transition:.15s">
+      ♂♀ ריץ רץ
     </button>`;
-  el.style.cssText = 'font-size:1.15rem;font-weight:900;color:#12355b;margin-bottom:18px;line-height:1.5';
+  el.style.cssText = 'font-size:1.05rem;font-weight:800;color:#12355b;margin-bottom:18px;line-height:1.55';
 
-  const anyFallback = show.some(c => hasFallback(c.name));
+  const anyFallback = false;
 
   document.getElementById('res-wrap').innerHTML = `
     <table class="res-table">
@@ -1713,17 +2064,26 @@ function renderTable() {
           const pk     = state.picked.has(c.name);
           const shiryunMark = getShiryunPicks().has(c.name) ? ' 🎯' : '';
           const trueRank = scoreRankMap[c.name] ?? idx;
-          const shift    = shiryunMark ? (trueRank - idx) : 0;
-          const col    = shift > 4  ? '#ef4444'
-                       : shift > 0  ? '#f59e0b'
-                       : idx < 8   ? '#10b981'
-                       : idx < 25  ? '#f59e0b'
-                       :             '#ef4444';
-          const fallbackMark = !shiryunMark && hasFallback(c.name)
-            ? '<span title="חלק מהנתונים מבוסס על פרופיל 2025" style="color:#ef4444;font-size:.78rem;cursor:help"> *</span>'
+          const shiryunShift = shiryunMark ? (trueRank - idx) : 0;
+          const zipperShift  = zipperActive ? (idx - trueRank) : 0; // positive = moved down, negative = moved up
+          const absZipper    = Math.abs(zipperShift);
+          const col    = shiryunShift > 4              ? '#ef4444'
+                       : shiryunShift > 0              ? '#f59e0b'
+                       : zipperActive && absZipper > 3 ? '#ef4444'   // far → red
+                       : zipperActive && zipperShift > 0 ? '#a78bfa' // moved down → soft purple
+                       : zipperActive && zipperShift < 0 ? '#f59e0b' // moved up → yellow
+                       : zipperActive                  ? '#94a3b8'   // no change in zipper → gray
+                       : idx < 8                      ? '#10b981'   // top 8 → green
+                       :                                '#94a3b8';  // rest → gray
+          const shift = shiryunShift;
+          const is2026 = flatDB[c.name] && flatDB[c.name]['zccb'] === '1';
+          const fallbackMark = !is2026
+            ? '<span title="טרם עודכן לנתוני 2026" style="display:inline-block;width:4px;height:4px;border-radius:50%;background:#ef4444;margin-right:4px;vertical-align:middle"></span>'
             : '';
-          return `<tr>
-            <td class="nm-cell">${c.name}${shiryunMark}${fallbackMark}</td>
+          const borderStyle = idx === 7 ? 'border-bottom:2px solid #667085' : '';
+          return `<tr style="${borderStyle}">
+            <td class="nm-cell">
+              <span style="color:var(--muted);font-size:.78rem;font-weight:400;margin-left:7px;opacity:.6">${idx+1}.</span>${c.name}${shiryunMark}${fallbackMark}</td>
             <td class="sc-cell">
               <div class="sc-val" style="color:${col}">${c.total}</div>
               <div class="sc-bar"><div class="sc-fill" style="width:${c.total}%;background:${col}"></div></div>
@@ -1832,53 +2192,43 @@ function beep() {
 function openProfile(idx) {
   const c = scored[idx];
   const s = sumDB[c.name] || {};
-  const w = cfg.runtime_scoring.personal_score_weights;
 
-  document.getElementById('m-name').textContent = c.name;
-  document.getElementById('m-sub').textContent =
-    [s['קטגוריה'], s['סגנון'], s['תחומי_חוזק_בולטים']].filter(Boolean).join(' · ');
-
-  const topicRows = state.topics.map(code => {
-    const t   = cfg.topics.find(x => x.code === code);
-    const row = (topicDB[c.name] || {})[code];
-    const dir = cfg.topic_direction_options.find(d => d.id === state.dirs[code]);
-    const op  = row ? row['עמדות_ציון']  : '—';
-    const ex  = row ? row['ביצוע_ציון']  : '—';
-    const im  = row ? row['תדמית_ציון']  : '—';
-    const ts  = row ? Math.round(topicScore(row, state.dirs[code] || 'identity_anchor')) : 35;
-    const tc  = scoreColor(ts);
-    const src = (topicSource[c.name] || {})[code];
-    const srcTag = src === '2025'
-      ? '<span style="font-size:.68rem;color:var(--muted);background:#f0ece5;border-radius:4px;padding:1px 4px;margin-right:3px">2025</span>'
-      : '';
-    return `<tr style="border-bottom:1px solid var(--line)">
-      <td style="padding:5px 8px;font-size:.82rem;font-weight:700">${srcTag}${t ? t.short_title : code}</td>
-      <td style="padding:5px 8px;font-size:.75rem;color:var(--muted)">${dir ? dir.label : '—'}</td>
-      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${op}</td>
-      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${ex}</td>
-      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${im}</td>
-      <td style="padding:5px 8px;text-align:center;font-weight:800;color:${tc};font-size:.82rem">${ts}</td>
-    </tr>`;
-  }).join('');
+  document.getElementById('m-name').textContent = `כרטיס מועמד — ${c.name}`;
+  document.getElementById('m-sub').textContent = '';
 
   const factors = [
-    { lbl:`התאמת נושאים (${(w.topic_fit*100).toFixed(0)}%)`, val: c.topicFit },
-    { lbl:`אופי ציבורי (${(w.public_tone*100).toFixed(0)}%)`, val: c.publicTone },
-    { lbl:`תפקיד כנסת (${(w.knesset_role*100).toFixed(0)}%)`, val: c.knessetRole },
-    { lbl:`כיסוי מידע (${(w.information_tolerance*100).toFixed(0)}%)`, val: c.infoTol },
-    { lbl:`רקורד/פוטנציאל (${(w.proven_vs_potential*100).toFixed(0)}%)`, val: c.provenPot }
-  ];
+    { lbl: `רזומה (${c.resumeWeight || 80}%)`, val: c.resumeDisplay },
+    { lbl: `מוטיבציה אפקטיבית (${c.motivationWeight || 20}%)`, val: c.motivDisplay }
+  ].filter(f => f.val !== null && f.val !== undefined);
+
+  // Per-topic breakdown for display only
+  const baseTopicRows = TOPIC_NUMS.map(num => {
+    const t = cfg.topics.find(x => x.code === 'D' + num);
+    const d = c.topicDetail ? c.topicDetail[num] : {};
+    const op = d && d.opinions !== null ? d.opinions : '—';
+    const cap = d && d.capability !== null ? d.capability : '—';
+    const img = d && d.image !== null ? d.image : '—';
+    const filled = (d.opinions !== null ? 1 : 0) + (d.capability !== null ? 1 : 0) + (d.image !== null ? 1 : 0);
+    const fillColor = filled === 3 ? '#10b981' : filled > 0 ? '#f59e0b' : '#e2e8f0';
+    return `<tr style="border-bottom:1px solid var(--line)">
+      <td style="padding:5px 8px;font-size:.82rem;font-weight:700">${t ? t.short_title : num}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${op}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${cap}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${img}</td>
+      <td style="padding:5px 8px;text-align:center"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${fillColor}"></span> ${filled}/3</td>
+    </tr>`;
+  }).join('');
 
   document.getElementById('m-body').innerHTML = `
     <div style="display:flex;align-items:center;gap:14px;background:var(--brand-soft);border-radius:12px;padding:12px 14px;margin-bottom:14px">
       <div style="font-size:2.2rem;font-weight:900;color:${scoreColor(c.total)}">${c.total}</div>
       <div>
-        <div style="font-weight:800">ציון התאמה אישי</div>
-        <div style="color:var(--muted);font-size:.83rem">מתוך ${state.topics.length} נושאים ושאלות הסגל</div>
+        <div style="font-weight:800">ציון בשלות בסיסי</div>
+        <div style="color:var(--muted);font-size:.83rem">רזומה ${c.resumeWeight || 80}% · מוטיבציה ${c.motivationWeight || 20}%</div>
       </div>
     </div>
 
-    <h3 style="margin-bottom:8px">פירוק ציון</h3>
+    <h3 style="margin-bottom:8px">פירוק ציון הבסיס</h3>
     <div class="sc-detail">
       ${factors.map(f => `
         <div class="sc-row">
@@ -1888,18 +2238,50 @@ function openProfile(idx) {
         </div>`).join('')}
     </div>
 
-    ${state.topics.length > 0 ? `
-    <h3 style="margin:14px 0 7px">ציונים לפי נושא</h3>
+    <div style="margin-top:10px;padding:9px 12px;border-radius:11px;background:#fbfcff;border:1px solid var(--line);font-size:.82rem;color:var(--muted);line-height:1.55">
+      <strong>מוטיבציה:</strong> ${c.motivationType || 'לא_ברור'}
+      ${c.motivationConfidenceDisplay !== null && c.motivationConfidenceDisplay !== undefined ? ` · ביטחון ${c.motivationConfidenceDisplay}%` : ''}
+      ${c.motivationAnchor ? `<br><strong>עוגן:</strong> ${c.motivationAnchor}` : ''}
+    </div>
+
+
+    ${c.gptResume !== null ? `
+    <div style="margin-top:10px;padding:9px 12px;border-radius:11px;background:#fff8f0;border:1px solid #f0d8b8;font-size:.82rem;line-height:1.55">
+      <strong>השוואת ועדות מסדרות:</strong>
+      <table style="width:100%;margin-top:5px;border-collapse:collapse;font-size:.82rem">
+        <tr style="border-bottom:1px solid #f0d8b8">
+          <td></td>
+          <td style="text-align:center;font-weight:700;padding:3px 6px">ג׳מיני</td>
+          <td style="text-align:center;font-weight:700;padding:3px 6px">GPT</td>
+          <td style="text-align:center;font-weight:700;padding:3px 6px;color:var(--muted)">פער</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5e6d5">
+          <td style="padding:3px 6px">רזומה</td>
+          <td style="text-align:center;padding:3px 6px">${c.resumeDisplay !== null ? (c.resumeDisplay/10).toFixed(1) : '—'}</td>
+          <td style="text-align:center;padding:3px 6px">${c.gptResume !== null ? c.gptResume.toFixed(1) : '—'}</td>
+          <td style="text-align:center;padding:3px 6px;color:${Math.abs((c.resumeDisplay||0)/10 - (c.gptResume||0)) >= 1.5 ? '#ef4444' : 'var(--muted)'}">${c.resumeDisplay !== null && c.gptResume !== null ? ((c.resumeDisplay/10) - c.gptResume > 0 ? '+' : '') + ((c.resumeDisplay/10) - c.gptResume).toFixed(1) : '—'}</td>
+        </tr>
+        <tr>
+          <td style="padding:3px 6px">מוטיבציה</td>
+          <td style="text-align:center;padding:3px 6px">${c.motivationType || '—'}</td>
+          <td style="text-align:center;padding:3px 6px">${c.gptMot || '—'}</td>
+          <td style="text-align:center;padding:3px 6px;color:${c.motivationType !== c.gptMot ? '#ef4444' : '#10b981'}">${c.motivationType === c.gptMot ? '✓' : '✗'}</td>
+        </tr>
+      </table>
+    </div>` : ''}
+
+    ${!state._fastTrack ? `
+    <h3 style="margin:14px 0 7px">נתוני נושאים — להצגה בלבד (${c.coverage}/36)</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin:0 0 6px">הנתונים הבאים אינם משוקללים במסלול הבסיסי הנוכחי.</p>
     <table style="width:100%;border-collapse:collapse">
       <thead><tr style="border-bottom:2px solid var(--line)">
         <th style="text-align:right;padding:5px 8px;color:var(--muted);font-size:.75rem">נושא</th>
-        <th style="text-align:right;padding:5px 8px;color:var(--muted);font-size:.75rem">כיוון</th>
         <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">עמדות</th>
-        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">ביצוע</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">יכולות</th>
         <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">תדמית</th>
-        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">ציון</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">כיסוי</th>
       </tr></thead>
-      <tbody>${topicRows}</tbody>
+      <tbody>${baseTopicRows}</tbody>
     </table>` : ''}
 
     ${s['תחומי_חוזק_בולטים'] ? `
@@ -1907,7 +2289,8 @@ function openProfile(idx) {
       <strong>תחומי חוזק: </strong>${s['תחומי_חוזק_בולטים']}
     </div>` : ''}
 
-    <div class="actions" style="margin-top:14px">
+    <p style="margin-top:14px;font-size:.75rem;color:#999;font-weight:700;text-align:center">נושא הביטחון פוצל: אסטרטגיה מבצעית ובניין הכוח · חזון מדיני והסדרים אזוריים</p>
+    <div class="actions" style="margin-top:8px">
       <button class="btn-g" onclick="closeModal()">סגור</button>
     </div>`;
 
@@ -1955,7 +2338,7 @@ function goFinal() {
 }
 
 // הדירוג בפועל (ללא שינוי בחישוב) — כל המסלולים מגיעים לכאן
-function runRanking() { visibleCount = 10; showScreen('s-final'); runLoader(); }
+function runRanking() { visibleCount = 10; zipperActive = false; showScreen('s-final'); runLoader(); }
 
 // ── צומת ההכרעה: גורמי השקלול (דינמי לפי state) ──
 function getDecideFactors() {
@@ -2063,7 +2446,7 @@ function decideBack() {
 }
 
 function resetAll() {
-  state.style = {}; state.topics = []; state.dirs = {}; state.picked = new Set(); state.priorities = []; state.dirOrder = [];
+  state.style = {}; state.topics = []; state.dirs = {}; state.picked = new Set(); state.priorities = []; state.dirOrder = []; state._fastTrack = false;
   expandedSquadQ = 0; expandedQ = 0; expandedDir = 0;
   saveState();
   clearTimeout(_squadPhotoTimer);
@@ -2090,6 +2473,10 @@ async function init() {
     // startSquadPhotos(); // אנימציה מושבתת — ישר למצב יציב
     renderAnonPhotos();
     document.getElementById('squad-stop-btn').style.display = 'none';
+    // Committee mode — jump straight to ranking
+    if (new URLSearchParams(location.search).get('committee') === '1') {
+      skipToRanking();
+    }
     const hdr = document.querySelector('header');
     if (hdr) document.querySelector('.page').style.paddingTop = (hdr.offsetHeight + 4) + 'px';
     window.addEventListener('resize', () => {

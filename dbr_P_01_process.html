@@ -332,6 +332,12 @@
         <span class="path-cta">כניסה</span>
       </a>
 
+      <a class="path-card" href="dbr_P_01_main.html?committee=1" onclick="trackPath('committee')" style="border-color:#b45309;">
+        <div class="path-title"><span class="path-icon">🏛️</span> ועדות מסדרות</div>
+        <div class="path-desc" id="committee-desc">שלוש ועדות מסדרות עצמאיות בדקו את כל המועמדים. כל ועדה העריכה בנפרד את הרזומה, המוטיבציה והתאמה לתפקיד. ראו את הדירוג, השוו בין הוועדות, ובחרו.</div>
+        <span class="path-cta">כניסה</span>
+      </a>
+
       <a class="path-card" href="dbr_P_01_main.html" onclick="trackPath('squad')">
         <div class="path-title"><span class="path-icon">⚖️</span> בחירה על פי הקריטריונים שלך</div>
         <div class="path-desc" id="dbr-desc">על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.</div>
@@ -359,9 +365,6 @@
     </div>
 
     <div class="methodology-link">
-      על הרציונל של תהליך הבחירה ואופן פעולת המערכת —
-      <a href="dbr_P_01_game.html">קראו כאן</a>
-      &nbsp;·&nbsp;
       <a href="dbr_P_01_state.html">מסך הסיכום</a>
     </div>
 
@@ -371,9 +374,7 @@
   </div>
 
   <script>
-    if (!localStorage.getItem('dbr_intro_seen')) {
-      window.location.replace('dbr_P_01_game.html');
-    }
+    // dbr_P_01_game.html removed from flow
 
     const STATE_KEY = 'primeris_state_v1';
 

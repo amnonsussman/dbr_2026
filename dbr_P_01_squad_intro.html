@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ד.ב.ר — מהרציונל לסגל מאוזן</title>
+<style>
+  :root{
+    --bg1:#f7f4ee;
+    --bg2:#e9e1d5;
+    --ink:#22313a;
+    --muted:#6b746f;
+    --line:#68777a;
+    --card:#ffffffcc;
+    --smoke:#6f8fa4;
+    --sage:#89a88a;
+    --terra:#b97a64;
+    --violet:#8a8199;
+    --sand:#b9ad93;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background:
+      radial-gradient(circle at 50% 42%, rgba(255,255,255,.94), rgba(247,244,238,.75) 36%, var(--bg2) 100%);
+    color:var(--ink);
+    overflow:hidden;
+  }
+  .page{
+    position:relative;
+    width:min(100vw, 1280px);
+    height:100vh;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .topbar{
+    position:absolute;
+    top:18px;
+    right:22px;
+    left:22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    z-index:20;
+    pointer-events:none;
+  }
+  .brand{
+    font-weight:850;
+    letter-spacing:.02em;
+    font-size:clamp(20px,2.2vw,34px);
+  }
+  .brand small{
+    display:block;
+    font-weight:550;
+    font-size:clamp(11px,1.1vw,14px);
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .phaseBox{
+    text-align:left;
+    direction:rtl;
+    background:var(--card);
+    border:1px solid rgba(50,60,60,.12);
+    border-radius:18px;
+    padding:10px 16px;
+    box-shadow:0 10px 25px rgba(51,58,55,.08);
+    min-width:220px;
+  }
+  .phaseBox .phase{
+    font-weight:800;
+    font-size:14px;
+  }
+  .phaseBox .speed{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:2px;
+  }
+  .stageWrap{
+    position:relative;
+    width:min(92vw, 980px);
+    height:min(82vh, 760px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .octoLayer{
+    position:absolute;
+    width:min(68vw, 560px);
+    height:min(68vw, 560px);
+    max-height:64vh;
+    max-width:64vh;
+    min-width:430px;
+    min-height:430px;
+    z-index:1;
+    filter:drop-shadow(0 20px 35px rgba(40,50,50,.12));
+  }
+  .octoSvg{
+    width:100%;
+    height:100%;
+    overflow:visible;
+  }
+  .octoPoly{
+    fill:rgba(255,255,255,.34);
+    stroke:rgba(160,170,175,.45);
+    stroke-width:1.8;
+    stroke-linejoin:round;
+  }
+  .voterTop{
+    position:absolute;
+    z-index:7;
+    top:10%;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
+    pointer-events:none;
+    width:80%;
+  }
+  .voterRole{
+    font-size:clamp(13px,1.8vw,20px);
+    font-weight:500;
+    color:var(--muted);
+    letter-spacing:.01em;
+    margin-bottom:4px;
+  }
+  .voter{
+    font-size:clamp(22px,4.2vw,48px);
+    font-weight:900;
+    line-height:1.1;
+    letter-spacing:.08em;
+    color:#17242c;
+    text-shadow:0 4px 16px rgba(255,255,255,.85);
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .voter.pulse{
+    transform:scale(1.035);
+  }
+  .thoughtBottom{
+    position:absolute;
+    z-index:7;
+    top:73%;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
+    pointer-events:none;
+    width:80%;
+  }
+  .thought{
+    font-size:clamp(14px,1.5vw,19px);
+    font-weight:650;
+    color:var(--muted);
+    line-height:1.4;
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+  .thought.visible{
+    opacity:1;
+  }
+  .cyclePrompt{
+    position:absolute;
+    z-index:12;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    width:75%;
+    opacity:1;
+    transition:opacity .4s ease;
+  }
+  .cyclePrompt.hidden{
+    opacity:0;
+    pointer-events:none;
+  }
+  .promptMsg{
+    font-size:clamp(15px,2vw,22px);
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.5;
+    margin-bottom:18px;
+  }
+  .promptBtns{
+    display:flex;
+    gap:14px;
+    justify-content:center;
+  }
+  .promptBtn{
+    font-family:inherit;
+    font-size:clamp(14px,1.6vw,18px);
+    font-weight:800;
+    border:none;
+    border-radius:999px;
+    padding:10px 28px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .promptBtn:hover{
+    transform:scale(1.05);
+  }
+  .promptBtn.yes{
+    background:#33464f;
+    color:#fff;
+    box-shadow:0 6px 18px rgba(51,70,79,.25);
+  }
+  .promptBtn.no{
+    background:rgba(255,255,255,.7);
+    color:var(--ink);
+    border:1.5px solid rgba(50,60,60,.18);
+    box-shadow:0 4px 12px rgba(50,60,60,.08);
+  }
+  .arrowLayer{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:3;
+    pointer-events:none;
+    overflow:visible;
+  }
+  .arrowLine{
+    fill:none;
+    stroke:rgba(130,140,148,.65);
+    stroke-width:1.2;
+    stroke-dasharray:200;
+    stroke-dashoffset:200;
+    opacity:.55;
+    marker-end:url(#arrowHead);
+  }
+  .arrowLine.animate{
+    animation:drawArrow .4s ease-out forwards;
+  }
+  .arrowLine.fade{
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+  @keyframes drawArrow{
+    to{ stroke-dashoffset:0; }
+  }
+  .bank{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:min(24vw, 170px);
+    height:min(24vw, 170px);
+    transform:translate(-50%,-50%);
+    z-index:5;
+  }
+  .shape{
+    position:absolute;
+    width:min(2.5vw, 18px);
+    height:min(2.5vw, 18px);
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border:1.4px solid rgba(120,130,135,.25);
+    box-shadow:0 4px 10px rgba(80,80,80,.08);
+    transition:transform .36s cubic-bezier(.2,.85,.25,1), opacity .24s ease, width .2s ease, height .2s ease;
+    opacity:.94;
+  }
+  .shape.big{ width:min(3.6vw, 25px); height:min(3.6vw, 25px); }
+  .circle{ border-radius:999px; }
+  .roundSquare{ border-radius:min(1.4vw, 10px); }
+  .diamond{ border-radius:min(1vw, 7px); transform:translate(-50%,-50%) rotate(45deg); }
+  .triangle{
+    width:0 !important;
+    height:0 !important;
+    background:transparent !important;
+    border-left:min(1.7vw, 12px) solid transparent !important;
+    border-right:min(1.7vw, 12px) solid transparent !important;
+    border-bottom:min(2.5vw, 18px) solid var(--c) !important;
+    border-top:0 !important;
+    box-shadow:none;
+    filter:drop-shadow(0 7px 7px rgba(50,50,50,.14));
+  }
+  .hex{
+    clip-path:polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+  }
+  .selected{
+    z-index:9;
+    width:min(2.6vw, 18px);
+    height:min(2.6vw, 18px);
+    opacity:1;
+    outline:2px solid rgba(255,255,255,.72);
+  }
+  .selected.triangle{
+    border-left-width:min(1.4vw, 10px) !important;
+    border-right-width:min(1.4vw, 10px) !important;
+    border-bottom-width:min(2.6vw, 18px) !important;
+  }
+  .slot{
+    position:absolute;
+    width:124px;
+    height:112px;
+    z-index:4;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    opacity:.24;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .slot.filled{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1.025);
+  }
+  .candidateFigure{
+    position:relative;
+    width:58px;
+    height:62px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .avatar{
+    position:relative;
+    width:46px;
+    height:58px;
+    filter:drop-shadow(0 8px 12px rgba(44,54,54,.14));
+  }
+  .avatarHead{
+    position:absolute;
+    top:2px;
+    left:50%;
+    transform:translateX(-50%);
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#f8f2e8,#dec7ae);
+    border:1px solid rgba(71,55,42,.18);
+  }
+  .avatarBody{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:42px;
+    height:36px;
+    border-radius:18px 18px 13px 13px;
+    background:linear-gradient(145deg,#52666f,#33454d);
+    border:1px solid rgba(22,34,38,.16);
+  }
+  .avatarBody:after{
+    content:"";
+    position:absolute;
+    top:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:12px;
+    height:20px;
+    border-radius:0 0 10px 10px;
+    background:rgba(255,255,255,.55);
+  }
+  .slotLabel{
+    font-size:15px;
+    font-weight:900;
+    color:#263842;
+    background:rgba(255,255,255,.72);
+    border:1px solid rgba(70,80,80,.14);
+    border-radius:999px;
+    padding:4px 10px;
+    box-shadow:0 5px 12px rgba(50,60,60,.07);
+    white-space:nowrap;
+    line-height:1.1;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    direction:rtl;
+  }
+  .slotDot{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:18px;
+    height:18px;
+    flex-shrink:0;
+  }
+  .dash{
+    position:absolute;
+    bottom:22px;
+    right:50%;
+    transform:translateX(50%);
+    display:flex;
+    gap:8px;
+    z-index:30;
+    direction:rtl;
+    background:rgba(255,255,255,.55);
+    border:1px solid rgba(40,50,50,.11);
+    border-radius:999px;
+    padding:9px 12px;
+    backdrop-filter: blur(8px);
+  }
+  .tick{
+    width:13px;
+    height:13px;
+    border-radius:999px;
+    background:rgba(80,90,90,.2);
+    transition:width .25s ease, background .25s ease, transform .25s ease;
+  }
+  .tick.active{
+    width:30px;
+    transform:scale(1.05);
+    background:#33464f;
+  }
+  .counterStrip{
+    position:absolute;
+    bottom:70px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:15;
+    color:#4e5b60;
+    font-weight:700;
+    font-size:14px;
+    text-align:center;
+    opacity:.85;
+  }
+  .flash{
+    animation:flash .18s ease 1;
+  }
+  @keyframes flash{
+    0%{filter:brightness(1)}
+    50%{filter:brightness(1.18)}
+    100%{filter:brightness(1)}
+  }
+  @media (max-width:700px){
+    .octoLayer{min-width:300px; min-height:300px;}
+    .slot{width:86px;height:82px;}
+    .candidateFigure{width:42px;height:46px;}
+    .avatar{width:34px;height:44px;}
+    .avatarHead{width:18px;height:18px;}
+    .avatarBody{width:32px;height:28px;}
+    .slotLabel{font-size:11px;padding:2px 7px;gap:3px;}
+    .slotDot{width:12px;height:12px;}
+    .topbar{top:12px;right:12px;left:12px;}
+    .phaseBox{min-width:150px;padding:8px 10px;}
+    .voter{font-size:14px;}
+    .thought{font-size:12px;}
+  }
+  .startOverlay{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    background:rgba(247,244,238,.95);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:24px;
+    cursor:pointer;
+  }
+  .startOverlay.gone{ display:none; }
+  .startTitle{
+    font-size:clamp(28px,5vw,52px);
+    font-weight:900;
+    color:#22313a;
+    letter-spacing:.04em;
+  }
+  .startSub{
+    font-size:clamp(14px,2vw,20px);
+    color:#6b746f;
+    font-weight:600;
+  }
+  .startBtn{
+    font-family:inherit;
+    font-size:clamp(16px,2vw,22px);
+    font-weight:800;
+    background:#33464f;
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:14px 40px;
+    cursor:pointer;
+    box-shadow:0 8px 24px rgba(51,70,79,.3);
+    transition:transform .15s ease;
+  }
+  .startBtn:hover{ transform:scale(1.05); }
+
+  .introPanel{
+    width:min(92vw, 880px);
+    background:rgba(255,255,255,.82);
+    border:1px solid rgba(50,60,60,.12);
+    border-radius:28px;
+    padding:clamp(22px,4vw,44px);
+    box-shadow:0 22px 60px rgba(40,50,50,.14);
+    text-align:center;
+    backdrop-filter: blur(10px);
+  }
+  .introHeadline{
+    margin:10px 0 14px;
+    font-size:clamp(24px,4.2vw,46px);
+    line-height:1.16;
+    color:#22313a;
+    letter-spacing:-.03em;
+  }
+  .introText{
+    max-width:760px;
+    margin:0 auto 16px;
+    font-size:clamp(15px,1.65vw,20px);
+    color:#34444b;
+    line-height:1.65;
+    font-weight:550;
+  }
+  .introText.small{
+    font-size:clamp(13px,1.35vw,16px);
+    color:#6b746f;
+    max-width:680px;
+  }
+  .introCallout{
+    max-width:760px;
+    margin:18px auto;
+    padding:16px 18px;
+    background:#eaf3ff;
+    color:#12355b;
+    border-right:5px solid #1d5fa7;
+    border-radius:16px;
+    font-weight:900;
+    font-size:clamp(14px,1.55vw,18px);
+    line-height:1.55;
+    text-align:right;
+  }
+  .introActions{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:22px;
+  }
+  .skipBtn{
+    font-family:inherit;
+    font-size:clamp(15px,1.7vw,20px);
+    font-weight:850;
+    background:rgba(255,255,255,.78);
+    color:#33464f;
+    border:1.5px solid rgba(51,70,79,.24);
+    border-radius:999px;
+    padding:13px 30px;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(51,70,79,.12);
+    transition:transform .15s ease;
+  }
+  .skipBtn:hover{ transform:scale(1.04); }
+
+  .resultOverlay{
+    position:fixed;
+    inset:0;
+    z-index:998;
+    background:rgba(247,244,238,.96);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+  }
+  .resultOverlay.hidden{ display:none; }
+  .resultPanel{
+    width:min(94vw, 980px);
+    max-height:94vh;
+    overflow:auto;
+    background:white;
+    border:1px solid rgba(50,60,60,.12);
+    border-radius:28px;
+    padding:clamp(22px,4vw,42px);
+    box-shadow:0 24px 70px rgba(40,50,50,.18);
+    text-align:center;
+  }
+  .resultEyebrow{
+    color:#1d5fa7;
+    font-weight:900;
+    letter-spacing:.08em;
+    font-size:.92rem;
+    margin-bottom:6px;
+  }
+  .resultPanel h2{
+    margin:0 0 14px;
+    color:#17242c;
+    font-size:clamp(24px,4vw,42px);
+    line-height:1.18;
+  }
+  .resultPanel p{
+    max-width:760px;
+    margin:0 auto 22px;
+    color:#34444b;
+    font-size:clamp(15px,1.55vw,18px);
+    line-height:1.65;
+    font-weight:550;
+  }
+  .pitch{
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr;
+    gap:12px;
+    max-width:880px;
+    margin:22px auto;
+    direction:rtl;
+  }
+  .pitchZone{
+    border:2px solid rgba(90,110,110,.18);
+    border-radius:22px;
+    padding:18px 14px;
+    min-height:150px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg,#ffffff,#f8fbff);
+    box-shadow:0 8px 22px rgba(40,50,50,.08);
+  }
+  .pitchZone.attack{
+    border-color:rgba(185,122,100,.36);
+    background:linear-gradient(180deg,#fff,#fff5f1);
+  }
+  .pitchZone.missing{
+    border-color:rgba(160,90,90,.36);
+    background:repeating-linear-gradient(135deg,#fff 0,#fff 10px,#fff0f0 10px,#fff0f0 20px);
+  }
+  .pitchZone.defense{
+    border-color:rgba(111,143,164,.34);
+    background:linear-gradient(180deg,#fff,#f1f7fb);
+  }
+  .zoneTitle{
+    font-weight:950;
+    color:#22313a;
+    font-size:1.25rem;
+    margin-bottom:10px;
+  }
+  .playerRow{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+    justify-content:center;
+    font-size:clamp(22px,3.2vw,36px);
+    line-height:1.1;
+    margin-bottom:10px;
+  }
+  .playerRow.thin{ font-size:clamp(20px,2.8vw,30px); }
+  .emptyLine{
+    color:#8a3b3b;
+    font-weight:950;
+    font-size:clamp(18px,2.4vw,28px);
+    margin:8px 0 12px;
+  }
+  .zoneText{
+    color:#5f6b7a;
+    font-weight:800;
+    font-size:.95rem;
+    line-height:1.35;
+  }
+  .resultPunch{
+    max-width:820px;
+    margin:18px auto 0;
+    padding:18px 20px;
+    border-right:5px solid #1d5fa7;
+    background:#eaf3ff;
+    border-radius:18px;
+    color:#12355b;
+    font-weight:950;
+    font-size:clamp(15px,1.7vw,20px);
+    line-height:1.55;
+    text-align:right;
+  }
+  .resultActions{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:26px;
+  }
+  .resultBtn{
+    font-family:inherit;
+    min-width:220px;
+    padding:12px 24px;
+    border-radius:999px;
+    font-weight:900;
+    font-size:1rem;
+    cursor:pointer;
+    border:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .resultBtn:hover{ transform:translateY(-1px); }
+  .resultBtn.primary{
+    background:#1d5fa7;
+    color:white;
+    box-shadow:0 10px 22px rgba(29,95,167,.24);
+  }
+  .resultBtn.secondary{
+    background:white;
+    color:#1d5fa7;
+    border:1.5px solid #1d5fa7;
+  }
+  @media (max-width:760px){
+    .pitch{ grid-template-columns:1fr; }
+    .introPanel{ max-height:92vh; overflow:auto; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="startOverlay" id="startOverlay">
+  <div class="introPanel">
+    <div class="startTitle">ד.ב.ר</div>
+    <div class="startSub">דמוקרטים בוחרים רציונלית</div>
+
+    <h1 class="introHeadline">לא בוחרים רק שמות. מרכיבים נבחרת.</h1>
+
+    <p class="introText">
+      בפריימריז כמעט כל בוחר רוצה אותו דבר: לבחור את הקבוצה הטובה ביותר למפלגה.
+      אבל כל בוחר מזהה “קבוצה טובה” דרך עדשה אחרת — שם מוכר, המלצה, ניסיון, ערכים,
+      מפגש אישי, תחושת אמון, תדמית או רצון להתחדשות.
+    </p>
+
+    <div class="introCallout">
+      <strong>מה תראו עכשיו?</strong><br>
+      סימולציה של כ־50,000 בוחרים, שרובם בחרו באופן רציונלי.
+      איך אנחנו יודעים? דגמנו 32 מהם, וצללנו לתהליך הבחירה שלהם.
+    </div>
+
+    <p class="introText small">
+      במהלך הסימולציה תוכלו לראות שהבוחרים שנדגמו אכן בחרו את מועמדיהם באופן הגיוני לגמרי.
+      ולמרות זאת, לאחר בדיקת התוצאה המצטברת — הבחירה התגלתה כלא אופטימלית, בלשון המעטה.
+    </p>
+
+    <p class="introText small">
+      במקרה שנראה כאן, הבוחרים בחרו יותר מדי “חלוצים” — אבל כמעט לא נוצר “קישור”
+      שמחבר את המהלך ומזרים להם את הכדורים.
+    </p>
+
+    <div class="introActions">
+      <button class="startBtn" id="startBtn">התחל סימולציה</button>
+      <a class="skipBtn" href="dbr_P_01_process.html">דלג לבחירת דרך ההרכבה</a>
+    </div>
+  </div>
+</div>
+
+<div class="resultOverlay hidden" id="resultOverlay">
+  <div class="resultPanel">
+    <div class="resultEyebrow">תוצאות הבחירה</div>
+    <h2>הבוחרים בחרו בהיגיון. התוצאה יצאה לא אופטימלית.</h2>
+
+    <p>
+      דגמנו בוחרים מתוך הסימולציה, וראינו שכל אחד מהם פעל מתוך היגיון סביר.
+      אבל כשמחברים הרבה החלטות רציונליות יחד, יכולה להיווצר תוצאה קבוצתית בעייתית:
+      עודף גדול במקום אחד, וחוסר קריטי במקום אחר.
+    </p>
+
+    <div class="pitch">
+      <div class="pitchZone attack">
+        <div class="zoneTitle">התקפה</div>
+        <div class="playerRow">
+          <span>⚽</span><span>⚽</span><span>⚽</span><span>⚽</span><span>⚽</span><span>⚽</span>
+        </div>
+        <div class="zoneText">יותר מדי חלוצים מצוינים</div>
+      </div>
+
+      <div class="pitchZone midfield missing">
+        <div class="zoneTitle">קישור</div>
+        <div class="emptyLine">אין מי שמזרים כדורים</div>
+        <div class="zoneText">אין מי שמחבר, מתאם ומפעיל את ההתקפה</div>
+      </div>
+
+      <div class="pitchZone defense">
+        <div class="zoneTitle">הגנה</div>
+        <div class="playerRow thin"><span>🛡️</span><span>🛡️</span></div>
+        <div class="zoneText">מעט מדי יציבות ושמירת מערכת</div>
+      </div>
+    </div>
+
+    <div class="resultPunch">
+      גם אוסף של בחירות טובות ומנומקות לא בהכרח יוצר נבחרת טובה.
+      נבחרת צריכה תפקידים משלימים: התקפה, הגנה, קישור, ניסיון, ביצוע, ייצוג ויכולת לעבוד יחד.
+    </div>
+
+    <div class="resultActions">
+      <a class="resultBtn primary" href="dbr_P_01_process.html">המשך לבחירת דרך ההרכבה</a>
+      <button class="resultBtn secondary" id="btnMoreExamples">הראה עוד דוגמאות</button>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="topbar">
+    <div class="brand">ד.ב.ר<small>דמוקרטים בוחרים רציונלית</small></div>
+    <div class="phaseBox">
+      <div class="phase" id="phaseTitle">קטע 1 מתוך 5</div>
+      <div class="speed" id="phaseSpeed">מהירות רגילה</div>
+    </div>
+  </div>
+
+  <main class="stageWrap" id="stage">
+    <div class="octoLayer" id="octo">
+      <svg class="octoSvg" viewBox="0 0 500 500" aria-hidden="true">
+        <polygon class="octoPoly" points="250,18 414,86 482,250 414,414 250,482 86,414 18,250 86,86"></polygon>
+      </svg>
+      <div class="voterTop">
+        <div class="voterRole" id="voterRole">בוחר</div>
+        <div class="voter" id="voterText">מוכוון תקשורת</div>
+      </div>
+      <div class="thoughtBottom">
+        <div class="thought" id="thoughtText"></div>
+      </div>
+      <div class="cyclePrompt hidden" id="cyclePrompt">
+        <div class="promptMsg" id="promptMsg"></div>
+        <div class="promptBtns">
+          <button class="promptBtn yes" id="btnYes">להמשיך</button>
+          <button class="promptBtn no" id="btnNo">לעצור</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bank" id="bank"></div>
+
+    <div id="slots"></div>
+
+    <svg class="arrowLayer" id="arrowLayer" aria-hidden="true">
+      <defs>
+        <marker id="arrowHead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6" fill="none" stroke="rgba(160,170,175,.5)" stroke-width="1" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+    </svg>
+  </main>
+
+  <div class="counterStrip" id="counterStrip">סימולציה של כ־50,000 בוחרים — ואז בדיקת הסגל שנוצר</div>
+
+  <div class="dash" aria-hidden="true">
+    <div class="tick active" id="tick0"></div>
+    <div class="tick" id="tick1"></div>
+    <div class="tick" id="tick2"></div>
+    <div class="tick" id="tick3"></div>
+    <div class="tick" id="tick4"></div>
+  </div>
+</div>
+
+<script>
+(() => {
+  /* ── צלילים (Web Audio API) ── */
+  let audioCtx = null;
+
+  function ensureAudio(){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+
+  /* פותח אודיו בכל לחיצה/מקש */
+  document.addEventListener('click', ensureAudio);
+  document.addEventListener('keydown', ensureAudio);
+
+  function beep(freq, duration, vol){
+    try {
+      const ctx = ensureAudio();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(vol, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + duration + 0.05);
+    } catch(e){ console.warn('beep error', e); }
+  }
+  function beepLand(){ beep(175, 0.25, 0.3); }    /* ביפ עמוק ועדין — אוקטבה מתחת ל-350Hz */
+  /* ביפ בחירה — התחלתי נמוך ונעים, הולך וגבוה/מהיר/חלש
+     תדר: 350Hz → 900Hz  (עולה)
+     משך:  0.14s → 0.02s  (מתקצר)
+     עוצמה: 0.35 → 0.12   (נחלש)
+     עוצר שינוי בשלב 3 (בחירה 4) */
+  function beepPick(step){
+    const t = Math.min(step, 3) / 3;
+    const freq = 350 + 550 * t;                /* 350Hz → 900Hz */
+    const dur  = 0.14 * (1 - 0.86 * t);       /* 0.14s → 0.02s */
+    const vol  = 0.35 * (1 - 0.66 * t);       /* 0.35  → 0.12  */
+    beep(freq, dur, vol);
+  }
+
+  const COLORS = [
+    {name:'כחול מעושן', val:'#6f8fa4'},
+    {name:'ירוק מרווה', val:'#89a88a'},
+    {name:'חמרה עדינה', val:'#b97a64'},
+    {name:'סגול אפור', val:'#8a8199'},
+    {name:'חול אפור', val:'#b9ad93'}
+  ];
+  const TYPES = ['circle','roundSquare','diamond','triangle','hex'];
+
+  /* ── 4 מחזורים × 8 טיפוסי בוחרים ── */
+  const VOTER_CYCLES = [
+    { id:'C01',
+      title:'בחירה מתוך רעש, חשיפה ומפגש ישיר',
+      short:'כך נראית בחירה כשיש הרבה שמות, מעט זמן, והרבה מקורות השפעה.',
+      voters:[
+        {name:'הבוחר לפי תדמית', short:'תדמית', r:['אני בוחר מי שאני מכיר.','מוכרות מעידה שכבר עשה משהו.','שם מוכר יכול למשוך קולות גם מחוץ למעגל הקרוב.','קל יותר לסמוך על מי שכבר ראיתי ושמעתי.','מועמד מוכר מרגיש פחות מסוכן מבחינתי.','הוא כבר יודע לדבר לציבור.','יש עליו יותר מידע ציבורי לבדיקה.','אני לא רוצה להמר על אלמונים לגמרי.']},
+        {name:'הבוחר לפי המלצות', short:'המלצות', r:['אני סומך על אנשים שמבינים יותר ממני.','אין לי זמן לבדוק את כל המועמדים לבד.','כשאותה המלצה חוזרת מכמה כיוונים, זה יוצר ביטחון.','קבוצות שאני מעריך כבר עשו סינון ראשוני.','חברים לפעמים מכירים מועמדים מקרוב.','המלצה אישית עדיפה בעיניי מפרסום עצמי.','כך אני מצמצם טעויות בבחירה.','עדיף לבחור מתוך רשימה שכבר נבדקה.']},
+        {name:'הבוחר לפי נראות תקשורתית', short:'תקשורת', r:['מי שמופיע בתקשורת יודע להשפיע.','נבחר ציבור צריך לדעת לדבר לציבור רחב.','נראות תקשורתית מעידה על יכולת ניסוח.','מועמד תקשורתי יכול לקדם מסרים של המחנה.','הוא כבר עומד מול ביקורת ולחץ ציבורי.','יש לו נוכחות פוליטית ממשית.','הוא יכול לייצג את הרשימה בדיונים ציבוריים.','פוליטיקה היא גם מאבק על תשומת לב.']},
+        {name:'הבוחר מהשטח', short:'מפגש ישיר', r:['הייתי בחוג בית והתרשמתי ממנו מקרוב.','ראיתי איך הוא עונה לשאלות לא נוחות.','פגשתי אותו בהפגנה וראיתי מחויבות בשטח.','אני זוכר את הפעילות שלו למען החטופים.','הוא לא רק מדבר — הוא מגיע למקומות עצמם.','מפגש אישי נותן מידע שלא רואים בתקשורת.','ראיתי איך הוא מקשיב לאנשים.','אחרי שפגשתי אותו, יש לי יותר ביטחון בבחירה.']},
+        {name:'הבוחר האינטואיטיבי', short:'אינטואיציה', r:['אני מרגיש מי משדר אמינות.','לפעמים תחושת בטן מסכמת הרבה מידע שלא קל לנסח.','אני בוחר לפי חיבור אנושי, לא רק לפי סעיפים.','מועמד יכול להיות נכון גם אם לא בדקתי כל פרט.','אני מזהה עקביות בטון, בשפה ובהתנהגות.','פוליטיקה היא גם שאלה של אמון.','אני מעדיף מועמד שנראה לי שלם ואותנטי.','בסוף הבחירה צריכה גם להרגיש נכונה, לא רק להיראות מחושבת.']},
+        {name:'הבוחר לפי מחנה', short:'מחנה', r:['חשוב לי לחזק את הקבוצה הפוליטית שלי.','מועמד מהמחנה שלי ייאבק על הערכים שלי.','בפוליטיקה צריך נאמנות בסיסית.','אני לא רוצה לחזק קו מנוגד.','המחנה יודע מי באמת איתו לאורך זמן.','בחירה היא גם הצהרת כיוון.','עדיף מועמד מחויב ממועמד עמום.','בלי כוח למחנה אין השפעה.']},
+        {name:'הבוחר לפי אנטי', short:'נגד', r:['חשוב לי למנוע בחירה גרועה.','לפעמים בלימה חשובה לא פחות מקידום.','אני יודע היטב מה אני לא רוצה.','יש מועמדים שמסכנים את הכיוון שאני מאמין בו.','בחירה נגדית היא כלי פוליטי לגיטימי.','צריך לסמן גבולות ברורים.','לא כל מועמד ראוי רק כי הוא במחנה שלי.','מניעת נזק היא חלק מבחירה אחראית.']},
+        {name:'הבוחר שמחפש פנים חדשות', short:'פנים חדשות', r:['המערכת צריכה התחדשות.','ותיקים כבר קיבלו הזדמנות.','חדשים מביאים אנרגיה אחרת.','פריימריז נועדו לפתוח דלתות.','צריך להכניס קולות שלא נשמעו מספיק.','ניסיון אינו הכול.','לפעמים מי שבחוץ רואה טוב יותר.','בלי סיכון מסוים אין שינוי.']}
+      ]
+    },
+    { id:'C02',
+      title:'בחירה לפי ערכים ונושאים',
+      short:'כך נראית בחירה כשהבוחר מתחיל מהשאלה מה חשוב לו פוליטית וציבורית.',
+      voters:[
+        {name:'הבוחר הדמוקרטי', short:'דמוקרטיה', r:['בלי דמוקרטיה יציבה אין משמעות לשאר ההבטחות.','אני מחפש מחויבות ברורה לשלטון החוק.','חשוב לי מועמד שמגן על מוסדות המדינה.','אחריות ציבורית חשובה לי יותר מסיסמאות.','אני רוצה מי שיתמודד עם שחיתות ופגיעה בכללי המשחק.','מועמד צריך להבין את עומק המשבר הדמוקרטי.','אני בוחר מי שמוכן לשמור על איזונים ובלמים.','זו בעיניי שאלת יסוד של המחנה.']},
+        {name:'הבוחר החברתי', short:'חברה ורווחה', r:['פוליטיקה צריכה לשפר חיים של אנשים.','פערים חברתיים הם בעיה מרכזית במדינה.','יוקר המחיה דורש סדר עדיפויות אמיתי.','שירותים ציבוריים חזקים הם בסיס לחברה בריאה.','אני מחפש מועמד שמבין פריפריה ולא רק מדבר עליה.','צדק חברתי צריך להפוך למדיניות.','מועמד טוב צריך לראות את האנשים שלא נשמעים.','בלי חוסן חברתי אין חוסן לאומי.']},
+        {name:'הבוחר המדיני־ביטחוני', short:'ביטחון ומדיניות', r:['שאלות ביטחוניות קובעות את עתיד המדינה.','אני רוצה עמדה אחראית ולא רק סיסמאות.','צריך להבין גם כוח צבאי וגם אופק מדיני.','מועמד חייב לומר משהו ברור על עזה והשטחים.','ביטחון בלי מדיניות ארוכת טווח אינו מספיק.','אני מחפש מי שמבין מציאות אזורית.','עמימות בנושא הזה מסוכנת בעיניי.','זה נושא שמכריע את סדר היום הישראלי.']},
+        {name:'הבוחר של שותפות יהודית־ערבית', short:'שותפות', r:['אי אפשר לבנות דמוקרטיה בלי שוויון אזרחי.','שותפות יהודית־ערבית היא צורך פוליטי ומוסרי.','אני מחפש מועמד שלא מפחד משותפות ממשית.','ייצוג הוא לא קישוט אלא בסיס לאמון.','ביטחון אישי בחברה הערבית חשוב לכל המדינה.','תקציבים ושירותים צריכים להיות שוויוניים.','צריך להתמודד עם חוסר אמון, לא לברוח ממנו.','זה מבחן עומק למחנה דמוקרטי.']},
+        {name:'הבוחר בנושא חרדים ושוויון חובות', short:'חרדים וחובות', r:['שוויון חובות הוא תנאי לאמון בין אזרחים.','צריך עמדה ברורה על גיוס.','תקציבים וחינוך חייבים להיות חלק מהדיון.','אני רוצה מועמד שלא מסתפק בסיסמאות על דת ומדינה.','צריך לדבר גם על חיים משותפים ולא רק על עימות.','לימודי ליבה חשובים לעתיד החברה כולה.','כפייה דתית פוגעת בחופש האזרחי.','זו אחת הבעיות הקשות ביותר של החברה בישראל.']},
+        {name:'הבוחר החינוכי־תרבותי', short:'חינוך ותרבות', r:['חינוך קובע את החברה של הדור הבא.','תרבות היא חלק מחוסן דמוקרטי.','ספורט וקהילה בונים שייכות ואחריות.','אני מחפש מועמד שמבין חינוך ציבורי לעומק.','פערים בחינוך משכפלים פערים חברתיים.','אוריינות דיגיטלית היא צורך אזרחי בסיסי.','בלי חינוך דמוקרטי קשה לשמור על חברה פתוחה.','זה תחום שנראה רך אבל משפיע מאוד.']},
+        {name:'הבוחר הסביבתי', short:'סביבה ואקלים', r:['אקלים וסביבה הם לא נושא צדדי.','תחבורה ותכנון משפיעים על החיים היומיומיים.','מרחב ציבורי טוב הוא חלק מאיכות חיים.','אני מחפש מועמד שחושב לטווח ארוך.','זיהום ופגיעה בטבע הם גם פגיעה חברתית.','מדיניות סביבתית דורשת אומץ מול אינטרסים.','ערים וישובים צריכים תכנון בריא יותר.','זה נושא שמחבר בין בריאות, כלכלה וצדק.']},
+        {name:'הבוחר הממלכתי־מאחה', short:'איחוי', r:['החברה הישראלית צריכה פחות הסתה ויותר תיקון.','אני מחפש מועמד שמסוגל לדבר עם כמה קהלים.','גישור אינו חולשה אלא יכולת פוליטית.','צריך להוריד את עוצמת הקרעים בלי למחוק מחלוקות.','מועמד טוב יודע להחזיק עקרונות וגם להקשיב.','אני רוצה פחות פוליטיקה של השפלה.','חברה קרועה מתקשה לקבל החלטות טובות.','איחוי הוא חלק מהעבודה הדמוקרטית.']}
+      ]
+    },
+    { id:'C03',
+      title:'בחירה לפי יכולות ותפקוד',
+      short:'כך נראית בחירה כשהבוחר שואל מי באמת יודע לבצע, להוביל ולהחזיק תפקיד.',
+      voters:[
+        {name:'הבוחר הביצועיסטי', short:'ביצוע', r:['כוונות טובות אינן מספיקות.','אני מחפש מי שכבר הוכיח ביצוע.','צריך אנשים שיודעים לעבוד מול מערכת.','מועמד טוב יודע להפוך רעיון לתוצאה.','ביצוע דורש התמדה ולא רק נאומים.','אני בודק מה באמת השתנה בזכותו.','הכנסת צריכה גם אנשי עבודה.','בסוף הציבור נמדד בתוצאות.']},
+        {name:'הבוחר הפרלמנטרי', short:'פרלמנטרי', r:['חבר כנסת צריך לדעת לעבוד בכנסת.','חקיקה טובה דורשת מקצוענות.','ועדות הן מקום שבו נעשית עבודה אמיתית.','אני מעריך מי שמכיר פרטים ולא רק כותרות.','עבודה פרלמנטרית שקטה יכולה להשפיע מאוד.','צריך לדעת לבנות קואליציות סביב חוקים.','מועמד רציני יודע לקרוא חומר ולהתעקש.','המחנה צריך אנשים שמבינים את המנגנון.']},
+        {name:'הבוחר המנהיגותי', short:'הובלה', r:['צריך אנשים שיודעים להוביל.','מנהיגות נמדדת ברגעי לחץ.','אני מחפש מי שמסוגל לסחוף אחריו אחרים.','הובלה דורשת חזון וגם משמעת.','מועמד מנהיגותי יכול לחבר אנשים סביב מטרה.','לא מספיק להיות צודק; צריך להוביל שינוי.','אני בוחן האם אנשים מוכנים ללכת אחריו.','בפוליטיקה יש צורך בדמויות שמחזיקות קו.']},
+        {name:'הבוחר המקצועי', short:'מומחיות', r:['יש תחומים שדורשים מומחיות אמיתית.','אני מעדיף מועמד שמבין לעומק נושא מרכזי.','מקצועיות מגינה מפני סיסמאות ריקות.','ניסיון ענפי עוזר לקבל החלטות טובות.','הכנסת צריכה גם מומחים, לא רק פוליטיקאים.','מי שמכיר תחום מבפנים יכול לזהות כשלים.','ידע מקצועי מקצר עקומת למידה.','מומחיות טובה יכולה להפוך למדיניות טובה.']},
+        {name:'הבוחר המנוסה', short:'ניסיון', r:['ניסיון מלמד איך מערכות באמת עובדות.','אני מעדיף מי שכבר עבר מבחנים ציבוריים.','רקורד קודם מאפשר בדיקה ולא רק תקווה.','מועמד מנוסה יודע להתמודד עם מורכבות.','יש ערך למי שכבר עשה טעויות ולמד מהן.','תפקיד ציבורי בכיר אינו מקום להתלמדות בלבד.','ניסיון יוצר רשת קשרים ויכולת השפעה.','אני רוצה לדעת על מה הבחירה נשענת.']},
+        {name:'הבוחר האמין', short:'אמינות', r:['אמינות חשובה לי יותר מברק רגעי.','אני בודק האם המועמד עקבי לאורך זמן.','יושרה היא תנאי לתפקיד ציבורי.','אני רוצה מועמד שאפשר לסמוך עליו גם כשקשה.','אמון ציבורי קשה לבנות וקל להרוס.','מועמד אמין לא מוכר אשליות.','אני בוחן פער בין מילים למעשים.','בלי אמינות גם עמדה נכונה מאבדת כוח.']},
+        {name:'הבוחר העמיד', short:'עמידות', r:['פוליטיקה היא מרחב של לחץ מתמשך.','אני מחפש מי שלא מתפרק כשקשה.','משברים חושפים אופי.','צריך מועמד שיודע לספוג ביקורת.','עמידות חשובה במיוחד בתקופה לא יציבה.','מי שנשאר עקבי בלחץ ראוי לאמון.','אני בודק איך המועמד פעל ברגעי מבחן.','בלי עמידות קשה לקדם שינוי אמיתי.']},
+        {name:'הבוחר החדשני', short:'חדשנות', r:['בעיות חדשות דורשות כלים חדשים.','אני מחפש מועמד שלא תקוע בשפה ישנה.','יכולת ללמוד חשובה לא פחות מניסיון קודם.','חדשנות יכולה לשפר ממשל ושירותים ציבוריים.','צריך אנשים שמבינים טכנולוגיה וחברה.','חשיבה חדשה יכולה לפתוח פתרונות שלא נוסו.','אני מעריך סקרנות וגמישות מחשבתית.','פוליטיקה צריכה להתעדכן בלי לאבד ערכים.']}
+      ]
+    },
+    { id:'C04',
+      title:'בחירה לפי הרכב הנבחרת',
+      short:'כך נראית בחירה כשהבוחר חושב על הרשימה כמו על סגל: איזון בין תפקידים, יכולות וסגנונות.',
+      voters:[
+        {name:'בונה הנבחרת', short:'נבחרת', r:['רשימה טובה היא לא רק אוסף כוכבים.','צריך איזון בין תחומים וסגנונות.','אני חושב על השאלה מי משלים את מי.','נבחרת צריכה גם התקפה, גם הגנה וגם קישור.','מועמד טוב לבד לא מספיק להרכב טוב.','אני מחפש שילוב שיכול לעבוד בפועל.','יש תפקידים שונים שצריך למלא.','בחירה חכמה מסתכלת גם על התמונה הכוללת.']},
+        {name:'מחפש הכוכבים', short:'כוכבים', r:['כוכבים מביאים אנרגיה לרשימה.','דמויות בולטות מושכות קולות.','כריזמה עוזרת לקדם מסרים.','צריך אנשים שהציבור מזהה מיד.','מועמד חזק יכול להרים את כל הרשימה.','בפוליטיקה יש ערך לנוכחות.','אני רוצה אנשים שיכולים לעמוד בחזית.','בלי כוכבים קשה לפרוץ לתודעה.']},
+        {name:'מאזן הכוכבים', short:'איזון כוכבים', r:['יותר מדי כוכבים עלולים ליצור רעש פנימי.','צריך גם אנשים שעובדים מאחורי הקלעים.','כריזמה אינה מחליפה יכולת ביצוע.','אני מחפש איזון בין נראות לעבודה.','רשימה צריכה אנשים משלימים.','לא כל תפקיד דורש אותו סוג מנהיגות.','עודף אגו יכול לפגוע בצוות.','הרכב טוב צריך גם יציבות וגם ברק.']},
+        {name:'מחפש ההגנה', short:'הגנה', r:['צריך מי שישמור על המערכת.','הגנה טובה מונעת טעויות יקרות.','אני מעריך יציבות ואחריות.','לא כל פוליטיקה היא התקפה.','שומרי סף חזקים חשובים לדמוקרטיה.','צריך אנשים שמזהים סיכונים בזמן.','מועמד אחראי יודע גם לעצור מהלכים מסוכנים.','בלי הגנה, גם התקפה טובה עלולה לקרוס.']},
+        {name:'מחפש ההתקפה', short:'התקפה', r:['צריך אנשים שיודעים להילחם.','שינוי לא קורה בלי דחיפה חזקה.','אני רוצה מועמד שלא מפחד מעימות.','יש רגעים שצריך התקפה פוליטית ברורה.','חדות מסר חשובה מול יריבים חזקים.','יוזמה עדיפה בעיניי מהתגוננות מתמדת.','המחנה צריך מי שידחוף קדימה.','בלי התקפה קשה לנצח ולקדם מדיניות.']},
+        {name:'מחפש הקישור', short:'קישור', r:['צריך מי שמחבר בין חלקי הנבחרת.','קישור טוב הופך כישרונות לפעולה משותפת.','אני מחפש מועמד שיודע לעבוד עם אחרים.','גישור בין קבוצות הוא כוח פוליטי.','לא כל השפעה נראית בכותרות.','מי שמחבר תחומים יכול לייצר פתרונות רחבים.','מערכת מורכבת צריכה מתווכים טובים.','בלי קישור, ההתקפה וההגנה לא מדברות זו עם זו.']},
+        {name:'מתקן החוסרים', short:'חוסרים', r:['אני לא שואל רק מי טוב, אלא מה חסר.','אם יש הרבה מאותו סוג, צריך להשלים.','רשימה מאוזנת צריכה כיסוי רחב.','לפעמים הבחירה החשובה היא במי שחסר.','אני מחפש מועמד שמוסיף יכולת שאין לאחרים.','עוד מאותו דבר לא תמיד משפר את הרשימה.','צריך להסתכל על הרכב כולל.','השלמת חוסרים יכולה לשנות את איכות הנבחרת.']},
+        {name:'הבוחר האסטרטגי', short:'אסטרטגיה', r:['אני חושב על היום שאחרי הבחירות.','רשימה צריכה גם לנצח וגם לתפקד.','צריך איזון בין אידיאולוגיה, יכולת ותדמית.','אני שואל מי יוכל להשפיע בפועל.','אסטרטגיה מחייבת לראות כמה צעדים קדימה.','מועמד טוב צריך להתאים לתפקיד בתוך הסגל.','אני בוחן את הרשימה כמערכת, לא כאוסף יחידים.','בחירה רציונלית צריכה לחבר בין ערכים, כוח וביצוע.']}
+      ]
+    }
+  ];
+
+  const SLOT_LABELS = [
+    'בחירה ראשונה','בחירה שנייה','בחירה שלישית','בחירה רביעית',
+    'בחירה חמישית','בחירה שישית','בחירה שביעית','בחירה שמינית'
+  ];
+
+  const bank = document.getElementById('bank');
+  const slotsBox = document.getElementById('slots');
+  const voterRole = document.getElementById('voterRole');
+  const voterText = document.getElementById('voterText');
+  const thoughtText = document.getElementById('thoughtText');
+  const phaseTitle = document.getElementById('phaseTitle');
+  const phaseSpeed = document.getElementById('phaseSpeed');
+  const counterStrip = document.getElementById('counterStrip');
+  const stage = document.getElementById('stage');
+
+  const cyclePrompt = document.getElementById('cyclePrompt');
+  const promptMsg = document.getElementById('promptMsg');
+  const btnYes = document.getElementById('btnYes');
+  const btnNo = document.getElementById('btnNo');
+
+  const resultOverlay = document.getElementById('resultOverlay');
+  const btnMoreExamples = document.getElementById('btnMoreExamples');
+
+
+  function showResultChapter(done, remaining){
+    return new Promise(resolve => {
+      resetBank();
+      resetSlots();
+      clearArrows();
+      hideThought();
+      voterRole.style.opacity = '0';
+      voterText.style.opacity = '0';
+      bank.style.opacity = '0';
+
+      if(btnMoreExamples){
+        btnMoreExamples.textContent = remaining > 0 ? 'הראה עוד דוגמאות' : 'התחל מחדש';
+      }
+
+      resultOverlay.classList.remove('hidden');
+
+      function onMore(){
+        cleanup();
+        resolve(true);
+      }
+
+      function cleanup(){
+        if(btnMoreExamples) btnMoreExamples.removeEventListener('click', onMore);
+        resultOverlay.classList.add('hidden');
+        voterRole.style.opacity = '';
+        voterText.style.opacity = '';
+        bank.style.opacity = '';
+      }
+
+      if(btnMoreExamples) btnMoreExamples.addEventListener('click', onMore);
+    });
+  }
+
+  function askContinue(done, remaining){
+    return new Promise(resolve => {
+      promptMsg.textContent = `סיימנו ${done} סוגי בוחרים. יש עוד ${remaining} נוספים. להמשיך?`;
+      /* הסתר אלמנטים אחרים */
+      voterRole.style.opacity = '0';
+      voterText.style.opacity = '0';
+      hideThought();
+      bank.style.opacity = '0';
+      clearArrows();
+
+      cyclePrompt.classList.remove('hidden');
+
+      function onYes(){ cleanup(); resolve(true); }
+      function onNo(){ cleanup(); resolve(false); }
+      function cleanup(){
+        btnYes.removeEventListener('click', onYes);
+        btnNo.removeEventListener('click', onNo);
+        cyclePrompt.classList.add('hidden');
+        voterRole.style.opacity = '';
+        voterText.style.opacity = '';
+        bank.style.opacity = '';
+      }
+
+      btnYes.addEventListener('click', onYes);
+      btnNo.addEventListener('click', onNo);
+    });
+  }
+
+  function showThought(text){
+    thoughtText.textContent = text;
+    thoughtText.classList.add('visible');
+  }
+  function hideThought(){
+    thoughtText.classList.remove('visible');
+  }
+
+  const slotPositions = [
+    [50, 8], [78, 18], [92, 50], [78, 82],
+    [50, 92], [22, 82], [8, 50], [22, 18]
+  ];
+
+  let bankShapes = [];
+  let selectedShapes = [];
+  let chaosTimer = null;
+  let phaseIndex = 0;
+
+  function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+  function fmt(n){ return n.toLocaleString('he-IL'); }
+
+  function makeShape(type, color, cls=''){
+    const el = document.createElement('div');
+    el.className = `shape ${type} ${cls}`;
+    el.style.setProperty('--c', color);
+    if(type !== 'triangle') el.style.background = color;
+    return el;
+  }
+
+  function createSlots(){
+    slotsBox.innerHTML = '';
+    slotPositions.forEach((p, i) => {
+      const slot = document.createElement('div');
+      slot.className = 'slot';
+      slot.style.left = p[0] + '%';
+      slot.style.top = p[1] + '%';
+      slot.innerHTML = `
+        <div class="candidateFigure">
+          <div class="avatar" aria-hidden="true">
+            <div class="avatarHead"></div>
+            <div class="avatarBody"></div>
+          </div>
+        </div>
+        <div class="slotLabel"><span class="slotDot"></span>${SLOT_LABELS[i]}</div>
+      `;
+      slotsBox.appendChild(slot);
+    });
+  }
+
+  function resetSlots(){
+    [...slotsBox.children].forEach(slot => {
+      slot.classList.remove('filled');
+      const dot = slot.querySelector('.slotDot');
+      dot.innerHTML = '';
+    });
+    clearArrows();
+  }
+
+  function resetBank(){
+    clearInterval(chaosTimer);
+    bank.innerHTML = '';
+    selectedShapes.forEach(x => x.remove());
+    selectedShapes = [];
+    bankShapes = [];
+    let idx = 0;
+    for (const type of TYPES) {
+      for (const c of COLORS) {
+        const el = makeShape(type, c.val, 'big');
+        el.dataset.type = type;
+        el.dataset.color = c.val;
+        const col = idx % 5;
+        const row = Math.floor(idx / 5);
+        const bw = bank.offsetWidth || 200;
+        const gap = bw * 0.16;
+        const off = gap * -2;
+        const x = off + col * gap;
+        const y = off + row * gap;
+        const rot = (type === 'diamond' ? 45 : 0);
+        el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${rot}deg)`;
+        bank.appendChild(el);
+        bankShapes.push(el);
+        idx++;
+      }
+    }
+  }
+
+  function startChaos(strength=1, interval=110){
+    clearInterval(chaosTimer);
+    const radius = Math.min(bank.offsetWidth, bank.offsetHeight) * .34;
+    chaosTimer = setInterval(() => {
+      bankShapes.forEach((el, i) => {
+        if(el.dataset.gone === '1') return;
+        const x = (Math.random()*2-1) * radius * strength;
+        const y = (Math.random()*2-1) * radius * strength;
+        const rotBase = el.dataset.type === 'diamond' ? 45 : 0;
+        const rot = rotBase + (Math.random()*2-1) * 220;
+        el.style.transitionDuration = (80 + Math.random()*180) + 'ms';
+        el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${rot}deg)`;
+      });
+    }, interval);
+  }
+
+  function pickShape(){
+    const available = bankShapes.filter(x => x.dataset.gone !== '1');
+    if(!available.length) return null;
+    const el = available[Math.floor(Math.random()*available.length)];
+    el.dataset.gone = '1';
+    return el;
+  }
+
+  const arrowLayer = document.getElementById('arrowLayer');
+  const BANK_RADIUS = 110; /* חצי רוחב הבנק — נקודת יציאת החץ */
+
+  function drawArrow(slotIdx){
+    const stageRect = stage.getBoundingClientRect();
+    const bankRect = bank.getBoundingClientRect();
+    const cx = bankRect.left + bankRect.width/2 - stageRect.left;
+    const cy = bankRect.top + bankRect.height/2 - stageRect.top;
+
+    const slot = slotsBox.children[slotIdx];
+    const slotRect = slot.getBoundingClientRect();
+    const tx = slotRect.left + slotRect.width/2 - stageRect.left;
+    const ty = slotRect.top + slotRect.height/2 - stageRect.top;
+
+    /* נקודת יציאה מקצה מעגל הבנק */
+    const dx = tx - cx;
+    const dy = ty - cy;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const r = BANK_RADIUS;
+    const sx = cx + (dx/dist) * r;
+    const sy = cy + (dy/dist) * r;
+    /* נקודת כניסה — קצת לפני מרכז ה-slot */
+    const ex = tx - (dx/dist) * 20;
+    const ey = ty - (dy/dist) * 20;
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', sx);
+    line.setAttribute('y1', sy);
+    line.setAttribute('x2', ex);
+    line.setAttribute('y2', ey);
+    line.classList.add('arrowLine');
+    arrowLayer.appendChild(line);
+
+    /* חישוב אורך לדיוק ה-dasharray */
+    const len = Math.sqrt((ex-sx)**2 + (ey-sy)**2);
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+
+    void line.offsetWidth;
+    line.classList.add('animate');
+    return line;
+  }
+
+  function clearArrows(){
+    arrowLayer.querySelectorAll('.arrowLine').forEach(el => el.remove());
+  }
+
+  function fadeArrows(){
+    arrowLayer.querySelectorAll('.arrowLine').forEach(el => el.classList.add('fade'));
+  }
+
+  function moveToSlot(source, idx, mode){
+    if(mode === 'normal') beepPick(idx);         /* ביפ רק במוכוון, לא silent/quick/flash */
+    const slot = slotsBox.children[idx];
+    const dot = slot.querySelector('.slotDot');
+
+    const clone = makeShape(source.dataset.type, source.dataset.color, 'selected');
+    clone.style.position = 'relative';
+    clone.style.left = 'auto';
+    clone.style.top = 'auto';
+    clone.style.transform = 'none';
+    if(source.dataset.type === 'diamond'){
+      clone.style.transform = 'rotate(45deg)';
+    }
+    dot.innerHTML = '';
+    dot.appendChild(clone);
+
+    source.style.opacity = '0';
+    if(mode === 'normal' || mode === 'silent') {
+      drawArrow(idx);
+      slot.classList.add('filled');
+      source.style.transitionDuration = '420ms';
+    } else if(mode === 'quick') {
+      drawArrow(idx);                          /* חץ תמיד */
+      slot.classList.add('filled');
+      source.style.transitionDuration = '160ms';
+    } else {
+      slot.classList.add('filled');
+      slot.classList.add('flash');
+      setTimeout(()=>slot.classList.remove('flash'), 180);
+      source.style.transitionDuration = '60ms';
+    }
+  }
+
+  /* ── פונקציות phase ── */
+
+  function setTickAndPhase(tickIdx, title, speed){
+    phaseTitle.textContent = title;
+    phaseSpeed.textContent = speed;
+    for(let k=0;k<5;k++){
+      document.getElementById('tick'+k).classList.toggle('active', k===tickIdx);
+    }
+  }
+
+  /* ── דפוס accelerando קבוע ──
+     בחירה 1 = הכי איטית, הקצב הולך וגובר,
+     בחירה 8 = 1/8 מזמן הבחירה הראשונה.
+     הביפים גם מתקצרים בהתאם (דרך beepPick).
+     כל בחירה: ערבוב → מחשבה → חץ+צורה        */
+
+  /* זמנים בסיסיים לבחירה הראשונה (ms) */
+  const BASE_CHAOS   = 1000;   /* ערבוב */
+  const BASE_GAP     = 300;    /* הפסקה לפני מחשבה */
+  const BASE_THOUGHT = 2200;   /* הצגת מחשבה */
+  const BASE_SETTLE  = 600;    /* אחרי הנחת צורה */
+
+  /* פקטור מהירות: accelerando עד בחירה 4, אחר כך קבוע על 0.5 */
+  function accelFactor(i){
+    const step = Math.min(i, 3);              /* 0-3, נעצר ב-3 */
+    return 1 - 0.5 * (step / 3);              /* 1.0 → 0.5 */
+  }
+  /* עוצמת כאוס גדלה ככל שמזדרזים */
+  function chaosStrength(i){ const s = Math.min(i,3); return 1.05 + 0.5 * (s/3); }
+  function chaosInterval(i){ const s = Math.min(i,3); return Math.round(115 - 65 * (s/3)); }
+
+  /* מבנה 8 צורות מסודרות ב-2 שורות */
+  const outroPatterns = [
+    ['circle','#6f8fa4'],['roundSquare','#89a88a'],['diamond','#b97a64'],['circle','#8a8199'],
+    ['hex','#89a88a'],['triangle','#6f8fa4'],['roundSquare','#b9ad93'],['hex','#b97a64']
+  ];
+  let outroGrid = null;
+  function buildOutroGrid(){
+    bank.innerHTML = '';
+    outroGrid = document.createElement('div');
+    outroGrid.style.cssText = `
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      display:grid; grid-template-columns:repeat(4,1fr); gap:min(2vw,14px);
+      width:min(24vw,170px);
+    `;
+    outroPatterns.forEach(([type, color]) => {
+      const s = makeShape(type, color, 'selected');
+      s.style.position = 'relative';
+      s.style.left = 'auto';
+      s.style.top = 'auto';
+      s.style.transform = type === 'diamond' ? 'rotate(45deg)' : 'none';
+      s.style.width = 'min(3vw, 20px)';
+      s.style.height = 'min(3vw, 20px)';
+      s.style.opacity = '1';
+      outroGrid.appendChild(s);
+    });
+    bank.appendChild(outroGrid);
+  }
+
+  async function runOrientedVoter(role, label, rationales, intro, outro){
+    /* ── שלב 1: הודעת פתיחה (ביפ עצירה כבר נשמע מ-fastRun) ── */
+    resetBank();
+    resetSlots();
+    clearArrows();
+    hideThought();
+    voterRole.textContent = '';
+    voterText.textContent = intro;
+    voterText.style.fontSize = 'clamp(14px,2vw,22px)';
+    voterText.style.fontWeight = '600';
+    voterText.style.letterSpacing = '.02em';
+    await sleep(3000);                         /* זמן קריאה */
+    voterText.style.fontSize = '';
+    voterText.style.fontWeight = '';
+    voterText.style.letterSpacing = '';
+
+    /* ── שלב 2: הצגת שם המוכוון (בלי ביפ) ── */
+    hideThought();
+    voterRole.textContent = role;
+    voterText.textContent = label;
+    voterText.classList.remove('pulse');
+    void voterText.offsetWidth;
+    voterText.classList.add('pulse');
+
+    resetBank();
+    await sleep(1200);                         /* המתנה לפני חץ ראשון */
+
+    /* בחירה ראשונה — ערבוב קצר, עצירה, חץ */
+    {
+      startChaos(1.05, 115);
+      await sleep(1000);
+      clearInterval(chaosTimer);
+      await sleep(300);
+      const source = pickShape();
+      if(source) moveToSlot(source, 0, 'normal');
+      showThought(rationales[0]);
+      await sleep(1800);
+    }
+
+    /* בחירות 2-8 — accelerando */
+    for(let i=1;i<8;i++){
+      const f = accelFactor(i);
+
+      const chaosMs   = Math.max(80,  Math.round(BASE_CHAOS   * f));
+      const gapMs     = Math.max(30,  Math.round(BASE_GAP     * f));
+      const thoughtMs = Math.max(120, Math.round(BASE_THOUGHT * f));
+      const settleMs  = Math.max(40,  Math.round(BASE_SETTLE  * f));
+
+      hideThought();
+      startChaos(chaosStrength(i), chaosInterval(i));
+      await sleep(chaosMs);
+      clearInterval(chaosTimer);
+
+      /* מחשבה — מוצגת תמיד, פשוט מתקצרת */
+      await sleep(gapMs);
+      showThought(rationales[i]);
+      await sleep(thoughtMs);
+
+      const source = pickShape();
+      const quick = f < 0.35;
+      if(source) moveToSlot(source, i, quick ? 'quick' : 'normal');
+      await sleep(settleMs);
+
+      /* אחרי חץ 7 — צורות מסודרות מופיעות מיד */
+      if(i === 6) buildOutroGrid();
+    }
+
+    /* השהייה — המשתמש רואה חצים + צורות מסודרות */
+    await sleep(2500);
+
+    /* הגריד כבר הוצג אחרי חץ 7 — ממשיכים ליציאה */
+    hideThought();
+    clearArrows();
+    voterRole.textContent = '';
+    voterText.textContent = '';
+
+    /* כותרת באמצע המתומן — בולטת ומודגשת */
+    voterText.textContent = '';
+    const outroTitle = document.createElement('div');
+    outroTitle.style.cssText = `
+      position:absolute; top:-15%; left:50%; transform:translateX(-50%);
+      font-size:clamp(18px,3vw,32px); font-weight:900;
+      letter-spacing:.06em; color:#17242c; white-space:nowrap;
+      text-shadow:0 4px 16px rgba(255,255,255,.85);
+    `;
+    outroTitle.textContent = 'בדיקת רציונל הבחירה';
+    bank.appendChild(outroTitle);
+
+    await sleep(500);
+    showThought(outro);                        /* מחמאה למטה */
+    await sleep(2500);
+
+    /* V ירוק בתחתית — מחמאה נשארת */
+    const vMark = document.createElement('div');
+    vMark.style.cssText = `
+      position:absolute; top:73%; left:50%; transform:translateX(-50%);
+      font-size:clamp(36px,6vw,60px); color:#2ecc71; font-weight:900; line-height:1;
+      opacity:0; transition:opacity .4s ease;
+    `;
+    vMark.textContent = '✓';
+    bank.appendChild(vMark);
+    requestAnimationFrame(() => vMark.style.opacity = '1');
+    await sleep(2500);
+
+    /* fade out של הכל ביחד */
+    outroTitle.style.transition = 'opacity 2s ease';
+    outroTitle.style.opacity = '0';
+    outroGrid.style.transition = 'opacity 2s ease';
+    outroGrid.style.opacity = '0';
+    vMark.style.transition = 'opacity 2s ease';
+    vMark.style.opacity = '0';
+    thoughtText.style.transition = 'opacity 2s ease';
+    thoughtText.style.opacity = '0';
+    await sleep(2000);
+
+    thoughtText.style.transition = '';
+    thoughtText.style.opacity = '';
+    hideThought();
+    bank.innerHTML = '';
+
+    /* "ממשיכים..." במרכז המתומן הריק */
+    const contMsg = document.createElement('div');
+    contMsg.style.cssText = `
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      font-size:clamp(18px,3vw,30px); font-weight:700; color:#22313a;
+      letter-spacing:.04em;
+    `;
+    contMsg.textContent = 'ממשיכים לדגום בוחר אחר...';
+    bank.appendChild(contMsg);
+    await sleep(1200);
+    bank.innerHTML = '';
+  }
+
+  /* ── מחזור בוחר מהיר (quick / flash) ── */
+
+  async function runFastVoter(voterNum, mode, cycleMs, chaos){
+    const male = voterNum % 2 === 1;
+    voterRole.textContent = male ? 'בוחר' : 'בוחרת';
+    voterText.textContent = `מס׳ ${fmt(voterNum)}`;
+    hideThought();
+    voterText.classList.remove('pulse');
+    void voterText.offsetWidth;
+    voterText.classList.add('pulse');
+
+    resetBank();
+    resetSlots();
+
+    const str = mode === 'flash' ? 1.8 : 1.45;
+    const ci  = mode === 'flash' ? 35  : 60;
+    startChaos(str, ci);
+    await sleep(Math.min(chaos, cycleMs * .45));
+    clearInterval(chaosTimer);
+
+    const delays = { quick:45, flash:5 };
+    const delay = delays[mode] ?? 80;
+    for(let i=0;i<8;i++){
+      const source = pickShape();
+      if(source) moveToSlot(source, i, mode);
+      if(mode !== 'flash') await sleep(delay);
+    }
+    if(mode === 'flash') await sleep(Math.max(40, cycleMs * .16));
+
+    const used = Math.min(chaos + (mode === 'quick' ? 8*45 : 50), cycleMs);
+    await sleep(Math.max(40, cycleMs - used));
+  }
+
+  /* ── עזר: הצגת בוחר מוכוון ── */
+
+  /* ── מחמאות יציאה — כל פעם אחת אחרת ── */
+  const COMPLIMENTS_M = [
+    'מאוד הגיוני. הוא יודע בדיוק במי לבחור',
+    'ברור שזו החלטה רציונלית',
+    'מספיק רציונלי, הוא יודע מה הוא עושה',
+    'הוא חשב על זה טוב. הגיוני לגמרי',
+    'בחירה שקולה ומחושבת',
+    'קשה להתווכח עם ההגיון הזה',
+    'הוא בדק, שקל, והחליט — רציונלי',
+    'הגיוני מאוד. כל בחירה מנומקת',
+  ];
+  const COMPLIMENTS_F = [
+    'מאוד הגיוני. היא יודעת בדיוק במי לבחור',
+    'ברור שזו החלטה רציונלית',
+    'מספיק רציונלי, היא יודעת מה היא עושה',
+    'היא חשבה על זה טוב. הגיוני לגמרי',
+    'בחירה שקולה ומחושבת',
+    'קשה להתווכח עם ההגיון הזה',
+    'היא בדקה, שקלה, והחליטה — רציונלי',
+    'הגיוני מאוד. כל בחירה מנומקת',
+  ];
+  let complimentIdx = 0;
+
+  function orientedLabel(vt, v, num){
+    const male = v % 2 === 0;
+    const role = male ? `בוחר ${fmt(num)}` : `בוחרת ${fmt(num)}`;
+    const orient = male ? 'מוכוון' : 'מוכוונת';
+    const topic = v === 0 ? vt.name.replace(/^ה?בוחר(ת)?\s*/,'') : vt.short;
+    const pronoun = male ? 'שלו' : 'שלה';
+    const intro = `עצרנו אקראית על ${role}, בואו נבדוק את הגיון הבחירה ${pronoun}`;
+    const pool = male ? COMPLIMENTS_M : COMPLIMENTS_F;
+    const outro = pool[complimentIdx % pool.length];
+    complimentIdx++;
+    return { role, label:`${orient} ${topic}`, intro, outro };
+  }
+
+  /* ── ריצה מהירה — מונה רץ 4 שניות עד המספר הסופי ── */
+
+  async function fastRun(startNum, endNum){
+    resetBank();
+    resetSlots();
+    clearArrows();
+    hideThought();
+
+    const duration = 4000;                     /* 4 שניות */
+    const total = endNum - startNum;
+    const startTime = performance.now();
+
+    return new Promise(resolve => {
+      function tick(){
+        const elapsed = performance.now() - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        /* easeOut — מתחיל מהר ומאט לקראת הסוף */
+        const ease = 1 - Math.pow(1 - t, 2);
+        const current = startNum + Math.round(total * ease);
+        const male = current % 2 === 1;
+        voterRole.textContent = male ? 'בוחר' : 'בוחרת';
+        voterText.textContent = `מס׳ ${fmt(current)}`;
+
+        /* סיבוב כל מבנה הצורות */
+        const deg = elapsed * 0.09;            /* ~32° לשנייה */
+        bank.style.transform = `translate(-50%,-50%) rotate(${deg}deg)`;
+
+        if(t < 1){
+          requestAnimationFrame(tick);
+        } else {
+          bank.style.transform = 'translate(-50%,-50%)';  /* מאפס סיבוב */
+          beepLand();                          /* ביפ עצירה */
+          resolve();
+        }
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  /* ── הרצה ראשית — 4 מחזורים ── */
+
+  async function run(){
+    createSlots();
+    let g = 0; /* מונה בוחרים גלובלי */
+
+    /* מרחקים בין מוכוונים (כמה בוחרים אנונימיים ביניהם) */
+    const GAPS = [329, 820, 1800, 1400, 2500, 1100, 3200, 1800];
+
+    /* ── פתיח בתוך המתומן — הסבר לפני הסימולציה ── */
+    resetSlots();
+    hideThought();
+    voterRole.textContent = '';
+
+    const introStyle = () => {
+      voterText.style.fontSize = 'clamp(15px,2.2vw,26px)';
+      voterText.style.fontWeight = '700';
+      voterText.style.letterSpacing = '.02em';
+    };
+    const clearIntroStyle = () => {
+      voterText.style.fontSize = '';
+      voterText.style.fontWeight = '';
+      voterText.style.letterSpacing = '';
+    };
+
+    /* שלב 1 — הצורות */
+    resetBank();
+    introStyle();
+    voterText.textContent = '25 מועמדים מתמודדים';
+    showThought('כל צורה היא מועמד. הצבע — התחום שלו, הצורה — הסגנון שלו');
+    await sleep(4000);
+
+    /* שלב 2 — ערבוב קצר להדגמה */
+    hideThought();
+    voterText.textContent = 'כולם מתערבבים בפתק';
+    startChaos(1.1, 100);
+    await sleep(2500);
+    clearInterval(chaosTimer);
+
+    /* שלב 3 — המתומן */
+    hideThought();
+    voterText.textContent = 'המתומן — פתק ההצבעה';
+    showThought('לכל בוחר 8 מקומות. הוא בוחר 8 מתוך 25');
+    await sleep(4000);
+
+    /* שלב 4 — מה נעשה */
+    hideThought();
+    voterText.textContent = 'נריץ כ־50,000 בוחרים';
+    showThought('מדי פעם נעצור, נדגום בוחר — ונבדוק את ההיגיון שלו');
+    await sleep(4000);
+
+    /* שלב 5 — השאלה */
+    hideThought();
+    voterText.textContent = 'בסוף נשאל:';
+    showThought('האם אוסף בחירות רציונליות יוצר נבחרת רציונלית?');
+    await sleep(4000);
+
+    /* שלב 6 — בקשה להתחיל */
+    hideThought();
+    resetBank();
+    voterText.textContent = '';
+    clearIntroStyle();
+
+    await new Promise(resolve => {
+      const goBtn = document.createElement('button');
+      goBtn.className = 'startBtn';
+      goBtn.style.cssText = `
+        position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+        z-index:20;
+      `;
+      goBtn.textContent = 'התחילו את המדגם';
+      bank.appendChild(goBtn);
+      goBtn.addEventListener('click', () => {
+        bank.innerHTML = '';
+        resolve();
+      });
+    });
+
+    while(true){
+      g = 0;
+
+      for(let c=0; c<VOTER_CYCLES.length; c++){
+        const cycle = VOTER_CYCLES[c];
+        const voters = cycle.voters; /* 8 בוחרים מוכוונים */
+
+        setTickAndPhase(0, `מחזור ${c+1} מתוך 4`, cycle.title);
+        counterStrip.textContent = cycle.short;
+
+        /* ── 8 מוכוונים בודדים ── */
+        for(let vi=0; vi<8; vi++){
+
+          /* ריצה מהירה — מונה רץ 4 שניות */
+          const target = g + GAPS[vi];
+          setTickAndPhase(1, `מחזור ${c+1}`, 'בוחרים נוספים...');
+          await fastRun(g, target);
+          g = target;
+
+          /* מוכוון — האחרון FULL, לפני-אחרון B, השאר A */
+          g++;
+          setTickAndPhase(0, `מחזור ${c+1} מתוך 4`, cycle.title);
+          const lbl = orientedLabel(voters[vi], vi, g);
+          await runOrientedVoter(lbl.role, lbl.label, voters[vi].r, lbl.intro, lbl.outro);
+
+          /* הפסקה נוחה בין מוכוונים (חוץ מהאחרון במחזור) */
+          if(vi < 7){
+            await sleep(2500);
+            resetBank();
+            resetSlots();
+            clearArrows();
+          }
+        }
+
+        /* ── הפסקה בין מחזורים ── */
+        const done = (c + 1) * 8;
+        const remaining = 32 - done;
+
+        if(remaining > 0){
+          setTickAndPhase(4, `מחזור ${c+1} הושלם`, '');
+          counterStrip.textContent = `${fmt(g)} בוחרים סיימו — כל אחד בחר רציונלית`;
+
+          resetBank();
+          resetSlots();
+
+          const cont = await showResultChapter(done, remaining);
+          if(!cont){
+            counterStrip.textContent = 'הריצה הופסקה. רענן את הדף כדי להתחיל מחדש.';
+            return;
+          }
+          counterStrip.textContent = `מחזור ${c+2}: ${VOTER_CYCLES[c+1].title}`;
+          await sleep(1500);
+        }
+      }
+
+      /* ── סיום כל 4 המחזורים ── */
+      counterStrip.textContent = `${fmt(g)} בוחרים — כולם בחרו רציונלית. אבל האם התוצאה הקולקטיבית רציונלית?`;
+      await sleep(5000);
+      counterStrip.textContent = 'מתחילים מחדש...';
+      await sleep(2000);
+    }
+  }
+
+  /* ── מסך פתיחה — לחיצה פותחת אודיו ומריצה ── */
+  document.getElementById('startBtn').addEventListener('click', () => {
+    ensureAudio();                              // פותח AudioContext מתוך אינטראקציה
+    document.getElementById('startOverlay').classList.add('gone');
+    run();
+  });
+})();
+</script>
+</body>
+</html>

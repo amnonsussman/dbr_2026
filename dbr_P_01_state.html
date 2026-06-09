@@ -55,10 +55,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 20px;
-      padding: 20px 0 28px;
+      gap: 12px;
+      padding: 12px 0 10px;
       border-bottom: 1px solid var(--border-soft);
-      margin-bottom: 36px;
+      margin-bottom: 8px;
     }
 
     .brand {
@@ -130,7 +130,7 @@
 
     /* ── Page title ── */
     .page-title {
-      margin-bottom: 28px;
+      margin-bottom: 6px;
     }
 
     .page-title h1 {
@@ -152,14 +152,14 @@
     .summary-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      justify-content: center;
+      gap: 10px;
       flex-wrap: wrap;
       background: white;
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-medium);
-      padding: 14px 20px;
-      margin-bottom: 28px;
+      padding: 8px 14px;
+      margin-bottom: 8px;
       box-shadow: var(--shadow-soft);
     }
 
@@ -450,7 +450,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
+      padding: 8px 14px;
       border-bottom: 1px solid var(--border-soft);
       background: var(--blue-card);
     }
@@ -463,6 +463,82 @@
       font-size: .82rem;
       color: var(--text-muted);
     }
+
+    /* ── Rank columns ── */
+    .rank-columns {
+      display: grid;
+      grid-template-columns: 1fr 2px 1fr;
+      gap: 0;
+      padding: 4px clamp(2px, 1vw, 16px) 8px;
+    }
+    .rank-divider {
+      background: var(--blue-main);
+      opacity: .3;
+    }
+    .rank-columns > div:first-child .rank-row {
+      padding-inline-end: 10px;
+    }
+    .rank-columns > div:last-child .rank-row {
+      padding-inline-start: 10px;
+    }
+    .rank-row {
+      display: flex;
+      align-items: center;
+      gap: clamp(1px, 0.3vw, 3px);
+      padding: 2px clamp(1px, 0.5vw, 6px);
+      border-bottom: 1px solid #edf3fb;
+      cursor: pointer;
+      line-height: 1.25;
+    }
+    .rank-row:last-child { border-bottom: none; }
+    .rank-row:hover { background: var(--blue-soft); }
+    .rank-num {
+      min-width: 16px;
+      font-size: clamp(.58rem, 1.6vw, .68rem);
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .rank-name {
+      flex: 1;
+      font-size: clamp(.82rem, 2.5vw, 1rem);
+      font-weight: 700;
+      color: var(--blue-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rank-name.picked {
+      color: var(--blue-dark);
+    }
+    .rank-pick {
+      flex-shrink: 0;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-soft);
+      background: white;
+      font-size: .7rem;
+      font-weight: 900;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: .12s;
+      line-height: 1;
+    }
+    .rank-row .rank-pick:hover { border-color: var(--green); color: var(--green); }
+    .picked ~ .rank-pick { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+    .rank-card {
+      flex-shrink: 0;
+      font-size: clamp(.62rem, 1.8vw, .76rem);
+      cursor: pointer;
+      opacity: .5;
+      transition: opacity .12s;
+    }
+    .rank-row:hover .rank-card { opacity: 1; }
+    /* תמיד שתי עמודות — הכל מתכווץ עם clamp */
 
     /* ── Intro overlay ── */
     .intro-overlay {
@@ -643,39 +719,15 @@
       <span id="rank-meta-text" class="last-updated-text"></span>
     </div>
 
-    <!-- Ranking grids — women / men -->
-    <div id="ranking-section" style="display:none;">
-      <div class="lists-grid">
-        <!-- נשים -->
-        <div class="rank-section">
-          <div class="rank-section-header">
-            <span class="rank-section-title">👩 נשים</span>
-            <span class="rank-meta" id="meta-women"></span>
-          </div>
-          <div style="overflow-x:auto">
-            <table class="rank-table"><thead><tr>
-              <th style="width:28px">#</th>
-              <th>שם</th>
-              <th style="text-align:center;width:54px">ציון</th>
-              <th style="text-align:center;width:36px"></th>
-            </tr></thead><tbody id="grid-women"></tbody></table>
-          </div>
-        </div>
-        <!-- גברים -->
-        <div class="rank-section">
-          <div class="rank-section-header">
-            <span class="rank-section-title">👨 גברים</span>
-            <span class="rank-meta" id="meta-men"></span>
-          </div>
-          <div style="overflow-x:auto">
-            <table class="rank-table"><thead><tr>
-              <th style="width:28px">#</th>
-              <th>שם</th>
-              <th style="text-align:center;width:54px">ציון</th>
-              <th style="text-align:center;width:36px"></th>
-            </tr></thead><tbody id="grid-men"></tbody></table>
-          </div>
-        </div>
+    <!-- Ranking — two columns, all candidates -->
+    <div id="ranking-section" class="rank-section" style="display:none;">
+      <div class="rank-section-header" style="justify-content:center">
+        <span class="rank-section-title">הבחירה שלך — מול דירוג ד.ב.ר</span>
+      </div>
+      <div class="rank-columns">
+        <div id="rank-col-1"></div>
+        <div class="rank-divider"></div>
+        <div id="rank-col-2"></div>
       </div>
     </div>
 
@@ -836,7 +888,7 @@
       return `<span style="font-size:.82rem;font-weight:700;color:var(--text-main)">${v}</span>`;
     }
 
-    // ── רינדור שני גרידים (נשים / גברים) ──
+    // ── רינדור שתי עמודות — חצי ראשון / חצי שני ──
     function renderRanking() {
       state = loadState();
       const allPicks = new Set([
@@ -846,44 +898,44 @@
       ]);
 
       const sorted = [...rankList].sort((a, b) => (b.scoreC ?? -1) - (a.scoreC ?? -1));
-      const women = sorted.filter(c => c.gender === 'נקבה');
-      const men   = sorted.filter(c => c.gender === 'זכר');
+      const half = Math.ceil(sorted.length / 2);
+      const col1 = sorted.slice(0, half);
+      const col2 = sorted.slice(half);
 
-      fillGrid('grid-women', women, allPicks);
-      fillGrid('grid-men',   men,   allPicks);
-
-      const metaW = document.getElementById('meta-women');
-      const metaM = document.getElementById('meta-men');
-      const pickedW = women.filter(c => allPicks.has(c.name)).length;
-      const pickedM = men.filter(c => allPicks.has(c.name)).length;
-      if (metaW) metaW.textContent = pickedW ? pickedW + ' נבחרו מתוך ' + women.length : women.length + ' מועמדות';
-      if (metaM) metaM.textContent = pickedM ? pickedM + ' נבחרו מתוך ' + men.length : men.length + ' מועמדים';
+      document.getElementById('rank-col-1').innerHTML = col1.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
+      document.getElementById('rank-col-2').innerHTML = col2.map((c, i) => rankRow(c, half + i + 1, allPicks)).join('');
 
       // summary bar
       document.getElementById('summary-bar').style.display = '';
       document.getElementById('counter-total').textContent = rankList.length;
       document.getElementById('counter-picked').textContent = allPicks.size;
-      const metaEl = document.getElementById('rank-meta-text');
-      if (metaEl) metaEl.textContent = 'ציון כשירות = 80% רזומה + 20% מוטיבציה';
     }
 
-    function fillGrid(tbodyId, list, allPicks) {
-      const tbody = document.getElementById(tbodyId);
-      if (!tbody) return;
-      tbody.innerHTML = list.map((c, idx) => {
-        const picked = allPicks.has(c.name);
-        const srcWarn = c.zccsrc !== null && c.zccsrc < 3 ? ' <span title="מידע חלקי" style="cursor:help;font-size:.7rem">⚠️</span>' : '';
-        return `<tr style="cursor:pointer" onclick="openProfile('${escapeHtml(c.name)}')">
-          <td style="font-size:.82rem;color:var(--text-muted);font-weight:700;width:28px">${idx+1}</td>
-          <td style="font-weight:${picked?'900':'700'};color:${picked?'var(--green)':'var(--blue-dark)'}">
-            ${escapeHtml(c.name)}${picked?' 🎯':''}${srcWarn}
-          </td>
-          <td style="text-align:center">${scorePill(c.scoreC)}</td>
-          <td style="text-align:center">
-            <span style="font-size:.8rem;cursor:pointer" title="כרטיס ועדה מסדרת">📋</span>
-          </td>
-        </tr>`;
-      }).join('');
+    function rankRow(c, rank, allPicks) {
+      const picked = allPicks.has(c.name);
+      return '<div class="rank-row">'
+        + '<span class="rank-num">' + rank + '</span>'
+        + '<span class="rank-name' + (picked ? ' picked' : '') + '">' + escapeHtml(c.name) + (picked ? '&nbsp;&nbsp;<span style="font-size:.75em">🎯</span>' : '') + '</span>'
+        + '<span class="rank-pick" onclick="event.stopPropagation();togglePick(\'' + escapeHtml(c.name) + '\')" title="' + (picked ? 'הסר מהרשימה' : 'הוסף לרשימה') + '">' + (picked ? '✓' : '+') + '</span>'
+        + '<span class="rank-card" onclick="openProfile(\'' + escapeHtml(c.name) + '\')" title="כרטיס ועדה מסדרת">📋</span>'
+        + '</div>';
+    }
+
+    function togglePick(name) {
+      state = loadState();
+      state.selected = state.selected || [];
+      state.shiryun = state.shiryun || [];
+      const i = state.selected.indexOf(name);
+      if (i >= 0) {
+        state.selected.splice(i, 1);
+        const j = state.shiryun.indexOf(name);
+        if (j >= 0) state.shiryun.splice(j, 1);
+      } else {
+        state.selected.push(name);
+        state.shiryun.push(name);
+      }
+      saveState(state);
+      renderRanking();
     }
 
     function openProfile(name) {

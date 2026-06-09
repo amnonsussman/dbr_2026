@@ -188,6 +188,10 @@
     .pill.green strong { color: var(--green); }
     .pill.muted { background: white; }
     .pill.muted strong { color: var(--text-muted); }
+    .pill.yellow { background: #fef3c7; border-color: #fbbf24; }
+    .pill.yellow strong { color: #b45309; }
+    .pill.shiryun-pill { background: #fef3c7; border-color: #fbbf24; }
+    .pill.shiryun-pill strong { color: #b45309; }
 
     .last-updated-text {
       font-size: .83rem;
@@ -510,6 +514,15 @@
       background: var(--blue-main);
       color: white;
     }
+    .shuffle-btn {
+      background: #fff7ed;
+      color: #ea580c;
+      border-color: #fdba74;
+    }
+    .shuffle-btn:hover {
+      background: #ea580c;
+      color: white;
+    }
     /* ── Expand toggle ── */
     .expand-btn {
       background: none;
@@ -578,19 +591,17 @@
       text-overflow: ellipsis;
     }
 
-    /* ── Target icon colors ── */
+    /* ── Pencil icon colors ── */
     .pick-target {
-      font-size: 1.1em;
+      font-size: 0.75em;
       cursor: pointer;
       vertical-align: middle;
     }
     .target-with-reason {
-      filter: hue-rotate(90deg) saturate(1.4);
       opacity: 1;
     }
     .target-no-reason {
-      filter: hue-rotate(-30deg) saturate(2);
-      opacity: .9;
+      opacity: .5;
     }
     .rank-name a, a.rank-name {
       text-decoration: none;
@@ -738,8 +749,9 @@
       transition: .12s;
       line-height: 1;
     }
-    .rank-row .rank-pick:hover { border-color: var(--green); color: var(--green); }
-    .picked ~ .rank-pick { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+    .rank-pick.empty-pick { border: none; background: transparent; pointer-events: none; }
+    .rank-pick.picked-check { border-color: var(--blue-main); color: var(--blue-main); background: transparent; }
+    .rank-pick.shiryuned { border-color: #2e7d4f; background: #c2e8d0; color: #1a5c35; border-width: 2px; }
     .rank-card {
       flex-shrink: 0;
       font-size: clamp(.82rem, 2.2vw, 1rem);
@@ -920,21 +932,11 @@
       <p>בחנו את הרשימה שבניתם לצד דירוג הוועדה המסדרת, בצעו שינויים ואשרו את הרשימה הסופית.</p>
     </section>
 
-    <!-- Summary bar -->
-    <div id="summary-bar" class="summary-bar" style="display:none;">
-      <div class="summary-pills">
-        <span class="pill"><strong id="counter-total">0</strong> מועמדים</span>
-        <span class="pill green" id="picked-filter-btn" style="cursor:pointer" onclick="togglePickedFilter()"><strong id="counter-picked" style="display:none">0</strong> <span id="picked-filter-label">הצג הכל</span></span>
-      </div>
-      <span id="rank-meta-text" class="last-updated-text"></span>
-    </div>
-
     <!-- Ranking — two columns, all candidates -->
     <div id="ranking-section" class="rank-section" style="display:none;">
       <div class="rank-section-header" style="flex-direction:column;align-items:stretch;gap:0;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <span class="rank-section-title">הבחירה שלך מול:</span>
-          <button class="expand-btn" id="expand-btn" onclick="toggleExpand()" title="הרחב / צמצם">⤢</button>
         </div>
         <select id="team-select" class="team-select" onchange="onTeamChange()">
           <option value="dbr1">הוועדה המסדרת של ד.ב.ר (1)</option>
@@ -952,6 +954,21 @@
           <option value="future">נבחרת דור העתיד</option>
         </select>
       </div>
+      <!-- Summary bar -->
+      <div id="summary-bar" class="summary-bar" style="display:none;">
+        <div class="summary-stats" style="display:flex;gap:18px;margin:0 2px 3px;font-size:.78rem;color:var(--text-muted)">
+          <span><strong id="stat-total">0</strong> מועמדים</span>
+          <span><strong id="stat-picked">0</strong> נבחרים</span>
+          <span><strong id="stat-shiryun">0</strong> מאושרים</span>
+        </div>
+        <div class="summary-pills">
+          <span class="pill" id="all-filter-btn" style="cursor:pointer" onclick="togglePickedFilter()"><span id="all-filter-label">כלל המועמדים</span></span>
+          <span class="pill yellow" id="picked-filter-btn" style="cursor:pointer" onclick="togglePickedOnlyFilter()"><span id="picked-only-label">נבחרו</span></span>
+          <span class="pill green" id="shiryun-filter-btn" style="cursor:pointer;display:none" onclick="toggleShiryunFilter()"><span id="shiryun-filter-label">אושרו לסיום</span></span>
+          <button class="expand-btn" id="expand-btn" onclick="toggleExpand()" title="הרחב / צמצם" style="margin-inline-start:auto">⤢</button>
+        </div>
+        <span id="rank-meta-text" class="last-updated-text"></span>
+      </div>
       <div id="team-notice" class="dbr-notice" style="display:none;">
         <strong id="team-notice-name"></strong><br>
         <span id="team-notice-text"></span>
@@ -964,6 +981,7 @@
         </div>
         <div id="show-more-bar" class="show-more-bar" style="display:none;">
           <button class="show-more-btn" onclick="showAllCandidates()">הצג עוד ▼</button>
+          <button class="show-more-btn shuffle-btn" id="zipper-btn" onclick="startShuffle()">🔀 ריצ׳רץ</button>
         </div>
       </div>
     </div>
@@ -972,11 +990,12 @@
     <div id="reason-modal" class="reason-overlay" style="display:none;" onclick="closeReasonModal()">
       <div class="reason-box" onclick="event.stopPropagation()">
         <h3 id="reason-title">למה בחרת?</h3>
+        <p id="reason-unpick-msg" style="display:none;text-align:center;color:#5f6b7a;margin:12px 0"></p>
         <textarea id="reason-text" placeholder="למה בחרת במועמד/ת הזו?"></textarea>
         <div class="reason-actions">
           <button class="reason-delete" id="reason-delete-btn" onclick="deleteReason()" style="display:none">מחק</button>
           <button class="reason-cancel" onclick="closeReasonModal()">ביטול</button>
-          <button class="reason-save" onclick="saveReason()">שמור</button>
+          <button class="reason-save" id="reason-save" onclick="saveReason()">שמור</button>
         </div>
       </div>
     </div>
@@ -1170,17 +1189,22 @@
         sorted.forEach((c, i) => { if (allPicks.has(c.name)) lastPickIdx = i; });
         if (lastPickIdx >= 0) cutoff = Math.min(sorted.length, lastPickIdx + 1 + 4);
       }
+      /* שמור מספר דירוג מקורי לכל מועמד */
       const visible = sorted.slice(0, cutoff);
+      visible.forEach((c, i) => { c._origRank = i + 1; });
       const isTruncated = cutoff < sorted.length;
 
+      /* ריצ׳רץ — סירוג אישה/גבר */
+      const display = zipperMode ? zipperSort(visible) : visible;
+
       /* גובה שורה דינמי — ככל שפחות שורות, יותר מרווח */
-      const rowsPerCol = Math.ceil(visible.length / 2);
+      const rowsPerCol = Math.ceil(display.length / 2);
       const rowH = Math.max(28, Math.min(44, Math.round(420 / Math.max(rowsPerCol, 1))));
       document.querySelector('.rank-columns').style.setProperty('--row-h', rowH + 'px');
 
-      const half = Math.ceil(visible.length / 2);
-      const col1 = visible.slice(0, half);
-      const col2 = visible.slice(half);
+      const half = Math.ceil(display.length / 2);
+      const col1 = display.slice(0, half);
+      const col2 = display.slice(half);
 
       document.getElementById('rank-col-1').innerHTML = col1.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
       document.getElementById('rank-col-2').innerHTML = col2.map((c, i) => rankRow(c, half + i + 1, allPicks)).join('');
@@ -1188,10 +1212,14 @@
       /* כפתור "הצג עוד" */
       document.getElementById('show-more-bar').style.display = (isTruncated && !filterPicked) ? '' : 'none';
 
-      // summary bar
+      // summary bar — מספרים אמיתיים תמיד, ללא תלות במצב הלחצנים
       document.getElementById('summary-bar').style.display = '';
-      document.getElementById('counter-total').textContent = rankList.length;
-      document.getElementById('counter-picked').textContent = allPicks.size;
+      document.getElementById('stat-total').textContent = rankList.length;
+      document.getElementById('stat-picked').textContent = allPicks.size;
+
+      const shiryunCount = (state.shiryun || []).length;
+      document.getElementById('stat-shiryun').textContent = shiryunCount;
+      document.getElementById('shiryun-filter-btn').style.display = shiryunCount > 0 ? '' : 'none';
     }
 
     let expanded = false;
@@ -1219,40 +1247,193 @@
         if (lastPickIdx >= 0) cutoff = Math.min(sorted.length, lastPickIdx + 1 + 4);
       }
       const visible = sorted.slice(0, cutoff);
+      visible.forEach((c, i) => { c._origRank = i + 1; });
       const isTruncated = cutoff < sorted.length;
-      document.getElementById('rank-col-1').innerHTML = visible.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
+      const display = zipperMode ? zipperSort(visible) : visible;
+      document.getElementById('rank-col-1').innerHTML = display.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
       document.getElementById('show-more-bar').style.display = isTruncated ? '' : 'none';
     }
 
-    let filterPicked = true;
+    let zipperMode = false;
+    function startShuffle() {
+      zipperMode = !zipperMode;
+      document.getElementById('zipper-btn').textContent = zipperMode ? '🔀 סדר מקורי' : '🔀 ריצ׳רץ';
+      if (expanded) renderRankingSingleCol(); else renderRanking();
+    }
+
+    function zipperSort(list) {
+      /* סירוג אישה/גבר/אישה/גבר — כל אחד שומר את מספר הדירוג המקורי */
+      const women = list.filter(c => c.gender === 'נקבה');
+      const men = list.filter(c => c.gender !== 'נקבה');
+      const result = [];
+      let wi = 0, mi = 0;
+      let nextWoman = true;
+      while (wi < women.length || mi < men.length) {
+        if (nextWoman && wi < women.length) {
+          result.push(women[wi++]);
+        } else if (!nextWoman && mi < men.length) {
+          result.push(men[mi++]);
+        } else if (wi < women.length) {
+          result.push(women[wi++]);
+        } else {
+          result.push(men[mi++]);
+        }
+        nextWoman = !nextWoman;
+      }
+      return result;
+    }
+
+    let filterPicked = true; /* true = הדגשת נבחרים (לא-נבחרים כנקודות), false = כל המועמדים שווים */
+    let filterShiryun = false;
+    let filterPickedOnly = false; /* true = מציג רק את הנבחרים, מסתיר את כל השאר */
+    let preShiryunFilterPicked = true; /* שומר את מצב filterPicked לפני סינון שריון */
+
+    function togglePickedOnlyFilter() {
+      filterPickedOnly = !filterPickedOnly;
+      document.getElementById('picked-only-label').textContent = filterPickedOnly ? 'חזרה' : 'נבחרו';
+      if (expanded) renderRankingSingleCol(); else renderRanking();
+    }
+
     function togglePickedFilter() {
-      filterPicked = !filterPicked;
-      document.getElementById('picked-filter-label').textContent = filterPicked ? 'הצג הכל' : 'נבחרו על ידך 🎯';
-      document.getElementById('counter-picked').style.display = filterPicked ? 'none' : '';
+      if (filterShiryun) {
+        /* חוזר ממצב שריון — מחזיר למצב שהיה */
+        filterShiryun = false;
+        filterPicked = preShiryunFilterPicked;
+        document.getElementById('shiryun-filter-label').textContent = 'אושרו לסיום';
+      } else {
+        filterPicked = !filterPicked;
+      }
+      /* filterPicked=true → הדגשת נבחרים (נקודות), filterPicked=false → כל המועמדים שווים */
+      if (filterPicked) {
+        document.getElementById('all-filter-label').textContent = 'כלל המועמדים';
+      } else {
+        document.getElementById('all-filter-label').textContent = 'הדגש נבחרים';
+      }
+      if (expanded) renderRankingSingleCol(); else renderRanking();
+    }
+
+    let _preShiryunExpanded = false;
+    function toggleShiryunFilter() {
+      if (!filterShiryun) {
+        /* נכנס למצב אישור — שומר מצב נוכחי */
+        preShiryunFilterPicked = filterPicked;
+        _preShiryunExpanded = expanded;
+        filterShiryun = true;
+        /* מסך רחב */
+        if (!expanded) toggleExpand();
+        /* הסתר דרופדאון, ריצ'רץ, כותרת+הרחבה */
+        document.getElementById('team-select').style.display = 'none';
+        document.getElementById('show-more-bar').style.display = 'none';
+        document.querySelector('.rank-section-header').style.display = 'none';
+        document.getElementById('shiryun-filter-label').textContent = 'חזרה';
+      } else {
+        /* חוזר למצב שהיה לפני */
+        filterShiryun = false;
+        filterPicked = preShiryunFilterPicked;
+        /* החזר מסך רחב/צר למצב שהיה */
+        if (!_preShiryunExpanded && expanded) toggleExpand();
+        /* החזר דרופדאון, ריצ'רץ, כותרת+הרחבה */
+        document.getElementById('team-select').style.display = '';
+        document.getElementById('show-more-bar').style.display = '';
+        document.querySelector('.rank-section-header').style.display = '';
+        document.getElementById('shiryun-filter-label').textContent = 'אושרו לסיום';
+      }
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }
 
     let _reasonName = '';
-    function openReasonModal(name) {
+    let _reasonMode = 'edit';
+    let _reasonPrefix = '';
+    var SEP = '──────────';
+    function openReasonModal(name, mode) {
       _reasonName = name;
+      _reasonMode = mode || 'edit';
       const reasons = getPickReasons();
       const existing = reasons[name] || '';
-      document.getElementById('reason-title').textContent = 'למה בחרת ב' + name + '?';
-      document.getElementById('reason-text').value = existing;
-      document.getElementById('reason-delete-btn').style.display = existing ? '' : 'none';
+      var title = '';
+      var btnText = 'שמור';
+      if (_reasonMode === 'pick') {
+        _reasonPrefix = 'בחרתי כי: ';
+        title = name;
+        btnText = 'בחר ושמור';
+      } else if (_reasonMode === 'unpick') {
+        _reasonPrefix = 'ביטלתי בחירה כי: ';
+        title = 'ביטול בחירה של ' + name;
+        btnText = 'בטל בחירה';
+      } else if (_reasonMode === 'approve') {
+        _reasonPrefix = 'אישרתי בחירה כי: ';
+        title = 'אישור ' + name;
+        btnText = 'אשר ושמור';
+      } else if (_reasonMode === 'unapprove') {
+        _reasonPrefix = 'ביטלתי אישור בחירה כי: ';
+        title = 'ביטול אישור של ' + name;
+        btnText = 'בטל אישור';
+      } else {
+        _reasonPrefix = 'תיקנתי הסבר: ';
+        title = 'הסבר — ' + name;
+        btnText = 'שמור';
+      }
+      var newVal = existing ? existing + '\n' + SEP + '\n' : '';
+      document.getElementById('reason-title').textContent = title;
+      document.getElementById('reason-text').value = newVal;
+      document.getElementById('reason-text').style.display = '';
+      document.getElementById('reason-text').readOnly = false;
+      document.getElementById('reason-unpick-msg').style.display = 'none';
+      document.getElementById('reason-delete-btn').style.display = 'none';
+      document.getElementById('reason-save').textContent = btnText;
+      var ta = document.getElementById('reason-text');
+      ta.scrollTop = ta.scrollHeight;
       document.getElementById('reason-modal').style.display = '';
-      setTimeout(function() { document.getElementById('reason-text').focus(); }, 50);
+      setTimeout(function() { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }, 50);
     }
     function closeReasonModal() {
       document.getElementById('reason-modal').style.display = 'none';
       _reasonName = '';
+      _reasonMode = 'edit';
     }
     function saveReason() {
+      var now = new Date();
+      var ts = now.toLocaleDateString('he-IL') + ' ' + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+      var rawVal = document.getElementById('reason-text').value;
+      /* מוסיף את הפרפיקס עם הזמן לטקסט החדש שהמשתמש כתב אחרי הקו המפריד */
+      var parts = rawVal.split(SEP);
+      var before = parts.length > 1 ? parts.slice(0, -1).join(SEP).trimEnd() : '';
+      var after = parts[parts.length - 1].trim();
+      var final = '';
+      if (before && after) {
+        final = before + '\n' + SEP + '\n' + ts + ' — ' + _reasonPrefix + after;
+      } else if (before && !after) {
+        final = before;
+      } else if (!before && after) {
+        final = ts + ' — ' + _reasonPrefix + after;
+      }
       const reasons = getPickReasons();
-      const val = document.getElementById('reason-text').value.trim();
-      if (val) reasons[_reasonName] = val;
+      if (final) reasons[_reasonName] = final;
       else delete reasons[_reasonName];
       savePickReasons(reasons);
+
+      state = loadState();
+      state.selected = state.selected || [];
+      state.shiryun = state.shiryun || [];
+
+      if (_reasonMode === 'pick') {
+        if (state.selected.indexOf(_reasonName) < 0) {
+          state.selected.push(_reasonName);
+        }
+        saveState(state);
+      } else if (_reasonMode === 'unpick') {
+        const i = state.selected.indexOf(_reasonName);
+        if (i >= 0) state.selected.splice(i, 1);
+        saveState(state);
+      } else if (_reasonMode === 'approve') {
+        if (state.selected.indexOf(_reasonName) < 0) state.selected.push(_reasonName);
+        if (state.shiryun.indexOf(_reasonName) < 0) state.shiryun.push(_reasonName);
+        saveState(state);
+      } else if (_reasonMode === 'unapprove') {
+        const i = state.shiryun.indexOf(_reasonName);
+        if (i >= 0) state.shiryun.splice(i, 1);
+        saveState(state);
+      }
       closeReasonModal();
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }
@@ -1316,42 +1497,116 @@
       const picked = allPicks.has(c.name);
       const eName = escapeHtml(c.name);
 
-      /* מצב סינון — מועמדים לא נבחרים הופכים לנקודה */
-      if (filterPicked && !picked) {
+      const shiryuned = (state.shiryun || []).includes(c.name);
+      const gDot = genderDotHtml(c.gender);
+      const gDotFaded = '<span class="gender-dot" style="background:' + (c.gender==='נקבה'?'#e879a0':'#3b82f6') + ';opacity:.3"></span>';
+
+      /* מצב סינון שריון — רק משוריינים מוצגים, השאר מוסתרים */
+      if (filterShiryun && !shiryuned) {
+        return '';
+      }
+      /* מצב "רק נבחרים" — הסתר את הלא-נבחרים לגמרי */
+      if (filterPickedOnly && !filterShiryun && !picked) {
+        return '';
+      }
+      var reasonToggleHtml = '';
+      if (filterShiryun && shiryuned) {
+        var reasonText = (getPickReasons()[c.name] || '').trim();
+        var rid = 'shiryun-reason-' + rank;
+        var reasonHtml = reasonText
+          ? '<div id="' + rid + '" style="display:none;padding:4px 32px 10px;font-size:.82rem;color:var(--text-muted);line-height:1.5;white-space:pre-wrap;border-bottom:1px solid var(--border-soft)">' + escapeHtml(reasonText) + '</div>'
+          : '';
+        reasonToggleHtml = reasonText
+          ? '<span class="reason-toggle" onclick="event.stopPropagation();toggleShiryunReason(\'' + rid + '\',this)" title="הצג/הסתר הסבר" style="cursor:pointer;flex-shrink:0;color:var(--text-muted);font-size:.9rem;padding:0 4px">▾</span>'
+          : '';
+      }
+      /* מצב הדגשת נבחרים — לא נבחרים מוצגים כנקודה קטנה וחיוורה */
+      if (filterPicked && !filterShiryun && !picked) {
         return '<div class="rank-row rank-dot">'
           + '<span class="rank-num dot-num">' + rank + '</span>'
+          + gDotFaded
           + '<span class="dot-name">' + eName + '</span>'
           + '</div>';
       }
-
+      /* מצב "כל המועמדים שווים" — נופל לשורה מלאה רגילה */
       const hasReason = picked && !!(getPickReasons()[c.name] || '').trim();
       const targetCls = hasReason ? 'target-with-reason' : 'target-no-reason';
-      const targetHtml = picked
-        ? '&nbsp;<span class="pick-target ' + targetCls + '" onclick="event.preventDefault();event.stopPropagation();openReasonModal(\'' + eName + '\')" title="' + (hasReason ? 'ערוך הסבר' : 'הוסף הסבר לבחירה') + '">🎯</span>'
+      const targetHtml = (picked && !filterShiryun)
+        ? '&nbsp;<span class="pick-target ' + targetCls + '" onclick="event.stopPropagation();openReasonModal(\'' + eName + '\')" title="' + (hasReason ? 'ערוך הסבר' : 'הוסף הסבר לבחירה') + '">✏️</span>'
         : '';
-      return '<div class="rank-row">'
+
+      /* + = שריין, ✓ = בטל שריון */
+      const pickIcon = picked ? '✓' : '';
+      const pickTitle = shiryuned ? 'בטל שריון' : (picked ? 'שריין' : 'בחר');
+      const pickCls = 'rank-pick' + (shiryuned ? ' shiryuned' : (picked ? ' picked-check' : ' empty-pick'));
+
+      var row = '<div class="rank-row" onclick="togglePick(\'' + eName + '\')">'
         + '<span class="rank-num">' + rank + '</span>'
-        + '<a class="rank-name' + (picked ? ' picked' : ' unpicked') + '" href="dbr_P_01_candidate.html?name=' + encodeURIComponent(c.name) + '" onclick="event.stopPropagation()">' + eName + targetHtml + '</a>'
-        + '<span class="rank-pick" onclick="event.stopPropagation();togglePick(\'' + eName + '\')" title="' + (picked ? 'הסר מהרשימה' : 'הוסף לרשימה') + '">' + (picked ? '✓' : '+') + '</span>'
-        + '<span class="rank-card" onclick="event.stopPropagation();openProfile(\'' + eName + '\')" title="כרטיס ועדה מסדרת">📋</span>'
+        + gDot
+        + '<span class="rank-name' + (picked ? ' picked' : ' unpicked') + '">' + eName + targetHtml + '</span>'
+        + reasonToggleHtml
+        + (filterShiryun ? '' : '<span class="' + pickCls + '" onclick="event.stopPropagation();toggleShiryunState(\'' + eName + '\')" title="' + pickTitle + '">' + pickIcon + '</span>')
+        + (filterShiryun ? '' : '<span class="rank-card" onclick="event.stopPropagation();openProfile(\'' + eName + '\')" title="כרטיס ועדה מסדרת">📋</span>')
         + '</div>';
+      if (filterShiryun && shiryuned && typeof reasonHtml !== 'undefined') {
+        row += reasonHtml;
+      }
+      return row;
+    }
+
+    function toggleShiryunReason(rid, el) {
+      var div = document.getElementById(rid);
+      if (!div) return;
+      var open = div.style.display === 'none';
+      div.style.display = open ? '' : 'none';
+      el.textContent = open ? '▴' : '▾';
+    }
+
+    function beepError() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.frequency.value = 200;
+        osc.type = 'square';
+        gain.gain.value = 0.15;
+        osc.start(); osc.stop(ctx.currentTime + 0.12);
+      } catch(e) {}
     }
 
     function togglePick(name) {
       state = loadState();
       state.selected = state.selected || [];
       state.shiryun = state.shiryun || [];
-      const i = state.selected.indexOf(name);
-      if (i >= 0) {
-        state.selected.splice(i, 1);
-        const j = state.shiryun.indexOf(name);
-        if (j >= 0) state.shiryun.splice(j, 1);
+      const picked = state.selected.indexOf(name) >= 0;
+      if (picked) {
+        if (state.shiryun.indexOf(name) >= 0) {
+          beepError();
+          return;
+        }
+        openReasonModal(name, 'unpick');
       } else {
-        state.selected.push(name);
-        state.shiryun.push(name);
+        openReasonModal(name, 'pick');
       }
-      saveState(state);
-      renderRanking();
+    }
+
+    const MAX_SHIRYUN = 8;
+
+    function toggleShiryunState(name) {
+      state = loadState();
+      state.selected = state.selected || [];
+      state.shiryun = state.shiryun || [];
+      const isShiryuned = state.shiryun.indexOf(name) >= 0;
+      if (isShiryuned) {
+        openReasonModal(name, 'unapprove');
+      } else {
+        if (state.shiryun.length >= MAX_SHIRYUN) {
+          beepError();
+          return;
+        }
+        openReasonModal(name, 'approve');
+      }
     }
 
     function openProfile(name) {

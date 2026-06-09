@@ -317,6 +317,29 @@
 
     .btn-remove:hover { border-color: #f44; color: #f44; }
 
+    /* ── Picked state (photo click) ── */
+    .candidate-card.picked .photo-wrap {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(46,125,79,0.2);
+    }
+    .candidate-card.picked .candidate-name { color: var(--green); }
+    .photo-wrap { position: relative; }
+    .photo-check {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: .75rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+    }
+
 
     /* ============ Sticky footer ============ */
     .sticky-footer {
@@ -659,17 +682,50 @@
 
     function isShiryun(id)  { return primState.shiryun.includes(id); }
     function isDbr(id)      { return primState.dbr_picks.includes(id); }
+    function isPicked(id)   { return (primState.selected || []).includes(id); }
+
+    function togglePick(id) {
+      ensureArrays();
+      primState.selected = primState.selected || [];
+      const idx = primState.selected.indexOf(id);
+      if (idx >= 0) {
+        primState.selected.splice(idx, 1);
+        /* אם מסיר מנבחרים, הסר גם משריון */
+        primState.shiryun = primState.shiryun.filter(x => x !== id);
+        primState.dbr_picks = primState.dbr_picks.filter(x => x !== id);
+      } else {
+        primState.selected.push(id);
+      }
+      savePrimerisState(primState);
+      updateCard(id);
+      renderCounters();
+    }
 
     function updateCard(id) {
       const card = document.querySelector(`.candidate-card[data-id="${CSS.escape(id)}"]`);
       if (!card) return;
       const sel = isShiryun(id);
+      const picked = isPicked(id);
       const dbr = isDbr(id);
-      card.className = 'candidate-card' + (sel ? ' selected' : dbr ? ' dbr-picked' : '');
+      card.className = 'candidate-card' + (sel ? ' selected' : picked ? ' picked' : dbr ? ' dbr-picked' : '');
+
+      /* עדכון סימן ✓ על התמונה */
+      const pw = card.querySelector('.photo-wrap');
+      const existingCheck = pw.querySelector('.photo-check');
+      if (picked && !existingCheck) {
+        pw.insertAdjacentHTML('beforeend', '<div class="photo-check">✓</div>');
+      } else if (!picked && existingCheck) {
+        existingCheck.remove();
+      }
+      pw.title = picked ? 'הסר מהרשימה' : 'בחר';
+
       card.querySelectorAll('.btn-shiryun, .btn-remove, .dbr-badge').forEach(el => el.remove());
       if (sel) {
         card.insertAdjacentHTML('beforeend',
           `<button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(id)}')">✓ משוריין</button>`);
+      } else if (picked) {
+        card.insertAdjacentHTML('beforeend',
+          `<button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(id)}')">שריין</button>`);
       } else if (dbr) {
         card.insertAdjacentHTML('beforeend',
           `<div class="dbr-badge">🎯 נבחר במושכלת</div>
@@ -792,19 +848,24 @@
 
       list.innerHTML = filtered.map(c => {
         const sel = isShiryun(c.id);
+        const picked = isPicked(c.id);
         const dbr = isDbr(c.id);
+        const cardCls = sel ? ' selected' : picked ? ' picked' : dbr ? ' dbr-picked' : '';
         return `
-          <div class="candidate-card${sel ? ' selected' : dbr ? ' dbr-picked' : ''}" data-id="${escapeHtml(c.id)}">
-            <div class="photo-wrap">
+          <div class="candidate-card${cardCls}" data-id="${escapeHtml(c.id)}">
+            <div class="photo-wrap" onclick="togglePick('${escapeHtml(c.id)}')" style="cursor:pointer" title="${picked ? 'הסר מהרשימה' : 'בחר'}">
               <img src="${escapeHtml(localImageUrl(c.name))}" alt="${escapeHtml(c.name)}"
                    onerror="${WIKI_PHOTOS[c.name]
                      ? `this.src='${escapeHtml(WIKI_PHOTOS[c.name])}';this.onerror=function(){this.outerHTML='<span style=\\'font-size:3rem\\'>${c.gender==='נשים'?'👩':'👨'}</span>'}`
                      : `this.outerHTML='<span style=\\'font-size:3rem\\'>${c.gender==='נשים'?'👩':'👨'}</span>'`}"
                    style="width:100%;height:100%;object-fit:cover">
+              ${picked ? '<div class="photo-check">✓</div>' : ''}
             </div>
             <div class="candidate-name">${escapeHtml(c.name)}</div>
             ${sel ? `
               <button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(c.id)}')">✓ משוריין</button>
+            ` : picked ? `
+              <button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(c.id)}')">שריין</button>
             ` : dbr ? `
               <div class="dbr-badge">🎯 נבחר במושכלת</div>
               <button class="btn-remove" onclick="removeDbr('${escapeHtml(c.id)}')">הסר</button>

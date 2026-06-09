@@ -429,22 +429,32 @@
       return `אלה המועמדים/ות שבחרתם:<br><div style="display:grid;grid-template-columns:1fr 1fr;gap:0 10px;margin:4px 0">${list}</div>`;
     }
 
+    function selectionTextWithShiryun(selectedArr, shiryunArr) {
+      const shiryunSet = new Set(shiryunArr);
+      const list = selectedArr.map(n => {
+        const isSh = shiryunSet.has(n);
+        return `<div style="display:flex;align-items:center;font-weight:${isSh ? '900' : '600'};color:${isSh ? '#2e7d4f' : '#12355b'};font-size:.85rem;line-height:1.2;padding:1px 0">${genderDot(n)}${n}${isSh ? ' ✓' : ''}</div>`;
+      }).join('');
+      return `נבחרו ${selectedArr.length} מועמדים/ות:<br><div style="display:grid;grid-template-columns:1fr 1fr;gap:0 10px;margin:4px 0">${list}</div>`;
+    }
+
     const SHIRYUN_DESC_HTML = 'בחירה ישירה של מועמדים/ות מתוך רשימת המועמדים המלאה, על פי השיקולים שלך.<br><span style="font-size:.88rem;color:#5f6b7a;margin-top:6px;display:block">גם אם בחרתם בשריון ישיר את כל השמונה, מומלץ ללכת למסלול השני, כדי להבדיל בין התרשמות לעובדות.</span>';
     const DBR_DESC     = 'על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.';
 
     function renderAll() {
       primState = loadState();
       const shiryun   = primState.shiryun   || [];
+      const selected  = primState.selected  || [];
       const dbrPicks  = primState.dbr_picks || [];
-      const nSel = (primState.selected || []).length;
+      const nSel = selected.length;
 
-      // כרטיסית שריון
+      // כרטיסית שריון — מציג נבחרים (selected), עם סימון משוריינים
       const shiryunEl = document.getElementById('shiryun-desc');
-      if (shiryunEl) shiryunEl.innerHTML = shiryun.length > 0
-        ? selectionText(shiryun)
+      if (shiryunEl) shiryunEl.innerHTML = selected.length > 0
+        ? selectionTextWithShiryun(selected, shiryun)
         : SHIRYUN_DESC_HTML;
       const btnRow = document.getElementById('shiryun-btn-row');
-      if (btnRow) btnRow.style.display = shiryun.length > 0 ? 'flex' : 'none';
+      if (btnRow) btnRow.style.display = selected.length > 0 ? 'flex' : 'none';
 
       // כרטיסית מושכלת
       const dbrEl = document.getElementById('dbr-desc');

@@ -489,6 +489,26 @@
       border-bottom: 1px solid #edf3fb;
       cursor: pointer;
       line-height: 1.25;
+      min-height: var(--row-h, 28px);
+    }
+    .show-more-bar {
+      text-align: center;
+      padding: 10px 0 6px;
+    }
+    .show-more-btn {
+      background: var(--blue-soft);
+      color: var(--blue-main);
+      border: 1.5px solid var(--border-soft);
+      border-radius: 20px;
+      padding: 6px 24px;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .15s;
+    }
+    .show-more-btn:hover {
+      background: var(--blue-main);
+      color: white;
     }
     .rank-row:last-child { border-bottom: none; }
     .rank-row:hover { background: var(--blue-soft); }
@@ -729,6 +749,9 @@
         <div class="rank-divider"></div>
         <div id="rank-col-2"></div>
       </div>
+      <div id="show-more-bar" class="show-more-bar" style="display:none;">
+        <button class="show-more-btn" onclick="showAllCandidates()">הצג עוד ▼</button>
+      </div>
     </div>
 
     <!-- Modal כרטיס ועדה מסדרת -->
@@ -898,17 +921,42 @@
       ]);
 
       const sorted = [...rankList].sort((a, b) => (b.scoreC ?? -1) - (a.scoreC ?? -1));
-      const half = Math.ceil(sorted.length / 2);
-      const col1 = sorted.slice(0, half);
-      const col2 = sorted.slice(half);
+
+      /* חתוך: מ-#1 עד 4 מועמדים אחרי הנבחר הנמוך ביותר */
+      let cutoff = sorted.length;          // ברירת מחדל — הצג הכל
+      if (!showAll && allPicks.size > 0) {
+        let lastPickIdx = -1;
+        sorted.forEach((c, i) => { if (allPicks.has(c.name)) lastPickIdx = i; });
+        if (lastPickIdx >= 0) cutoff = Math.min(sorted.length, lastPickIdx + 1 + 4);
+      }
+      const visible = sorted.slice(0, cutoff);
+      const isTruncated = cutoff < sorted.length;
+
+      /* גובה שורה דינמי — ככל שפחות שורות, יותר מרווח */
+      const rowsPerCol = Math.ceil(visible.length / 2);
+      const rowH = Math.max(28, Math.min(44, Math.round(420 / Math.max(rowsPerCol, 1))));
+      document.querySelector('.rank-columns').style.setProperty('--row-h', rowH + 'px');
+
+      const half = Math.ceil(visible.length / 2);
+      const col1 = visible.slice(0, half);
+      const col2 = visible.slice(half);
 
       document.getElementById('rank-col-1').innerHTML = col1.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
       document.getElementById('rank-col-2').innerHTML = col2.map((c, i) => rankRow(c, half + i + 1, allPicks)).join('');
+
+      /* כפתור "הצג עוד" */
+      document.getElementById('show-more-bar').style.display = isTruncated ? '' : 'none';
 
       // summary bar
       document.getElementById('summary-bar').style.display = '';
       document.getElementById('counter-total').textContent = rankList.length;
       document.getElementById('counter-picked').textContent = allPicks.size;
+    }
+
+    let showAll = false;
+    function showAllCandidates() {
+      showAll = true;
+      renderRanking();
     }
 
     function rankRow(c, rank, allPicks) {

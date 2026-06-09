@@ -457,7 +457,7 @@
     .rank-section-title {
       font-weight: 700;
       color: var(--blue-dark);
-      font-size: clamp(.82rem, 2.5vw, 1rem);
+      font-size: clamp(.92rem, 2.8vw, 1.12rem);
     }
     .rank-meta {
       font-size: .82rem;
@@ -663,16 +663,25 @@
       margin-inline-end: auto;
     }
 
-    .dbr-toggle {
+    .team-select {
+      width: auto;
+      max-width: 65%;
+      padding: 4px 4px;
+      font-size: clamp(.82rem, 2.5vw, 1rem);
+      font-weight: 700;
+      font-family: inherit;
+      color: var(--blue-dark);
+      background: white;
+      border: 1.5px solid var(--blue-main);
+      border-radius: 6px;
       cursor: pointer;
-      color: var(--blue-main);
-      border-bottom: 2px dashed var(--blue-main);
-      padding-bottom: 1px;
-      transition: .15s;
+      direction: rtl;
+      appearance: auto;
     }
-    .dbr-toggle:hover {
-      color: var(--green);
+    .team-select:focus {
+      outline: none;
       border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(16,185,129,.15);
     }
     .dbr-notice {
       text-align: center;
@@ -915,20 +924,37 @@
     <div id="summary-bar" class="summary-bar" style="display:none;">
       <div class="summary-pills">
         <span class="pill"><strong id="counter-total">0</strong> מועמדים</span>
-        <span class="pill green" id="picked-filter-btn" style="cursor:pointer" onclick="togglePickedFilter()"><strong id="counter-picked">0</strong> <span id="picked-filter-label">הצג הכל</span></span>
+        <span class="pill green" id="picked-filter-btn" style="cursor:pointer" onclick="togglePickedFilter()"><strong id="counter-picked" style="display:none">0</strong> <span id="picked-filter-label">הצג הכל</span></span>
       </div>
       <span id="rank-meta-text" class="last-updated-text"></span>
     </div>
 
     <!-- Ranking — two columns, all candidates -->
     <div id="ranking-section" class="rank-section" style="display:none;">
-      <div class="rank-section-header">
-        <span class="rank-section-title">הבחירה שלך מול הוועדה המסדרת של <span id="dbr-toggle" class="dbr-toggle" onclick="toggleDBR()">ד.ב.ר (1)</span></span>
-        <button class="expand-btn" id="expand-btn" onclick="toggleExpand()" title="הרחב / צמצם">⤢</button>
+      <div class="rank-section-header" style="flex-direction:column;align-items:stretch;gap:0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span class="rank-section-title">הבחירה שלך מול:</span>
+          <button class="expand-btn" id="expand-btn" onclick="toggleExpand()" title="הרחב / צמצם">⤢</button>
+        </div>
+        <select id="team-select" class="team-select" onchange="onTeamChange()">
+          <option value="dbr1">הוועדה המסדרת של ד.ב.ר (1)</option>
+          <option value="dbr2">הוועדה המסדרת של ד.ב.ר (2)</option>
+          <option value="dbr3">הוועדה המסדרת של ד.ב.ר (3)</option>
+          <option value="lochemet">נבחרת לוחמת</option>
+          <option value="coalition">נבחרת מותאמת קואליציה</option>
+          <option value="opposition">נבחרת מותאמת אופוזיציה</option>
+          <option value="yair">נבחרת החלומות של יאיר גולן</option>
+          <option value="bonot">בונות אלטרנטיבה</option>
+          <option value="north">נבחרת פיתוח הצפון</option>
+          <option value="hosen">נבחרת חוסן חברתי</option>
+          <option value="security">נבחרת ביטחון לאומי</option>
+          <option value="environment">נבחרת צדק סביבתי</option>
+          <option value="future">נבחרת דור העתיד</option>
+        </select>
       </div>
-      <div id="dbr-notice" class="dbr-notice" style="display:none;">
-        <strong>ד.ב.ר (2)</strong><br>
-        הוועדה המסדרת של ד.ב.ר (2) עדיין לא התכנסה
+      <div id="team-notice" class="dbr-notice" style="display:none;">
+        <strong id="team-notice-name"></strong><br>
+        <span id="team-notice-text"></span>
       </div>
       <div id="dbr1-content">
         <div class="rank-columns">
@@ -1113,6 +1139,20 @@
     }
 
     // ── רינדור שתי עמודות — חצי ראשון / חצי שני ──
+    function cleanPicks() {
+      /* הסר נבחרים שלא קיימים בדאטה */
+      state = loadState();
+      const validNames = new Set(rankList.map(c => c.name));
+      let changed = false;
+      ['selected','shiryun','dbr_picks'].forEach(key => {
+        if (!state[key]) return;
+        const before = state[key].length;
+        state[key] = state[key].filter(n => validNames.has(n));
+        if (state[key].length !== before) changed = true;
+      });
+      if (changed) saveState(state);
+    }
+
     function renderRanking() {
       state = loadState();
       const allPicks = new Set([
@@ -1188,6 +1228,7 @@
     function togglePickedFilter() {
       filterPicked = !filterPicked;
       document.getElementById('picked-filter-label').textContent = filterPicked ? 'הצג הכל' : 'נבחרו על ידך 🎯';
+      document.getElementById('counter-picked').style.display = filterPicked ? 'none' : '';
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }
 
@@ -1223,12 +1264,39 @@
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }
 
-    let activeDBR = 1;
-    function toggleDBR() {
-      activeDBR = activeDBR === 1 ? 2 : 1;
-      document.getElementById('dbr-toggle').textContent = 'ד.ב.ר (' + activeDBR + ')';
-      document.getElementById('dbr1-content').style.display = activeDBR === 1 ? '' : 'none';
-      document.getElementById('dbr-notice').style.display = activeDBR === 2 ? '' : 'none';
+    const TEAM_STATUS = {
+      dbr1: 'active',
+      dbr2: 'committee_pending', dbr3: 'committee_pending',
+      lochemet: 'building', coalition: 'building', opposition: 'building',
+      yair: 'building', bonot: 'building', north: 'building',
+      hosen: 'building', security: 'building', environment: 'building', future: 'building'
+    };
+    const TEAM_LABELS = {
+      dbr2: 'ד.ב.ר (2)', dbr3: 'ד.ב.ר (3)',
+      lochemet: 'נבחרת לוחמת', coalition: 'נבחרת מותאמת קואליציה',
+      opposition: 'נבחרת מותאמת אופוזיציה', yair: 'נבחרת החלומות של יאיר גולן',
+      bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הצפון',
+      hosen: 'נבחרת חוסן חברתי', security: 'נבחרת ביטחון לאומי',
+      environment: 'נבחרת צדק סביבתי', future: 'נבחרת דור העתיד'
+    };
+    function onTeamChange() {
+      const val = document.getElementById('team-select').value;
+      const status = TEAM_STATUS[val];
+      const notice = document.getElementById('team-notice');
+      const content = document.getElementById('dbr1-content');
+      if (status === 'active') {
+        notice.style.display = 'none';
+        content.style.display = '';
+      } else {
+        content.style.display = 'none';
+        const label = TEAM_LABELS[val] || val;
+        document.getElementById('team-notice-name').textContent = label;
+        document.getElementById('team-notice-text').textContent =
+          status === 'committee_pending'
+            ? 'הוועדה המסדרת של ' + label + ' טרם התכנסה'
+            : label + ' — נמצאת בתהליך גיבוש';
+        notice.style.display = '';
+      }
     }
 
     let showAll = false;
@@ -1412,6 +1480,9 @@
       });
       rankList.sort((a,b) => (b.scoreC??-1) - (a.scoreC??-1));
       document.getElementById('ranking-section').style.display = '';
+      cleanPicks();
+      // DEBUG: uncomment next line to reset all picks
+      // saveState({ selected: [], shiryun: [], dbr_picks: [], approved: [], meta: {} });
       renderRanking();
     }).catch(() => {});
 

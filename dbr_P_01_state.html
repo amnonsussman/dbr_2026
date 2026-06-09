@@ -393,6 +393,175 @@
       font-size: .97rem;
     }
 
+    /* ── Ranking table ── */
+    .rank-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .93rem;
+    }
+    .rank-table th {
+      text-align: right;
+      padding: 8px 12px;
+      font-size: .76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border-soft);
+    }
+    .rank-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-soft);
+      vertical-align: middle;
+    }
+    .rank-table tr:last-child td { border-bottom: none; }
+    .rank-table tr.row-shiryun td { background: #f0faf4; }
+    .rank-table tr.row-dbr td    { background: #f0f6ff; }
+    .rank-table tr.row-cut td:first-child { border-top: 3px dashed #94a3b8; }
+
+    .score-pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: .85rem;
+      color: white;
+    }
+
+    .gender-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-inline-end: 6px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .rank-section {
+      background: white;
+      border: 1.5px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 28px;
+    }
+    .rank-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-soft);
+      background: var(--blue-card);
+    }
+    .rank-section-title {
+      font-weight: 800;
+      color: var(--blue-dark);
+      font-size: 1rem;
+    }
+    .rank-meta {
+      font-size: .82rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Intro overlay ── */
+    .intro-overlay {
+      position: fixed; inset: 0;
+      background: rgba(23,32,51,.5);
+      z-index: 50;
+      display: grid; place-items: center;
+      padding: 20px;
+    }
+    .intro-card {
+      background: white;
+      border-radius: var(--radius-large);
+      max-width: 640px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      padding: 32px 28px;
+      box-shadow: 0 28px 70px rgba(16,24,40,.25);
+      text-align: right;
+    }
+    .intro-card h2 {
+      font-size: 1.35rem;
+      color: var(--blue-dark);
+      margin: 0 0 16px;
+      line-height: 1.3;
+    }
+    .intro-card p {
+      color: var(--text-main);
+      font-size: .93rem;
+      line-height: 1.75;
+      margin: 0 0 12px;
+    }
+    .intro-card ul {
+      padding: 0 18px 0 0;
+      margin: 0 0 14px;
+    }
+    .intro-card li {
+      font-size: .92rem;
+      line-height: 1.7;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .intro-card .intro-note {
+      background: var(--blue-soft);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-small);
+      padding: 12px 14px;
+      font-size: .88rem;
+      color: var(--blue-dark);
+      font-weight: 700;
+      line-height: 1.6;
+      margin: 16px 0;
+    }
+    .intro-btn {
+      display: block;
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--blue-main);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 8px;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .intro-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(29,95,167,.25); }
+
+    .info-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-soft);
+      background: white;
+      color: var(--text-muted);
+      font-size: .78rem;
+      font-weight: 900;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-inline-start: 8px;
+      transition: border-color .15s, color .15s;
+    }
+    .info-btn:hover { border-color: var(--blue-main); color: var(--blue-main); }
+
+    /* ── Modal ── */
+    .mbk{display:none;position:fixed;inset:0;background:rgba(23,32,51,.45);z-index:10;align-items:center;justify-content:center;padding:16px}
+    .mbk.open{display:flex}
+    .mbox{background:#fff;border-radius:22px;padding:22px;max-width:680px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 28px 70px rgba(16,24,40,.25)}
+    .mhdr{display:flex;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--border-soft);margin-bottom:14px}
+    .mhdr h2{font-size:1.1rem;color:var(--blue-dark)}
+    .m-close{width:34px;height:34px;border:1px solid var(--border-soft);background:#fff;border-radius:11px;cursor:pointer;font-weight:900;font-size:1rem;display:grid;place-items:center}
+    .sc-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+    .bar-bg{flex:1;height:7px;background:#edf1f7;border-radius:999px;overflow:hidden}
+    .bar-fg{height:100%;border-radius:999px}
+
     /* ── Footer ── */
     .footer {
       margin-top: 40px;
@@ -440,58 +609,85 @@
       </div>
     </header>
 
+    <!-- Intro overlay — first visit -->
+    <div id="intro-overlay" class="intro-overlay" style="display:none">
+      <div class="intro-card">
+        <h2>גיבוש הרשימה הסופית שלי</h2>
+        <p>בשלב הזה אתם עוברים מבחירה רחבה יותר אל הרשימה הסופית.</p>
+        <p>מצד אחד נמצאת הרשימה שלכם — המועמדות והמועמדים שבחרתם לקדם. מתוך הרשימה הזו תצטרכו לבחור עד שמונה מועמדים סופיים.</p>
+        <p>מצד שני נמצא דירוג הוועדה המסדרת של ד.ב.ר — דירוג המבוסס על דיוקנאות המועמדים, על פי הרזומה שלהם והמוטיבציה שלהם לתפקידם הציבורי הבכיר.</p>
+        <p>במסך הזה תוכלו לבחון את הרשימה שבניתם, להשוות אותה לדירוג ד.ב.ר, לבצע שינויים, ולבסוף לאשר את הרשימה הסופית שלכם.</p>
+        <p>המטרה אינה להחליף את שיקול הדעת שלכם, אלא לתת לכם נקודת ייחוס נוספת לפני ההחלטה:</p>
+        <ul>
+          <li>מי מהמועמדים שבחרתם מדורג גבוה או נמוך בדירוג ד.ב.ר?</li>
+          <li>האם יש מועמדות או מועמדים חזקים שלא נכנסו לרשימה שלכם?</li>
+          <li>האם אתם עדיין שלמים עם הבחירה?</li>
+        </ul>
+        <p>בסוף התהליך תתבקשו לאשר עד שמונה מועמדות ומועמדים לרשימה הסופית.</p>
+        <div class="intro-note">הדירוג של ד.ב.ר הוא נקודת ייחוס בלבד.<br>ההחלטה הסופית נשארת שלכם.</div>
+        <button class="intro-btn" onclick="dismissIntro()">הבנתי, נתחיל בגיבוש הרשימה</button>
+      </div>
+    </div>
+
     <section class="page-title">
-      <h1>הרשימה שלי</h1>
-      <p>מועמדים שנבחרו לדיון ומועמדים שאושרו לרשימה הסופית.</p>
+      <h1>גיבוש הרשימה הסופית שלי <button class="info-btn" onclick="showIntro()" title="הסבר על המסך">ⓘ</button></h1>
+      <p>בחנו את הרשימה שבניתם לצד דירוג הוועדה המסדרת, בצעו שינויים ואשרו את הרשימה הסופית.</p>
     </section>
 
-    <!-- Empty state -->
-    <div id="empty-state" class="empty-state" style="display:none;">
-      <div class="empty-icon">🗳️</div>
-      <h2>הרשימה ריקה</h2>
-      <p>עדיין לא נוספו מועמדים. חזרו לתהליך הבחירה ועברו באחד המסלולים.</p>
-      <a href="dbr_P_01_process.html"><button class="btn-primary">חזרה לתהליך הבחירה</button></a>
-    </div>
-
-    <!-- Summary bar — shown when candidates exist -->
+    <!-- Summary bar -->
     <div id="summary-bar" class="summary-bar" style="display:none;">
       <div class="summary-pills">
-        <span class="pill"><strong id="counter-selected">0</strong> נבחרו לדיון</span>
-        <span class="pill green"><strong id="counter-approved">0</strong> אושרו לרשימה</span>
+        <span class="pill"><strong id="counter-total">0</strong> מועמדים</span>
+        <span class="pill green"><strong id="counter-picked">0</strong> נבחרו על ידך 🎯</span>
       </div>
-      <span id="last-updated" class="last-updated-text"></span>
+      <span id="rank-meta-text" class="last-updated-text"></span>
     </div>
 
-    <!-- Lists -->
-    <div id="lists-label" style="display:none;"></div>
-    <div id="lists-section" class="lists-grid" style="display:none;">
-      <div class="list-card">
-        <div class="list-header">
-          <div class="list-title">
-            נבחרו לדיון
-            <span class="list-badge" id="badge-selected">0</span>
+    <!-- Ranking grids — women / men -->
+    <div id="ranking-section" style="display:none;">
+      <div class="lists-grid">
+        <!-- נשים -->
+        <div class="rank-section">
+          <div class="rank-section-header">
+            <span class="rank-section-title">👩 נשים</span>
+            <span class="rank-meta" id="meta-women"></span>
           </div>
-          <div class="list-status">ממתינים להחלטה</div>
-        </div>
-        <ul class="list-items" id="selected-list"></ul>
-      </div>
-
-      <div class="list-card approved">
-        <div class="list-header">
-          <div class="list-title">
-            אושרו לרשימה
-            <span class="list-badge" id="badge-approved">0</span>
+          <div style="overflow-x:auto">
+            <table class="rank-table"><thead><tr>
+              <th style="width:28px">#</th>
+              <th>שם</th>
+              <th style="text-align:center;width:54px">ציון</th>
+              <th style="text-align:center;width:36px"></th>
+            </tr></thead><tbody id="grid-women"></tbody></table>
           </div>
-          <div class="list-status">החלטה סופית</div>
         </div>
-        <ul class="list-items" id="approved-list"></ul>
+        <!-- גברים -->
+        <div class="rank-section">
+          <div class="rank-section-header">
+            <span class="rank-section-title">👨 גברים</span>
+            <span class="rank-meta" id="meta-men"></span>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="rank-table"><thead><tr>
+              <th style="width:28px">#</th>
+              <th>שם</th>
+              <th style="text-align:center;width:54px">ציון</th>
+              <th style="text-align:center;width:36px"></th>
+            </tr></thead><tbody id="grid-men"></tbody></table>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Finish bar -->
-    <div id="finish-bar" class="finish-bar" style="display:none;">
-      <p>לאחר אישור הרשימה הסופית ניתן להפיק אותה ולהדפיסה.</p>
-      <button class="btn-primary" onclick="finishProcess()">סיום והפקת הרשימה הסופית</button>
+    <!-- Modal כרטיס ועדה מסדרת -->
+    <div id="modal" class="mbk" onclick="closeModal(event)">
+      <div class="mbox" onclick="event.stopPropagation()">
+        <div class="mhdr">
+          <div><h2 id="m-name"></h2><p style="color:var(--text-muted);margin-top:2px;font-size:.86rem" id="m-sub"></p></div>
+          <button class="m-close" onclick="closeModal()">×</button>
+        </div>
+        <div id="m-body"></div>
+      </div>
     </div>
 
     <footer class="footer">
@@ -500,6 +696,20 @@
   </div>
 
   <script>
+    const INTRO_KEY = 'dbr_state_intro_seen';
+
+    function showIntro() {
+      document.getElementById('intro-overlay').style.display = '';
+    }
+    function dismissIntro() {
+      document.getElementById('intro-overlay').style.display = 'none';
+      try { localStorage.setItem(INTRO_KEY, 'yes'); } catch(e) {}
+    }
+    // הצג בכניסה ראשונה
+    if (localStorage.getItem(INTRO_KEY) !== 'yes') {
+      document.getElementById('intro-overlay').style.display = '';
+    }
+
     const STATE_KEY = 'primeris_state_v1';
 
     function loadState() {
@@ -525,84 +735,289 @@
 
     let state = loadState();
 
-    function renderAll() {
+    // ══════════════════════════════════════════
+    // דירוג — ועדה מסדרת (CSV) + ועדה חיצונית (JSON)
+    // ══════════════════════════════════════════
+
+    let flatDB      = {};   // שם → שורת CSV
+    let rankList    = [];   // [{ name, gender, scoreC, scoreT }]
+
+    // ── ציון ועדה מסדרת (80% רזומה + 20% מוטיבציה) ──
+    const BASE_W   = { resume: 0.80, motivation: 0.20 };
+    const MOT_SCORE = {
+      'שליחות':9.0,'תיקון':8.5,'מומחיות':8.2,'קריירה':7.0,
+      'הזדמנות':6.0,'לא_ברור':5.0,'לא ברור':5.0,'':5.0
+    };
+    function motivationBaseScore(type) { return MOT_SCORE[type] ?? 5.0; }
+    function motivationConfidenceFactor(confPct) {
+      const c = parseFloat(confPct);
+      return 0.70 + 0.30 * (isNaN(c) ? 0.60 : Math.max(0,Math.min(100,c))/100);
+    }
+    function weightedAvgAvail(parts) {
+      const a = parts.filter(p => p.val !== null && p.val !== undefined && !isNaN(p.val));
+      if (!a.length) return null;
+      const w = a.reduce((s,p)=>s+p.w,0);
+      return a.reduce((s,p)=>s+p.val*p.w,0)/w;
+    }
+    function computeCommitteeScore(name) {
+      const row = flatDB[name];
+      const resumeVal = (row && row['zccc'] !== '') ? parseFloat(row['zccc']) : null;
+      const motType   = row ? (row['zccd'] || 'לא_ברור') : 'לא_ברור';
+      const motScore  = motivationBaseScore(motType) * motivationConfidenceFactor(row ? row['zcce'] : null);
+      const base = weightedAvgAvail([
+        { val: resumeVal,  w: BASE_W.resume     },
+        { val: motScore,   w: BASE_W.motivation }
+      ]);
+      return base !== null ? Math.round(base * 10) : null;
+    }
+
+    // ציון רזומה גולמי (zccc × 10) + סוג מוטיבציה
+    function getResumeBreakdown(name) {
+      const row = flatDB[name];
+      if (!row) return { resume: null, motType: '—', motScore: null };
+      const resumeRaw = parseFloat(row['zccc']);
+      const motType   = (row['zccd'] || '').replace(/_/g, ' ') || '—';
+      const motScore  = motivationBaseScore(row['zccd'] || '') * motivationConfidenceFactor(row['zcce']);
+      return {
+        resume:   isNaN(resumeRaw) ? null : Math.round(resumeRaw * 10),
+        motType,
+        motScore: Math.round(motScore * 10)
+      };
+    }
+
+    // ── ציון ועדה חיצונית (ממוצע ציוני נושאים) ──
+    function computeTopicScore(candidate) {
+      const topics = candidate['נושאים'] || [];
+      let s = 0, n = 0;
+      for (const t of topics) {
+        for (const ax of ['עמדות','ביצוע','תדמית']) {
+          const v = t[ax]?.ציון;
+          if (v != null && !isNaN(Number(v)) && Number(v) > 0) { s += Number(v); n++; }
+        }
+      }
+      return n > 0 ? Math.round((s/n)*10) : null;
+    }
+
+    // ── CSV parsing ──
+    function parseCsvLine(line) {
+      const out=[]; let cur=''; let inQ=false;
+      for (let i=0;i<line.length;i++) {
+        const c=line[i];
+        if (c==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+        else if(c===','&&!inQ){out.push(cur);cur='';}
+        else cur+=c;
+      }
+      out.push(cur); return out;
+    }
+    function parseCsv(txt) {
+      txt=txt.replace(/^﻿/,'');
+      const lines=txt.split(/\r?\n/), headers=parseCsvLine(lines[0]), rows=[];
+      for(let i=1;i<lines.length;i++){
+        if(!lines[i].trim())continue;
+        const vals=parseCsvLine(lines[i]),r={};
+        headers.forEach((h,j)=>{r[h.trim()]=(vals[j]||'').trim();});
+        rows.push(r);
+      }
+      return rows;
+    }
+
+    // ── עזרים ──
+    function scoreColor(v) {
+      if (v===null) return '#ccc';
+      if (v>=80) return '#10b981'; if (v>=65) return '#3b82f6';
+      if (v>=50) return '#f59e0b'; return '#ef4444';
+    }
+    function genderDotHtml(gender) {
+      const color = gender==='נקבה'?'#e879a0':gender==='זכר'?'#3b82f6':'#aaa';
+      return `<span class="gender-dot" style="background:${color}"></span>`;
+    }
+    function scorePill(v) {
+      if (v===null) return `<span style="color:#ccc;font-size:.78rem">—</span>`;
+      return `<span style="font-size:.82rem;font-weight:700;color:var(--text-main)">${v}</span>`;
+    }
+
+    // ── רינדור שני גרידים (נשים / גברים) ──
+    function renderRanking() {
       state = loadState();
-      const hasAny = (state.selected || []).length > 0;
+      const allPicks = new Set([
+        ...(state.selected || []),
+        ...(state.shiryun || []),
+        ...(state.dbr_picks || [])
+      ]);
 
-      document.getElementById('empty-state').style.display    = hasAny ? 'none' : '';
-      document.getElementById('summary-bar').style.display    = hasAny ? '' : 'none';
-      document.getElementById('lists-label').style.display    = hasAny ? '' : 'none';
-      document.getElementById('lists-section').style.display  = hasAny ? '' : 'none';
-      document.getElementById('finish-bar').style.display     = hasAny ? '' : 'none';
+      const sorted = [...rankList].sort((a, b) => (b.scoreC ?? -1) - (a.scoreC ?? -1));
+      const women = sorted.filter(c => c.gender === 'נקבה');
+      const men   = sorted.filter(c => c.gender === 'זכר');
 
-      if (!hasAny) return;
+      fillGrid('grid-women', women, allPicks);
+      fillGrid('grid-men',   men,   allPicks);
 
-      document.getElementById('counter-selected').textContent = state.selected.length;
-      document.getElementById('counter-approved').textContent = (state.approved || []).length;
-      document.getElementById('badge-selected').textContent   = state.selected.length;
-      document.getElementById('badge-approved').textContent   = (state.approved || []).length;
+      const metaW = document.getElementById('meta-women');
+      const metaM = document.getElementById('meta-men');
+      const pickedW = women.filter(c => allPicks.has(c.name)).length;
+      const pickedM = men.filter(c => allPicks.has(c.name)).length;
+      if (metaW) metaW.textContent = pickedW ? pickedW + ' נבחרו מתוך ' + women.length : women.length + ' מועמדות';
+      if (metaM) metaM.textContent = pickedM ? pickedM + ' נבחרו מתוך ' + men.length : men.length + ' מועמדים';
 
-      if (state.meta && state.meta.last_updated) {
-        const d = new Date(state.meta.last_updated);
-        document.getElementById('last-updated').textContent = 'עודכן ' + d.toLocaleString('he-IL');
+      // summary bar
+      document.getElementById('summary-bar').style.display = '';
+      document.getElementById('counter-total').textContent = rankList.length;
+      document.getElementById('counter-picked').textContent = allPicks.size;
+      const metaEl = document.getElementById('rank-meta-text');
+      if (metaEl) metaEl.textContent = 'ציון כשירות = 80% רזומה + 20% מוטיבציה';
+    }
+
+    function fillGrid(tbodyId, list, allPicks) {
+      const tbody = document.getElementById(tbodyId);
+      if (!tbody) return;
+      tbody.innerHTML = list.map((c, idx) => {
+        const picked = allPicks.has(c.name);
+        const srcWarn = c.zccsrc !== null && c.zccsrc < 3 ? ' <span title="מידע חלקי" style="cursor:help;font-size:.7rem">⚠️</span>' : '';
+        return `<tr style="cursor:pointer" onclick="openProfile('${escapeHtml(c.name)}')">
+          <td style="font-size:.82rem;color:var(--text-muted);font-weight:700;width:28px">${idx+1}</td>
+          <td style="font-weight:${picked?'900':'700'};color:${picked?'var(--green)':'var(--blue-dark)'}">
+            ${escapeHtml(c.name)}${picked?' 🎯':''}${srcWarn}
+          </td>
+          <td style="text-align:center">${scorePill(c.scoreC)}</td>
+          <td style="text-align:center">
+            <span style="font-size:.8rem;cursor:pointer" title="כרטיס ועדה מסדרת">📋</span>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function openProfile(name) {
+      const row = flatDB[name];
+      document.getElementById('m-name').textContent = `כרטיס ועדה מסדרת — ${name}`;
+      document.getElementById('m-sub').textContent = '';
+      if (!row) {
+        document.getElementById('m-body').innerHTML = '<p style="color:var(--text-muted)">אין נתוני ועדה מסדרת למועמד/ת.</p>';
+        document.getElementById('modal').classList.add('open');
+        return;
+      }
+      const zccc = parseFloat(row['zccc']);
+      const zccd = (row['zccd'] || 'לא_ברור').replace(/_/g,' ');
+      const zcce = row['zcce'] || '';
+      const zccf = row['zccf'] || '';
+      const zccg = row['zccg'] || '';
+      const zs61 = row['zs61'] || '';
+      const zs62 = row['zs62'] || '';
+      const src  = row['zccsrc'] || '';
+      const total = computeCommitteeScore(name);
+
+      const resumeDisp = !isNaN(zccc) ? Math.round(zccc * 10) : null;
+      const motBase = motivationBaseScore(zccd);
+      const motEff = Math.round(motBase * motivationConfidenceFactor(zcce) * 10);
+      const confDisp = zcce !== '' ? Math.round(parseFloat(zcce)) : null;
+
+      const barRow = (lbl, val) => val !== null ? `
+        <div class="sc-row">
+          <span style="font-size:.84rem;min-width:140px">${lbl}</span>
+          <div class="bar-bg"><div class="bar-fg" style="width:${val}%;background:${scoreColor(val)}"></div></div>
+          <span style="font-weight:800;font-size:.88rem;min-width:28px;text-align:center">${val}</span>
+        </div>` : '';
+
+      const gptResume = row['zccc_o'] ? parseFloat(row['zccc_o']) : null;
+      const gptMot = row['zccd_o'] || '';
+      const hasGpt = gptResume !== null && !isNaN(gptResume);
+
+      const srcWarn = parseInt(src) < 3 ? ' <span title="מידע חלקי" style="cursor:help">⚠️</span>' : '';
+
+      let gptHtml = '';
+      if (hasGpt) {
+        gptHtml = '<div style="margin-top:10px;padding:9px 12px;border-radius:11px;background:#fff8f0;border:1px solid #f0d8b8;font-size:.82rem;line-height:1.55">'
+          + '<strong>השוואת ועדות:</strong>'
+          + '<table style="width:100%;margin-top:5px;border-collapse:collapse;font-size:.82rem">'
+          + '<tr style="border-bottom:1px solid #f0d8b8"><td></td><td style="text-align:center;font-weight:700;padding:3px 6px">ג׳מיני</td><td style="text-align:center;font-weight:700;padding:3px 6px">GPT</td></tr>'
+          + '<tr style="border-bottom:1px solid #f5e6d5"><td style="padding:3px 6px">רזומה</td>'
+          + '<td style="text-align:center;padding:3px 6px">' + (!isNaN(zccc) ? zccc.toFixed(1) : '—') + '</td>'
+          + '<td style="text-align:center;padding:3px 6px">' + gptResume.toFixed(1) + '</td></tr>'
+          + '<tr><td style="padding:3px 6px">מוטיבציה</td>'
+          + '<td style="text-align:center;padding:3px 6px">' + zccd + '</td>'
+          + '<td style="text-align:center;padding:3px 6px">' + (gptMot || '—') + '</td></tr>'
+          + '</table></div>';
       }
 
-      const notApproved = state.selected.filter(id => !(state.approved || []).includes(id));
-      const selUL = document.getElementById('selected-list');
-      const appUL = document.getElementById('approved-list');
+      document.getElementById('m-body').innerHTML = `
+        <div style="display:flex;align-items:center;gap:14px;background:var(--blue-soft);border-radius:12px;padding:12px 14px;margin-bottom:14px">
+          <div style="font-size:2.2rem;font-weight:900;color:${scoreColor(total)}">${total !== null ? total : '—'}</div>
+          <div>
+            <div style="font-weight:800">ציון כשירות</div>
+            <div style="color:var(--text-muted);font-size:.83rem">רזומה 80% · מוטיבציה 20%</div>
+          </div>
+        </div>
 
-      selUL.innerHTML = notApproved.length
-        ? notApproved.map(id => `<li class="list-item">
-            <span class="name">${escapeHtml(candidateName(id))}</span>
-            <div class="actions">
-              <button class="item-btn approve" onclick="approve('${escapeHtml(id)}')">אשר</button>
-              <button class="item-btn remove"  onclick="removeSelected('${escapeHtml(id)}')">הסר</button>
-            </div>
-          </li>`).join('')
-        : '<li class="empty-list">כל הנבחרים אושרו, או שהרשימה ריקה.</li>';
+        <h3 style="margin-bottom:8px;color:var(--blue-dark)">פירוק ציון</h3>
+        ${barRow('רזומה (80%)', resumeDisp)}
+        ${barRow('מוטיבציה אפקטיבית (20%)', motEff)}
 
-      appUL.innerHTML = (state.approved || []).length
-        ? state.approved.map(id => `<li class="list-item">
-            <span class="name">${escapeHtml(candidateName(id))}</span>
-            <div class="actions">
-              <button class="item-btn remove" onclick="unapprove('${escapeHtml(id)}')">בטל אישור</button>
-            </div>
-          </li>`).join('')
-        : '<li class="empty-list">עדיין לא אושרו מועמדים.</li>';
+        <div style="margin-top:10px;padding:9px 12px;border-radius:11px;background:var(--blue-card);border:1px solid var(--border-soft);font-size:.82rem;color:var(--text-muted);line-height:1.55">
+          <strong>מוטיבציה:</strong> ${zccd}
+          ${confDisp !== null ? ' · ביטחון ' + confDisp + '%' : ''}
+          ${zccg ? '<br><strong>עוגן:</strong> ' + escapeHtml(zccg) : ''}
+        </div>
+
+        ${zs61 || zs62 ? '<div style="display:flex;gap:10px;margin-top:10px">' +
+          (zs61 ? '<div style="flex:1;padding:8px 12px;border-radius:11px;background:#f0f6ff;border:1px solid var(--border-soft);font-size:.84rem"><strong>6.1 אסטרטגיה:</strong> ' + zs61 + '</div>' : '') +
+          (zs62 ? '<div style="flex:1;padding:8px 12px;border-radius:11px;background:#f0f6ff;border:1px solid var(--border-soft);font-size:.84rem"><strong>6.2 חזון מדיני:</strong> ' + zs62 + '</div>' : '') +
+          '</div>' : ''}
+
+        ${gptHtml}
+
+        ${zccf ? '<div style="margin-top:10px;padding:9px 12px;border-radius:11px;background:#fafbfc;border:1px solid var(--border-soft);font-size:.82rem;line-height:1.6"><strong>נימוק:</strong> ' + escapeHtml(zccf) + '</div>' : ''}
+
+        <div style="margin-top:8px;font-size:.78rem;color:var(--text-muted)">מקורות web: <strong>${src || '—'}</strong>${srcWarn}</div>
+
+        <div style="margin-top:14px;text-align:center">
+          <button onclick="closeModal()" style="padding:8px 22px;border-radius:10px;border:1px solid var(--border-soft);background:white;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit">סגור</button>
+        </div>`;
+
+      document.getElementById('modal').classList.add('open');
     }
 
-    function approve(id) {
-      state.approved = state.approved || [];
-      if (!state.approved.includes(id)) state.approved.push(id);
-      saveState(state);
-      renderAll();
+    function closeModal(e) {
+      if (!e || e.target.id === 'modal') document.getElementById('modal').classList.remove('open');
     }
 
-    function unapprove(id) {
-      state.approved = (state.approved || []).filter(x => x !== id);
-      saveState(state);
-      renderAll();
-    }
-
-    function removeSelected(id) {
-      state.selected = state.selected.filter(x => x !== id);
-      state.approved = (state.approved || []).filter(x => x !== id);
-      saveState(state);
-      renderAll();
-    }
-
-    function finishProcess() {
-      if (!(state.approved || []).length) {
-        if (!confirm('עדיין לא אושרו מועמדים. להמשיך לסיום בכל זאת?')) return;
+    // ── טעינת שני מקורות במקביל ──
+    Promise.all([
+      fetch('dbr_P_01_data.csv').then(r => r.ok ? r.text() : ''),
+      fetch('data/candidates_master.json').then(r => r.ok ? r.json() : {})
+    ]).then(([csvTxt, jsonData]) => {
+      // CSV → flatDB
+      for (const row of parseCsv(csvTxt)) {
+        if (row['id1']) flatDB[row['id1']] = row;
       }
-      state.meta = state.meta || {};
-      state.meta.status = 'completed';
-      saveState(state);
-      alert('הרשימה הסופית נשמרה. בקרוב תתווסף כאן אפשרות להפקה ולהדפסה.');
-    }
+      // JSON → מפה לפי שם
+      const moachMap = {};
+      for (const c of (jsonData.candidates || [])) {
+        if (c['שם']) moachMap[c['שם']] = c;
+      }
+      // בנה רשימה משותפת (ללא מסירי מועמדות)
+      const names = new Set([...Object.keys(flatDB), ...Object.keys(moachMap)]);
+      const activeNames = [...names].filter(n => (flatDB[n]?.['id5'] || '') !== 'dropped');
+      rankList = activeNames.map(name => {
+        const bd = getResumeBreakdown(name);
+        const srcRaw = flatDB[name]?.['zccsrc'];
+        return {
+          name,
+          gender: (flatDB[name]?.['id2']) || (moachMap[name]?.['קטגוריה']==='נשים'?'נקבה':moachMap[name]?.['קטגוריה']==='גברים'?'זכר':''),
+          scoreC:   computeCommitteeScore(name),
+          scoreT:   moachMap[name] ? computeTopicScore(moachMap[name]) : null,
+          resume:   bd.resume,
+          motType:  bd.motType,
+          motScore: bd.motScore,
+          zccsrc:   srcRaw !== undefined && srcRaw !== '' ? parseInt(srcRaw) : null
+        };
+      });
+      rankList.sort((a,b) => (b.scoreC??-1) - (a.scoreC??-1));
+      document.getElementById('ranking-section').style.display = '';
+      renderRanking();
+    }).catch(() => {});
 
-    renderAll();
-    window.addEventListener('focus', renderAll);
+    // ══════════════════════════════════════════
+
+    window.addEventListener('focus', () => { if (rankList.length) renderRanking(); });
   </script>
 </body>
 </html>

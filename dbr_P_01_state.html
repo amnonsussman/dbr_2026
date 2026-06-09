@@ -455,9 +455,9 @@
       background: var(--blue-card);
     }
     .rank-section-title {
-      font-weight: 800;
+      font-weight: 700;
       color: var(--blue-dark);
-      font-size: 1rem;
+      font-size: clamp(.82rem, 2.5vw, 1rem);
     }
     .rank-meta {
       font-size: .82rem;
@@ -484,7 +484,7 @@
     .rank-row {
       display: flex;
       align-items: center;
-      gap: clamp(1px, 0.3vw, 3px);
+      gap: clamp(4px, 1vw, 8px);
       padding: 2px clamp(1px, 0.5vw, 6px);
       border-bottom: 1px solid #edf3fb;
       cursor: pointer;
@@ -510,6 +510,180 @@
       background: var(--blue-main);
       color: white;
     }
+    /* ── Expand toggle ── */
+    .expand-btn {
+      background: none;
+      border: 2px solid var(--blue-main);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      cursor: pointer;
+      color: var(--blue-main);
+      transition: .15s;
+      line-height: 1;
+    }
+    .expand-btn:hover {
+      color: var(--blue-main);
+      border-color: var(--blue-main);
+    }
+
+    /* ── Expanded single-column mode ── */
+    .rank-columns.expanded {
+      grid-template-columns: 1fr;
+    }
+    .rank-columns.expanded .rank-divider {
+      display: none;
+    }
+    .rank-columns.expanded .rank-row {
+      gap: clamp(6px, 1.5vw, 12px);
+      padding: 4px clamp(4px, 1vw, 10px);
+      min-height: 40px;
+    }
+    .rank-columns.expanded .rank-num {
+      font-size: clamp(.72rem, 2vw, .88rem);
+      min-width: 22px;
+    }
+    .rank-columns.expanded .rank-name {
+      font-size: clamp(1rem, 3.2vw, 1.25rem);
+    }
+    .rank-columns.expanded .rank-name.unpicked {
+      font-size: clamp(.88rem, 2.6vw, 1.05rem);
+    }
+    .rank-columns.expanded .rank-pick {
+      width: 34px; height: 34px;
+      font-size: 1rem;
+    }
+    .rank-columns.expanded .rank-card {
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+    }
+
+    /* ── Dot row (filtered non-picked) ── */
+    .rank-dot {
+      min-height: 0 !important;
+      padding: 1px 4px !important;
+      border-bottom: none !important;
+    }
+    .dot-num {
+      font-size: .65rem !important;
+      min-width: 15px !important;
+      opacity: .55;
+    }
+    .dot-name {
+      font-size: .7rem;
+      color: var(--text-muted);
+      opacity: .5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Target icon colors ── */
+    .pick-target {
+      font-size: 1.1em;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+    .target-with-reason {
+      filter: hue-rotate(90deg) saturate(1.4);
+      opacity: 1;
+    }
+    .target-no-reason {
+      filter: hue-rotate(-30deg) saturate(2);
+      opacity: .9;
+    }
+    .rank-name a, a.rank-name {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ── Reason modal ── */
+    .reason-overlay {
+      position: fixed; inset: 0;
+      background: rgba(23,32,51,.45);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 60vh;
+    }
+    .reason-box {
+      background: white;
+      border-radius: var(--radius-medium);
+      padding: 20px;
+      width: min(90vw, 380px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
+      direction: rtl;
+    }
+    .reason-box h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: var(--blue-dark);
+    }
+    .reason-box textarea {
+      width: 100%;
+      min-height: 80px;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: .92rem;
+      font-family: inherit;
+      resize: vertical;
+      direction: rtl;
+    }
+    .reason-box textarea:focus {
+      outline: none;
+      border-color: var(--blue-main);
+    }
+    .reason-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+    .reason-actions button {
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+    .reason-save {
+      background: var(--blue-main);
+      color: white;
+    }
+    .reason-cancel {
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+    }
+    .reason-delete {
+      background: #fee2e2;
+      color: #dc2626;
+      margin-inline-end: auto;
+    }
+
+    .dbr-toggle {
+      cursor: pointer;
+      color: var(--blue-main);
+      border-bottom: 2px dashed var(--blue-main);
+      padding-bottom: 1px;
+      transition: .15s;
+    }
+    .dbr-toggle:hover {
+      color: var(--green);
+      border-color: var(--green);
+    }
+    .dbr-notice {
+      text-align: center;
+      padding: 32px 20px;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .dbr-notice strong {
+      color: var(--blue-dark);
+    }
     .rank-row:last-child { border-bottom: none; }
     .rank-row:hover { background: var(--blue-soft); }
     .rank-num {
@@ -525,6 +699,13 @@
       font-size: clamp(.82rem, 2.5vw, 1rem);
       font-weight: 700;
       color: var(--blue-dark);
+    }
+    .rank-name.unpicked {
+      font-size: clamp(.92rem, 2.8vw, 1.1rem);
+      font-weight: 300;
+      font-stretch: condensed;
+      letter-spacing: -.02em;
+      color: var(--text-muted);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -534,11 +715,11 @@
     }
     .rank-pick {
       flex-shrink: 0;
-      width: 18px; height: 18px;
+      width: 26px; height: 26px;
       border-radius: 50%;
       border: 1.5px solid var(--border-soft);
       background: white;
-      font-size: .7rem;
+      font-size: .82rem;
       font-weight: 900;
       color: var(--text-muted);
       cursor: pointer;
@@ -552,7 +733,7 @@
     .picked ~ .rank-pick { border-color: var(--green); background: var(--green-soft); color: var(--green); }
     .rank-card {
       flex-shrink: 0;
-      font-size: clamp(.62rem, 1.8vw, .76rem);
+      font-size: clamp(.82rem, 2.2vw, 1rem);
       cursor: pointer;
       opacity: .5;
       transition: opacity .12s;
@@ -734,23 +915,43 @@
     <div id="summary-bar" class="summary-bar" style="display:none;">
       <div class="summary-pills">
         <span class="pill"><strong id="counter-total">0</strong> מועמדים</span>
-        <span class="pill green"><strong id="counter-picked">0</strong> נבחרו על ידך 🎯</span>
+        <span class="pill green" id="picked-filter-btn" style="cursor:pointer" onclick="togglePickedFilter()"><strong id="counter-picked">0</strong> <span id="picked-filter-label">הצג הכל</span></span>
       </div>
       <span id="rank-meta-text" class="last-updated-text"></span>
     </div>
 
     <!-- Ranking — two columns, all candidates -->
     <div id="ranking-section" class="rank-section" style="display:none;">
-      <div class="rank-section-header" style="justify-content:center">
-        <span class="rank-section-title">הבחירה שלך — מול דירוג ד.ב.ר</span>
+      <div class="rank-section-header">
+        <span class="rank-section-title">הבחירה שלך מול הוועדה המסדרת של <span id="dbr-toggle" class="dbr-toggle" onclick="toggleDBR()">ד.ב.ר (1)</span></span>
+        <button class="expand-btn" id="expand-btn" onclick="toggleExpand()" title="הרחב / צמצם">⤢</button>
       </div>
-      <div class="rank-columns">
-        <div id="rank-col-1"></div>
-        <div class="rank-divider"></div>
-        <div id="rank-col-2"></div>
+      <div id="dbr-notice" class="dbr-notice" style="display:none;">
+        <strong>ד.ב.ר (2)</strong><br>
+        הוועדה המסדרת של ד.ב.ר (2) עדיין לא התכנסה
       </div>
-      <div id="show-more-bar" class="show-more-bar" style="display:none;">
-        <button class="show-more-btn" onclick="showAllCandidates()">הצג עוד ▼</button>
+      <div id="dbr1-content">
+        <div class="rank-columns">
+          <div id="rank-col-1"></div>
+          <div class="rank-divider"></div>
+          <div id="rank-col-2"></div>
+        </div>
+        <div id="show-more-bar" class="show-more-bar" style="display:none;">
+          <button class="show-more-btn" onclick="showAllCandidates()">הצג עוד ▼</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal הסבר בחירה -->
+    <div id="reason-modal" class="reason-overlay" style="display:none;" onclick="closeReasonModal()">
+      <div class="reason-box" onclick="event.stopPropagation()">
+        <h3 id="reason-title">למה בחרת?</h3>
+        <textarea id="reason-text" placeholder="למה בחרת במועמד/ת הזו?"></textarea>
+        <div class="reason-actions">
+          <button class="reason-delete" id="reason-delete-btn" onclick="deleteReason()" style="display:none">מחק</button>
+          <button class="reason-cancel" onclick="closeReasonModal()">ביטול</button>
+          <button class="reason-save" onclick="saveReason()">שמור</button>
+        </div>
       </div>
     </div>
 
@@ -945,12 +1146,89 @@
       document.getElementById('rank-col-2').innerHTML = col2.map((c, i) => rankRow(c, half + i + 1, allPicks)).join('');
 
       /* כפתור "הצג עוד" */
-      document.getElementById('show-more-bar').style.display = isTruncated ? '' : 'none';
+      document.getElementById('show-more-bar').style.display = (isTruncated && !filterPicked) ? '' : 'none';
 
       // summary bar
       document.getElementById('summary-bar').style.display = '';
       document.getElementById('counter-total').textContent = rankList.length;
       document.getElementById('counter-picked').textContent = allPicks.size;
+    }
+
+    let expanded = false;
+    function toggleExpand() {
+      expanded = !expanded;
+      document.querySelector('.rank-columns').classList.toggle('expanded', expanded);
+      document.getElementById('expand-btn').textContent = expanded ? '⤡' : '⤢';
+      document.getElementById('rank-col-2').style.display = expanded ? 'none' : '';
+      if (expanded) renderRankingSingleCol();
+      else renderRanking();
+    }
+
+    function renderRankingSingleCol() {
+      state = loadState();
+      const allPicks = new Set([
+        ...(state.selected || []),
+        ...(state.shiryun || []),
+        ...(state.dbr_picks || [])
+      ]);
+      const sorted = [...rankList].sort((a, b) => (b.scoreC ?? -1) - (a.scoreC ?? -1));
+      let cutoff = sorted.length;
+      if (!showAll && allPicks.size > 0) {
+        let lastPickIdx = -1;
+        sorted.forEach((c, i) => { if (allPicks.has(c.name)) lastPickIdx = i; });
+        if (lastPickIdx >= 0) cutoff = Math.min(sorted.length, lastPickIdx + 1 + 4);
+      }
+      const visible = sorted.slice(0, cutoff);
+      const isTruncated = cutoff < sorted.length;
+      document.getElementById('rank-col-1').innerHTML = visible.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
+      document.getElementById('show-more-bar').style.display = isTruncated ? '' : 'none';
+    }
+
+    let filterPicked = true;
+    function togglePickedFilter() {
+      filterPicked = !filterPicked;
+      document.getElementById('picked-filter-label').textContent = filterPicked ? 'הצג הכל' : 'נבחרו על ידך 🎯';
+      if (expanded) renderRankingSingleCol(); else renderRanking();
+    }
+
+    let _reasonName = '';
+    function openReasonModal(name) {
+      _reasonName = name;
+      const reasons = getPickReasons();
+      const existing = reasons[name] || '';
+      document.getElementById('reason-title').textContent = 'למה בחרת ב' + name + '?';
+      document.getElementById('reason-text').value = existing;
+      document.getElementById('reason-delete-btn').style.display = existing ? '' : 'none';
+      document.getElementById('reason-modal').style.display = '';
+      setTimeout(function() { document.getElementById('reason-text').focus(); }, 50);
+    }
+    function closeReasonModal() {
+      document.getElementById('reason-modal').style.display = 'none';
+      _reasonName = '';
+    }
+    function saveReason() {
+      const reasons = getPickReasons();
+      const val = document.getElementById('reason-text').value.trim();
+      if (val) reasons[_reasonName] = val;
+      else delete reasons[_reasonName];
+      savePickReasons(reasons);
+      closeReasonModal();
+      if (expanded) renderRankingSingleCol(); else renderRanking();
+    }
+    function deleteReason() {
+      const reasons = getPickReasons();
+      delete reasons[_reasonName];
+      savePickReasons(reasons);
+      closeReasonModal();
+      if (expanded) renderRankingSingleCol(); else renderRanking();
+    }
+
+    let activeDBR = 1;
+    function toggleDBR() {
+      activeDBR = activeDBR === 1 ? 2 : 1;
+      document.getElementById('dbr-toggle').textContent = 'ד.ב.ר (' + activeDBR + ')';
+      document.getElementById('dbr1-content').style.display = activeDBR === 1 ? '' : 'none';
+      document.getElementById('dbr-notice').style.display = activeDBR === 2 ? '' : 'none';
     }
 
     let showAll = false;
@@ -959,13 +1237,35 @@
       renderRanking();
     }
 
+    function getPickReasons() {
+      try { return JSON.parse(localStorage.getItem('dbr_pick_reasons') || '{}'); } catch(e) { return {}; }
+    }
+    function savePickReasons(obj) {
+      localStorage.setItem('dbr_pick_reasons', JSON.stringify(obj));
+    }
+
     function rankRow(c, rank, allPicks) {
       const picked = allPicks.has(c.name);
+      const eName = escapeHtml(c.name);
+
+      /* מצב סינון — מועמדים לא נבחרים הופכים לנקודה */
+      if (filterPicked && !picked) {
+        return '<div class="rank-row rank-dot">'
+          + '<span class="rank-num dot-num">' + rank + '</span>'
+          + '<span class="dot-name">' + eName + '</span>'
+          + '</div>';
+      }
+
+      const hasReason = picked && !!(getPickReasons()[c.name] || '').trim();
+      const targetCls = hasReason ? 'target-with-reason' : 'target-no-reason';
+      const targetHtml = picked
+        ? '&nbsp;<span class="pick-target ' + targetCls + '" onclick="event.preventDefault();event.stopPropagation();openReasonModal(\'' + eName + '\')" title="' + (hasReason ? 'ערוך הסבר' : 'הוסף הסבר לבחירה') + '">🎯</span>'
+        : '';
       return '<div class="rank-row">'
         + '<span class="rank-num">' + rank + '</span>'
-        + '<span class="rank-name' + (picked ? ' picked' : '') + '">' + escapeHtml(c.name) + (picked ? '&nbsp;&nbsp;<span style="font-size:.75em">🎯</span>' : '') + '</span>'
-        + '<span class="rank-pick" onclick="event.stopPropagation();togglePick(\'' + escapeHtml(c.name) + '\')" title="' + (picked ? 'הסר מהרשימה' : 'הוסף לרשימה') + '">' + (picked ? '✓' : '+') + '</span>'
-        + '<span class="rank-card" onclick="openProfile(\'' + escapeHtml(c.name) + '\')" title="כרטיס ועדה מסדרת">📋</span>'
+        + '<a class="rank-name' + (picked ? ' picked' : ' unpicked') + '" href="dbr_P_01_candidate.html?name=' + encodeURIComponent(c.name) + '" onclick="event.stopPropagation()">' + eName + targetHtml + '</a>'
+        + '<span class="rank-pick" onclick="event.stopPropagation();togglePick(\'' + eName + '\')" title="' + (picked ? 'הסר מהרשימה' : 'הוסף לרשימה') + '">' + (picked ? '✓' : '+') + '</span>'
+        + '<span class="rank-card" onclick="event.stopPropagation();openProfile(\'' + eName + '\')" title="כרטיס ועדה מסדרת">📋</span>'
         + '</div>';
     }
 

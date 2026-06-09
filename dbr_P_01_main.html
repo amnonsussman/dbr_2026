@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<script>if(localStorage.getItem('dbr_disclaimer_accepted')!=='yes'){window.location.href='dbr_P_01_index.html?redirect='+encodeURIComponent(location.pathname.split('/').pop()+location.search)}</script>
+<script>/* disclaimer check disabled in dev */</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJNJTZQF1F"></script>
 <script>
@@ -24,7 +24,8 @@
     .page{max-width:1100px;margin:0 auto;padding:0 16px 72px}
 
     /* Header */
-    header{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--line);padding:8px 24px 6px;box-shadow:0 2px 8px rgba(16,24,40,.06)}
+    header{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--line);padding:8px 0 6px;box-shadow:0 2px 8px rgba(16,24,40,.06)}
+    .header-inner{max-width:1100px;margin:0 auto;padding:0 16px}
     .header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-bottom:6px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:#12355b;font-size:1.08rem;text-decoration:none}
     .brand-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#3730a3,#1e1b4b);display:grid;place-items:center;color:white;font-size:.7rem;font-weight:900;letter-spacing:.04em;box-shadow:0 2px 8px rgba(55,48,163,.25)}
@@ -150,28 +151,29 @@
     .ldr-nt{color:var(--muted);font-size:.79rem}
 
     /* Results table */
-    .res-table{width:100%;border-collapse:collapse;margin-top:10px}
-    .res-table thead th{text-align:right;padding:7px 10px;border-bottom:2px solid var(--line);color:var(--muted);font-size:.78rem;font-weight:700}
+    #s-final.card{padding:8px 10px}
+    .res-table{width:100%;border-collapse:collapse;margin-top:4px}
+    .res-table thead th{text-align:right;padding:4px 2px;border-bottom:2px solid var(--line);color:var(--muted);font-size:.75rem;font-weight:700}
     .res-table tbody tr{border-bottom:1px solid var(--line);transition:background .1s}
     .res-table tbody tr:hover{background:#f5f8ff}
-    .res-table td{padding:9px 10px;vertical-align:middle}
-    .rnk{font-weight:900;color:var(--muted);font-size:.88rem;width:30px}
-    .rnk.top{color:var(--brand);font-size:1rem}
-    .nm-cell{font-weight:700;font-size:.92rem}
+    .res-table td{padding:5px 2px;vertical-align:middle}
+    .rnk{font-weight:900;color:var(--muted);font-size:.84rem;width:26px}
+    .rnk.top{color:var(--brand);font-size:.95rem}
+    .nm-cell{font-weight:700;font-size:.88rem;line-height:1.2;max-width:180px;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
     .badge{display:inline-block;padding:2px 7px;border-radius:999px;font-size:.72rem;font-weight:700;margin-top:2px}
     .b-f{background:#f3e8ff;color:#6b21a8}
     .b-m{background:#dbeafe;color:#1d4ed8}
     .b-ar{background:#dcfce7;color:#15803d}
     .b-x{background:#f1f5f9;color:#475569}
-    .sc-cell{width:110px}
-    .sc-val{font-weight:700;font-size:.82rem;margin-bottom:2px}
-    .sc-bar{height:4px;border-radius:999px;background:#edf1f7;overflow:hidden;width:60px}
+    .sc-cell{width:100px}
+    .sc-val{font-weight:700;font-size:.8rem;margin-bottom:1px}
+    .sc-bar{height:3px;border-radius:999px;background:#edf1f7;overflow:hidden;width:55px}
     .sc-fill{height:100%;border-radius:999px}
     .bd-cell{font-size:.78rem;color:var(--muted)}
     .bd-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
     .bd-tag{padding:2px 6px;border-radius:999px;border:1px solid var(--line);background:#f8f9fb;font-size:.72rem}
-    .act-cell{white-space:nowrap;display:flex;gap:5px;align-items:center}
-    .ic-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer;display:inline-grid;place-items:center;font-size:.88rem;transition:.1s}
+    .act-cell{white-space:nowrap;display:flex;gap:2px;align-items:center}
+    .ic-btn{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer;display:inline-grid;place-items:center;font-size:.78rem;transition:.1s}
     .ic-btn:hover{border-color:var(--brand);background:var(--brand-soft)}
     .ic-btn.picked{background:var(--green-soft);border-color:var(--green)}
 
@@ -188,10 +190,48 @@
 
     /* Loading overlay */
     #overlay{position:fixed;inset:0;background:rgba(255,255,255,.93);z-index:20;display:grid;place-items:center;font-size:1rem;color:var(--brand);font-weight:700}
-    #finish-bar{display:none;background:#e6f4eb;border:1px solid var(--green-soft);color:var(--green);border-radius:14px;padding:12px 20px;align-items:center;justify-content:space-between;gap:12px}
+    #finish-bar{display:none;background:#e6f4eb;border:1px solid var(--green-soft);color:var(--green);border-radius:10px;padding:6px 14px;align-items:center;justify-content:space-between;gap:8px}
     #finish-bar.visible{display:flex}
-    #finish-bar .fb-count{font-weight:900;font-size:1.05rem}
-    #finish-bar button{background:var(--green);color:#fff;border:none;border-radius:10px;padding:8px 18px;font-weight:900;font-size:.9rem;cursor:pointer;font-family:inherit;white-space:nowrap}
+    #finish-bar .fb-count{font-weight:900;font-size:.88rem}
+    #finish-bar button{background:var(--green);color:#fff;border:none;border-radius:8px;padding:5px 14px;font-weight:900;font-size:.82rem;cursor:pointer;font-family:inherit;white-space:nowrap}
+    @keyframes b1{0%{top:15%;left:30%}25%{top:55%;left:68%}50%{top:72%;left:30%}75%{top:32%;left:62%}100%{top:15%;left:30%}}
+    @keyframes b2{0%{top:62%;left:60%}25%{top:22%;left:35%}50%{top:42%;left:72%}75%{top:68%;left:22%}100%{top:62%;left:60%}}
+    @keyframes b3{0%{top:38%;left:68%}25%{top:70%;left:38%}50%{top:22%;left:58%}75%{top:55%;left:25%}100%{top:38%;left:68%}}
+    @keyframes b4{0%{top:28%;left:45%}25%{top:65%;left:25%}50%{top:48%;left:65%}75%{top:18%;left:50%}100%{top:28%;left:45%}}
+    @keyframes b5{0%{top:68%;left:35%}25%{top:32%;left:60%}50%{top:60%;left:48%}75%{top:40%;left:22%}100%{top:68%;left:35%}}
+    @keyframes b6{0%{top:48%;left:50%}25%{top:25%;left:25%}50%{top:58%;left:32%}75%{top:70%;left:58%}100%{top:48%;left:50%}}
+    @keyframes b7{0%{top:22%;left:58%}25%{top:52%;left:28%}50%{top:32%;left:68%}75%{top:62%;left:45%}100%{top:22%;left:58%}}
+    @keyframes b8{0%{top:45%;left:22%}25%{top:20%;left:62%}50%{top:60%;left:52%}75%{top:35%;left:32%}100%{top:45%;left:22%}}
+    @keyframes b9{0%{top:20%;left:45%}25%{top:60%;left:30%}50%{top:35%;left:65%}75%{top:55%;left:42%}100%{top:20%;left:45%}}
+    @keyframes b10{0%{top:55%;left:25%}25%{top:25%;left:55%}50%{top:65%;left:45%}75%{top:30%;left:30%}100%{top:55%;left:25%}}
+    @keyframes b11{0%{top:35%;left:62%}25%{top:65%;left:35%}50%{top:28%;left:42%}75%{top:58%;left:60%}100%{top:35%;left:62%}}
+    @keyframes b12{0%{top:62%;left:48%}25%{top:32%;left:22%}50%{top:50%;left:55%}75%{top:22%;left:40%}100%{top:62%;left:48%}}
+    @keyframes b13{0%{top:28%;left:28%}25%{top:58%;left:55%}50%{top:42%;left:25%}75%{top:65%;left:48%}100%{top:28%;left:28%}}
+    @keyframes b14{0%{top:50%;left:62%}25%{top:22%;left:38%}50%{top:58%;left:30%}75%{top:40%;left:65%}100%{top:50%;left:62%}}
+    .roulette-wrap{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:50}
+    .roulette-wheel{width:160px;height:160px;position:relative}
+    .roulette-wheel svg{position:absolute;inset:0;width:100%;height:100%}
+    .rb{position:absolute;width:9px;height:9px;border-radius:50%;opacity:.9;box-shadow:0 0 4px rgba(0,0,0,.3);transition:top .8s ease-out,left .8s ease-out}
+    .rb.free{transition:none}
+    .rb1{background:#4285F4}.rb1.free{animation:b1 8s ease-in-out infinite}
+    .rb2{background:#10a37f}.rb2.free{animation:b2 9s ease-in-out infinite}
+    .rb3{background:#d97706}.rb3.free{animation:b3 7.5s ease-in-out infinite}
+    .rb4{background:#4285F4}.rb4.free{animation:b4 10s ease-in-out infinite}
+    .rb5{background:#10a37f}.rb5.free{animation:b5 8.5s ease-in-out infinite}
+    .rb6{background:#d97706}.rb6.free{animation:b6 9.5s ease-in-out infinite}
+    .rb7{background:#6366f1}.rb7.free{animation:b7 7s ease-in-out infinite}
+    .rb8{background:#e11d48}.rb8.free{animation:b8 8s ease-in-out infinite}
+    .rb9{background:#4285F4}.rb9.free{animation:b9 7s ease-in-out infinite}
+    .rb10{background:#10a37f}.rb10.free{animation:b10 9.5s ease-in-out infinite}
+    .rb11{background:#d97706}.rb11.free{animation:b11 6.5s ease-in-out infinite}
+    .rb12{background:#6366f1}.rb12.free{animation:b12 8.5s ease-in-out infinite}
+    .rb13{background:#e11d48}.rb13.free{animation:b13 7.5s ease-in-out infinite}
+    .rb14{background:#4285F4}.rb14.free{animation:b14 10s ease-in-out infinite}
+    .rb9.stuck,.rb10.stuck,.rb11.stuck,.rb12.stuck,.rb13.stuck,.rb14.stuck{opacity:0;transition:opacity .5s}
+    .rb1.stuck{top:19%;left:56%}.rb2.stuck{top:34%;left:72%}.rb3.stuck{top:56%;left:72%}.rb4.stuck{top:72%;left:56%}
+    .rb5.stuck{top:72%;left:34%}.rb6.stuck{top:56%;left:19%}.rb7.stuck{top:34%;left:19%}.rb8.stuck{top:19%;left:34%}
+    .shuffle-stop{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;font-size:.7rem;color:var(--muted);pointer-events:all;z-index:11;opacity:.6;transition:.15s}
+    .shuffle-stop:hover{opacity:1;border-color:var(--brand)}
     @keyframes nudge{0%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}100%{transform:translateX(0)}}
     @keyframes idle-pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,95,187,.5);transform:scale(1)}50%{box-shadow:0 0 0 8px rgba(47,95,187,0);transform:scale(1.08)}}
     .idle-hint{animation:idle-pulse 1.2s ease-in-out infinite}
@@ -207,13 +247,15 @@
 
 <div class="page" id="app" style="display:none">
   <header>
-    <div class="header-top">
-      <a class="brand" href="dbr_P_01_index.html"><span class="brand-mark">ד.ב.ר</span><span style="margin-right:10px">דמוקרטים בוחרים רציונלית</span></a>
-      <a id="btn-back" href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+    <div class="header-inner">
+      <div class="header-top">
+        <a class="brand" href="dbr_P_01_index.html"><span class="brand-mark">ד.ב.ר</span><span style="margin-right:10px">דמוקרטים בוחרים רציונלית</span></a>
+        <a id="btn-back" href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+      </div>
+      <div style="text-align:center;font-size:.68rem;color:var(--muted);padding:3px 0">© 2026 Silvertel Online ltd | כל הזכויות שמורות | v3.1</div>
+      <div style="border-top:1px solid var(--line);margin:4px 0"></div>
+      <div class="steps" id="steps"></div>
     </div>
-    <div style="text-align:center;font-size:.68rem;color:var(--muted);padding:3px 0">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
-    <div style="border-top:1px solid var(--line);margin:4px 0"></div>
-    <div class="steps" id="steps"></div>
   </header>
 
   <!-- מסך 1: תמונות + שלושה לחצנים -->
@@ -244,8 +286,11 @@
         <span style="font-size:.92rem;font-weight:700;color:var(--ink)">אני רוצה לכתוב לך בשפה שלי</span>
       </label>
     </div>
-    <div class="actions" style="margin-top:10px">
+    <div class="actions" style="margin-top:10px;flex-direction:column;gap:8px">
       <button id="btn-squad-next" class="btn-p" onclick="goSquadNext()" disabled>המשך ←</button>
+      <button class="btn-s" onclick="skipToRanking()" style="background:#fff8f0;border-color:#f0d8b8;color:#b45309">
+        🏛️ דירוג ועדות מסדרות
+      </button>
     </div>
   </section>
 
@@ -287,9 +332,9 @@
     </p>
 
     <div class="actions" style="justify-content:center">
-      <button class="btn-p" onclick="selectBestSquad()">המשך התאמה</button>
+      <button class="btn-s" onclick="selectBestSquad()">המשך התאמה</button>
       <button class="btn-s" onclick="skipToRanking()">חשב התאמה</button>
-      <button class="btn-g" onclick="showScreen('s-squad')">חזרה</button>
+      <button class="btn-s" onclick="showScreen('s-squad')">חזרה</button>
     </div>
   </section>
 
@@ -420,14 +465,44 @@
     <div id="ldr" class="ldr-box"></div>
     <div id="final-out" style="display:none">
       <p class="lead" id="final-desc"></p>
-      <div id="res-wrap"></div>
-      <div id="finish-bar" style="margin-top:16px">
+
+      <!-- sim panel -->
+      <div id="sim-panel" style="display:none;background:#f8faff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:.84rem">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px">
+            <label style="font-weight:700;color:var(--muted)">השפעת בוחר</label>
+            <input id="sim-tilt" type="number" min="0" max="1" step="0.05" value="0.35"
+              style="width:64px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;font-size:.88rem;font-weight:700;text-align:center">
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <label style="font-weight:700;color:var(--muted)">לא מכוסה</label>
+            <select id="sim-null" style="padding:4px 10px;border:1.5px solid var(--line);border-radius:8px;font-size:.85rem;font-weight:700">
+              <option value="0">0 — דלג</option>
+              <option value="1">1 — ניטרלי (5)</option>
+              <option value="2">2 — ממוצע מועמד</option>
+            </select>
+          </div>
+          <button onclick="rerank()" style="padding:5px 16px;border-radius:999px;border:none;background:var(--brand);color:#fff;font-size:.84rem;font-weight:800;cursor:pointer;font-family:inherit">דרג מחדש</button>
+          <span id="sim-mode-label" style="font-size:.78rem;color:var(--muted)"></span>
+        </div>
+      </div>
+
+      <div style="position:relative">
+        <div id="roulette-overlay"></div>
+        <div id="res-wrap"></div>
+      </div>
+      <div id="finish-bar" style="margin-top:4px">
         <div>
           <div class="fb-count" id="fb-count">0 נבחרו</div>
         </div>
         <a href="dbr_P_01_process.html"><button>סיים שלב זה</button></a>
       </div>
     </div>
+  </section>
+
+  <!-- מסך נבחרת: בניית נבחרת מונחית -->
+  <section id="s-team" class="screen card">
+    <div id="team-chat"></div>
   </section>
 </div>
 
@@ -463,7 +538,6 @@
   <div class="mbox" onclick="event.stopPropagation()">
     <div class="mhdr">
       <div>
-        <p style="color:var(--brand);font-weight:800;font-size:.86rem;margin-bottom:3px">פרופיל מועמד/ת</p>
         <h2 id="m-name"></h2>
         <p style="color:var(--muted);margin-top:2px;font-size:.86rem" id="m-sub"></p>
       </div>
@@ -511,6 +585,8 @@ let topicDBBase = null, sumDBBase = null, topicDB2026 = null, sumDB2026 = null;
 let viewingBase = false;
 let flatDB = {};
 let useV2 = false;
+let activeCommittee = 'g'; // g=gemini, o=gpt, c=claude
+let resumeDB = {};
 
 function saveState() {
   try {
@@ -588,7 +664,7 @@ async function loadAll() {
     for (const r of parseCSV(await sum26R.text())) {
       if (!r['מועמד']) continue;
       if (!(r['סגנון'] || r['תפקיד_מאבק'] || r['נושאים_מכוסים'])) continue;
-      sumDB[r['מועמד']] = r;
+      sumDB[r['מועמד']] = { ...(sumDB[r['מועמד']] || {}), ...r };
       sumSource[r['מועמד']] = '2026';
     }
   }
@@ -596,12 +672,23 @@ async function loadAll() {
   sumDB2026   = sumDB;
 
   // ── קובץ מאוחד (V2) ──
-  const flatR = await fetch('dbr_P_01_data.csv');
+  const flatR = await fetch('dbr_P_01_data.csv?v=' + Date.now());
   if (flatR.ok) {
     for (const r of parseCSV(await flatR.text())) {
       if (r['id1']) flatDB[r['id1']] = r;
     }
   }
+
+  // ── Resume & motivation data ──
+  try {
+    const resR = await fetch('data/resume_motivation.json');
+    if (resR.ok) {
+      const resData = await resR.json();
+      for (const m of resData['מועמדים'] || []) {
+        if (m['שם']) resumeDB[m['שם']] = m;
+      }
+    }
+  } catch(e) { console.warn('resume_motivation.json not loaded', e); }
 }
 
 function hasFallback(name) {
@@ -908,8 +995,300 @@ function computeScoreV2(name) {
   };
 }
 
+// ── Base Layer Scoring (Layer 1) ───────────────────────────────────────────
+// Executive Search readiness score: resume + motivation only.
+// The 36 topic cells are still collected for profile display, but they do NOT
+// affect the active base ranking in this version.
+
+const BASE_READINESS_WEIGHTS = {
+  resume: 0.80,
+  motivation: 0.20
+};
+
+// Simulation parameters (editable via sim panel)
+let SIM_TILT = 0.35;       // voter influence weight (0 = base only, 1 = topics only)
+let SIM_NULL = 0;           // uncovered topic handling: 0=skip, 1=neutral(5), 2=candidate avg
+
+// Zipper mode
+let zipperActive = false;
+
+function getGender(name) {
+  return (flatDB[name] || {})['id2'] || '';
+}
+
+function applyZipper(list) {
+  const males   = list.filter(c => getGender(c.name) === 'זכר');
+  const females = list.filter(c => getGender(c.name) === 'נקבה');
+  const other   = list.filter(c => { const g = getGender(c.name); return g !== 'זכר' && g !== 'נקבה'; });
+
+  const first = list[0];
+  const firstGender = first ? getGender(first.name) : 'זכר';
+  const [lead, follow] = firstGender === 'נקבה' ? [females, males] : [males, females];
+
+  const zipped = [];
+  const len = Math.max(lead.length, follow.length);
+  for (let i = 0; i < len; i++) {
+    if (i < lead.length)   zipped.push(lead[i]);
+    if (i < follow.length) zipped.push(follow[i]);
+  }
+  return [...zipped, ...other];
+}
+
+function toggleZipper() {
+  zipperActive = !zipperActive;
+  const btn = document.getElementById('btn-zipper');
+  if (btn) {
+    btn.style.background = zipperActive ? 'var(--brand)' : '#fff';
+    btn.style.color = zipperActive ? '#fff' : 'var(--muted)';
+    btn.style.borderColor = zipperActive ? 'var(--brand)' : 'var(--line)';
+  }
+  // Debug
+  const sample = scored.slice(0,3).map(c => c.name + ':' + (getGender(c.name)||'?'));
+  console.log('zipper:', zipperActive, 'sample:', sample);
+  const k = 'גלעד קריב';
+  const fk = flatDB[k];
+  console.log('flatDB[קריב] id1-id4:', fk ? [fk.id1, fk.id2, fk.id3, fk.id4] : 'NOT FOUND');
+  console.log('flatDB keys sample:', Object.keys(flatDB).slice(0,3));
+  renderTable();
+}
+
+const MOTIVATION_SCORE_MAP = {
+  'שליחות': 9.0,
+  'תיקון': 8.5,
+  'מומחיות': 8.2,
+  'קריירה': 7.0,
+  'הזדמנות': 6.0,
+  'לא_ברור': 5.0,
+  'לא ברור': 5.0,
+  '': 5.0
+};
+
+function motivationBaseScore(type) {
+  return MOTIVATION_SCORE_MAP[type] !== undefined ? MOTIVATION_SCORE_MAP[type] : 5.0;
+}
+
+function motivationConfidenceFactor(confPct) {
+  const c = parseFloat(confPct);
+  const frac = isNaN(c) ? 0.60 : Math.max(0, Math.min(100, c)) / 100;
+  return 0.70 + 0.30 * frac;
+}
+
+function weightedAverageAvailable(parts) {
+  const active = parts.filter(p => p.val !== null && p.val !== undefined && !isNaN(p.val));
+  if (!active.length) return null;
+  const wSum = active.reduce((s, p) => s + p.w, 0);
+  return active.reduce((s, p) => s + p.val * p.w, 0) / wSum;
+}
+
+function getTopicDisplayStats(name) {
+  const row = flatDB[name];
+  const topicDetail = {}; // תצוגה בלבד — לא חלק מציון הבסיס
+  let opinionsSum = 0, opinionsN = 0;
+  let capabilitySum = 0, capabilityN = 0;
+  let imageSum = 0, imageN = 0;
+  let coverage = 0;
+
+  for (const num of TOPIC_NUMS) {
+    const detail = { opinions: null, capability: null, image: null };
+
+    if (row) {
+      const opVal = parseFloat(row['sud' + num]);
+      if (!isNaN(opVal) && opVal > 0) {
+        detail.opinions = opVal;
+        opinionsSum += opVal;
+        opinionsN++;
+        coverage++;
+      }
+
+      const capVal = parseFloat(row['suc' + num]);
+      if (!isNaN(capVal) && capVal > 0) {
+        detail.capability = capVal;
+        capabilitySum += capVal;
+        capabilityN++;
+        coverage++;
+      }
+
+      const imVal = parseFloat(row['sut' + num]);
+      if (!isNaN(imVal) && imVal > 0) {
+        detail.image = imVal;
+        imageSum += imVal;
+        imageN++;
+        coverage++;
+      }
+    }
+
+    topicDetail[num] = detail;
+  }
+
+  return {
+    opinionsAvg: opinionsN > 0 ? Math.round(opinionsSum / opinionsN * 10) : null,
+    capabilityAvg: capabilityN > 0 ? Math.round(capabilitySum / capabilityN * 10) : null,
+    imageAvg: imageN > 0 ? Math.round(imageSum / imageN * 10) : null,
+    coverage,
+    topicDetail
+  };
+}
+
+function computeBaseScore(name) {
+  const row = flatDB[name];
+  const displayStats = getTopicDisplayStats(name);
+
+  // --- Resume score: 0-10 from flat CSV (zccc) ---
+  const resumeRaw = row ? row['zccc'] : null;
+  const resumeVal = (resumeRaw !== null && resumeRaw !== undefined && resumeRaw !== '')
+    ? parseFloat(resumeRaw)
+    : null;
+
+  // --- Motivation score: type score softened by confidence ---
+  const motivationType = row ? (row['zccd'] || 'לא_ברור') : 'לא_ברור';
+  const motivationAnchor = row ? (row['zccg'] || '') : '';
+  const motivationConfidenceRaw = row ? row['zcce'] : null;
+  const motivationTypeScore = motivationBaseScore(motivationType);
+  const motivationFactor = motivationConfidenceFactor(motivationConfidenceRaw);
+  const motivationEffective = motivationTypeScore * motivationFactor;
+  const hasMotivation = !!row && motivationType !== null && motivationType !== undefined && motivationType !== '';
+
+  // --- Active basic route: Executive Search readiness only ---
+  // This route intentionally ignores voter answers, selected topics, and the 36 topic cells.
+  const baseVal = weightedAverageAvailable([
+    { val: resumeVal, w: BASE_READINESS_WEIGHTS.resume },
+    { val: hasMotivation ? motivationEffective : null, w: BASE_READINESS_WEIGHTS.motivation }
+  ]);
+
+  const total = baseVal !== null ? Math.round(baseVal * 10) : 50;
+
+  // --- Security 6.1/6.2 from flat CSV ---
+  const s61 = row ? parseFloat(row['zs61']) : null;
+  const s62 = row ? parseFloat(row['zs62']) : null;
+  const committeeSource = row ? (row['zccs'] || '') : '';
+
+  // --- GPT parallel data for comparison ---
+  const gptResume = row && row['zccc_o'] ? parseFloat(row['zccc_o']) : null;
+  const gptMot = row ? (row['zccd_o'] || '') : '';
+  const gptConf = row && row['zcce_o'] ? parseFloat(row['zcce_o']) : null;
+  const gptAnchor = row ? (row['zccg_o'] || '') : '';
+
+  return {
+    total,
+    resumeDisplay: resumeVal !== null && !isNaN(resumeVal) ? Math.round(resumeVal * 10) : null,
+    motivDisplay: hasMotivation ? Math.round(motivationEffective * 10) : null,
+    motivationType,
+    motivationTypeDisplay: Math.round(motivationTypeScore * 10),
+    motivationConfidenceDisplay: motivationConfidenceRaw !== null && motivationConfidenceRaw !== undefined && motivationConfidenceRaw !== ''
+      ? Math.round(parseFloat(motivationConfidenceRaw))
+      : null,
+    motivationAnchor,
+    resumeWeight: Math.round(BASE_READINESS_WEIGHTS.resume * 100),
+    motivationWeight: Math.round(BASE_READINESS_WEIGHTS.motivation * 100),
+    // Security split
+    s61: !isNaN(s61) ? s61 : null,
+    s62: !isNaN(s62) ? s62 : null,
+    committeeSource,
+    // GPT comparison
+    gptResume: !isNaN(gptResume) ? gptResume : null,
+    gptMot,
+    gptConf: !isNaN(gptConf) ? gptConf : null,
+    gptAnchor,
+
+    // The following fields are display-only and are not used by the active base score.
+    ...displayStats
+  };
+}
+
+function computeVoterFit(name) {
+  // Returns 0-100 topic fit based on user's selected topics
+  // Only relevant when state.topics.length > 0 (not fast track)
+  if (!state.topics.length) return null;
+  const row = flatDB[name];
+  const candidateAvg = row ? (() => {
+    let s = 0, n = 0;
+    for (const num of TOPIC_NUMS) {
+      ['sud','suc','sut'].forEach(axis => {
+        const v = parseFloat(row[axis + num]);
+        if (!isNaN(v) && v > 0) { s += v; n++; }
+      });
+    }
+    return n > 0 ? s / n : 5;
+  })() : 5;
+
+  let sum = 0, count = 0;
+  for (const code of state.topics) {
+    const num = code.replace('D','');
+    const dir = state.dirs[code] || 'identity_and_capability';
+    // axis weights by direction
+    const DW2 = {
+      identity_anchor:       { op:.50, ex:.20, im:.30 },
+      capability_operator:   { op:.20, ex:.60, im:.20 },
+      identity_and_capability:{ op:.38, ex:.38, im:.24 },
+      squad_representation:  { op:.30, ex:.20, im:.50 }
+    };
+    const dw = DW2[dir] || DW2.identity_and_capability;
+
+    let cellSum = 0, cellW = 0;
+    [['sud','op'],['suc','ex'],['sut','im']].forEach(([axis, key]) => {
+      const v = row ? parseFloat(row[axis + num]) : NaN;
+      const conf = row ? parseFloat(row[axis + num + 'e']) : NaN;
+      const w = dw[key];
+      if (!isNaN(v) && v > 0) {
+        const adj = v * (0.6 + 0.4 * (isNaN(conf) ? 0.72 : conf / 100));
+        cellSum += adj * w;
+        cellW += w;
+      } else {
+        // Uncovered topic handling
+        if (SIM_NULL === 1) { cellSum += 5 * w; cellW += w; }          // neutral
+        else if (SIM_NULL === 2) { cellSum += candidateAvg * w; cellW += w; } // candidate avg
+        // SIM_NULL === 0: skip (do nothing)
+      }
+    });
+    if (cellW > 0) { sum += (cellSum / cellW) * 10; count++; }
+    else if (SIM_NULL !== 0) { sum += 50; count++; } // fully uncovered topic
+  }
+  return count > 0 ? Math.round(sum / count) : null;
+}
+
+function computeFinalScore(name) {
+  const base = computeBaseScore(name);
+  // Fast track — base only
+  if (!state.topics.length || SIM_TILT === 0) return base;
+  const voterFit = computeVoterFit(name);
+  if (voterFit === null) return base;
+  const total = Math.round(base.total * (1 - SIM_TILT) + voterFit * SIM_TILT);
+  return { ...base, total, voterFit };
+}
+
+function rerank() {
+  SIM_TILT = parseFloat(document.getElementById('sim-tilt').value) || 0;
+  SIM_NULL = parseInt(document.getElementById('sim-null').value) || 0;
+  const label = document.getElementById('sim-mode-label');
+  if (label) label.textContent = `בסיס ${Math.round((1-SIM_TILT)*100)}% | נושאים ${Math.round(SIM_TILT*100)}%`;
+  renderResults(false);
+}
+
 function toggleV2() {
   useV2 = !useV2;
+  renderResults(false);
+}
+
+const COMMITTEE_NAMES = { g: 'ועדת ג׳מיני', o: 'ועדת GPT', c: 'ועדת קלוד' };
+const COMMITTEE_ORDER = ['g', 'o'];
+
+function toggleCommittee() {
+  const idx = COMMITTEE_ORDER.indexOf(activeCommittee);
+  activeCommittee = COMMITTEE_ORDER[(idx + 1) % COMMITTEE_ORDER.length];
+
+  // Swap active fields from parallel columns
+  const suffix = activeCommittee === 'g' ? '_g' : '_o';
+  const fields = ['zccc', 'zccd', 'zcce', 'zccf', 'zccg', 'zs61', 'zs62'];
+  for (const name of Object.keys(flatDB)) {
+    const row = flatDB[name];
+    for (const f of fields) {
+      if (row[f + suffix] !== undefined && row[f + suffix] !== '') {
+        row[f] = row[f + suffix];
+      }
+    }
+    row['zccs'] = activeCommittee;
+  }
+
   renderResults(false);
 }
 
@@ -937,7 +1316,7 @@ const BACK_MAP = {
   's-topics': { screen: 's-style'  },
   's-dir':    { screen: 's-topics' },
   's-sum':    { screen: 's-dir'    },
-  's-final':  { screen: 's-dir' },
+  's-final':  { screen: null }, // dynamic — see goBack()
 };
 
 function updateBackBtn(id) {
@@ -951,7 +1330,18 @@ function updateBackBtn(id) {
     btn.onclick = null;
   } else {
     btn.href = '#';
-    btn.onclick = (e) => { e.preventDefault(); showScreen(b.screen); };
+    btn.onclick = (e) => {
+      e.preventDefault();
+      // Fast track: go back to squad screen without touching topic selections
+      if (id === 's-final' && state._fastTrack) {
+        state._fastTrack = false;
+        saveState();
+        window.location.href = 'dbr_P_01_process.html';
+        return;
+      }
+      if (b.screen) showScreen(b.screen);
+      else showScreen('s-squad');
+    };
   }
 }
 
@@ -978,7 +1368,7 @@ function startIdleTimer(screenId) {
   clearTimeout(_idleSeqTimer);
   clearIdleHints();
   _idleTimer = setTimeout(() => {
-    if (hasScreenSelection(screenId)) return;
+    if (hasScreenSelection(screenId) || screenId === 's-final') return;
     const screen = document.getElementById(screenId);
     if (!screen) return;
     const btns = [...screen.querySelectorAll('button:not([disabled]), .t-card, .opt, .ic-btn')].slice(0, 4);
@@ -1255,16 +1645,10 @@ function selectBestSquad() {
 }
 
 function skipToRanking() {
-  state.style.public_tone = state.style.public_tone || 'mixed_tone';
-  state.style.knesset_role = state.style.knesset_role || 'multi_function';
-  state.style.missing_information_tolerance = state.style.missing_information_tolerance || 'medium';
-  state.style.proven_vs_potential = state.style.proven_vs_potential || 'balanced';
-  if (state.topics.length === 0) {
-    state.topics = cfg.topics.map(t => t.code);
-    for (const code of state.topics) {
-      state.dirs[code] = state.dirs[code] || 'identity_and_capability';
-    }
-  }
+  // Fast track — base score only (resume + motivation), no topic selection
+  state.topics = [];
+  state.dirs = {};
+  state._fastTrack = true;
   saveState();
   runRanking();
 }
@@ -1546,6 +1930,14 @@ function renderDirs() {
       <span style="font-size:.78rem;color:var(--muted)">בחר</span>
     </div>`;
   }).join('');
+
+  // Lock "חשב התאמה" until all topics have a direction
+  const allDirected = state.topics.every(code => !!state.dirs[code]);
+  const btnCalc = document.querySelector('#s-dir .btn-p');
+  if (btnCalc) {
+    btnCalc.disabled = !allDirected;
+    btnCalc.title = allDirected ? '' : 'יש לכוון את כל הנושאים לפני החישוב';
+  }
 }
 
 function setDir(code, val) {
@@ -1638,6 +2030,118 @@ const LABEL_OVERRIDE = {
   multi_function: 'גם וגם וגם'
 };
 
+function committeeTotal(name, suffix) {
+  const row = flatDB[name];
+  if (!row) return null;
+  const rRaw = row['zccc' + suffix];
+  const resumeVal = (rRaw !== null && rRaw !== undefined && rRaw !== '') ? parseFloat(rRaw) : null;
+  const motType = row['zccd' + suffix] || 'לא_ברור';
+  const motConf = row['zcce' + suffix];
+  const motScore = motivationBaseScore(motType);
+  const motFactor = motivationConfidenceFactor(motConf);
+  const motEff = motScore * motFactor;
+  const hasMot = motType !== null && motType !== undefined && motType !== '';
+  const base = weightedAverageAvailable([
+    { val: resumeVal, w: BASE_READINESS_WEIGHTS.resume },
+    { val: hasMot ? motEff : null, w: BASE_READINESS_WEIGHTS.motivation }
+  ]);
+  return base !== null ? Math.round(base * 10) : null;
+}
+
+let sortCommittee = null; // null = default ranking, '_g' / '_o' / '_c'
+let sortAlpha = false;
+let filterMine = false;
+let _shuffleTimer = null;
+let _shuffleActive = false;
+let _showNames = false;
+
+function stopShuffle() {
+  clearTimeout(_shuffleTimer);
+  _shuffleTimer = null;
+  _shuffleActive = false;
+  _showNames = true;
+  const wrap = document.getElementById('roulette-overlay');
+  if (wrap) wrap.innerHTML = '';
+  renderResults(false);
+}
+
+function setBallState(state) {
+  document.querySelectorAll('.rb').forEach(el => {
+    el.classList.remove('free', 'stuck');
+    if (state) el.classList.add(state);
+  });
+}
+
+function shuffleScored() {
+  for (let i = scored.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [scored[i], scored[j]] = [scored[j], scored[i]];
+  }
+}
+
+function shuffleCycle() {
+  if (!_shuffleActive) return;
+  // Phase 1: balls free, dots instead of names
+  setBallState('free');
+  _showNames = false;
+  visibleCount = 18;
+  renderTable();
+  _shuffleTimer = setTimeout(() => {
+    if (!_shuffleActive) return;
+    // Phase 2: balls stick, shuffle names, show 8 names
+    setBallState('stuck');
+    shuffleScored();
+    _showNames = true;
+    visibleCount = 8;
+    renderTable();
+    _shuffleTimer = setTimeout(() => {
+      if (!_shuffleActive) return;
+      // back to phase 1
+      shuffleCycle();
+    }, 4000);
+  }, 4000);
+}
+
+function startShuffle() {
+  _shuffleActive = true;
+  _showNames = false;
+  renderTable();
+  shuffleCycle();
+  document.addEventListener('click', userInteracted, true);
+}
+
+function userInteracted(e) {
+  if (!_shuffleActive) return;
+  // Ignore clicks on the stop button (it handles itself)
+  if (e && e.target.closest('.shuffle-stop')) return;
+  stopShuffle();
+  document.removeEventListener('click', userInteracted, true);
+}
+
+function sortByCommittee(suffix) {
+  stopShuffle();
+  sortAlpha = false;
+  filterMine = false;
+  sortCommittee = (sortCommittee === suffix) ? null : suffix;
+  renderTable();
+}
+
+function sortByName() {
+  stopShuffle();
+  sortCommittee = null;
+  sortAlpha = !sortAlpha;
+  filterMine = false;
+  renderTable();
+}
+
+function toggleFilterMine() {
+  stopShuffle();
+  filterMine = !filterMine;
+  sortCommittee = null;
+  sortAlpha = false;
+  renderTable();
+}
+
 function scoreColor(v) {
   if (v >= 80) return '#10b981';
   if (v >= 65) return '#3b82f6';
@@ -1661,10 +2165,13 @@ function getShiryunPicks() {
 }
 
 function renderResults(resetVisible) {
-  if (resetVisible) visibleCount = 10;
-  const scoreFn = useV2 ? computeScoreV2 : computeScore;
-  scored = allNames.map(name => ({ name, ...scoreFn(name) }));
-  scored.sort((a, b) => b.total - a.total);
+  if (resetVisible) visibleCount = 14;
+  // Show sim panel only in full voter flow (not fast track)
+  const panel = document.getElementById('sim-panel');
+  const isFullFlow = state.topics.length > 0 && !state._fastTrack;
+  if (panel) panel.style.display = isFullFlow ? 'block' : 'none';
+  scored = allNames.map(name => ({ name, ...computeFinalScore(name) }));
+  scored.sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, 'he'));
   // שמירת מיקום אמיתי לפי ציון בלבד
   scoreRankMap = {};
   scored.forEach((c, i) => { scoreRankMap[c.name] = i; });
@@ -1680,66 +2187,83 @@ function renderResults(resetVisible) {
 }
 
 function renderTable() {
-  const w    = cfg.runtime_scoring.personal_score_weights;
-  const show = scored.slice(0, visibleCount);
-  const remaining = scored.length - visibleCount;
+  let display = zipperActive ? applyZipper(scored) : [...scored];
+  if (sortCommittee) {
+    const sfx = sortCommittee;
+    display.sort((a, b) => {
+      const va = committeeTotal(a.name, sfx) ?? -1;
+      const vb = committeeTotal(b.name, sfx) ?? -1;
+      return vb - va;
+    });
+  } else if (sortAlpha) {
+    display.sort((a, b) => a.name.localeCompare(b.name, 'he'));
+  }
+  if (filterMine) {
+    const shiryun = getShiryunPicks();
+    display = display.filter(c => state.picked.has(c.name) || shiryun.has(c.name));
+  }
+  const show = display.slice(0, visibleCount);
+  const remaining = display.length - visibleCount;
 
-  const topicNumHe = ['','נושא ליבה אחד','שני נושאי הליבה','שלושת נושאי הליבה','ארבעת נושאי הליבה','חמשת נושאי הליבה','ששת נושאי הליבה','שבעת נושאי הליבה','שמונת נושאי הליבה'];
-  const topicPhrase = topicNumHe[state.topics.length] || `${state.topics.length} נושאי הליבה`;
   const el = document.getElementById('final-desc');
-  el.innerHTML = `הדירוג נקבע בהתאם לתשובותיך על אופי הסגל ולפי ${topicPhrase} שהתמקדת בהם.
-    <button onclick="toggleBaseView()" title="${viewingBase ? 'חזור לנתוני 2026' : 'הצג דירוג לפי נתוני הבסיס (2025)'}"
-      style="margin-right:12px;padding:4px 12px;border-radius:999px;border:1px solid ${viewingBase ? '#2f5fbb' : 'var(--line)'};
-             background:${viewingBase ? '#eaf0ff' : '#fff'};color:${viewingBase ? 'var(--brand)' : 'var(--muted)'};
-             font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle">
-      ${viewingBase ? '↩ 2026' : '⟳ בסיס 2025'}
-    </button>
-    <button onclick="toggleV2()" title="${useV2 ? 'חזור לשיטה הישנה (שני קבצים)' : 'דרג לפי השיטה החדשה (קובץ מאוחד)'}"
-      style="margin-right:8px;padding:4px 12px;border-radius:999px;border:1px solid ${useV2 ? '#157a52' : 'var(--line)'};
-             background:${useV2 ? '#e7f6ef' : '#fff'};color:${useV2 ? '#157a52' : 'var(--muted)'};
-             font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;vertical-align:middle">
-      ${useV2 ? '⟳ V1' : '⚡ V2'}
-    </button>`;
-  el.style.cssText = 'font-size:1.15rem;font-weight:900;color:#12355b;margin-bottom:18px;line-height:1.5';
+  el.innerHTML = '';
+  el.style.cssText = 'display:none';
 
-  const anyFallback = show.some(c => hasFallback(c.name));
+  const anyFallback = false;
 
   document.getElementById('res-wrap').innerHTML = `
     <table class="res-table">
-      <thead><tr><th>מועמד/ת</th><th>ציון</th><th></th></tr></thead>
+      <thead><tr><th style="cursor:pointer;user-select:none${sortAlpha ? ';color:var(--brand)' : ''}" onclick="sortByName()">מועמד/ת${sortAlpha ? ' א↓' : ''}</th>${['_g','_o','_c'].map((sfx,i) => {
+        const lbl = ['🏛️ ג׳מיני','🏛️ GPT','🏛️ קלוד'][i];
+        const active = sortCommittee === sfx;
+        return '<th style="text-align:center;cursor:pointer;user-select:none'+(active ? ';color:var(--brand)' : '')+'" onclick="sortByCommittee(\''+sfx+'\')">'+lbl+(active ? ' ▼' : '')+'</th>';
+      }).join('')}<th style="text-align:center;cursor:pointer;user-select:none${filterMine ? ';color:var(--brand)' : ''}" onclick="toggleFilterMine()">👤 אני${filterMine ? ' ▼' : ''}</th></tr></thead>
       <tbody>
         ${show.map((c, idx) => {
-          const s      = sumDB[c.name] || {};
           const pk     = state.picked.has(c.name);
           const shiryunMark = getShiryunPicks().has(c.name) ? ' 🎯' : '';
           const trueRank = scoreRankMap[c.name] ?? idx;
-          const shift    = shiryunMark ? (trueRank - idx) : 0;
-          const col    = shift > 4  ? '#ef4444'
-                       : shift > 0  ? '#f59e0b'
-                       : idx < 8   ? '#10b981'
-                       : idx < 25  ? '#f59e0b'
-                       :             '#ef4444';
-          const fallbackMark = !shiryunMark && hasFallback(c.name)
-            ? '<span title="חלק מהנתונים מבוסס על פרופיל 2025" style="color:#ef4444;font-size:.78rem;cursor:help"> *</span>'
-            : '';
-          return `<tr>
-            <td class="nm-cell">${c.name}${shiryunMark}${fallbackMark}</td>
-            <td class="sc-cell">
-              <div class="sc-val" style="color:${col}">${c.total}</div>
-              <div class="sc-bar"><div class="sc-fill" style="width:${c.total}%;background:${col}"></div></div>
-            </td>
+          const shiryunShift = shiryunMark ? (trueRank - idx) : 0;
+          const zipperShift  = zipperActive ? (idx - trueRank) : 0;
+          const absZipper    = Math.abs(zipperShift);
+          const col    = shiryunShift > 4              ? '#ef4444'
+                       : shiryunShift > 0              ? '#f59e0b'
+                       : zipperActive && absZipper > 3 ? '#ef4444'
+                       : zipperActive && zipperShift > 0 ? '#a78bfa'
+                       : zipperActive && zipperShift < 0 ? '#f59e0b'
+                       : zipperActive                  ? '#94a3b8'
+                       : idx < 8                      ? '#10b981'
+                       :                                '#94a3b8';
+          const fallbackMark = '';
+          const borderStyle = idx === 7 ? 'border-bottom:2px dashed #b0b8c8' : '';
+          const sG = committeeTotal(c.name, '_g');
+          const sO = committeeTotal(c.name, '_o');
+          const sC = committeeTotal(c.name, '_o');
+          function miniSc(v) {
+            if (v === null) return '<span style="color:#ccc">—</span>';
+            const mc = v >= 80 ? '#10b981' : v >= 65 ? '#3b82f6' : v >= 50 ? '#f59e0b' : '#ef4444';
+            return '<span style="font-weight:700;font-size:.72rem;color:'+mc+'">'+v+'</span>';
+          }
+          return `<tr style="${borderStyle}">
+            <td class="nm-cell">
+              <span style="font-size:.78rem;font-weight:400;margin-left:7px;opacity:.6">${idx+1}.</span>${_showNames ? c.name + shiryunMark + fallbackMark : '· · · · ·'}</td>
+            <td style="text-align:center;width:42px;padding:5px 2px">${sortCommittee === '_g' ? miniSc(sG) : ''}</td>
+            <td style="text-align:center;width:42px;padding:5px 2px">${sortCommittee === '_o' ? miniSc(sO) : ''}</td>
+            <td style="text-align:center;width:42px;padding:5px 2px">${sortCommittee === '_c' ? miniSc(sC) : ''}</td>
             <td><div class="act-cell">
               <button class="ic-btn ${pk ? 'picked' : ''}" data-idx="${idx}" onclick="togglePick(${idx})">${pk ? '✓' : shiryunMark ? '✓' : '+'}</button>
               <button class="ic-btn" onclick="openProfile(${idx})">📋</button>
             </div></td>
           </tr>`;
         }).join('')}
-        ${remaining > 0 ? `
         <tr>
-          <td colspan="4" style="text-align:center;padding:10px">
-            <button onclick="showMore()" style="border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 16px;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit">הצג עוד</button>
+          <td colspan="5" style="text-align:center;padding:10px">
+            ${remaining > 0 ? `<button onclick="showMore()" style="border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 16px;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit;margin-left:8px">הצג עוד</button>` : ''}
+            <button onclick="toggleZipper()" style="padding:5px 14px;border-radius:999px;border:1px solid var(--line);background:${zipperActive ? 'var(--brand)' : '#fff'};color:${zipperActive ? '#fff' : 'var(--muted)'};font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;margin-left:8px">♂♀ ריץ רץ</button>
+            <button onclick="resetAll()" style="padding:5px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">↺ איפוס</button>
+            <button onclick="runTeamBuilder('fighting_opposition')" style="padding:5px 14px;border-radius:999px;border:1px solid var(--brand);background:var(--brand-soft);color:var(--brand);font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit">⚔ נבחרת לוחמנית</button>
           </td>
-        </tr>` : ''}
+        </tr>
       </tbody>
     </table>
     ${anyFallback ? `<p style="margin-top:10px;font-size:.8rem;color:var(--muted)">* פרופיל זה מבוסס על נתוני 2025 — עדכון יוני 2026 טרם הוזן.</p>` : ''}
@@ -1832,53 +2356,43 @@ function beep() {
 function openProfile(idx) {
   const c = scored[idx];
   const s = sumDB[c.name] || {};
-  const w = cfg.runtime_scoring.personal_score_weights;
 
-  document.getElementById('m-name').textContent = c.name;
-  document.getElementById('m-sub').textContent =
-    [s['קטגוריה'], s['סגנון'], s['תחומי_חוזק_בולטים']].filter(Boolean).join(' · ');
-
-  const topicRows = state.topics.map(code => {
-    const t   = cfg.topics.find(x => x.code === code);
-    const row = (topicDB[c.name] || {})[code];
-    const dir = cfg.topic_direction_options.find(d => d.id === state.dirs[code]);
-    const op  = row ? row['עמדות_ציון']  : '—';
-    const ex  = row ? row['ביצוע_ציון']  : '—';
-    const im  = row ? row['תדמית_ציון']  : '—';
-    const ts  = row ? Math.round(topicScore(row, state.dirs[code] || 'identity_anchor')) : 35;
-    const tc  = scoreColor(ts);
-    const src = (topicSource[c.name] || {})[code];
-    const srcTag = src === '2025'
-      ? '<span style="font-size:.68rem;color:var(--muted);background:#f0ece5;border-radius:4px;padding:1px 4px;margin-right:3px">2025</span>'
-      : '';
-    return `<tr style="border-bottom:1px solid var(--line)">
-      <td style="padding:5px 8px;font-size:.82rem;font-weight:700">${srcTag}${t ? t.short_title : code}</td>
-      <td style="padding:5px 8px;font-size:.75rem;color:var(--muted)">${dir ? dir.label : '—'}</td>
-      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${op}</td>
-      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${ex}</td>
-      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${im}</td>
-      <td style="padding:5px 8px;text-align:center;font-weight:800;color:${tc};font-size:.82rem">${ts}</td>
-    </tr>`;
-  }).join('');
+  document.getElementById('m-name').textContent = `כרטיס מועמד — ${c.name}`;
+  document.getElementById('m-sub').textContent = '';
 
   const factors = [
-    { lbl:`התאמת נושאים (${(w.topic_fit*100).toFixed(0)}%)`, val: c.topicFit },
-    { lbl:`אופי ציבורי (${(w.public_tone*100).toFixed(0)}%)`, val: c.publicTone },
-    { lbl:`תפקיד כנסת (${(w.knesset_role*100).toFixed(0)}%)`, val: c.knessetRole },
-    { lbl:`כיסוי מידע (${(w.information_tolerance*100).toFixed(0)}%)`, val: c.infoTol },
-    { lbl:`רקורד/פוטנציאל (${(w.proven_vs_potential*100).toFixed(0)}%)`, val: c.provenPot }
-  ];
+    { lbl: `רזומה (${c.resumeWeight || 80}%)`, val: c.resumeDisplay },
+    { lbl: `מוטיבציה אפקטיבית (${c.motivationWeight || 20}%)`, val: c.motivDisplay }
+  ].filter(f => f.val !== null && f.val !== undefined);
+
+  // Per-topic breakdown for display only
+  const baseTopicRows = TOPIC_NUMS.map(num => {
+    const t = cfg.topics.find(x => x.code === 'D' + num);
+    const d = c.topicDetail ? c.topicDetail[num] : {};
+    const op = d && d.opinions !== null ? d.opinions : '—';
+    const cap = d && d.capability !== null ? d.capability : '—';
+    const img = d && d.image !== null ? d.image : '—';
+    const filled = (d.opinions !== null ? 1 : 0) + (d.capability !== null ? 1 : 0) + (d.image !== null ? 1 : 0);
+    const fillColor = filled === 3 ? '#10b981' : filled > 0 ? '#f59e0b' : '#e2e8f0';
+    return `<tr style="border-bottom:1px solid var(--line)">
+      <td style="padding:5px 8px;font-size:.82rem;font-weight:700">${t ? t.short_title : num}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${op}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${cap}</td>
+      <td style="padding:5px 8px;text-align:center;font-size:.82rem">${img}</td>
+      <td style="padding:5px 8px;text-align:center"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${fillColor}"></span> ${filled}/3</td>
+    </tr>`;
+  }).join('');
 
   document.getElementById('m-body').innerHTML = `
     <div style="display:flex;align-items:center;gap:14px;background:var(--brand-soft);border-radius:12px;padding:12px 14px;margin-bottom:14px">
       <div style="font-size:2.2rem;font-weight:900;color:${scoreColor(c.total)}">${c.total}</div>
       <div>
-        <div style="font-weight:800">ציון התאמה אישי</div>
-        <div style="color:var(--muted);font-size:.83rem">מתוך ${state.topics.length} נושאים ושאלות הסגל</div>
+        <div style="font-weight:800">ציון בשלות בסיסי</div>
+        <div style="color:var(--muted);font-size:.83rem">רזומה ${c.resumeWeight || 80}% · מוטיבציה ${c.motivationWeight || 20}%</div>
       </div>
     </div>
 
-    <h3 style="margin-bottom:8px">פירוק ציון</h3>
+    <h3 style="margin-bottom:8px">פירוק ציון הבסיס</h3>
     <div class="sc-detail">
       ${factors.map(f => `
         <div class="sc-row">
@@ -1888,18 +2402,50 @@ function openProfile(idx) {
         </div>`).join('')}
     </div>
 
-    ${state.topics.length > 0 ? `
-    <h3 style="margin:14px 0 7px">ציונים לפי נושא</h3>
+    <div style="margin-top:10px;padding:9px 12px;border-radius:11px;background:#fbfcff;border:1px solid var(--line);font-size:.82rem;color:var(--muted);line-height:1.55">
+      <strong>מוטיבציה:</strong> ${c.motivationType || 'לא_ברור'}
+      ${c.motivationConfidenceDisplay !== null && c.motivationConfidenceDisplay !== undefined ? ` · ביטחון ${c.motivationConfidenceDisplay}%` : ''}
+      ${c.motivationAnchor ? `<br><strong>עוגן:</strong> ${c.motivationAnchor}` : ''}
+    </div>
+
+
+    ${c.gptResume !== null ? `
+    <div style="margin-top:10px;padding:9px 12px;border-radius:11px;background:#fff8f0;border:1px solid #f0d8b8;font-size:.82rem;line-height:1.55">
+      <strong>השוואת ועדות מסדרות:</strong>
+      <table style="width:100%;margin-top:5px;border-collapse:collapse;font-size:.82rem">
+        <tr style="border-bottom:1px solid #f0d8b8">
+          <td></td>
+          <td style="text-align:center;font-weight:700;padding:3px 6px">ג׳מיני</td>
+          <td style="text-align:center;font-weight:700;padding:3px 6px">GPT</td>
+          <td style="text-align:center;font-weight:700;padding:3px 6px;color:var(--muted)">פער</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5e6d5">
+          <td style="padding:3px 6px">רזומה</td>
+          <td style="text-align:center;padding:3px 6px">${c.resumeDisplay !== null ? (c.resumeDisplay/10).toFixed(1) : '—'}</td>
+          <td style="text-align:center;padding:3px 6px">${c.gptResume !== null ? c.gptResume.toFixed(1) : '—'}</td>
+          <td style="text-align:center;padding:3px 6px;color:${Math.abs((c.resumeDisplay||0)/10 - (c.gptResume||0)) >= 1.5 ? '#ef4444' : 'var(--muted)'}">${c.resumeDisplay !== null && c.gptResume !== null ? ((c.resumeDisplay/10) - c.gptResume > 0 ? '+' : '') + ((c.resumeDisplay/10) - c.gptResume).toFixed(1) : '—'}</td>
+        </tr>
+        <tr>
+          <td style="padding:3px 6px">מוטיבציה</td>
+          <td style="text-align:center;padding:3px 6px">${c.motivationType || '—'}</td>
+          <td style="text-align:center;padding:3px 6px">${c.gptMot || '—'}</td>
+          <td style="text-align:center;padding:3px 6px;color:${c.motivationType !== c.gptMot ? '#ef4444' : '#10b981'}">${c.motivationType === c.gptMot ? '✓' : '✗'}</td>
+        </tr>
+      </table>
+    </div>` : ''}
+
+    ${!state._fastTrack ? `
+    <h3 style="margin:14px 0 7px">נתוני נושאים — להצגה בלבד (${c.coverage}/36)</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin:0 0 6px">הנתונים הבאים אינם משוקללים במסלול הבסיסי הנוכחי.</p>
     <table style="width:100%;border-collapse:collapse">
       <thead><tr style="border-bottom:2px solid var(--line)">
         <th style="text-align:right;padding:5px 8px;color:var(--muted);font-size:.75rem">נושא</th>
-        <th style="text-align:right;padding:5px 8px;color:var(--muted);font-size:.75rem">כיוון</th>
         <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">עמדות</th>
-        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">ביצוע</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">יכולות</th>
         <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">תדמית</th>
-        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">ציון</th>
+        <th style="text-align:center;padding:5px 8px;color:var(--muted);font-size:.75rem">כיסוי</th>
       </tr></thead>
-      <tbody>${topicRows}</tbody>
+      <tbody>${baseTopicRows}</tbody>
     </table>` : ''}
 
     ${s['תחומי_חוזק_בולטים'] ? `
@@ -1907,7 +2453,8 @@ function openProfile(idx) {
       <strong>תחומי חוזק: </strong>${s['תחומי_חוזק_בולטים']}
     </div>` : ''}
 
-    <div class="actions" style="margin-top:14px">
+    <p style="margin-top:14px;font-size:.75rem;color:#999;font-weight:700;text-align:center">נושא הביטחון פוצל: אסטרטגיה מבצעית ובניין הכוח · חזון מדיני והסדרים אזוריים</p>
+    <div class="actions" style="margin-top:8px">
       <button class="btn-g" onclick="closeModal()">סגור</button>
     </div>`;
 
@@ -1955,7 +2502,25 @@ function goFinal() {
 }
 
 // הדירוג בפועל (ללא שינוי בחישוב) — כל המסלולים מגיעים לכאן
-function runRanking() { visibleCount = 10; showScreen('s-final'); runLoader(); }
+async function runRanking() {
+  visibleCount = 14; zipperActive = false; sortCommittee = null; sortAlpha = false; filterMine = false;
+  stopShuffle();
+  showScreen('s-final');
+  await runLoader();
+  const ov = document.getElementById('roulette-overlay');
+  if (ov) ov.innerHTML = `
+    <div class="roulette-wrap">
+      <div class="roulette-wheel">
+        <svg viewBox="0 0 100 100"><polygon points="50,4 82.5,17.5 96,50 82.5,82.5 50,96 17.5,82.5 4,50 17.5,17.5" fill="none" stroke="#8090a8" stroke-width="3"/></svg>
+        <div class="rb rb1"></div><div class="rb rb2"></div><div class="rb rb3"></div><div class="rb rb4"></div>
+        <div class="rb rb5"></div><div class="rb rb6"></div><div class="rb rb7"></div><div class="rb rb8"></div>
+        <div class="rb rb9"></div><div class="rb rb10"></div><div class="rb rb11"></div><div class="rb rb12"></div>
+        <div class="rb rb13"></div><div class="rb rb14"></div>
+      </div>
+      <button class="shuffle-stop" onclick="stopShuffle()">✕</button>
+    </div>`;
+  startShuffle();
+}
 
 // ── צומת ההכרעה: גורמי השקלול (דינמי לפי state) ──
 function getDecideFactors() {
@@ -2063,7 +2628,7 @@ function decideBack() {
 }
 
 function resetAll() {
-  state.style = {}; state.topics = []; state.dirs = {}; state.picked = new Set(); state.priorities = []; state.dirOrder = [];
+  state.style = {}; state.topics = []; state.dirs = {}; state.picked = new Set(); state.priorities = []; state.dirOrder = []; state._fastTrack = false;
   expandedSquadQ = 0; expandedQ = 0; expandedDir = 0;
   saveState();
   clearTimeout(_squadPhotoTimer);
@@ -2090,6 +2655,10 @@ async function init() {
     // startSquadPhotos(); // אנימציה מושבתת — ישר למצב יציב
     renderAnonPhotos();
     document.getElementById('squad-stop-btn').style.display = 'none';
+    // Committee mode — jump straight to ranking
+    if (new URLSearchParams(location.search).get('committee') === '1') {
+      skipToRanking();
+    }
     const hdr = document.querySelector('header');
     if (hdr) document.querySelector('.page').style.paddingTop = (hdr.offsetHeight + 4) + 'px';
     window.addEventListener('resize', () => {
@@ -2104,6 +2673,207 @@ async function init() {
 }
 
 init();
+
+// ══════════════════════════════════════════════════════
+//  TEAM BUILDER — בונה נבחרת מונחה
+// ══════════════════════════════════════════════════════
+
+// תוצרי בניית נבחרת
+let teamResult = null;
+
+// בריפים מוגדרים מראש
+const TEAM_BRIEFS = {
+  fighting_opposition: {
+    label:       'נבחרת לוחמנית — האופוזיציה',
+    description: 'לתרחיש שבו הדמוקרטים לא בקואליציה — גם אם הגוש שלהם ניצח',
+    weights: {
+      resume:    0.35,  // zccc
+      fighting:  0.35,  // zr1 — תפקיד מאבק
+      topics:    0.20,  // ממוצע נושאי מפתח
+      style:     0.10,  // בונוס לסגנון לוחם
+    },
+    keyTopics: [1, 3, 4, 9],  // דמוקרטיה, שוויון, גיוס, דת ומדינה
+    styleBonus: { 'לוחם וברור': 10, 'שילוב': 5, 'ממלכתי ואחראי': 0 },
+    teamSize: 8,
+  },
+};
+
+// ─── ניקוד מועמד לפי בריף ───────────────────────────
+function scoreForBrief(name, brief) {
+  const row = flatDB[name];
+  if (!row) return null;
+
+  // 1. ציון רזומה (0-100)
+  const resumeRaw = parseFloat(row['zccc']);
+  const resume = isNaN(resumeRaw) ? 50 : resumeRaw * 10;
+
+  // 2. תפקיד מאבק (0-100)
+  const fightRaw = parseFloat(row['zr1']);
+  const fighting = isNaN(fightRaw) ? 50 : fightRaw * 10;
+
+  // 3. ממוצע נושאי מפתח — ציון עמדות (0-100)
+  let topicSum = 0, topicN = 0;
+  for (const num of brief.keyTopics) {
+    const key = 'sud' + String(num).padStart(2, '0');
+    const v = parseFloat(row[key]);
+    if (!isNaN(v)) { topicSum += v * 10; topicN++; }
+  }
+  const topics = topicN > 0 ? topicSum / topicN : 50;
+
+  // 4. בונוס סגנון (0-100)
+  const styleVal = brief.styleBonus[row['zps']] ?? 0;
+  const style = styleVal * 10;
+
+  // 5. ציון משוקלל
+  const w = brief.weights;
+  const total = resume * w.resume + fighting * w.fighting + topics * w.topics + style * w.style;
+
+  return {
+    name,
+    total: Math.round(total),
+    resume: Math.round(resume),
+    fighting: Math.round(fighting),
+    topics: Math.round(topics),
+    style: styleVal,
+    styleLabel: row['zps'] || '',
+    motivation: row['zccd'] || '',
+  };
+}
+
+// ─── בניית נבחרת ────────────────────────────────────
+function buildTeam(briefKey) {
+  const brief = TEAM_BRIEFS[briefKey];
+  if (!brief) return null;
+
+  // ניקוד כל המועמדים
+  const allNames = Object.keys(flatDB);
+  let candidates = allNames
+    .map(n => scoreForBrief(n, brief))
+    .filter(Boolean)
+    .sort((a, b) => b.total - a.total);
+
+  // משוריינים — תמיד נכנסים (עד 2 מקומות)
+  const shiryunSet = getShiryunPicks();
+  const shiryun = candidates.filter(c => shiryunSet.has(c.name));
+  const rest    = candidates.filter(c => !shiryunSet.has(c.name));
+
+  // בחירת 8 עם איזון מגדרי פשוט
+  const selected = [...shiryun];
+  let mCount = selected.filter(c => getGender(c.name) === 'ז').length;
+  let fCount = selected.filter(c => getGender(c.name) === 'נ').length;
+
+  for (const c of rest) {
+    if (selected.length >= brief.teamSize) break;
+    const g = getGender(c.name);
+    // איזון: לא יותר מ-5 מאותו מגדר מתוך 8
+    if (g === 'ז' && mCount >= 5) continue;
+    if (g === 'נ' && fCount >= 5) continue;
+    selected.push(c);
+    if (g === 'ז') mCount++; else fCount++;
+  }
+
+  // אם עוד לא 8 — ממלאים בלי אילוץ מגדרי
+  for (const c of rest) {
+    if (selected.length >= brief.teamSize) break;
+    if (!selected.find(s => s.name === c.name)) selected.push(c);
+  }
+
+  return {
+    briefKey,
+    brief,
+    team: selected.slice(0, brief.teamSize),
+    generatedAt: new Date().toISOString(),
+  };
+}
+
+// ─── תיאור מועמד בנבחרת ──────────────────────────────
+function teamCandidateReason(c, brief) {
+  const reasons = [];
+  if (c.style > 0) reasons.push(`סגנון ${c.styleLabel}`);
+  if (c.fighting >= 70) reasons.push('תפקיד מאבק חזק');
+  if (c.resume >= 75) reasons.push('רקע מקצועי חזק');
+  if (c.topics >= 70) reasons.push('עמדות חדות בנושאי המפתח');
+  if (c.motivation === 'שליחות' || c.motivation === 'תיקון') reasons.push(`מוטיבציה: ${c.motivation}`);
+  return reasons.length > 0 ? reasons.join(' · ') : 'ציון כולל גבוה';
+}
+
+// ─── הצגת הנבחרת ────────────────────────────────────
+function renderTeam(result) {
+  const chat = document.getElementById('team-chat');
+  if (!chat) return;
+
+  const { brief, team } = result;
+  const shiryunSet = getShiryunPicks();
+
+  const rows = team.map((c, i) => {
+    const g       = getGender(c.name);
+    const gIcon   = g === 'נ' ? '♀' : g === 'ז' ? '♂' : '';
+    const shiryun = shiryunSet.has(c.name) ? ' 🎯' : '';
+    const reason  = teamCandidateReason(c, brief);
+    return `
+      <tr style="${i === 7 ? '' : 'border-bottom:1px solid var(--line)'}">
+        <td style="padding:8px 4px;font-weight:700;color:var(--muted);font-size:.82rem">${i + 1}</td>
+        <td style="padding:8px 6px;font-weight:800;font-size:.92rem">${c.name}${shiryun} <span style="color:var(--muted);font-weight:400;font-size:.8rem">${gIcon}</span></td>
+        <td style="padding:8px 4px;text-align:center">
+          <span style="background:var(--brand-soft);color:var(--brand);font-weight:800;font-size:.82rem;padding:2px 8px;border-radius:8px">${c.total}</span>
+        </td>
+        <td style="padding:8px 6px;color:var(--muted);font-size:.8rem;line-height:1.4">${reason}</td>
+      </tr>`;
+  }).join('');
+
+  chat.innerHTML = `
+    <div style="margin-bottom:16px">
+      <h2 style="margin-bottom:4px">${brief.label}</h2>
+      <p class="lead" style="margin-bottom:0">${brief.description}</p>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;margin-bottom:20px">
+      <thead>
+        <tr style="border-bottom:2px solid var(--line)">
+          <th style="text-align:right;padding:6px 4px;font-size:.78rem;color:var(--muted);width:28px">#</th>
+          <th style="text-align:right;padding:6px 6px;font-size:.78rem;color:var(--muted)">מועמד/ת</th>
+          <th style="text-align:center;padding:6px 4px;font-size:.78rem;color:var(--muted);width:52px">ציון</th>
+          <th style="text-align:right;padding:6px 6px;font-size:.78rem;color:var(--muted)">למה נבחר/ה</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+
+    <div style="background:#f8faff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:.82rem;color:var(--muted);line-height:1.6">
+      <strong style="color:var(--ink)">איך חושב האלגוריתם?</strong><br>
+      רזומה ${Math.round(brief.weights.resume * 100)}% ·
+      תפקיד מאבק ${Math.round(brief.weights.fighting * 100)}% ·
+      נושאי מפתח ${Math.round(brief.weights.topics * 100)}% ·
+      סגנון ${Math.round(brief.weights.style * 100)}%
+      <br>נושאי מפתח לנבחרת זו: דמוקרטיה · שוויון · גיוס · דת ומדינה
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn-p" onclick="adoptTeam()">אמץ נבחרת זו ←</button>
+      <button class="btn-g" onclick="showScreen('s-final')">← חזרה לדירוג</button>
+    </div>`;
+}
+
+// ─── כניסה למסך הנבחרת ───────────────────────────────
+function runTeamBuilder(briefKey) {
+  showScreen('s-team');
+  const chat = document.getElementById('team-chat');
+  chat.innerHTML = '<p style="color:var(--muted);padding:20px 0">בונה נבחרת...</p>';
+
+  // setTimeout קצר — כדי שה-DOM יתעדכן לפני חישוב כבד
+  setTimeout(() => {
+    teamResult = buildTeam(briefKey || 'fighting_opposition');
+    renderTeam(teamResult);
+  }, 80);
+}
+
+// ─── אימוץ נבחרת — מסמן את המועמדים כנבחרים ──────────
+function adoptTeam() {
+  if (!teamResult) return;
+  teamResult.team.forEach(c => state.picked.add(c.name));
+  saveState();
+  showScreen('s-final');
+}
 </script>
 </body>
 </html>

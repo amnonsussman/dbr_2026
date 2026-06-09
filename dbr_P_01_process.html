@@ -201,10 +201,10 @@
       background: white;
       border: 1.5px solid var(--border-soft);
       border-radius: var(--radius-medium);
-      padding: 24px 22px 20px;
+      padding: 14px 16px 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
       cursor: pointer;
     }
@@ -326,9 +326,22 @@
     <!-- Status bar — shown only when there are candidates -->
     <!-- Path cards -->
     <div class="paths-grid">
-      <a class="path-card" href="dbr_P_01_shiryun.html" onclick="trackPath('shiryun')">
-        <div class="path-title"><span class="path-icon">🎯</span> שיריון ישיר של מועמדים/ות</div>
+      <div class="path-card" onclick="location.href='dbr_P_01_shiryun.html';trackPath('shiryun')" style="cursor:pointer">
+        <div class="path-title" style="display:flex;align-items:center;justify-content:space-between">
+          <span><span class="path-icon">🎯</span> קידום מועמדים</span>
+          <a href="dbr_P_01_shiryun.html?intro=1" onclick="event.stopPropagation()" title="הסבר על המסלול"
+             style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;border:2px solid var(--blue-main);background:white;color:var(--blue-main);font-size:.8rem;font-weight:900;font-family:Georgia,serif;text-decoration:none;line-height:1">i</a>
+        </div>
         <div class="path-desc" id="shiryun-desc">בחירה ידנית של מועמד מתוך רשימת המועמדים המלאה, על פי שיקול הדעת שלך.</div>
+        <div id="shiryun-btn-row" style="display:none;margin-top:4px;justify-content:space-between;align-items:center;gap:8px">
+          <a href="dbr_P_01_shiryun.html" onclick="event.stopPropagation()" style="padding:6px 14px;background:#fff;color:var(--blue-main);border:1px solid var(--blue-main);border-radius:9px;font-weight:600;font-size:.82rem;text-decoration:none;">קדם מועמדים</a>
+          <a href="dbr_P_01_state.html" onclick="event.stopPropagation()" style="padding:6px 14px;background:#fff;color:var(--blue-main);border:1px solid var(--blue-main);border-radius:9px;font-weight:600;font-size:.82rem;text-decoration:none;">עבור לסיום התהליך</a>
+        </div>
+      </div>
+
+      <a class="path-card" href="dbr_P_01_main.html?committee=1" onclick="trackPath('committee')" style="border-color:#b45309;">
+        <div class="path-title"><span class="path-icon">🏛️</span> ועדות מסדרות</div>
+        <div class="path-desc" id="committee-desc">שלוש ועדות מסדרות עצמאיות בדקו את כל המועמדים. כל ועדה העריכה בנפרד את הרזומה, המוטיבציה והתאמה לתפקיד. ראו את הדירוג, השוו בין הוועדות, ובחרו.</div>
         <span class="path-cta">כניסה</span>
       </a>
 
@@ -359,9 +372,6 @@
     </div>
 
     <div class="methodology-link">
-      על הרציונל של תהליך הבחירה ואופן פעולת המערכת —
-      <a href="dbr_P_01_game.html">קראו כאן</a>
-      &nbsp;·&nbsp;
       <a href="dbr_P_01_state.html">מסך הסיכום</a>
     </div>
 
@@ -371,11 +381,26 @@
   </div>
 
   <script>
-    if (!localStorage.getItem('dbr_intro_seen')) {
-      window.location.replace('dbr_P_01_game.html');
-    }
+    // dbr_P_01_game.html removed from flow
 
     const STATE_KEY = 'primeris_state_v1';
+
+    let genderMap = {}; // name → 'נשים' | 'גברים' | 'ערבים'
+
+    async function loadGenderMap() {
+      try {
+        const resp = await fetch('data/candidates_master.json');
+        const data = await resp.json();
+        const arr  = Array.isArray(data) ? data : (data.candidates || []);
+        arr.forEach(c => { if (c['שם']) genderMap[c['שם']] = c['קטגוריה'] || ''; });
+      } catch(e) {}
+    }
+
+    function genderDot(name) {
+      const cat = genderMap[name] || '';
+      const color = cat === 'נשים' ? '#e879a0' : cat === 'גברים' ? '#3b82f6' : '#aaa';
+      return `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${color};margin-inline-end:5px;vertical-align:middle;flex-shrink:0"></span>`;
+    }
 
     function loadState() {
       try {
@@ -398,8 +423,10 @@
     let primState = loadState();
 
     function selectionText(namesArr) {
-      const list = namesArr.map(n => `<div style="font-weight:900;color:#12355b;font-size:.95rem;line-height:1.4;margin-bottom:2px">· ${n}</div>`).join('');
-      return `אלה המועמדים/ות שבחרתם:<br>${list}<span style="font-size:.88rem;color:#5f6b7a;margin-top:6px;display:block">עליכם עוד לאשר אותם במסך הסיכום.</span>`;
+      const list = namesArr.map(n =>
+        `<div style="display:flex;align-items:center;font-weight:900;color:#12355b;font-size:.85rem;line-height:1.2;padding:1px 0">${genderDot(n)}${n}</div>`
+      ).join('');
+      return `אלה המועמדים/ות שבחרתם:<br><div style="display:grid;grid-template-columns:1fr 1fr;gap:0 10px;margin:4px 0">${list}</div>`;
     }
 
     const SHIRYUN_DESC_HTML = 'בחירה ישירה של מועמדים/ות מתוך רשימת המועמדים המלאה, על פי השיקולים שלך.<br><span style="font-size:.88rem;color:#5f6b7a;margin-top:6px;display:block">גם אם בחרתם בשריון ישיר את כל השמונה, מומלץ ללכת למסלול השני, כדי להבדיל בין התרשמות לעובדות.</span>';
@@ -416,6 +443,8 @@
       if (shiryunEl) shiryunEl.innerHTML = shiryun.length > 0
         ? selectionText(shiryun)
         : SHIRYUN_DESC_HTML;
+      const btnRow = document.getElementById('shiryun-btn-row');
+      if (btnRow) btnRow.style.display = shiryun.length > 0 ? 'flex' : 'none';
 
       // כרטיסית מושכלת
       const dbrEl = document.getElementById('dbr-desc');
@@ -445,7 +474,7 @@
       renderAll();
     }
 
-    renderAll();
+    loadGenderMap().then(renderAll);
     window.addEventListener('focus', renderAll);
     window.addEventListener('pageshow', renderAll);
     document.addEventListener('visibilitychange', () => {

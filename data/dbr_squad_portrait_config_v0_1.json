@@ -1,0 +1,985 @@
+{
+  "meta": {
+    "project": "ד.ב.ר / פריימריז",
+    "config_name": "squad_builder_candidate_portrait_config",
+    "version": "0.1.0",
+    "status": "draft_from_mockup",
+    "language": "he",
+    "direction": "rtl",
+    "created_from": [
+      "dbr_squad_builder.html",
+      "dbr_topics_squad_flow_meaning_for_candidate_portrait.md",
+      "dbr_candidate_portrait_layers_summary.md"
+    ],
+    "purpose": "קובץ תצורה ראשוני המחבר בין מוקאפ בניית הסגל, שאלות הבוחר, ושדות דיוקן המועמד בזמן הכנה ובזמן ריצה.",
+    "design_note": "הקובץ אינו מדרג מועמדים בעצמו. הוא מגדיר מה יש לשאול, אילו שדות דיוקן צריך להכין, ואיך תשובות הבוחר מתורגמות לכוונות חיפוש/התאמה."
+  },
+  "runtime_flow": {
+    "max_topics": 7,
+    "screens": [
+      {
+        "id": "topics",
+        "label": "בחירת נושאים",
+        "source_ui_id": "screen-topics"
+      },
+      {
+        "id": "topic_directions",
+        "label": "כיוון הבחירה בכל נושא",
+        "source_ui_id": "screen-directions"
+      },
+      {
+        "id": "squad_style",
+        "label": "שאלות על אופי הסגל",
+        "source_ui_id": "screen-style"
+      },
+      {
+        "id": "summary",
+        "label": "סיכום מסלול",
+        "source_ui_id": "screen-summary"
+      },
+      {
+        "id": "best_final",
+        "label": "Best & Final",
+        "source_ui_id": "screen-final"
+      }
+    ],
+    "state_shape": {
+      "selectedTopics": [
+        "D01"
+      ],
+      "directions": {
+        "D01": "identity_anchor"
+      },
+      "styleAnswers": {
+        "public_tone": "statesmanlike_responsible"
+      },
+      "selectedCandidateIds": [
+        "candidate_id"
+      ]
+    },
+    "local_storage_keys_from_mockup": {
+      "flow_key": "dbr_topics_flow_v1",
+      "selected_key": "dbr_topics_selected",
+      "global_state_key": "primeris_state_v1"
+    }
+  },
+  "topics": [
+    {
+      "code": "D01",
+      "title": "דמוקרטיה, שלטון החוק ואחריות ציבורית",
+      "short_title": "דמוקרטיה ושלטון חוק",
+      "description": "מוסדות המדינה, עצמאות המשפט, אחריות שלטונית, מאבק בשחיתות ושיקום אמון הציבור.",
+      "portrait_focus": [
+        "topic_position_status",
+        "topic_identification",
+        "topic_anchor_strength",
+        "topic_evidence_strength",
+        "topic_clarity",
+        "topic_silence_type"
+      ]
+    },
+    {
+      "code": "D02",
+      "title": "איחוי החברה וסולידריות אזרחית",
+      "short_title": "איחוי וסולידריות",
+      "description": "צמצום קיטוב, בניית אמון בין קבוצות, מאבק באלימות פוליטית ושותפות ישראלית.",
+      "portrait_focus": [
+        "topic_identification",
+        "topic_capability",
+        "global_public_tone",
+        "global_coherence",
+        "squad_balance_contribution"
+      ]
+    },
+    {
+      "code": "D03",
+      "title": "שוויון זכויות והזדמנויות",
+      "short_title": "שוויון זכויות",
+      "description": "שוויון מגדרי, לאומי, דתי, אתני ותרבותי; ייצוג לנשים, מיעוטים, עולים ופריפריה.",
+      "portrait_focus": [
+        "topic_position_status",
+        "topic_identification",
+        "global_diversity_contribution",
+        "topic_evidence_strength"
+      ]
+    },
+    {
+      "code": "D04",
+      "title": "שוויון בנטל, גיוס ושירות אזרחי",
+      "short_title": "שוויון בנטל",
+      "description": "גיוס, ביטול פטורים סקטוריאליים, שירות משמעותי ושירות ככלי לאיחוי חברתי.",
+      "portrait_focus": [
+        "topic_position_status",
+        "topic_clarity",
+        "topic_interpretive_confidence",
+        "topic_silence_type"
+      ]
+    },
+    {
+      "code": "D05",
+      "title": "שותפות יהודית־ערבית ושוויון אזרחי",
+      "short_title": "שותפות יהודית־ערבית",
+      "description": "שותפות פוליטית וחברתית, ביטחון אישי, תקציבים, ייצוג ושוויון מלא.",
+      "portrait_focus": [
+        "topic_identification",
+        "topic_position_status",
+        "topic_anchor_strength",
+        "global_public_tone",
+        "global_reflection_gap"
+      ]
+    },
+    {
+      "code": "D06",
+      "title": "ביטחון, פלסטינים והחזון המדיני",
+      "short_title": "ביטחון וחזון מדיני",
+      "description": "תפיסת ביטחון, עתיד עזה והשטחים, פתרון מדיני, היפרדות או שתי מדינות.",
+      "portrait_focus": [
+        "topic_position_status",
+        "topic_capability",
+        "topic_capability_alignment",
+        "topic_anchor_strength",
+        "topic_evidence_strength"
+      ]
+    },
+    {
+      "code": "D07",
+      "title": "חינוך, אזרחות וליבה משותפת",
+      "short_title": "חינוך ואזרחות",
+      "description": "חינוך ממלכתי, לימודי ליבה, דמוקרטיה, זכויות אדם, מגילת העצמאות והכרת האחר.",
+      "portrait_focus": [
+        "topic_position_status",
+        "topic_capability",
+        "topic_identification",
+        "topic_silence_type"
+      ]
+    },
+    {
+      "code": "D08",
+      "title": "חברה, כלכלה, רווחה ופריפריה",
+      "short_title": "חברה ורווחה",
+      "description": "צמצום פערים, שירותים ציבוריים, יוקר המחיה, שיקום אזורים במצוקה וחיזוק הפריפריה.",
+      "portrait_focus": [
+        "topic_identification",
+        "topic_capability",
+        "topic_anchor_strength",
+        "global_diversity_contribution"
+      ]
+    },
+    {
+      "code": "D09",
+      "title": "יחסי דת ומדינה וחופש אזרחי",
+      "short_title": "דת ומדינה",
+      "description": "חופש דת וחופש מדת, נישואים, שבת, כשרות, כפייה דתית והיחס בין יהדות לדמוקרטיה.",
+      "portrait_focus": [
+        "topic_position_status",
+        "topic_clarity",
+        "topic_evidence_strength",
+        "global_reflection_gap"
+      ]
+    },
+    {
+      "code": "D10",
+      "title": "תקשורת אמת ואוריינות דיגיטלית",
+      "short_title": "תקשורת אמת",
+      "description": "מאבק בשקרים, הסתה, מניפולציות, אלגוריתמים מקצינים ופגיעה בשיח הציבורי.",
+      "portrait_focus": [
+        "topic_capability",
+        "topic_identification",
+        "topic_capability_alignment",
+        "global_public_tone"
+      ]
+    },
+    {
+      "code": "D11",
+      "title": "תרבות, מדע ופרויקטים לאומיים מאחדים",
+      "short_title": "תרבות ומדע",
+      "description": "יוזמות משותפות בין מגזרים בתחומי תרבות, מדע, בריאות, חדשנות, קהילה ושיקום.",
+      "portrait_focus": [
+        "topic_identification",
+        "topic_capability",
+        "squad_balance_contribution",
+        "complementarity_value"
+      ]
+    },
+    {
+      "code": "D12",
+      "title": "סביבה, אקלים ומרחב חיים",
+      "short_title": "סביבה ואקלים",
+      "description": "איכות סביבה, משבר האקלים, תחבורה, תכנון, שטחים פתוחים ואיכות חיים יומיומית.",
+      "portrait_focus": [
+        "topic_position_status",
+        "topic_capability",
+        "topic_silence_type",
+        "topic_unknown_pct"
+      ]
+    }
+  ],
+  "topic_direction_options": [
+    {
+      "id": "identity_anchor",
+      "label": "מי שמזוהה מאוד עם הנושא",
+      "runtime_meaning": "הבוחר מחפש מועמד שהנושא הוא חלק מרכזי בזהותו הציבורית או בסדר היום שלו.",
+      "required_candidate_topic_fields": [
+        "topic_identification",
+        "topic_position_status",
+        "topic_anchor_strength",
+        "topic_evidence_strength",
+        "topic_clarity"
+      ],
+      "default_field_weights": {
+        "topic_identification": 0.42,
+        "topic_anchor_strength": 0.24,
+        "topic_position_score_known": 0.16,
+        "topic_evidence_strength": 0.1,
+        "topic_clarity": 0.08
+      },
+      "risk_checks": [
+        "topic_silence_type",
+        "global_reflection_gap"
+      ]
+    },
+    {
+      "id": "capability_operator",
+      "label": "מי שמבין/ה בנושא ויכול/ה לקדם אותו",
+      "runtime_meaning": "הבוחר מחפש ידע, ניסיון, יכולת ביצוע או יכולת מוסדית הקשורים לנושא הספציפי.",
+      "required_candidate_topic_fields": [
+        "topic_capability",
+        "topic_capability_alignment",
+        "topic_evidence_strength",
+        "topic_interpretive_confidence",
+        "topic_clarity"
+      ],
+      "default_field_weights": {
+        "topic_capability": 0.42,
+        "topic_capability_alignment": 0.24,
+        "topic_evidence_strength": 0.14,
+        "topic_interpretive_confidence": 0.1,
+        "topic_clarity": 0.1
+      },
+      "risk_checks": [
+        "topic_unknown_pct",
+        "topic_silence_type"
+      ]
+    },
+    {
+      "id": "identity_and_capability",
+      "label": "שילוב של הזדהות ויכולת",
+      "runtime_meaning": "הבוחר מחפש מועמד שגם מזוהה עם הנושא וגם מסוגל לקדם אותו בפועל.",
+      "required_candidate_topic_fields": [
+        "topic_identification",
+        "topic_capability",
+        "topic_capability_alignment",
+        "topic_anchor_strength",
+        "topic_evidence_strength"
+      ],
+      "default_field_weights": {
+        "topic_identification": 0.28,
+        "topic_capability": 0.28,
+        "topic_capability_alignment": 0.22,
+        "topic_anchor_strength": 0.12,
+        "topic_evidence_strength": 0.1
+      },
+      "risk_checks": [
+        "global_coherence",
+        "global_reflection_gap",
+        "topic_silence_type"
+      ]
+    },
+    {
+      "id": "squad_representation",
+      "label": "מספיק שיהיה ייצוג חזק לנושא בתוך הסגל",
+      "runtime_meaning": "הבוחר אינו דורש שכל מועמד יהיה חזק בנושא; הוא רוצה שלפחות בסגל כולו יהיה עוגן משמעותי לנושא.",
+      "required_candidate_topic_fields": [
+        "topic_anchor_strength",
+        "topic_identification",
+        "complementarity_value",
+        "squad_balance_contribution",
+        "overlap_risk"
+      ],
+      "default_field_weights": {
+        "topic_anchor_strength": 0.42,
+        "topic_identification": 0.18,
+        "complementarity_value": 0.18,
+        "squad_balance_contribution": 0.14,
+        "overlap_risk_inverse": 0.08
+      },
+      "risk_checks": [
+        "role_overlap",
+        "topic_overlap",
+        "candidate_similarity"
+      ]
+    }
+  ],
+  "squad_style_questions": [
+    {
+      "key": "public_tone",
+      "title": "איזה אופי ציבורי אתה רוצה לסגל?",
+      "description": "האם הסגל צריך להיות חד ולוחם, ממלכתי ואחראי, מגשר ומרגיע, או שילוב בין הסגנונות?",
+      "candidate_fields": [
+        "global_public_tone",
+        "knesset_function_fit",
+        "global_reflection_gap"
+      ],
+      "options": [
+        {
+          "id": "combative_clear",
+          "label": "לוחם וברור",
+          "candidate_match_values": [
+            "combative_clear"
+          ],
+          "runtime_effect": "מעדיף מועמדים בעלי סגנון עימותי/חד וברור."
+        },
+        {
+          "id": "statesmanlike_responsible",
+          "label": "ממלכתי ואחראי",
+          "candidate_match_values": [
+            "statesmanlike_responsible"
+          ],
+          "runtime_effect": "מעדיף מועמדים מוסדיים, אחראיים, שקולים ומדיניותיים."
+        },
+        {
+          "id": "bridging_calming",
+          "label": "מגשר ומרגיע",
+          "candidate_match_values": [
+            "bridging_calming"
+          ],
+          "runtime_effect": "מעדיף מועמדים שמסוגלים לחבר קהלים ולהוריד מתח."
+        },
+        {
+          "id": "mixed_tone",
+          "label": "שילוב בין הסגנונות",
+          "candidate_match_values": [
+            "combative_clear",
+            "statesmanlike_responsible",
+            "bridging_calming",
+            "mixed_tone"
+          ],
+          "runtime_effect": "מבקש סגל מאוזן ולא טיפוס יחיד של סגנון ציבורי."
+        }
+      ]
+    },
+    {
+      "key": "internal_diversity",
+      "title": "כמה חשוב לך גיוון פנימי בסגל?",
+      "description": "עד כמה חשוב שהסגל ישלב רקעים, זהויות, ניסיון וסגנונות שונים — ולא רק מועמדים דומים זה לזה?",
+      "candidate_fields": [
+        "global_diversity_contribution",
+        "complementarity_value",
+        "overlap_risk",
+        "candidate_similarity"
+      ],
+      "options": [
+        {
+          "id": "very_important",
+          "label": "חשוב מאוד",
+          "runtime_effect": "מעלה משקל לגיוון, השלמה בין מועמדים והפחתת כפילות."
+        },
+        {
+          "id": "balanced_with_fit",
+          "label": "חשוב, לא על חשבון התאמה",
+          "runtime_effect": "מעדיף גיוון, אך לא על חשבון התאמה גבוהה לנושאים שנבחרו."
+        },
+        {
+          "id": "professional_diversity",
+          "label": "בעיקר גיוון מקצועי",
+          "runtime_effect": "מדגיש שונות של ניסיון, תחום מומחיות ותפקידים בסגל יותר מזהות או סגנון."
+        },
+        {
+          "id": "not_critical",
+          "label": "לא קריטי לי",
+          "runtime_effect": "לא מפעיל העדפת גיוון משמעותית מעבר להתאמה אישית."
+        }
+      ]
+    },
+    {
+      "key": "knesset_role",
+      "title": "איזה תפקיד הסגל צריך למלא בכנסת?",
+      "description": "האם הרשימה צריכה בעיקר להוביל מאבק ציבורי, לקדם חקיקה ומדיניות, לחבר קהלים, או לשלב בין המשימות?",
+      "candidate_fields": [
+        "knesset_function_fit",
+        "primary_squad_roles",
+        "secondary_squad_roles"
+      ],
+      "options": [
+        {
+          "id": "public_campaigner",
+          "label": "להוביל מאבק ציבורי",
+          "candidate_match_values": [
+            "public_campaigner"
+          ],
+          "runtime_effect": "מעדיף מועמדים חזקים במאבק ציבורי, מסר, נראות והובלת קהל."
+        },
+        {
+          "id": "legislation_policy_operator",
+          "label": "לקדם חקיקה ומדיניות",
+          "candidate_match_values": [
+            "legislation_policy_operator"
+          ],
+          "runtime_effect": "מעדיף מועמדים פרלמנטריים, מדיניותיים וביצועיים."
+        },
+        {
+          "id": "trust_builder_bridge",
+          "label": "לבנות אמון ולחבר קהלים",
+          "candidate_match_values": [
+            "trust_builder_bridge"
+          ],
+          "runtime_effect": "מעדיף מועמדים שמגשרים בין קהלים ומחזקים אמון."
+        },
+        {
+          "id": "multi_function",
+          "label": "גם וגם",
+          "candidate_match_values": [
+            "public_campaigner",
+            "legislation_policy_operator",
+            "trust_builder_bridge",
+            "multi_function"
+          ],
+          "runtime_effect": "מעדיף שילוב תפקידים בתוך הסגל."
+        }
+      ]
+    },
+    {
+      "key": "newcomers",
+      "title": "האם לתת מקום למועמדים פחות מוכרים?",
+      "description": "האם הסגל שלך צריך לכלול גם אנשים חדשים או פחות מתוקשרים?",
+      "candidate_fields": [
+        "global_public_familiarity",
+        "global_info_strength",
+        "global_future_potential",
+        "global_proven_track_record"
+      ],
+      "options": [
+        {
+          "id": "yes_definitely",
+          "label": "כן, בהחלט",
+          "runtime_effect": "נותן מקום למועמדים פחות מוכרים אם יש להם פוטנציאל או עוגן נושאי."
+        },
+        {
+          "id": "yes_if_evidence_based",
+          "label": "כן, אם יש מידע מבוסס",
+          "runtime_effect": "מאפשר מועמדים פחות מוכרים, אך דורש ראיות ותמונה סבירה."
+        },
+        {
+          "id": "limited",
+          "label": "במידה מוגבלת",
+          "runtime_effect": "מגביל מספר מועמדים פחות מוכרים בסגל."
+        },
+        {
+          "id": "prefer_established",
+          "label": "מעדיף מוכרים",
+          "runtime_effect": "מעדיף מועמדים מוכרים או מבוססים ציבורית."
+        }
+      ]
+    },
+    {
+      "key": "missing_information_tolerance",
+      "legacy_key": "missing",
+      "title": "כמה חוסר מידע אתה מוכן לקבל?",
+      "description": "האם מועמד עם תמונה חלקית עדיין יכול להיכנס לרשימה שלך?",
+      "candidate_fields": [
+        "global_info_strength",
+        "global_portrait_clarity",
+        "topic_unknown_pct",
+        "topic_silence_type",
+        "global_future_potential"
+      ],
+      "options": [
+        {
+          "id": "very_low",
+          "label": "מעט מאוד",
+          "runtime_effect": "מעניש חוסר מידע ומעדיף דיוקן חד ומבוסס."
+        },
+        {
+          "id": "medium",
+          "label": "בינוני",
+          "runtime_effect": "מאפשר חוסר מידע מסוים, במיוחד אם יש התאמה חזקה בתחומים אחרים."
+        },
+        {
+          "id": "high",
+          "label": "די הרבה",
+          "runtime_effect": "מאפשר מועמדים עם דיוקן חלקי יותר."
+        },
+        {
+          "id": "potential_dependent",
+          "label": "תלוי בפוטנציאל",
+          "runtime_effect": "מאפשר חוסר מידע אם יש פוטנציאל או עוגן ברור."
+        }
+      ]
+    },
+    {
+      "key": "proven_vs_potential",
+      "legacy_key": "potential",
+      "title": "מה חשוב יותר: מוכח או פוטנציאל?",
+      "description": "האם להעדיף ניסיון ברור או גם מועמדים שיכולים להתפתח?",
+      "candidate_fields": [
+        "global_proven_track_record",
+        "global_future_potential",
+        "global_info_strength"
+      ],
+      "options": [
+        {
+          "id": "proven_safe",
+          "label": "מוכח ובטוח",
+          "runtime_effect": "מעדיף מועמדים עם רקורד ברור, ניסיון וראיות חזקות."
+        },
+        {
+          "id": "balanced",
+          "label": "איזון",
+          "runtime_effect": "מאזן בין רקורד מוכח לבין פוטנציאל."
+        },
+        {
+          "id": "interesting_potential",
+          "label": "פוטנציאל מעניין",
+          "runtime_effect": "נותן משקל גבוה יותר למועמדים חדשים או מתפתחים."
+        },
+        {
+          "id": "topic_dependent",
+          "label": "תלוי בנושא",
+          "runtime_effect": "בנושאים מסוימים יעדיף ניסיון, ובאחרים יאפשר פוטנציאל."
+        }
+      ]
+    },
+    {
+      "key": "duplicate_candidates_policy",
+      "legacy_key": "duplicates",
+      "title": "אם שני מועמדים דומים מאוד, לבחור את שניהם?",
+      "description": "האם לחזק תחום אחד עם שני מועמדים דומים, או לפנות מקום לגיוון?",
+      "candidate_fields": [
+        "candidate_similarity",
+        "role_overlap",
+        "topic_overlap",
+        "style_overlap",
+        "complementarity_value",
+        "overlap_risk"
+      ],
+      "options": [
+        {
+          "id": "yes_if_both_strong",
+          "label": "כן, אם שניהם חזקים",
+          "runtime_effect": "מאפשר כפילות אם שני המועמדים חזקים במיוחד."
+        },
+        {
+          "id": "one_usually_enough",
+          "label": "אחד מספיק בדרך כלל",
+          "runtime_effect": "מפעיל העדפה להפחתת כפילות באותו תפקיד/נושא."
+        },
+        {
+          "id": "prefer_diversity",
+          "label": "עדיף לגוון",
+          "runtime_effect": "מעלה משקל להשלמה ומוריד משקל למועמדים דומים מדי."
+        },
+        {
+          "id": "case_by_case",
+          "label": "צריך לראות מקרה",
+          "runtime_effect": "לא מפעיל כלל קשיח; מציג אזהרת כפילות למשתמש."
+        }
+      ]
+    }
+  ],
+  "candidate_portrait_schema": {
+    "layers": [
+      {
+        "id": "stated_position",
+        "label_he": "רובד העמדה המוצהרת",
+        "label_en": "Stated Position Layer",
+        "main_question": "מה המועמד אומר, כותב, מצהיר או מצוטט בשמו?",
+        "default_level": "candidate_topic"
+      },
+      {
+        "id": "evidentiary",
+        "label_he": "רובד הראיות",
+        "label_en": "Evidentiary Layer",
+        "main_question": "על מה נשענת הקביעה לגבי המועמד?",
+        "default_level": "candidate_statement_or_topic"
+      },
+      {
+        "id": "interpretive_confidence",
+        "label_he": "רובד ביטחון הפרשנות",
+        "label_en": "Interpretive Confidence Layer",
+        "main_question": "עד כמה אנחנו בטוחים שהסקנו נכון מן הראיות?",
+        "default_level": "candidate_statement_or_topic"
+      },
+      {
+        "id": "portrait_clarity",
+        "label_he": "רובד חדות התמונה",
+        "label_en": "Portrait Clarity Layer",
+        "main_question": "עד כמה התמונה על המועמד בנושא מסוים חדה וברורה?",
+        "default_level": "candidate_topic_or_global"
+      },
+      {
+        "id": "silence",
+        "label_he": "רובד השתיקות",
+        "label_en": "Silence Layer",
+        "main_question": "מה לא נאמר, ומה משמעות השתיקה?",
+        "default_level": "candidate_topic"
+      },
+      {
+        "id": "coherence",
+        "label_he": "רובד הקוהרנטיות",
+        "label_en": "Coherence Layer",
+        "main_question": "האם חלקי הדיוקן מסתדרים זה עם זה?",
+        "default_level": "candidate_global"
+      },
+      {
+        "id": "reflection",
+        "label_he": "רובד ההשתקפות",
+        "label_en": "Reflection Layer",
+        "main_question": "מה הפער בין מה שהמועמד מספר על עצמו לבין מה שאומרים עליו אחרים?",
+        "default_level": "candidate_global"
+      },
+      {
+        "id": "capability_alignment",
+        "label_he": "רובד התאמה בין חזון ליכולת",
+        "label_en": "Capability Alignment Layer",
+        "main_question": "האם יש התאמה בין מה שהמועמד רוצה לקדם לבין היכולת שלו לקדם זאת בפועל?",
+        "default_level": "candidate_topic_or_global"
+      }
+    ],
+    "candidate_topic_fields": [
+      {
+        "name": "candidate_id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "topic_code",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "topic_name",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "topic_position_status",
+        "type": "enum",
+        "enum_ref": "position_status",
+        "required": true
+      },
+      {
+        "name": "topic_position_score_known",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_identification",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_capability",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_capability_alignment",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_anchor_strength",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_evidence_strength",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_interpretive_confidence",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_clarity",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_unknown_pct",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_silence_type",
+        "type": "enum",
+        "enum_ref": "silence_type",
+        "required": false
+      },
+      {
+        "name": "topic_notes",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "candidate_global_fields": [
+      {
+        "name": "candidate_id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "candidate_name",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "global_info_strength",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "global_portrait_clarity",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "global_public_familiarity",
+        "type": "enum_or_number",
+        "enum_ref": "public_familiarity",
+        "required": false
+      },
+      {
+        "name": "global_public_tone",
+        "type": "enum",
+        "enum_ref": "public_tone",
+        "required": false
+      },
+      {
+        "name": "global_coherence",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "global_reflection_gap",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "global_proven_track_record",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "global_future_potential",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "global_diversity_contribution",
+        "type": "object_or_text",
+        "required": false
+      }
+    ],
+    "candidate_squad_fit_fields": [
+      {
+        "name": "candidate_id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "primary_squad_roles",
+        "type": "array",
+        "enum_ref": "squad_role",
+        "required": false
+      },
+      {
+        "name": "secondary_squad_roles",
+        "type": "array",
+        "enum_ref": "squad_role",
+        "required": false
+      },
+      {
+        "name": "best_topics_as_anchor",
+        "type": "array_of_topic_codes",
+        "required": false
+      },
+      {
+        "name": "overlap_risk",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "complementarity_value",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "squad_balance_contribution",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "knesset_function_fit",
+        "type": "enum_or_array",
+        "enum_ref": "knesset_function_fit",
+        "required": false
+      },
+      {
+        "name": "candidate_similarity",
+        "type": "object",
+        "description": "מטריצת דמיון או רשימת מועמדים דומים",
+        "required": false
+      },
+      {
+        "name": "role_overlap",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "topic_overlap",
+        "type": "number_0_100",
+        "required": false
+      },
+      {
+        "name": "style_overlap",
+        "type": "number_0_100",
+        "required": false
+      }
+    ]
+  },
+  "enums": {
+    "position_status": [
+      "supports",
+      "opposes",
+      "mixed",
+      "unknown",
+      "not_relevant"
+    ],
+    "silence_type": [
+      "none",
+      "between_the_lines",
+      "loud_silence",
+      "radio_silence",
+      "ordinary_missing",
+      "unknown"
+    ],
+    "public_tone": [
+      "combative_clear",
+      "statesmanlike_responsible",
+      "bridging_calming",
+      "mixed_tone",
+      "unknown"
+    ],
+    "public_familiarity": [
+      "established",
+      "emerging",
+      "low_visibility",
+      "unknown"
+    ],
+    "knesset_function_fit": [
+      "public_campaigner",
+      "legislation_policy_operator",
+      "trust_builder_bridge",
+      "multi_function",
+      "unknown"
+    ],
+    "squad_role": [
+      "topic_anchor",
+      "policy_operator",
+      "public_campaigner",
+      "bridge_builder",
+      "diversity_contributor",
+      "institutional_actor",
+      "new_generation",
+      "expert_voice",
+      "field_voice",
+      "media_voice",
+      "unknown"
+    ]
+  },
+  "build_time_expected_outputs": {
+    "candidate_topic_portraits": {
+      "description": "טבלה או JSON של מועמד × נושא. זה הבסיס להתאמה לפי נושאים וכיווני בחירה.",
+      "primary_key": [
+        "candidate_id",
+        "topic_code"
+      ],
+      "fields_ref": "candidate_portrait_schema.candidate_topic_fields"
+    },
+    "candidate_global_portraits": {
+      "description": "טבלה או JSON של שדות דיוקן כלליים לכל מועמד.",
+      "primary_key": [
+        "candidate_id"
+      ],
+      "fields_ref": "candidate_portrait_schema.candidate_global_fields"
+    },
+    "candidate_squad_fit": {
+      "description": "טבלה או JSON של תרומת המועמד להרכב סגל, כולל עוגנים, כפילות והשלמה.",
+      "primary_key": [
+        "candidate_id"
+      ],
+      "fields_ref": "candidate_portrait_schema.candidate_squad_fit_fields"
+    },
+    "candidate_similarity_matrix": {
+      "description": "מטריצה אופציונלית לזיהוי מועמדים דומים מדי לפי נושא, תפקיד וסגנון.",
+      "primary_key": [
+        "candidate_id_a",
+        "candidate_id_b"
+      ]
+    }
+  },
+  "runtime_matching_contract": {
+    "input_from_user": [
+      "selectedTopics",
+      "directions",
+      "styleAnswers",
+      "preselectedCandidates",
+      "excludedCandidates"
+    ],
+    "input_from_build_time": [
+      "candidate_topic_portraits",
+      "candidate_global_portraits",
+      "candidate_squad_fit",
+      "candidate_similarity_matrix"
+    ],
+    "output_to_ui": [
+      "rankedCandidates",
+      "topicAnchors",
+      "squadWarnings",
+      "missingInfoNotes",
+      "overlapWarnings",
+      "bestFinalList"
+    ],
+    "important_policy": "בזמן ריצה לא לחשב אמת אחת על המועמד, אלא לפרש את הדיוקן המוכן דרך סרגל הבחירה של הבוחר."
+  },
+  "best_final_simulation_steps": [
+    {
+      "key": "topics",
+      "name": "קורא את בחירות הנושאים",
+      "note": "סורק את הנושאים שסומנו ואת כיווני הבחירה שלהם."
+    },
+    {
+      "key": "style",
+      "name": "מעבד העדפות אופי הסגל",
+      "note": "מנתח את תשובות שאלות הסגל."
+    },
+    {
+      "key": "match",
+      "name": "מתאים מועמדים לפרופיל",
+      "note": "בודק מועמדים מול פרופיל הסגל שנבנה."
+    },
+    {
+      "key": "rank",
+      "name": "מדרג לפי התאמה",
+      "note": "מסדר את הרשימה לפי קרבה להעדפות."
+    },
+    {
+      "key": "ready",
+      "name": "מכין את רשימת Best & Final",
+      "note": "הרשימה מוכנה — ההחלטה הסופית היא של הבוחר."
+    }
+  ],
+  "demo_section_policy": {
+    "mock_candidates_in_html": "לא הועברו לקובץ התצורה הראשי כנתוני אמת. הם שייכים למוקאפ בלבד.",
+    "topic_candidate_mapping_in_html": "לא הועבר לקובץ התצורה הראשי כי הוא מדגים שיבוץ מלאכותי של מועמד לכל נושא. בהמשך יופק מהנתונים האמיתיים."
+  },
+  "change_management": {
+    "expected_to_change": true,
+    "recommended_file_name": "dbr_squad_portrait_config.json",
+    "compatibility_rule": "קוד ה-UI וקוד ההכנה צריכים לקרוא את ה-JSON הזה, ולא לקבע שאלות/שדות בתוך HTML או JS.",
+    "versioning_rule": "שינוי משמעותי בשדות דיוקן או enum מחייב העלאת minor version; שינוי טקסטים בלבד יכול להעלות patch version."
+  }
+}

@@ -214,7 +214,7 @@
     /* ============ Candidate cards ============ */
     .candidates-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
     }
 
@@ -235,8 +235,8 @@
 
     .photo-wrap {
       width: 96px;
-      height: 96px;
-      border-radius: 50%;
+      height: 120px;
+      border-radius: 12px;
       overflow: hidden;
       border: 3px solid transparent;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -398,7 +398,7 @@
       .topbar { flex-wrap: nowrap; }
       .brand span:last-child { font-size: .85rem; }
       .candidates-list { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-      .photo-wrap { width: 76px; height: 76px; }
+      .photo-wrap { width: 76px; height: 95px; }
       .status-bar { padding: 10px 12px; gap: 8px; }
       .status-pill { font-size: 0.85rem; }
       .status-divider { height: 16px; }
@@ -409,6 +409,71 @@
   </style>
 </head>
 <body>
+  <!-- ══ מסך פתיחה — מוצג פעם אחת ══ -->
+  <div id="shiryun-intro" style="display:none;position:fixed;inset:0;background:#f4f8ff;z-index:200;overflow-y:auto;padding:0 0 100px">
+    <div style="max-width:680px;margin:0 auto;padding:32px 24px">
+
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+        <span style="height:40px;padding:0 13px;border-radius:12px;background:linear-gradient(135deg,#3730a3,#1e1b4b);display:grid;place-items:center;color:white;font-size:.84rem;font-weight:900;letter-spacing:.06em;box-shadow:0 4px 14px rgba(55,48,163,.3)">ד.ב.ר</span>
+        <span style="font-weight:800;color:var(--blue-dark);font-size:1.05rem">דמוקרטים בוחרים רציונלית</span>
+      </div>
+
+      <h2 style="margin:0 0 6px;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--blue-dark);line-height:1.3">בחרת במסלול: לקדם מועמדות ומועמדים מסוימים</h2>
+
+      <p style="margin:16px 0;color:var(--text-main);font-size:.98rem;line-height:1.75">
+        במסלול הזה אנחנו פועלים לפי שיטת הבחירה שהמפלגה קבעה.
+      </p>
+      <p style="margin:0 0 16px;color:var(--text-main);font-size:.98rem;line-height:1.75">
+        המפלגה לא מבקשת מהבוחרים להצביע על נבחרת שלמה, אלא לבחור מועמדות ומועמדים באופן אישי.
+        לכל מועמדת או מועמד שתבחרו יתווסף קול אחד, והקולות האלה יקבעו את המיקום הראשוני לקראת שלב הריץ-רץ והשריונים שתבצע המפלגה לאחר הפריימריז.
+      </p>
+      <p style="margin:0 0 24px;color:var(--text-main);font-size:.98rem;line-height:1.75">
+        לכן, אם יש מועמדות או מועמדים שחשוב לכם במיוחד לקדם — זה המסלול המתאים.
+      </p>
+
+      <div style="background:white;border:1px solid var(--border-soft);border-radius:16px;padding:20px 22px;margin-bottom:22px">
+        <div style="font-weight:800;color:var(--blue-dark);margin-bottom:10px;font-size:1rem">מה מאפשר המסלול הזה?</div>
+        <p style="margin:0 0 12px;color:var(--text-main);font-size:.96rem;line-height:1.7">
+          במסלול הזה הבחירה נשארת בידיים שלכם.<br>
+          אפשר לבחור מועמדות ומועמדים לפי שיקול דעתכם המלא:
+          היכרות, אמון, הערכה אישית, ניסיון קודם, עמדה פוליטית, או כל סיבה אחרת שחשובה לכם.
+        </p>
+        <p style="margin:0 0 12px;color:var(--text-main);font-size:.96rem;line-height:1.7">
+          אם אתם כבר שלמים עם הבחירה שלכם —<br>
+          בחרו את שמונת המועמדים שלכם והמשיכו הלאה.
+        </p>
+        <p style="margin:0;color:var(--text-main);font-size:.96rem;line-height:1.7">
+          אם אתם עדיין מתלבטים —<br>
+          אפשר לבחור בשלב ראשון יותר משמונה מועמדים, וליצור לעצמכם רשימת אפשרויות רחבה יותר.
+          בהמשך תוכלו לצמצם, להשוות, ולגבש את השמונה הסופיים שלכם.
+        </p>
+      </div>
+
+      <p style="margin:0 0 20px;color:var(--text-muted);font-size:.93rem;line-height:1.7">
+        גם אם תבחרו מועמדות ומועמדים לפי שיקול דעתכם המלא, תוכלו בכל שלב לראות את הבחירה שלכם
+        מול הדירוג הסטנדרטי של ד.ב.ר — דירוג המבוסס על הרזומה והמוטיבציה של כל מועמדת ומועמד.
+      </p>
+
+      <div style="background:var(--blue-soft);border-radius:14px;padding:16px 20px;margin-bottom:28px">
+        <p style="margin:0 0 6px;font-weight:800;color:var(--blue-dark);font-size:.97rem">המטרה כאן פשוטה:</p>
+        <p style="margin:0 0 6px;color:var(--text-main);font-size:.95rem;line-height:1.65">
+          לעזור לכם לקדם את המועמדות והמועמדים שחשובים לכם, בלי לקחת מכם את השליטה בבחירה.
+        </p>
+        <p style="margin:0;color:var(--blue-dark);font-weight:700;font-size:.95rem">
+          כאן לא ננסה לעקוף את השיטה — אלא לעבוד נכון בתוכה.
+        </p>
+      </div>
+
+      <div style="text-align:center">
+        <button onclick="dismissIntro()" style="padding:14px 36px;background:var(--blue-main);color:white;border:none;border-radius:14px;font-weight:800;font-size:1.05rem;cursor:pointer;font-family:inherit;box-shadow:0 8px 24px rgba(29,95,167,.25);transition:transform .15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+          המשך לבחירת מועמדים ←
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <!-- ════════════════════════════════ -->
+
   <main class="page">
     <header class="topbar">
 <!-- Google tag (gtag.js) -->
@@ -431,7 +496,12 @@
       </div>
     </header>
     <section class="page-header">
-      <h1>שריון מועמדים</h1>
+      <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px">
+        <h1 style="margin:0;font-size:clamp(1.5rem,2.8vw,2rem);color:var(--blue-dark);letter-spacing:-0.015em">קידום מועמדים</h1>
+        <button onclick="document.getElementById('shiryun-intro').style.display='block'"
+                title="הצג הסבר על המסלול"
+                style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:2px solid var(--blue-main);background:white;color:var(--blue-main);font-size:.85rem;font-weight:900;cursor:pointer;font-family:Georgia,serif;line-height:1;padding:0">i</button>
+      </div>
       <p class="subtitle">
         מסלול לבחירה ישירה — מתאים למי שכבר יודע/ת מי המתאים ומי המתאימה. סמנו אותם לדיון נוסף, ואשרו אותם בהמשך.
       </p>
@@ -479,6 +549,19 @@
   </footer>
 
   <script>
+    // ══ מסך פתיחה ══
+    const INTRO_KEY = 'dbr_shiryun_intro_seen';
+
+    function dismissIntro() {
+      localStorage.setItem(INTRO_KEY, 'yes');
+      document.getElementById('shiryun-intro').style.display = 'none';
+    }
+
+    if (localStorage.getItem(INTRO_KEY) !== 'yes' || new URLSearchParams(location.search).get('intro') === '1') {
+      document.getElementById('shiryun-intro').style.display = 'block';
+    }
+    // ════════════════
+
     // candidates נטען מה-CSV — ימולא ב-init()
     let candidates = [];
 
@@ -625,16 +708,45 @@
     }
 
     const IMAGE_OVERRIDE = {
-      'מהרטה ברוך רון':       'images/מהרטה_ברוך-רון.webp',
-      'ענבל וורטמן שוהם':     'images/ענבל_וורטמן-שהם.webp',
-      'לי הופמן אגיב':        'images/לי_הופמן-אגיב.webp',
-      'אמיר חניפס':           "images/אמיר_ח'ניפס.webp",
-      'איילת השחר סיידוף':    'images/איילת-השחר_סיידוף.webp',
+      'אבתיסאם מראענה-מנוחין': 'אבתיסאם_מראענה-מנוחין',
+      'מהרטה ברוך רון':       'מהרטה_ברוך-רון',
+      'ענבל וורטמן שוהם':     'ענבל_וורטמן-שהם',
+      'לי הופמן אגיב':        'לי_הופמן-אגיב',
+      'אמיר חניפס':           "אמיר_ח'ניפס",
+      'איילת השחר סיידוף':    'איילת-השחר_סיידוף',
+      'ענבר בזק':             'ענבר_בזק',
+      'רותם סיון הופמן':      'רותם_סיון_הופמן',
     };
-
-    function imageUrl(name) {
-      return IMAGE_OVERRIDE[name] || 'images/' + name.replace(/ /g, '_') + '.webp';
+    function localImageUrl(name) {
+      const base = IMAGE_OVERRIDE[name] || name.replace(/ /g, '_');
+      return 'images_new/' + base + '.webp';
     }
+
+    const WIKI_PHOTOS = {
+      'גלעד קריב': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Gilad_Kariv_%28SHL_9093%29.jpg/250px-Gilad_Kariv_%28SHL_9093%29.jpg',
+      'מיכל רוזין': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Michal_Rozin_%D7%9E%D7%99%D7%9B%D7%9C_%D7%A8%D7%95%D7%96%D7%99%D7%9F.jpg/250px-Michal_Rozin_%D7%9E%D7%99%D7%9B%D7%9C_%D7%A8%D7%95%D7%96%D7%99%D7%9F.jpg',
+      'מוסי רז': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Mossi_Raz_%28SHL_9237%29.jpg/250px-Mossi_Raz_%28SHL_9237%29.jpg',
+      'יעל כהן-פארן': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Yael_Cohen_Paran_%28IMG_0412%29.jpg/250px-Yael_Cohen_Paran_%28IMG_0412%29.jpg',
+      'אמילי מואטי': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Emilie_Moatti_%28SHL_8044%29.jpg/250px-Emilie_Moatti_%28SHL_8044%29.jpg',
+      'אבתיסאם מראענה-מנוחין': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Ibtisam_Maraana_MK_2022.jpg/250px-Ibtisam_Maraana_MK_2022.jpg',
+      'אורי זכי': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/UriZaki_125.jpg/250px-UriZaki_125.jpg',
+      'ערן עציון': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Eran_Etzion.jpg/250px-Eran_Etzion.jpg',
+      'נמרוד שפר': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Tat-Aluf_Nimrod_Shefer_1.jpg/250px-Tat-Aluf_Nimrod_Shefer_1.jpg',
+      'תומר אביטל': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Tomer_Avital_-_Israeli_Journalist_-_2024.jpg/250px-Tomer_Avital_-_Israeli_Journalist_-_2024.jpg',
+      'אבי דבוש': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Avi_Dabush_2025a.jpg/250px-Avi_Dabush_2025a.jpg',
+      'נאור נרקיס': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Naor_Narkis_%28cropped%29.jpg/250px-Naor_Narkis_%28cropped%29.jpg',
+      'נעמה לזימי': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Naama_lazimi_%28cropped%29.jpg/250px-Naama_lazimi_%28cropped%29.jpg',
+      'אפרת רייטן': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Efrat_Rayten.jpg/250px-Efrat_Rayten.jpg',
+      'סומיה בשיר': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Somaya_Bashir.jpg/250px-Somaya_Bashir.jpg',
+      'גבי לסקי': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Gaby_Lasky_180222_023_%28cropped%29.jpg/250px-Gaby_Lasky_180222_023_%28cropped%29.jpg',
+      'הדס רגולסקי': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/%D7%94%D7%93%D7%A1_%D7%A8%D7%92%D7%95%D7%9C%D7%A1%D7%A7%D7%99_%D7%A6%D7%99%D7%9C%D7%95%D7%9D-_%D7%92%D7%99%D7%9C%D7%99%D7%94_%D7%91%D7%9F_%D7%92%D7%93.jpg/250px-%D7%94%D7%93%D7%A1_%D7%A8%D7%92%D7%95%D7%9C%D7%A1%D7%A7%D7%99_%D7%A6%D7%99%D7%9C%D7%95%D7%9D-_%D7%92%D7%99%D7%9C%D7%99%D7%94_%D7%91%D7%9F_%D7%92%D7%93.jpg',
+      'איהאב שליאן': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/%D7%90%D7%99%D7%94%D7%90%D7%91_%D7%A9%D7%9C%D7%99%D7%90%D7%9F.jpg/250px-%D7%90%D7%99%D7%94%D7%90%D7%91_%D7%A9%D7%9C%D7%99%D7%90%D7%9F.jpg',
+      'עלי סלאלחה': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Ali_Salalcha_%28salalja%29.jpg/250px-Ali_Salalcha_%28salalja%29.jpg',
+      'יאיא פינק': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Yaya_Fink_%28cropped%29.jpg/250px-Yaya_Fink_%28cropped%29.jpg',
+      'משה רדמן': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Moshe_Radman.png/250px-Moshe_Radman.png',
+      'נאווה רוזוליו': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Nava_Rozolyo_Photo_by_Ben_Cohen_%28cropped%29.jpg/250px-Nava_Rozolyo_Photo_by_Ben_Cohen_%28cropped%29.jpg',
+      'רם שפע': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Ram_Shefa_%28SHL_8927%29.jpg/250px-Ram_Shefa_%28SHL_8927%29.jpg',
+    };
 
     function escapeHtml(s) {
       if (!s) return '';
@@ -684,8 +796,11 @@
         return `
           <div class="candidate-card${sel ? ' selected' : dbr ? ' dbr-picked' : ''}" data-id="${escapeHtml(c.id)}">
             <div class="photo-wrap">
-              <img src="${escapeHtml(c.image || imageUrl(c.name))}" alt="${escapeHtml(c.name)}"
-                   onerror="this.style.background='#e8eef8';this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22><text y=%2264%22 font-size=%2264%22>👤</text></svg>'">
+              <img src="${escapeHtml(localImageUrl(c.name))}" alt="${escapeHtml(c.name)}"
+                   onerror="${WIKI_PHOTOS[c.name]
+                     ? `this.src='${escapeHtml(WIKI_PHOTOS[c.name])}';this.onerror=function(){this.outerHTML='<span style=\\'font-size:3rem\\'>${c.gender==='נשים'?'👩':'👨'}</span>'}`
+                     : `this.outerHTML='<span style=\\'font-size:3rem\\'>${c.gender==='נשים'?'👩':'👨'}</span>'`}"
+                   style="width:100%;height:100%;object-fit:cover">
             </div>
             <div class="candidate-name">${escapeHtml(c.name)}</div>
             ${sel ? `
@@ -714,7 +829,7 @@
     fetch('data/candidates_master.json')
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(data => {
-        candidates = (data.candidates || []).map(c => ({ id: c['שם'], name: c['שם'], image: c['תמונה'] || '' }));
+        candidates = (data.candidates || []).map(c => ({ id: c['שם'], name: c['שם'], image: c['תמונה'] || '', gender: c['קטגוריה'] || '' }));
         renderList();
         renderCounters();
       })

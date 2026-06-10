@@ -250,6 +250,20 @@
 
     .path-cta { display: none; }
 
+    /* ── נבחרות וועדות (כרטיס התייחסות) ── */
+    .path-card.ref-card { border: 2px solid #b45309; background: white; box-shadow: 0 4px 18px rgba(180,83,9,.1); cursor: default; }
+    .ref-list { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+    .ref-group { font-size: .72rem; font-weight: 800; color: var(--text-muted); margin: 7px 2px 1px; }
+    .ref-group:first-child { margin-top: 0; }
+    .ref-item { display: flex; align-items: center; gap: 8px; padding: 7px 9px; border: 1px solid var(--border-soft); border-radius: 9px; background: #fff; text-decoration: none; color: var(--blue-dark); font-size: .9rem; font-weight: 600; transition: background .15s ease, border-color .15s ease; }
+    .ref-item:hover { background: #fff7ee; border-color: #b45309; }
+    .ref-badge { flex-shrink: 0; font-size: .68rem; font-weight: 800; padding: 2px 7px; border-radius: 999px; }
+    .ref-vaada { background: #fde7cf; color: #b45309; }
+    .ref-nivheret { background: #d8ecff; color: var(--blue-main); }
+    .ref-name { flex-grow: 1; line-height: 1.25; }
+    .ref-go { flex-shrink: 0; font-size: .8rem; color: var(--text-muted); font-weight: 700; }
+    .ref-item.ref-soon { opacity: .5; pointer-events: none; }
+
     /* ── Empty hint ── */
     .empty-hint {
       background: white;
@@ -339,11 +353,26 @@
         </div>
       </div>
 
-      <a class="path-card" href="dbr_P_01_main.html?committee=1" onclick="trackPath('committee')" style="border-color:#b45309;">
-        <div class="path-title"><span class="path-icon">🏛️</span> ועדות מסדרות</div>
-        <div class="path-desc" id="committee-desc">שלוש ועדות מסדרות עצמאיות בדקו את כל המועמדים. כל ועדה העריכה בנפרד את הרזומה, המוטיבציה והתאמה לתפקיד. ראו את הדירוג, השוו בין הוועדות, ובחרו.</div>
-        <span class="path-cta">כניסה</span>
-      </a>
+      <div class="path-card ref-card">
+        <div class="path-title"><span class="path-icon">🏛️</span> נבחרות וועדות</div>
+        <div class="path-desc" style="flex-grow:0;margin-bottom:2px">הרכבים וקריטריונים שהציעו גורמים שונים — ועדות מסדרות של מפלגות ו"נבחרות" מוצעות. השוו את הבחירה שלכם לחוות הדעת האלו וכוונו בהתאם.</div>
+        <div class="ref-list">
+          <div class="ref-group">ועדות מסדרות</div>
+          <a class="ref-item" href="dbr_P_01_main.html?committee=1" onclick="trackPath('committee')">
+            <span class="ref-name">ועדה מסדרת — סטייל העבודה</span>
+            <span class="ref-go">←</span>
+          </a>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">ועדה מסדרת — סטייל מרץ</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+          <div class="ref-group">נבחרות</div>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">פריפריה — ייצוג מגזרים ייחודיים</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+        </div>
+      </div>
 
       <a class="path-card" href="dbr_P_01_main.html" onclick="trackPath('squad')">
         <div class="path-title"><span class="path-icon">⚖️</span> בחירה על פי הקריטריונים שלך</div>

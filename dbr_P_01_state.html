@@ -910,7 +910,7 @@
     <!-- Intro overlay — first visit -->
     <div id="intro-overlay" class="intro-overlay" style="display:none">
       <div class="intro-card">
-        <h2>גיבוש הרשימה הסופית שלי</h2>
+        <h2>גיבוש הרשימה</h2>
         <p>בשלב הזה אתם עוברים מבחירה רחבה יותר אל הרשימה הסופית.</p>
         <p>מצד אחד נמצאת הרשימה שלכם — המועמדות והמועמדים שבחרתם לקדם. מתוך הרשימה הזו תצטרכו לבחור עד שמונה מועמדים סופיים.</p>
         <p>מצד שני נמצא דירוג הוועדה המסדרת של ד.ב.ר — דירוג המבוסס על דיוקנאות המועמדים, על פי הרזומה שלהם והמוטיבציה שלהם לתפקידם הציבורי הבכיר.</p>
@@ -928,7 +928,7 @@
     </div>
 
     <section class="page-title">
-      <h1>גיבוש הרשימה הסופית שלי <button class="info-btn" onclick="showIntro()" title="הסבר על המסך">ⓘ</button></h1>
+      <h1>גיבוש הרשימה <button class="info-btn" onclick="showIntro()" title="הסבר על המסך">ⓘ</button></h1>
       <p>בחנו את הרשימה שבניתם לצד דירוג הוועדה המסדרת, בצעו שינויים ואשרו את הרשימה הסופית.</p>
     </section>
 
@@ -1291,6 +1291,16 @@
     function togglePickedOnlyFilter() {
       filterPickedOnly = !filterPickedOnly;
       document.getElementById('picked-only-label').textContent = filterPickedOnly ? 'חזרה' : 'נבחרו';
+      const allBtn = document.getElementById('all-filter-btn');
+      if (filterPickedOnly) {
+        allBtn.style.opacity = '0.35';
+        allBtn.style.pointerEvents = 'none';
+        allBtn.style.cursor = 'default';
+      } else {
+        allBtn.style.opacity = '';
+        allBtn.style.pointerEvents = '';
+        allBtn.style.cursor = 'pointer';
+      }
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }
 
@@ -1313,6 +1323,21 @@
     }
 
     let _preShiryunExpanded = false;
+    function _setFirstTwoBtnsDisabled(disabled) {
+      const allBtn    = document.getElementById('all-filter-btn');
+      const pickedBtn = document.getElementById('picked-filter-btn');
+      [allBtn, pickedBtn].forEach(btn => {
+        if (disabled) {
+          btn.style.opacity      = '0.35';
+          btn.style.pointerEvents = 'none';
+          btn.style.cursor       = 'default';
+        } else {
+          btn.style.opacity      = '';
+          btn.style.pointerEvents = '';
+          btn.style.cursor       = 'pointer';
+        }
+      });
+    }
     function toggleShiryunFilter() {
       if (!filterShiryun) {
         /* נכנס למצב אישור — שומר מצב נוכחי */
@@ -1326,6 +1351,7 @@
         document.getElementById('show-more-bar').style.display = 'none';
         document.querySelector('.rank-section-header').style.display = 'none';
         document.getElementById('shiryun-filter-label').textContent = 'חזרה';
+        _setFirstTwoBtnsDisabled(true);
       } else {
         /* חוזר למצב שהיה לפני */
         filterShiryun = false;
@@ -1337,6 +1363,7 @@
         document.getElementById('show-more-bar').style.display = '';
         document.querySelector('.rank-section-header').style.display = '';
         document.getElementById('shiryun-filter-label').textContent = 'אושרו לסיום';
+        _setFirstTwoBtnsDisabled(false);
       }
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }

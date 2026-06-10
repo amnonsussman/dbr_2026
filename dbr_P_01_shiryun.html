@@ -496,6 +496,11 @@
 <body>
   <!-- ══ מסך פתיחה — מוצג פעם אחת ══ -->
   <div id="shiryun-intro" style="display:none;position:fixed;inset:0;background:#f4f8ff;z-index:200;overflow-y:auto;padding:0 0 100px">
+    <style>
+      #shiryun-intro details > summary::-webkit-details-marker { display: none; }
+      #shiryun-intro .fold-arr { transition: transform .2s; display: inline-block; color: var(--blue-main); font-size: .8rem; }
+      #shiryun-intro details[open] .fold-arr { transform: rotate(180deg); }
+    </style>
     <div style="max-width:680px;margin:0 auto;padding:32px 24px">
 
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
@@ -508,11 +513,25 @@
       <p style="margin:16px 0;color:var(--text-main);font-size:.98rem;line-height:1.75">
         כאן מתחילים. בוחרים מתוך הרשימה את המועמדות והמועמדים שמדברים אליכם — לפי היכרות, אמון, הערכה אישית, עמדה פוליטית, או כל סיבה שחשובה לכם.
       </p>
-      <p style="margin:0 0 24px;color:var(--text-main);font-size:.98rem;line-height:1.75">
+      <p style="margin:0 0 22px;color:var(--text-main);font-size:.98rem;line-height:1.75">
         זו עדיין לא ההחלטה הסופית — זו נקודת המוצא. בשלב הבא תעמידו את הנבחרת הזו למבחן.
       </p>
 
-      <div style="background:white;border:1px solid var(--border-soft);border-radius:16px;padding:20px 22px;margin-bottom:22px">
+      <!-- כפתור התחלה — מופיע מיד, לחסרי הסבלנות -->
+      <div style="text-align:center;margin-bottom:18px">
+        <button onclick="dismissIntro()" style="padding:14px 36px;background:var(--blue-main);color:white;border:none;border-radius:14px;font-weight:800;font-size:1.05rem;cursor:pointer;font-family:inherit;box-shadow:0 8px 24px rgba(29,95,167,.25);transition:transform .15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+          בואו נתחיל ←
+        </button>
+      </div>
+
+      <!-- ההסבר המלא — מקופל למי שרוצה להעמיק -->
+      <details style="margin-bottom:10px">
+        <summary style="cursor:pointer;padding:11px 16px;background:white;border:1px solid var(--border-soft);border-radius:12px;font-weight:800;color:var(--blue-dark);font-size:.95rem;display:flex;justify-content:space-between;align-items:center;gap:10px;list-style:none">
+          <span>איך זה עובד? — הסבר קצר</span>
+          <span class="fold-arr">▾</span>
+        </summary>
+
+      <div style="background:white;border:1px solid var(--border-soft);border-radius:16px;padding:20px 22px;margin:10px 0 22px">
         <div style="font-weight:800;color:var(--blue-dark);margin-bottom:12px;font-size:1rem">שתי דרכים להוסיף מועמד/ת לנבחרת:</div>
         <p style="margin:0 0 12px;color:var(--text-main);font-size:.96rem;line-height:1.7">
           <strong style="color:var(--green)">בחירה</strong> — לחיצה על התמונה. סימון רך, "מעניין אותי, שווה בדיקה".
@@ -531,12 +550,7 @@
           המטרה כאן: לגבש נקודת פתיחה אישית, שתעמוד למבחן בשלב הבא — לא לסיים את הבחירה.
         </p>
       </div>
-
-      <div style="text-align:center">
-        <button onclick="dismissIntro()" style="padding:14px 36px;background:var(--blue-main);color:white;border:none;border-radius:14px;font-weight:800;font-size:1.05rem;cursor:pointer;font-family:inherit;box-shadow:0 8px 24px rgba(29,95,167,.25);transition:transform .15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-          בואו נתחיל ←
-        </button>
-      </div>
+      </details>
 
     </div>
   </div>
@@ -580,12 +594,12 @@
       <div class="status-bar" id="status-bar" style="display:none">
         <div class="status-pills">
           <div class="status-pill">
-            <span>בנבחרת:</span>
+            <span>נבחרת ראשונית:</span>
             <strong id="counter-total">0</strong>
           </div>
           <div class="status-divider" aria-hidden="true"></div>
           <div class="status-pill approved">
-            <span>שריון זמני:</span>
+            <span>שריון ראשוני:</span>
             <strong id="counter-shiryun">0</strong>
           </div>
         </div>

@@ -408,21 +408,6 @@
           </a>
         </div>
       </div>
-
-      <div class="path-card" id="status-card" style="cursor:default;display:none;">
-        <div class="path-title"><span class="path-icon">📋</span> לקראת סיכום תהליך הבחירה</div>
-        <p style="font-size:.95rem;color:var(--text-muted);line-height:1.55;margin:0 0 14px">רגע לפני האישור הסופי, אפשר לראות איך נקבעה הרשימה שבחרת, אילו שיקולים היו למערכת, מה חיזק ומה החליש את צורת הדירוג.</p>
-
-        <!-- שני לחצנים -->
-        <div id="status-actions" style="display:none;gap:8px;">
-          <a href="dbr_P_01_state.html" style="flex:1;">
-            <button style="width:100%;padding:8px 10px;background:white;color:var(--blue-main);border:1.5px solid var(--blue-main);border-radius:9px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;">עבור לסיום התהליך</button>
-          </a>
-          <a href="dbr_P_01_candidate.html?filter=selected" style="flex:1;">
-            <button style="width:100%;padding:8px 10px;background:white;color:var(--blue-main);border:1.5px solid var(--blue-main);border-radius:9px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;">שקיפות הבחירה ←</button>
-          </a>
-        </div>
-      </div>
     </div>
 
     <div style="text-align:center;margin-bottom:12px">
@@ -519,10 +504,6 @@
       if (dbrEl) dbrEl.innerHTML = dbrPicks.length > 0
         ? selectionText(dbrPicks)
         : DBR_DESC;
-
-      // כרטיסית סטטוס
-      document.getElementById('status-card').style.display    = nSel > 0 ? '' : 'none';
-      document.getElementById('status-actions').style.display = nSel > 0 ? 'flex' : 'none';
     }
 
     function trackPath(path) {

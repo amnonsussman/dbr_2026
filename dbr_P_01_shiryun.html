@@ -41,7 +41,7 @@
       background: linear-gradient(180deg, #f4f8ff 0%, #ffffff 45%, #f8fbff 100%);
       color: var(--text-main);
       line-height: 1.7;
-      padding-bottom: 120px;
+      padding-bottom: 40px;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -138,33 +138,73 @@
       font-size: 1.02rem;
     }
 
+    /* ============ Sticky controls (search + status) ============ */
+    .sticky-controls {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: #f4f8ff;
+      padding: 12px 0 10px;
+      box-shadow: 0 6px 14px rgba(18, 53, 91, 0.06);
+    }
+
+    .search-help {
+      margin: -8px 0 0;
+      font-size: .85rem;
+      color: var(--text-muted);
+    }
+
     /* ============ Status bar ============ */
     .status-bar {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
-      padding: 14px 20px;
+      margin: 0 0 10px;
+      padding: 6px 14px;
       background: var(--white);
       border: 1px solid var(--border-soft);
-      border-radius: var(--radius-medium);
+      border-radius: var(--radius-small);
       box-shadow: var(--shadow-soft);
       align-items: center;
+      justify-content: space-between;
+    }
+
+    .status-pills {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .status-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       color: var(--text-main);
     }
 
     .status-pill strong {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--blue-dark);
     }
+
+    .continue-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .85rem;
+      font-family: inherit;
+      cursor: pointer;
+      background: var(--blue-soft);
+      color: var(--blue-main);
+      border: 1px solid var(--blue-main);
+      white-space: nowrap;
+      transition: background .15s ease;
+    }
+
+    .continue-btn:hover { background: #dceaff; }
 
     .status-pill.approved strong {
       color: var(--green);
@@ -179,17 +219,32 @@
     /* ============ Search ============ */
     .search-box {
       position: relative;
-      margin-bottom: 18px;
+      margin-bottom: 10px;
+    }
+
+    .search-clear {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      color: #e53935;
+      font-size: 1.05rem;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px 6px;
     }
 
     .search-input {
       width: 100%;
-      padding: 14px 20px 14px 50px;
+      padding: 9px 16px 9px 38px;
       border: 1px solid var(--border-soft);
-      border-radius: var(--radius-medium);
+      border-radius: var(--radius-small);
       background: var(--white);
       font-family: inherit;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--text-main);
       box-shadow: var(--shadow-soft);
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -265,11 +320,17 @@
 
     .candidate-card.selected .candidate-name { color: var(--green); }
 
-    .btn-shiryun {
+    .card-btns {
+      display: flex;
+      gap: 6px;
       width: 100%;
-      padding: 7px 8px;
+    }
+
+    .btn-pick, .btn-shiryun {
+      flex: 1;
+      padding: 7px 6px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 800;
       cursor: pointer;
       font-family: inherit;
@@ -279,13 +340,14 @@
       transition: all 0.15s ease;
     }
 
-    .candidate-card.selected .btn-shiryun {
-      background: var(--green);
-      color: white;
-      border-color: var(--green);
+    .btn-pick.active,
+    .btn-shiryun.selected {
+      background: var(--green-soft);
+      color: var(--green);
+      border-color: var(--green-border);
     }
 
-    .btn-shiryun:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .btn-pick:hover, .btn-shiryun:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
     .candidate-card.dbr-picked .photo-wrap {
       border-color: var(--blue-main);
@@ -441,55 +503,38 @@
         <span style="font-weight:800;color:var(--blue-dark);font-size:1.05rem">דמוקרטים בוחרים רציונלית</span>
       </div>
 
-      <h2 style="margin:0 0 6px;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--blue-dark);line-height:1.3">בחרת במסלול: לקדם מועמדות ומועמדים מסוימים</h2>
+      <h2 style="margin:0 0 6px;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--blue-dark);line-height:1.3">השלב הראשון: בניית הנבחרת הראשונית שלך</h2>
 
       <p style="margin:16px 0;color:var(--text-main);font-size:.98rem;line-height:1.75">
-        במסלול הזה אנחנו פועלים לפי שיטת הבחירה שהמפלגה קבעה.
-      </p>
-      <p style="margin:0 0 16px;color:var(--text-main);font-size:.98rem;line-height:1.75">
-        המפלגה לא מבקשת מהבוחרים להצביע על נבחרת שלמה, אלא לבחור מועמדות ומועמדים באופן אישי.
-        לכל מועמדת או מועמד שתבחרו יתווסף קול אחד, והקולות האלה יקבעו את המיקום הראשוני לקראת שלב הריץ-רץ והשריונים שתבצע המפלגה לאחר הפריימריז.
+        כאן מתחילים. בוחרים מתוך הרשימה את המועמדות והמועמדים שמדברים אליכם — לפי היכרות, אמון, הערכה אישית, עמדה פוליטית, או כל סיבה שחשובה לכם.
       </p>
       <p style="margin:0 0 24px;color:var(--text-main);font-size:.98rem;line-height:1.75">
-        לכן, אם יש מועמדות או מועמדים שחשוב לכם במיוחד לקדם — זה המסלול המתאים.
+        זו עדיין לא ההחלטה הסופית — זו נקודת המוצא. בשלב הבא תעמידו את הנבחרת הזו למבחן.
       </p>
 
       <div style="background:white;border:1px solid var(--border-soft);border-radius:16px;padding:20px 22px;margin-bottom:22px">
-        <div style="font-weight:800;color:var(--blue-dark);margin-bottom:10px;font-size:1rem">מה מאפשר המסלול הזה?</div>
+        <div style="font-weight:800;color:var(--blue-dark);margin-bottom:12px;font-size:1rem">שתי דרכים להוסיף מועמד/ת לנבחרת:</div>
         <p style="margin:0 0 12px;color:var(--text-main);font-size:.96rem;line-height:1.7">
-          במסלול הזה הבחירה נשארת בידיים שלכם.<br>
-          אפשר לבחור מועמדות ומועמדים לפי שיקול דעתכם המלא:
-          היכרות, אמון, הערכה אישית, ניסיון קודם, עמדה פוליטית, או כל סיבה אחרת שחשובה לכם.
-        </p>
-        <p style="margin:0 0 12px;color:var(--text-main);font-size:.96rem;line-height:1.7">
-          אם אתם כבר שלמים עם הבחירה שלכם —<br>
-          בחרו את שמונת המועמדים שלכם והמשיכו הלאה.
+          <strong style="color:var(--green)">בחירה</strong> — לחיצה על התמונה. סימון רך, "מעניין אותי, שווה בדיקה".
         </p>
         <p style="margin:0;color:var(--text-main);font-size:.96rem;line-height:1.7">
-          אם אתם עדיין מתלבטים —<br>
-          אפשר לבחור בשלב ראשון יותר משמונה מועמדים, וליצור לעצמכם רשימת אפשרויות רחבה יותר.
-          בהמשך תוכלו לצמצם, להשוות, ולגבש את השמונה הסופיים שלכם.
+          <strong style="color:var(--blue-main)">שריון זמני</strong> — כפתור "שריין". סימון חזק יותר, "אני רוצה אותו/אותה בנבחרת".
         </p>
       </div>
 
       <p style="margin:0 0 20px;color:var(--text-muted);font-size:.93rem;line-height:1.7">
-        גם אם תבחרו מועמדות ומועמדים לפי שיקול דעתכם המלא, תוכלו בכל שלב לראות את הבחירה שלכם
-        מול הדירוג הסטנדרטי של ד.ב.ר — דירוג המבוסס על הרזומה והמוטיבציה של כל מועמדת ומועמד.
+        אין מגבלת מספר — אפשר להתחיל רחב ולצמצם בהמשך. השריון נקרא <strong>זמני</strong> כי במסך הבחינה הבא תוכלו לשנות הכול: להוסיף, להסיר, ולהשוות את הנבחרת שלכם מול נבחרות חלופיות.
       </p>
 
       <div style="background:var(--blue-soft);border-radius:14px;padding:16px 20px;margin-bottom:28px">
-        <p style="margin:0 0 6px;font-weight:800;color:var(--blue-dark);font-size:.97rem">המטרה כאן פשוטה:</p>
-        <p style="margin:0 0 6px;color:var(--text-main);font-size:.95rem;line-height:1.65">
-          לעזור לכם לקדם את המועמדות והמועמדים שחשובים לכם, בלי לקחת מכם את השליטה בבחירה.
-        </p>
-        <p style="margin:0;color:var(--blue-dark);font-weight:700;font-size:.95rem">
-          כאן לא ננסה לעקוף את השיטה — אלא לעבוד נכון בתוכה.
+        <p style="margin:0;color:var(--blue-dark);font-weight:700;font-size:.95rem;line-height:1.65">
+          המטרה כאן: לגבש נקודת פתיחה אישית, שתעמוד למבחן בשלב הבא — לא לסיים את הבחירה.
         </p>
       </div>
 
       <div style="text-align:center">
         <button onclick="dismissIntro()" style="padding:14px 36px;background:var(--blue-main);color:white;border:none;border-radius:14px;font-weight:800;font-size:1.05rem;cursor:pointer;font-family:inherit;box-shadow:0 8px 24px rgba(29,95,167,.25);transition:transform .15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-          המשך לבחירת מועמדים ←
+          בואו נתחיל ←
         </button>
       </div>
 
@@ -520,37 +565,45 @@
     </header>
     <section class="page-header">
       <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px">
-        <h1 style="margin:0;font-size:clamp(1.5rem,2.8vw,2rem);color:var(--blue-dark);letter-spacing:-0.015em">קידום מועמדים</h1>
+        <h1 style="margin:0;font-size:clamp(1.5rem,2.8vw,2rem);color:var(--blue-dark);letter-spacing:-0.015em">הנבחרת הראשונית שלך</h1>
         <button onclick="document.getElementById('shiryun-intro').style.display='block'"
                 title="הצג הסבר על המסלול"
                 style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:2px solid var(--blue-main);background:white;color:var(--blue-main);font-size:.85rem;font-weight:900;cursor:pointer;font-family:Georgia,serif;line-height:1;padding:0">i</button>
       </div>
       <p class="subtitle">
-        מסלול לבחירה ישירה — מתאים למי שכבר יודע/ת מי המתאים ומי המתאימה. סמנו אותם לדיון נוסף, ואשרו אותם בהמשך.
+        נקודת הפתיחה. <strong style="color:var(--green)">בחרו</strong> בלחיצה על התמונה, או <strong style="color:var(--blue-main)">שרְיינו</strong> בכפתור — ללא הגבלת מספר. בשלב הבא תעמידו את הנבחרת למבחן.
       </p>
     </section>
 
-    <div class="status-bar">
-      <div class="status-pill">
-        <span>משוריינים:</span>
-        <strong id="counter-selected">0</strong>
+    <!-- אזור בקרה דביק בראש: חיפוש + סטטוס (נשאר קבוע בגלילה) -->
+    <div class="sticky-controls">
+      <div class="status-bar" id="status-bar" style="display:none">
+        <div class="status-pills">
+          <div class="status-pill">
+            <span>בנבחרת:</span>
+            <strong id="counter-total">0</strong>
+          </div>
+          <div class="status-divider" aria-hidden="true"></div>
+          <div class="status-pill approved">
+            <span>שריון זמני:</span>
+            <strong id="counter-shiryun">0</strong>
+          </div>
+        </div>
+        <button class="continue-btn" onclick="saveAndReturn()">המשך ←</button>
       </div>
-      <div class="status-divider" aria-hidden="true"></div>
-      <div class="status-pill">
-        <span>סך מקומות ברשימה:</span>
-        <strong>8</strong>
+      <div class="search-box">
+        <input
+          type="text"
+          class="search-input"
+          id="search-input"
+          placeholder="חיפוש חופשי: שם, נושא, מפלגה, מאפיין... (למשל: מרצ, מיעוט, אקלים)"
+          autocomplete="off"
+        />
+        <button class="search-clear" id="search-clear" onclick="searchBtnAction()" title="רענון ההצגה">⟳</button>
       </div>
-    </div>
-
-    <div class="search-box">
-      <span class="search-icon">⌕</span>
-      <input
-        type="text"
-        class="search-input"
-        id="search-input"
-        placeholder="חיפוש לפי שם..."
-        autocomplete="off"
-      />
+      <p class="search-help" id="search-help">
+        אפשר לחפש כל מילה שמופיעה בתיאור המועמדים — שם, מפלגה, תחום עיסוק או מאפיין. כמה מילים יחד מצמצמות את התוצאות.
+      </p>
     </div>
 
     <div class="candidates-list" id="candidates-list">
@@ -558,18 +611,6 @@
     </div>
 
   </main>
-
-  <footer class="sticky-footer">
-    <div class="footer-inner">
-      <div class="footer-summary">
-        <strong id="footer-selected">0</strong> משוריינים
-      </div>
-      <div class="footer-actions">
-        <a class="button secondary" href="dbr_P_01_process.html">ביטול וחזרה</a>
-        <button class="button primary" onclick="saveAndReturn()">שמירה וחזרה לתהליך</button>
-      </div>
-    </div>
-  </footer>
 
   <script>
     // ══ מסך פתיחה ══
@@ -677,12 +718,32 @@
     }
 
     function recomputeSelected() {
-      primState.selected = [...new Set([...primState.shiryun, ...primState.dbr_picks])];
+      // מצטבר: מוודא ששריון ו-dbr נכללים בנבחרת, בלי למחוק בחירות רכות (לחיצת תמונה)
+      const s = new Set(primState.selected || []);
+      primState.shiryun.forEach(id => s.add(id));
+      primState.dbr_picks.forEach(id => s.add(id));
+      primState.selected = [...s];
     }
 
     function isShiryun(id)  { return primState.shiryun.includes(id); }
     function isDbr(id)      { return primState.dbr_picks.includes(id); }
     function isPicked(id)   { return (primState.selected || []).includes(id); }
+
+    // שורת שני כפתורים: בחר (כמו לחיצת התמונה) מימין, שריין משמאל
+    function cardButtonsHTML(id) {
+      const picked = isPicked(id);
+      const sh = isShiryun(id);
+      // כשיש שריון — אין צורך בכפתור "בחר", רק "משוריין" (לחיצה עליו מבטלת לגמרי)
+      if (sh) {
+        return `<div class="card-btns">`
+          + `<button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(id)}')">✓ משוריין</button>`
+          + `</div>`;
+      }
+      return `<div class="card-btns">`
+        + `<button class="btn-pick${picked ? ' active' : ''}" onclick="togglePick('${escapeHtml(id)}')">${picked ? '✓ נבחר' : 'בחר'}</button>`
+        + `<button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(id)}')">שריין</button>`
+        + `</div>`;
+    }
 
     function togglePick(id) {
       ensureArrays();
@@ -719,27 +780,15 @@
       }
       pw.title = picked ? 'הסר מהרשימה' : 'בחר';
 
-      card.querySelectorAll('.btn-shiryun, .btn-remove, .dbr-badge').forEach(el => el.remove());
-      if (sel) {
-        card.insertAdjacentHTML('beforeend',
-          `<button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(id)}')">✓ משוריין</button>`);
-      } else if (picked) {
-        card.insertAdjacentHTML('beforeend',
-          `<button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(id)}')">שריין</button>`);
-      } else if (dbr) {
-        card.insertAdjacentHTML('beforeend',
-          `<div class="dbr-badge">🎯 נבחר במושכלת</div>
-           <button class="btn-remove" onclick="removeDbr('${escapeHtml(id)}')">הסר</button>`);
-      } else {
-        card.insertAdjacentHTML('beforeend',
-          `<button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(id)}')">שריין</button>`);
-      }
+      card.querySelectorAll('.card-btns, .btn-shiryun, .btn-remove, .dbr-badge').forEach(el => el.remove());
+      card.insertAdjacentHTML('beforeend', cardButtonsHTML(id));
     }
 
     function toggleShiryun(id) {
       ensureArrays();
       if (isShiryun(id)) {
         primState.shiryun = primState.shiryun.filter(x => x !== id);
+        primState.selected = (primState.selected || []).filter(x => x !== id);
       } else {
         primState.shiryun.push(id);
       }
@@ -752,6 +801,7 @@
     function removeDbr(id) {
       ensureArrays();
       primState.dbr_picks = primState.dbr_picks.filter(x => x !== id);
+      primState.selected = (primState.selected || []).filter(x => x !== id);
       recomputeSelected();
       savePrimerisState(primState);
       updateCard(id);
@@ -760,7 +810,7 @@
 
     function saveAndReturn() {
       savePrimerisState(primState);
-      window.location.href = 'dbr_P_01_process.html';
+      window.location.href = 'dbr_P_01_state.html';
     }
 
     const IMAGE_OVERRIDE = {
@@ -816,9 +866,70 @@
     // ============ Rendering ============
     function renderCounters() {
       ensureArrays();
-      const n = primState.shiryun.length;
-      document.getElementById('counter-selected').textContent = n;
-      document.getElementById('footer-selected').textContent = n;
+      const shiryunN = primState.shiryun.length;
+      const totalN = new Set([
+        ...(primState.selected || []),
+        ...primState.shiryun,
+        ...primState.dbr_picks
+      ]).size;
+      const elTotal   = document.getElementById('counter-total');
+      const elShiryun = document.getElementById('counter-shiryun');
+      const elFooter  = document.getElementById('footer-selected');
+      if (elTotal)   elTotal.textContent   = totalN;
+      if (elShiryun) elShiryun.textContent = shiryunN;
+      if (elFooter)  elFooter.textContent  = totalN;
+      updateControls(totalN);
+    }
+
+    // מציג את סרגל הסטטוס רק כשיש חיפוש או בחירה; מסתיר את מלל ההסבר אחרי הבחירה הראשונה
+    function updateControls(totalN) {
+      ensureArrays();
+      if (typeof totalN !== 'number') {
+        totalN = new Set([
+          ...(primState.selected || []),
+          ...primState.shiryun,
+          ...primState.dbr_picks
+        ]).size;
+      }
+      const searchEl = document.getElementById('search-input');
+      const searchActive = !!(searchEl && searchEl.value.trim() !== '');
+      const statusBar = document.getElementById('status-bar');
+      const help = document.getElementById('search-help');
+      const clearBtn = document.getElementById('search-clear');
+      if (statusBar) statusBar.style.display = (totalN > 0 || searchActive) ? 'flex' : 'none';
+      if (help) help.style.display = (totalN > 0) ? 'none' : 'block';
+      if (clearBtn) {
+        clearBtn.textContent = searchActive ? '✕' : '⟳';
+        clearBtn.style.color = searchActive ? '#e53935' : 'var(--blue-main)';
+        clearBtn.title = searchActive ? 'ניקוי וחזרה לראש' : 'רענון ההצגה';
+      }
+    }
+
+    // לחיצה על הכפתור: ניקוי אם יש חיפוש, אחרת ערבול מחדש של ההצגה
+    function searchBtnAction() {
+      const el = document.getElementById('search-input');
+      if (el.value.trim() !== '') {
+        clearSearch();
+      } else {
+        reshuffle();
+      }
+    }
+
+    // ניקוי החיפוש וחזרה לראש המסך
+    function clearSearch() {
+      const el = document.getElementById('search-input');
+      el.value = '';
+      state.searchTerm = '';
+      renderList();
+      updateControls();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ערבול מחדש — הצגה אקראית חדשה (הנבחרים עדיין צפים לראש)
+    function reshuffle() {
+      shuffle(candidates);
+      renderList();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderList() {
@@ -826,18 +937,19 @@
       const list = document.getElementById('candidates-list');
       const term = state.searchTerm.trim();
 
+      // חיפוש חופשי: מפצל למילים ודורש שכולן יופיעו אי-שם בטקסט המועמד
+      const tokens = normHeb(term.toLowerCase()).split(/\s+/).filter(Boolean);
+      const tokenVariants = tokens.map(vavYodVariants);
       let filtered = candidates.filter(c =>
-        term === '' || c.name.includes(term)
+        tokenVariants.length === 0 ||
+        tokenVariants.every(vars => vars.some(v => (c.search || '').includes(v)))
       );
 
-      // סדר: משוריינים → נבחרי מושכלת → שאר
+      // סדר: כל הנבחרים (בחירה או שריון) לראש ההצגה, והשאר בסדר האקראי שנקבע בכניסה
       filtered.sort((a, b) => {
-        const sa = isShiryun(a.id), sb = isShiryun(b.id);
-        const da = isDbr(a.id),     db = isDbr(b.id);
-        if (sa && !sb) return -1;
-        if (!sa && sb) return 1;
-        if (da && !db) return -1;
-        if (!da && db) return 1;
+        const pa = isPicked(a.id), pb = isPicked(b.id);
+        if (pa && !pb) return -1;
+        if (!pa && pb) return 1;
         return 0;
       });
 
@@ -862,16 +974,7 @@
               ${picked ? '<div class="photo-check">✓</div>' : ''}
             </div>
             <div class="candidate-name">${escapeHtml(c.name)}</div>
-            ${sel ? `
-              <button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(c.id)}')">✓ משוריין</button>
-            ` : picked ? `
-              <button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(c.id)}')">שריין</button>
-            ` : dbr ? `
-              <div class="dbr-badge">🎯 נבחר במושכלת</div>
-              <button class="btn-remove" onclick="removeDbr('${escapeHtml(c.id)}')">הסר</button>
-            ` : `
-              <button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(c.id)}')">שריין</button>
-            `}
+            ${cardButtonsHTML(c.id)}
           </div>
         `;
       }).join('');
@@ -881,16 +984,62 @@
     document.getElementById('search-input').addEventListener('input', (e) => {
       state.searchTerm = e.target.value;
       renderList();
+      updateControls();
     });
 
     // ============ Init — טעינה מ-candidates_master.json ============
     document.getElementById('candidates-list').innerHTML =
       '<div class="empty-state">טוען רשימת מועמדים…</div>';
 
+    // נרמול אותיות סופיות לרגילות — כדי ש"מרצ" ימצא גם צורות סופיות ולהפך
+    const FINALS = { 'ך': 'כ', 'ם': 'מ', 'ן': 'נ', 'ף': 'פ', 'ץ': 'צ' };
+    function normHeb(s) {
+      return String(s || '').replace(/[ךםןףץ]/g, ch => FINALS[ch]);  // אותיות סופיות → רגילות
+    }
+
+    // וריאנטים של כתיב מלא/חסר — הפרש של אות ו/י אחת בלבד (הוספה או השמטה)
+    function vavYodVariants(tok) {
+      const set = new Set([tok]);
+      for (let i = 0; i < tok.length; i++) {
+        if (tok[i] === 'ו' || tok[i] === 'י') set.add(tok.slice(0, i) + tok.slice(i + 1));
+      }
+      for (let i = 0; i <= tok.length; i++) {
+        set.add(tok.slice(0, i) + 'ו' + tok.slice(i));
+        set.add(tok.slice(0, i) + 'י' + tok.slice(i));
+      }
+      return [...set];
+    }
+
+    // בונה מחרוזת חיפוש מכל שדות הטקסט של המועמד
+    function buildSearchBlob(c) {
+      const parts = [
+        c['שם'], c['קטגוריה'], c['סגנון'], c['סגנון_ביטחון'],
+        c['תעודת_זהות_פוליטית'], c['תחומי_חוזק']
+      ];
+      if (Array.isArray(c['בקרת_ראיות'])) parts.push(c['בקרת_ראיות'].join(' '));
+      if (Array.isArray(c['נושאים'])) {
+        c['נושאים'].forEach(n => { parts.push(n['נושא']); parts.push(n['עוגן']); });
+      }
+      return normHeb(parts.filter(Boolean).join(' ').toLowerCase());
+    }
+
+    // ערבול Fisher–Yates — סדר אקראי בכל כניסה
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
     fetch('data/candidates_master.json')
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(data => {
-        candidates = (data.candidates || []).map(c => ({ id: c['שם'], name: c['שם'], image: c['תמונה'] || '', gender: c['קטגוריה'] || '' }));
+        candidates = (data.candidates || []).map(c => ({
+          id: c['שם'], name: c['שם'], image: c['תמונה'] || '', gender: c['קטגוריה'] || '',
+          search: buildSearchBlob(c)
+        }));
+        shuffle(candidates);
         renderList();
         renderCounters();
       })

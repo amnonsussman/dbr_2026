@@ -45,7 +45,7 @@
 
     a { color: inherit; text-decoration: none; }
 
-    .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+    .page { max-width: 600px; margin: 0 auto; padding: 0 24px 60px; }
 
     /* ── Top bar ── */
     .topbar {
@@ -53,9 +53,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
-      padding: 20px 0 28px;
+      padding: 20px 0 12px;
       border-bottom: 1px solid var(--border-soft);
-      margin-bottom: 36px;
+      margin-bottom: 20px;
     }
 
     .brand {
@@ -201,7 +201,7 @@
       background: white;
       border: 1.5px solid var(--border-soft);
       border-radius: var(--radius-medium);
-      padding: 14px 16px 12px;
+      padding: 10px 12px 8px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -235,7 +235,7 @@
     }
 
     .path-title {
-      font-size: 1.35rem;
+      font-size: 1.1rem;
       font-weight: 900;
       color: var(--blue-dark);
       line-height: 1.3;
@@ -326,9 +326,9 @@
     <!-- Status bar — shown only when there are candidates -->
     <!-- Path cards -->
     <div class="paths-grid">
-      <div class="path-card" onclick="location.href='dbr_P_01_shiryun.html';trackPath('shiryun')" style="cursor:pointer">
-        <div class="path-title" style="display:flex;align-items:center;justify-content:space-between">
-          <span><span class="path-icon">🎯</span> קידום מועמדים</span>
+      <div class="path-card" onclick="location.href='dbr_P_01_shiryun.html';trackPath('shiryun')" style="cursor:pointer;border:2px solid #2e7d32;box-shadow:0 4px 20px rgba(46,125,50,.1);">
+        <div class="path-title" style="display:flex;align-items:center;justify-content:space-between;font-size:1.25rem">
+          <span> תהליך הבחירה ואישורה</span>
           <a href="dbr_P_01_shiryun.html?intro=1" onclick="event.stopPropagation()" title="הסבר על המסלול"
              style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;border:2px solid var(--blue-main);background:white;color:var(--blue-main);font-size:.8rem;font-weight:900;font-family:Georgia,serif;text-decoration:none;line-height:1">i</a>
         </div>
@@ -438,7 +438,7 @@
       return `נבחרו ${selectedArr.length} מועמדים/ות:<br><div style="display:grid;grid-template-columns:1fr 1fr;gap:0 10px;margin:4px 0">${list}</div>`;
     }
 
-    const SHIRYUN_DESC_HTML = 'בחירה ישירה של מועמדים/ות מתוך רשימת המועמדים המלאה, על פי השיקולים שלך.<br><span style="font-size:.88rem;color:#5f6b7a;margin-top:6px;display:block">גם אם בחרתם בשריון ישיר את כל השמונה, מומלץ ללכת למסלול השני, כדי להבדיל בין התרשמות לעובדות.</span>';
+    const SHIRYUN_DESC_HTML = 'בחירה של מספר מועמדים/ות מהרשימה המלאה, והשוואתם מול נבחרות קבועות של המערכת כדי לקבל נקודות ייחוס להחלטה. התהליך מתחיל בבחירה ראשונית של מועמדים, וממשיך לבחינה ושינוי הנבחרת שבנית.</span>';
     const DBR_DESC     = 'על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.';
 
     function renderAll() {

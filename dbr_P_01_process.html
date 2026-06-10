@@ -252,11 +252,13 @@
 
     /* ── נבחרות וועדות (כרטיס התייחסות) ── */
     .path-card.ref-card { border: 2px solid #b45309; background: white; box-shadow: 0 4px 18px rgba(180,83,9,.1); cursor: default; }
+    .path-card.method-card { border: 2px solid var(--blue-main); background: white; box-shadow: 0 4px 18px rgba(29,95,167,.1); cursor: default; }
     .ref-list { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
     .ref-group { font-size: .72rem; font-weight: 800; color: var(--text-muted); margin: 7px 2px 1px; }
     .ref-group:first-child { margin-top: 0; }
     .ref-item { display: flex; align-items: center; gap: 8px; padding: 7px 9px; border: 1px solid var(--border-soft); border-radius: 9px; background: #fff; text-decoration: none; color: var(--blue-dark); font-size: .9rem; font-weight: 600; transition: background .15s ease, border-color .15s ease; }
-    .ref-item:hover { background: #fff7ee; border-color: #b45309; }
+    .ref-card .ref-item:hover { background: #fff7ee; border-color: #b45309; }
+    .method-card .ref-item:hover { background: #eef4fc; border-color: var(--blue-main); }
     .ref-badge { flex-shrink: 0; font-size: .68rem; font-weight: 800; padding: 2px 7px; border-radius: 999px; }
     .ref-vaada { background: #fde7cf; color: #b45309; }
     .ref-nivheret { background: #d8ecff; color: var(--blue-main); }
@@ -374,11 +376,38 @@
         </div>
       </div>
 
-      <a class="path-card" href="dbr_P_01_main.html" onclick="trackPath('squad')">
-        <div class="path-title"><span class="path-icon">⚖️</span> בחירה על פי הקריטריונים שלך</div>
-        <div class="path-desc" id="dbr-desc">על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.</div>
-        <span class="path-cta">כניסה</span>
-      </a>
+      <div class="path-card method-card">
+        <div class="path-title"><span class="path-icon">📋</span> מתודולוגיה ושקיפות</div>
+        <div class="path-desc" style="flex-grow:0;margin-bottom:2px">איך המערכת עובדת ומה עומד מאחורי ההמלצות — הרקע, השיטה, המקורות והמגבלות, וההתחייבות שלנו לשקיפות.</div>
+        <div class="ref-list">
+          <div class="ref-group">מתודולוגיה</div>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">רקע תיאורטי</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">שיטת הדירוג והמשקלים</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">מאמרים</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+          <div class="ref-group">שקיפות</div>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">מקורות המידע ומגבלות ידועות</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">התחייבות לשקיפות</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+          <a class="ref-item ref-soon" href="#" onclick="return false">
+            <span class="ref-name">פרטיות ואחסון נתונים</span>
+            <span class="ref-go">בקרוב</span>
+          </a>
+        </div>
+      </div>
 
       <div class="path-card" id="status-card" style="cursor:default;display:none;">
         <div class="path-title"><span class="path-icon">📋</span> לקראת סיכום תהליך הבחירה</div>

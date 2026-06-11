@@ -1798,7 +1798,7 @@
           ? '<span class="reason-toggle" onclick="event.stopPropagation();toggleShiryunReason(\'' + rid + '\',this)" title="הצג/הסתר הסבר" style="cursor:pointer;flex-shrink:0;color:var(--text-muted);font-size:.9rem;padding:0 4px">▾</span>'
           : '';
       }
-      /* מצב הדגשת נבחרים — לא נבחרים מוצגים כנקודה קטנה וחיוורה */
+      /* מצב פתק — לא נבחרים מוצגים באותיות קטנות וחיוורות */
       if (filterPicked && !filterShiryun && !picked) {
         return '<div class="rank-row rank-dot">'
           + gDotFaded
@@ -1806,7 +1806,7 @@
           + '<span class="dot-name">' + eName + '</span>'
           + '</div>';
       }
-      /* מצב "כל המועמדים שווים" — נופל לשורה מלאה רגילה */
+      /* מצב "כל המועמדים שווים" — שורה מלאה רגילה */
       const hasReason = picked && !!(getPickReasons()[c.name] || '').trim();
       const targetCls = hasReason ? 'target-with-reason' : 'target-no-reason';
       const targetHtml = '';

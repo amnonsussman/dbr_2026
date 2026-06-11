@@ -53,7 +53,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
-      padding: 20px 0 12px;
+      padding: 8px 0 6px;
       border-bottom: 1px solid var(--border-soft);
       margin-bottom: 20px;
     }
@@ -68,8 +68,8 @@
     }
 
     .brand-mark {
-      height: 40px;
-      padding: 0 13px;
+      height: 28px;
+      padding: 0 9px;
       border-radius: 12px;
       background: linear-gradient(135deg, #3730a3, #1e1b4b);
       display: grid;
@@ -235,11 +235,32 @@
     }
 
     .path-title {
-      font-size: 1.1rem;
+      font-size: 1.45rem;
       font-weight: 900;
       color: var(--blue-dark);
       line-height: 1.3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
     }
+    .path-title .title-text { flex: 1; text-align: center; }
+    .card-zoom-btn {
+      background: none;
+      border: 2px solid var(--border-soft);
+      border-radius: 7px;
+      width: 34px; height: 34px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      cursor: pointer;
+      color: var(--blue-main);
+      line-height: 1;
+      flex-shrink: 0;
+      padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s, opacity .15s;
+    }
+    .card-zoom-btn:hover { border-color: var(--blue-main); }
 
     .path-desc {
       font-size: .96rem;
@@ -342,70 +363,38 @@
     <!-- Status bar — shown only when there are candidates -->
     <!-- Path cards -->
     <div class="paths-grid">
-      <div class="path-card" onclick="location.href='dbr_P_01_shiryun.html';trackPath('shiryun')" style="cursor:pointer;border:2px solid #2e7d32;box-shadow:0 4px 20px rgba(46,125,50,.1);">
-        <div class="path-title" style="display:flex;align-items:center;justify-content:space-between;font-size:1.25rem">
-          <span> תהליך הבחירה ואישורה</span>
-          <a href="dbr_P_01_shiryun.html?intro=1" onclick="event.stopPropagation()" title="הסבר על המסלול"
-             style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;border:2px solid var(--blue-main);background:white;color:var(--blue-main);font-size:.8rem;font-weight:900;font-family:Georgia,serif;text-decoration:none;line-height:1">i</a>
+      <div class="path-card" style="cursor:default;border:2px solid #2e7d32;box-shadow:0 4px 20px rgba(46,125,50,.1);">
+        <div class="path-title">
+          <button class="card-zoom-btn" onclick="cardZoom('shiryun',-1)">−</button>
+          <span class="title-text">בחירה עצמאית</span>
+          <button class="card-zoom-btn" onclick="cardZoom('shiryun',1)">+</button>
         </div>
-        <div class="path-desc" id="shiryun-desc">בחירה ידנית של מועמד מתוך רשימת המועמדים המלאה, על פי שיקול הדעת שלך.</div>
-        <div id="shiryun-btn-row" style="display:none;margin-top:4px;justify-content:space-between;align-items:center;gap:8px">
-          <a href="dbr_P_01_shiryun.html" onclick="event.stopPropagation()" style="padding:6px 14px;background:#fff;color:var(--blue-main);border:1px solid var(--blue-main);border-radius:9px;font-weight:600;font-size:.82rem;text-decoration:none;">קדם מועמדים</a>
-          <a href="dbr_P_01_state.html" onclick="event.stopPropagation()" style="padding:6px 14px;background:#fff;color:var(--blue-main);border:1px solid var(--blue-main);border-radius:9px;font-weight:600;font-size:.82rem;text-decoration:none;">עבור לסיום התהליך</a>
-        </div>
+        <div class="path-desc" id="shiryun-desc">כאן בוחרים את המועמדים/ות באופן עצמאי, ישירות מתוך הרשימה המלאה — על פי שיקול הדעת שלכם בלבד.<br>אין שאלונים ואין דירוג אוטומטי: מסמנים את מי שתרצו, ואפשר לשנות בכל שלב.<br>בסיום, הרשימה שבחרתם עוברת אתכם להמשך התהליך.</div>
+        <a href="dbr_P_01_shiryun.html" onclick="event.stopPropagation();trackPath('shiryun')" style="display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
       </div>
 
-      <div class="path-card ref-card">
-        <div class="path-title"><span class="path-icon">🏛️</span> נבחרות וועדות</div>
-        <div class="path-desc" style="flex-grow:0;margin-bottom:2px">הרכבים וקריטריונים שהציעו גורמים שונים — ועדות מסדרות של מפלגות ו"נבחרות" מוצעות. השוו את הבחירה שלכם לחוות הדעת האלו וכוונו בהתאם.</div>
-        <div class="ref-list">
-          <div class="ref-group">ועדות מסדרות</div>
-          <a class="ref-item" href="dbr_P_01_main.html?committee=1" onclick="trackPath('committee')">
-            <span class="ref-name">ועדה מסדרת — סטייל העבודה</span>
-            <span class="ref-go">←</span>
-          </a>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">ועדה מסדרת — סטייל מרץ</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
-          <div class="ref-group">נבחרות</div>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">פריפריה — ייצוג מגזרים ייחודיים</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
+      <div class="path-card" style="cursor:default;border:2px solid #1d5fa7;box-shadow:0 4px 20px rgba(29,95,167,.1);">
+        <div class="path-title">
+          <button class="card-zoom-btn" onclick="cardZoom('dbr',-1)">−</button>
+          <span class="title-text">בחירה לפי המלצה</span>
+          <button class="card-zoom-btn" onclick="cardZoom('dbr',1)">+</button>
         </div>
+        <div class="path-desc" id="dbr-card-desc">כאן יוצאים מנקודת מוצא מוכנה: נבחרות שהכינו מערכות בינה מלאכותית, לפי קריטריונים של אנשי הפרויקט ויועצים נוספים.<br>כל נבחרת מציגה את 16 המועמדים המובילים שלה, לצד מי שכבר בחרתם בבחירה העצמאית.<br>תוכלו לעבור בין הנבחרות — כשהמועמדים שבחרתם עוברים אתכם — ולבחור מכל נבחרת את הראויים בעיניכם, ולבסוף להרכיב מהם את ה‑8 שלכם.</div>
+        <a href="dbr_P_01_state.html" onclick="trackPath('committee')" style="display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
       </div>
 
-      <div class="path-card method-card">
-        <div class="path-title"><span class="path-icon">📋</span> מתודולוגיה ושקיפות</div>
-        <div class="path-desc" style="flex-grow:0;margin-bottom:2px">איך המערכת עובדת ומה עומד מאחורי ההמלצות — הרקע, השיטה, המקורות והמגבלות, וההתחייבות שלנו לשקיפות.</div>
-        <div class="ref-list">
-          <div class="ref-group">מתודולוגיה</div>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">רקע תיאורטי</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">שיטת הדירוג והמשקלים</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">מאמרים</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
-          <div class="ref-group">שקיפות</div>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">מקורות המידע ומגבלות ידועות</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">התחייבות לשקיפות</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
-          <a class="ref-item ref-soon" href="#" onclick="return false">
-            <span class="ref-name">פרטיות ואחסון נתונים</span>
-            <span class="ref-go">בקרוב</span>
-          </a>
+      <div class="path-card" style="cursor:default;opacity:.7;border:2px dashed #a0b4cc;">
+        <div class="path-title">
+          <button class="card-zoom-btn" onclick="cardZoom('summary',-1)">−</button>
+          <span class="title-text" style="color:var(--text-muted)">מסך סיכום</span>
+          <button class="card-zoom-btn" onclick="cardZoom('summary',1)">+</button>
+        </div>
+        <div id="summary-static-desc" class="path-desc" style="color:var(--text-muted)">
+          במסך זה יוצג פתק הבחירה המלא שלכם — מוכן להדפסה, לשמירה כקובץ, או לשליחה לאחרים.
+        </div>
+        <div id="summary-desc" style="display:none;margin-top:6px;color:var(--text-main)"></div>
+        <div style="margin-top:10px;padding:8px 12px;background:#fff8e1;border:1.5px solid #fbbf24;border-radius:8px;font-size:.88rem;color:#92400e;">
+          <strong>שלב זה עדיין בפיתוח</strong> — יהיה זמין בקרוב.
         </div>
       </div>
     </div>
@@ -414,9 +403,7 @@
       <button onclick="resetAllSelections()" style="background:none;border:none;color:var(--text-muted);font-size:.82rem;cursor:pointer;text-decoration:underline;font-family:inherit">איפוס כל הבחירות</button>
     </div>
 
-    <div class="methodology-link">
-      <a href="dbr_P_01_state.html">מסך הסיכום</a>
-    </div>
+
 
     <footer class="footer">
       מערכת תומכת החלטה לפריימריז של מפלגת הדמוקרטים · הנתונים נשמרים מקומית בדפדפן בלבד.
@@ -481,7 +468,14 @@
       return `נבחרו ${selectedArr.length} מועמדים/ות:<br><div style="display:grid;grid-template-columns:1fr 1fr;gap:0 10px;margin:4px 0">${list}</div>`;
     }
 
-    const SHIRYUN_DESC_HTML = 'בחירה של מספר מועמדים/ות מהרשימה המלאה, והשוואתם מול נבחרות קבועות של המערכת כדי לקבל נקודות ייחוס להחלטה. התהליך מתחיל בבחירה ראשונית של מועמדים, וממשיך לבחינה ושינוי הנבחרת שבנית.</span>';
+    function summaryText(selectedArr) {
+      const list = selectedArr.map(n =>
+        `<div style="display:flex;align-items:center;font-weight:700;color:#12355b;line-height:1.4;padding:2px 0">${genderDot(n)}${n}</div>`
+      ).join('');
+      return `נבחרו ${selectedArr.length} מועמדים/ות:<br><div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin:6px 0">${list}</div>`;
+    }
+
+    const SHIRYUN_DESC_HTML = 'כאן בוחרים את המועמדים/ות באופן עצמאי, ישירות מתוך הרשימה המלאה — על פי שיקול הדעת שלכם בלבד.<br>אין שאלונים ואין דירוג אוטומטי: מסמנים את מי שתרצו, ואפשר לשנות בכל שלב.<br>בסיום, הרשימה שבחרתם עוברת אתכם להמשך התהליך.';
     const DBR_DESC     = 'על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.';
 
     function renderAll() {
@@ -491,13 +485,22 @@
       const dbrPicks  = primState.dbr_picks || [];
       const nSel = selected.length;
 
-      // כרטיסית שריון — מציג נבחרים (selected), עם סימון משוריינים
+      // כרטיסית שריון — טקסט קבוע תמיד
       const shiryunEl = document.getElementById('shiryun-desc');
-      if (shiryunEl) shiryunEl.innerHTML = selected.length > 0
-        ? selectionTextWithShiryun(selected, shiryun)
-        : SHIRYUN_DESC_HTML;
+      if (shiryunEl) shiryunEl.innerHTML = SHIRYUN_DESC_HTML;
       const btnRow = document.getElementById('shiryun-btn-row');
       if (btnRow) btnRow.style.display = selected.length > 0 ? 'flex' : 'none';
+
+      // כרטיסית מסך סיכום — מציג נבחרים אם יש
+      const summaryEl = document.getElementById('summary-desc');
+      if (summaryEl) {
+        if (selected.length > 0) {
+          summaryEl.innerHTML = summaryText(selected);
+          summaryEl.style.display = '';
+        } else {
+          summaryEl.style.display = 'none';
+        }
+      }
 
       // כרטיסית מושכלת
       const dbrEl = document.getElementById('dbr-desc');
@@ -521,6 +524,34 @@
       shared.selected  = [];
       saveState(shared);
       renderAll();
+    }
+
+    const cardZoomLevels = { shiryun: 0, dbr: 0, summary: 0 };
+    const cardDescIds = {
+      shiryun: ['shiryun-desc'],
+      dbr:     ['dbr-card-desc'],
+      summary: ['summary-static-desc', 'summary-desc']
+    };
+    const zoomFonts = ['.96rem', '1.06rem', '1.18rem', '1.32rem'];
+    function cardZoom(card, dir) {
+      const cur = cardZoomLevels[card] || 0;
+      const next = Math.max(0, Math.min(3, cur + dir));
+      if (next === cur) { beepError(); return; }
+      cardZoomLevels[card] = next;
+      cardDescIds[card].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.fontSize = zoomFonts[next];
+      });
+    }
+    function beepError() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.frequency.value = 200; osc.type = 'square';
+        gain.gain.value = 0.12;
+        osc.start(); osc.stop(ctx.currentTime + 0.1);
+      } catch(e) {}
     }
 
     loadGenderMap().then(renderAll);

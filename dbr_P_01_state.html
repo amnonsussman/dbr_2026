@@ -56,7 +56,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      padding: 12px 0 10px;
+      padding: 4px 0 4px;
       border-bottom: 1px solid var(--border-soft);
       margin-bottom: 8px;
     }
@@ -67,7 +67,7 @@
       gap: 12px;
       font-weight: 800;
       color: var(--blue-dark);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       min-width: 0;
       flex-shrink: 1;
     }
@@ -78,14 +78,14 @@
     }
 
     .brand-mark {
-      height: 40px;
-      padding: 0 13px;
-      border-radius: 12px;
+      height: 28px;
+      padding: 0 9px;
+      border-radius: 8px;
       background: linear-gradient(135deg, #3730a3, #1e1b4b);
       display: grid;
       place-items: center;
       color: white;
-      font-size: .84rem;
+      font-size: .72rem;
       font-weight: 900;
       letter-spacing: .06em;
       box-shadow: 0 4px 14px rgba(55,48,163,.3);
@@ -130,21 +130,22 @@
 
     /* ── Page title ── */
     .page-title {
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .page-title h1 {
-      margin: 0 0 8px;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin: 0 0 3px;
+      font-size: 1.5rem;
+      font-weight: 900;
       color: var(--blue-dark);
-      letter-spacing: -.02em;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
     .page-title p {
       margin: 0;
-      color: var(--text-muted);
+      color: var(--text-main);
       font-size: 1rem;
+      font-weight: 500;
       max-width: 640px;
     }
 
@@ -181,6 +182,12 @@
       background: var(--blue-card);
       color: var(--text-main);
       font-weight: 600;
+    }
+    #all-filter-btn {
+      padding: 10px 24px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-width: 2px;
     }
 
     .pill strong { font-weight: 900; font-size: 1.05rem; color: var(--blue-main); }
@@ -434,9 +441,9 @@
 
     .gender-dot {
       display: inline-block;
-      width: 8px; height: 8px;
+      width: 6px; height: 6px;
       border-radius: 50%;
-      margin-inline-end: 6px;
+      margin-inline-end: 2px;
       vertical-align: middle;
       flex-shrink: 0;
     }
@@ -469,6 +476,21 @@
     }
 
     /* ── Rank columns ── */
+    .rank-table-box {
+      background: white;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-medium);
+      box-shadow: var(--shadow-soft);
+      padding: 4px;
+    }
+    .rank-icons-help {
+      font-size: .78rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 4px 8px 6px;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 4px;
+    }
     .rank-columns {
       display: grid;
       grid-template-columns: 1fr 2px 1fr;
@@ -484,16 +506,18 @@
     }
     .rank-columns > div:last-child .rank-row {
       padding-inline-start: 10px;
+      padding-inline-end: 8px;
     }
     .rank-row {
       display: flex;
       align-items: center;
-      gap: clamp(4px, 1vw, 8px);
-      padding: 2px clamp(1px, 0.5vw, 6px);
+      gap: clamp(2px, 0.5vw, 4px);
+      padding: 1px clamp(1px, 0.3vw, 3px);
       border-bottom: 1px solid #edf3fb;
       cursor: pointer;
       line-height: 1.25;
-      min-height: var(--row-h, 28px);
+      min-height: 0;
+      padding-block: clamp(4px, 1vw, 8px);
     }
     .show-more-bar {
       text-align: center;
@@ -527,55 +551,47 @@
     .expand-btn {
       background: none;
       border: 2px solid var(--blue-main);
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 1.4rem;
+      border-radius: 8px;
+      padding: 5px 14px;
+      font-size: 1.7rem;
       font-weight: 900;
       cursor: pointer;
       color: var(--blue-main);
       transition: .15s;
       line-height: 1;
+      min-width: 42px;
     }
     .expand-btn:hover {
       color: var(--blue-main);
       border-color: var(--blue-main);
     }
 
-    /* ── Expanded single-column mode ── */
-    .rank-columns.expanded {
-      grid-template-columns: 1fr;
-    }
-    .rank-columns.expanded .rank-divider {
-      display: none;
-    }
-    .rank-columns.expanded .rank-row {
-      gap: clamp(6px, 1.5vw, 12px);
-      padding: 4px clamp(4px, 1vw, 10px);
-      min-height: 40px;
-    }
-    .rank-columns.expanded .rank-num {
-      font-size: clamp(.72rem, 2vw, .88rem);
-      min-width: 22px;
-    }
-    .rank-columns.expanded .rank-name {
-      font-size: clamp(1rem, 3.2vw, 1.25rem);
-    }
-    .rank-columns.expanded .rank-name.unpicked {
-      font-size: clamp(.88rem, 2.6vw, 1.05rem);
-    }
-    .rank-columns.expanded .rank-pick {
-      width: 34px; height: 34px;
-      font-size: 1rem;
-    }
-    .rank-columns.expanded .rank-card {
-      font-size: clamp(1rem, 2.8vw, 1.2rem);
-    }
+    /* ── Scale level 1 ── */
+    .rank-columns.scale-1 .rank-name.unpicked { font-size: clamp(1rem, 3vw, 1.2rem); }
+    .rank-columns.scale-1 .rank-name.picked   { font-size: clamp(1.15rem, 3.4vw, 1.45rem); }
+    .rank-columns.scale-1 .rank-card { font-size: clamp(1.1rem, 2.8vw, 1.3rem); }
+
+    /* ── Scale level 2 ── */
+    .rank-columns.scale-2 .rank-name.unpicked { font-size: clamp(1.1rem, 3vw, 1.35rem); }
+    .rank-columns.scale-2 .rank-name.picked   { font-size: clamp(1.3rem, 3.5vw, 1.6rem); }
+    .rank-columns.scale-2 .rank-card { font-size: clamp(1rem, 2.8vw, 1.2rem); }
+
+    /* ── Scale level 3 ── */
+    .rank-columns.scale-3 .rank-name.unpicked { font-size: clamp(1.25rem, 3.5vw, 1.55rem); }
+    .rank-columns.scale-3 .rank-name.picked   { font-size: clamp(1.5rem, 4vw, 1.85rem); }
+    .rank-columns.scale-3 .rank-card { font-size: clamp(1.1rem, 3vw, 1.35rem); }
+
+    /* backward compat — expanded = scale-2 */
+    .rank-columns.expanded { grid-template-columns: 1fr; }
+    .rank-columns.expanded .rank-divider { display: none; }
 
     /* ── Dot row (filtered non-picked) ── */
     .rank-dot {
       min-height: 0 !important;
       padding: 1px 4px !important;
       border-bottom: none !important;
+      pointer-events: none;
+      cursor: default;
     }
     .dot-num {
       font-size: .65rem !important;
@@ -583,9 +599,9 @@
       opacity: .55;
     }
     .dot-name {
-      font-size: .7rem;
+      font-size: .58rem;
       color: var(--text-muted);
-      opacity: .5;
+      opacity: .45;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -705,7 +721,7 @@
       color: var(--blue-dark);
     }
     .rank-row:last-child { border-bottom: none; }
-    .rank-row:hover { background: var(--blue-soft); }
+    .rank-row:hover { background: transparent; outline: 1px solid var(--border-soft); }
     .rank-num {
       min-width: 16px;
       font-size: clamp(.58rem, 1.6vw, .68rem);
@@ -721,25 +737,34 @@
       color: var(--blue-dark);
     }
     .rank-name.unpicked {
-      font-size: clamp(.92rem, 2.8vw, 1.1rem);
-      font-weight: 300;
-      font-stretch: condensed;
-      letter-spacing: -.02em;
+      font-size: clamp(.9rem, 2.7vw, 1.1rem);
+      font-weight: 400;
       color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
     .rank-name.picked {
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
       color: var(--blue-dark);
+    }
+    .rank-row.is-picked {
+      background: #eef5ff;
+      box-shadow: inset 3px 0 0 var(--blue-main);
+    }
+    .rank-row.is-picked:hover { background: #e3eefc; }
+    .beyond-separator {
+      border: none;
+      border-top: 2px dashed var(--blue-main);
+      margin: 6px 8px;
+      opacity: 0.35;
     }
     .rank-pick {
       flex-shrink: 0;
-      width: 26px; height: 26px;
+      width: 20px; height: 20px;
       border-radius: 50%;
       border: 1.5px solid var(--border-soft);
       background: white;
-      font-size: .82rem;
+      font-size: .65rem;
       font-weight: 900;
       color: var(--text-muted);
       cursor: pointer;
@@ -750,11 +775,11 @@
       line-height: 1;
     }
     .rank-pick.empty-pick { border: none; background: transparent; pointer-events: none; }
-    .rank-pick.picked-check { border-color: var(--blue-main); color: var(--blue-main); background: transparent; }
-    .rank-pick.shiryuned { border-color: #2e7d4f; background: #c2e8d0; color: #1a5c35; border-width: 2px; }
+    .rank-pick.picked-check { border-color: #f59e0b; color: #b45309; background: transparent; }
+    .rank-pick.shiryuned { border-color: #2e7d4f; background: transparent; color: #1a5c35; border-width: 2px; }
     .rank-card {
       flex-shrink: 0;
-      font-size: clamp(.82rem, 2.2vw, 1rem);
+      font-size: clamp(1.1rem, 2.8vw, 1.35rem);
       cursor: pointer;
       opacity: .5;
       transition: opacity .12s;
@@ -849,6 +874,35 @@
     }
     .info-btn:hover { border-color: var(--blue-main); color: var(--blue-main); }
 
+    /* ── Team picker grid ── */
+    .team-picker { margin-bottom: 20px; }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 600px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    .team-card {
+      background: white;
+      border: 2px solid var(--blue-main);
+      border-radius: var(--radius-small);
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 2px 8px rgba(29,95,167,.08);
+    }
+    .team-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(29,95,167,.15); }
+    .team-card.unavailable { border-color: var(--border-soft); opacity: .6; cursor: default; pointer-events: none; }
+    .team-card.active-selected { border-color: var(--green); background: var(--green-soft); }
+    .team-card-name { font-size: .95rem; font-weight: 900; color: var(--blue-dark); line-height: 1.3; }
+    .team-card.unavailable .team-card-name { color: var(--text-muted); }
+    .team-card-desc { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
+    .team-card-status { font-size: .72rem; font-weight: 800; color: var(--text-muted); margin-top: 2px; }
+    .team-card-status.active { color: var(--green); }
+
     /* ── Modal ── */
     .mbk{display:none;position:fixed;inset:0;background:rgba(23,32,51,.45);z-index:10;align-items:center;justify-content:center;padding:16px}
     .mbk.open{display:flex}
@@ -895,13 +949,13 @@
   gtag('js', new Date());
   gtag('config', 'G-TJNJTZQF1F');
 </script>
-      <div style="display:flex;flex-direction:column;width:100%;gap:6px">
+      <div style="display:flex;flex-direction:column;width:100%;gap:2px">
         <div style="display:flex;align-items:center;justify-content:space-between">
           <a class="brand" href="dbr_P_01_index.html" style="min-width:0;flex-shrink:1">
             <span class="brand-mark">ד.ב.ר</span>
             <span>דמוקרטים בוחרים רציונלית</span>
           </a>
-          <a href="dbr_P_01_process.html" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0">⬅️</a>
+          <a id="back-btn" onclick="handleBack()" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0;cursor:pointer">⬅️</a>
         </div>
         <div style="text-align:center;font-size:.72rem;color:var(--text-muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
       </div>
@@ -928,16 +982,80 @@
     </div>
 
     <section class="page-title">
-      <h1>גיבוש הרשימה <button class="info-btn" onclick="showIntro()" title="הסבר על המסך">ⓘ</button></h1>
-      <p>בחנו את הרשימה שבניתם לצד דירוג הוועדה המסדרת, בצעו שינויים ואשרו את הרשימה הסופית.</p>
+      <h1>בחירה לפי המלצה <button class="info-btn" onclick="showIntro()" title="הסבר על המסך">ⓘ</button></h1>
+      <p id="screen-desc">בחרו נבחרת מהתיבות למטה.</p>
     </section>
+
+    <!-- בחירת נבחרת -->
+    <div class="team-picker" id="team-picker">
+      <div class="team-grid">
+        <div class="team-card" onclick="selectTeam('dbr1')">
+          <div class="team-card-name">ועדה מסדרת ד.ב.ר</div>
+          <div class="team-card-desc">הנבחרת הרשמית של ד.ב.ר — 20 מועמדים מובילים לפי ניקוד האלגוריתם</div>
+          <div class="team-card-status active">✓ זמינה</div>
+        </div>
+        <div class="team-card" onclick="selectTeam('dbr2')">
+          <div class="team-card-name">ועדה מסדרת ד.ב.ר (2)</div>
+          <div class="team-card-desc">נבחרת חלופית עם הרכב שונה</div>
+          <div class="team-card-status active">✓ זמינה</div>
+        </div>
+        <div class="team-card" onclick="selectTeam('dbr3')">
+          <div class="team-card-name">ועדה מסדרת ד.ב.ר (3)</div>
+          <div class="team-card-desc">נבחרת שלישית עם דגש על ייצוג</div>
+          <div class="team-card-status active">✓ זמינה</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת לוחמת</div>
+          <div class="team-card-desc">דגש על ביטחון ומדיניות חוץ</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת מותאמת קואליציה</div>
+          <div class="team-card-desc">מותאמת לאפשרויות קואליציוניות</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת מותאמת אופוזיציה</div>
+          <div class="team-card-desc">מותאמת לתפקיד אופוזיציה</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת יאיר גולן</div>
+          <div class="team-card-desc">נבחרת החלומות של יאיר גולן</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">בונות אלטרנטיבה</div>
+          <div class="team-card-desc">דגש על ייצוג נשים ומגדר</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת פיתוח הצפון</div>
+          <div class="team-card-desc">דגש על פריפריה וצפון הארץ</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת חוסן חברתי</div>
+          <div class="team-card-desc">דגש על רווחה וצדק חברתי</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת ביטחון לאומי</div>
+          <div class="team-card-desc">דגש על ביטחון ומדיניות</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">נבחרת צדק סביבתי</div>
+          <div class="team-card-desc">דגש על אקלים וסביבה</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+      </div>
+    </div>
 
     <!-- Ranking — two columns, all candidates -->
     <div id="ranking-section" class="rank-section" style="display:none;">
-      <div class="rank-section-header" style="flex-direction:column;align-items:stretch;gap:0;">
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <span class="rank-section-title">הבחירה שלך מול:</span>
-        </div>
+      <div class="rank-section-header" style="flex-direction:column;align-items:stretch;gap:0;padding-top:4px;">
+        <div style="font-size:.78rem;font-weight:800;color:var(--text-muted);margin-bottom:4px">החלף נבחרת</div>
         <select id="team-select" class="team-select" onchange="onTeamChange()">
           <option value="dbr1">הוועדה המסדרת של ד.ב.ר (1)</option>
           <option value="dbr2">הוועדה המסדרת של ד.ב.ר (2)</option>
@@ -956,32 +1074,31 @@
       </div>
       <!-- Summary bar -->
       <div id="summary-bar" class="summary-bar" style="display:none;">
-        <div class="summary-stats" style="display:flex;gap:18px;margin:0 2px 3px;font-size:.78rem;color:var(--text-muted)">
-          <span><strong id="stat-total">0</strong> מועמדים</span>
-          <span><strong id="stat-picked">0</strong> נבחרים</span>
-          <span><strong id="stat-shiryun">0</strong> מאושרים</span>
-        </div>
+        <span id="stat-total" style="display:none"></span>
+        <span id="stat-picked" style="display:none"></span>
+        <span id="stat-shiryun" style="display:none"></span>
         <div class="summary-pills">
-          <span class="pill" id="all-filter-btn" style="cursor:pointer" onclick="togglePickedFilter()"><span id="all-filter-label">כלל המועמדים</span></span>
-          <span class="pill yellow" id="picked-filter-btn" style="cursor:pointer" onclick="togglePickedOnlyFilter()"><span id="picked-only-label">נבחרו</span></span>
-          <span class="pill green" id="shiryun-filter-btn" style="cursor:pointer;display:none" onclick="toggleShiryunFilter()"><span id="shiryun-filter-label">אושרו לסיום</span></span>
-          <button class="expand-btn" id="expand-btn" onclick="toggleExpand()" title="הרחב / צמצם" style="margin-inline-start:auto">⤢</button>
+          <button class="expand-btn" id="zoom-out-btn" onclick="zoomOut()" title="הקטן פונט">−</button>
+          <span class="pill" id="all-filter-btn" style="cursor:pointer;margin:0 auto" onclick="togglePickedFilter()"><span id="all-filter-label">הצג את פתק הבחירה שלך</span></span>
+          <button class="expand-btn" id="zoom-in-btn"  onclick="zoomIn()"  title="הגדל פונט">+</button>
         </div>
         <span id="rank-meta-text" class="last-updated-text"></span>
+        <div id="rank-info-text" style="width:100%;font-size:.85rem;color:var(--text-muted);text-align:center;padding:4px 6px 0;border-top:1px solid var(--border-soft);margin-top:2px;display:none;"></div>
       </div>
       <div id="team-notice" class="dbr-notice" style="display:none;">
         <strong id="team-notice-name"></strong><br>
         <span id="team-notice-text"></span>
       </div>
       <div id="dbr1-content">
-        <div class="rank-columns">
-          <div id="rank-col-1"></div>
-          <div class="rank-divider"></div>
-          <div id="rank-col-2"></div>
-        </div>
-        <div id="show-more-bar" class="show-more-bar" style="display:none;">
-          <button class="show-more-btn" onclick="showAllCandidates()">הצג עוד ▼</button>
-          <button class="show-more-btn shuffle-btn" id="zipper-btn" onclick="startShuffle()">🔀 ריצ׳רץ</button>
+        <div class="rank-table-box">
+          <div class="rank-columns">
+            <div id="rank-col-1"></div>
+            <div class="rank-divider"></div>
+            <div id="rank-col-2"></div>
+          </div>
+          <div id="show-more-bar" class="show-more-bar" style="display:none;">
+            <button class="show-more-btn shuffle-btn" id="zipper-btn" onclick="startShuffle()">🔀 ריצ׳רץ</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1172,27 +1289,45 @@
       if (changed) saveState(state);
     }
 
+    /* 20 הראשונים תמיד מוצגים; נבחרים (shiryun) מעבר ל-20 מתווספים עם קו מפריד, ללא מספר. */
+    const RANK_SLOTS = 20;
+    function buildSlots(sorted, allPicks) {
+      if (showAll) return sorted;
+      const top = sorted.slice(0, RANK_SLOTS);
+      /* רק נבחרים (בחר/shiryun) מעבר ל-20 מצטרפים — לא מתנדנדים. מתווספים אחרי תא 20, ללא החלפה */
+      const shiryunSet = new Set(state.shiryun || []);
+      const beyondPicks = sorted.slice(RANK_SLOTS).filter(c => shiryunSet.has(c.name));
+      return [...top, ...beyondPicks];
+    }
+
+    /* מרנדר עמודה אחת — מוסיף קו מפריד לפני המועמדים שמחוץ ל-20 */
+    function renderCol(items, allPicks) {
+      let html = '';
+      let separatorInserted = false;
+      for (const c of items) {
+        if (!separatorInserted && c._origRank > RANK_SLOTS) {
+          html += '<hr class="beyond-separator">';
+          separatorInserted = true;
+        }
+        const rank = c._origRank <= RANK_SLOTS ? c._origRank : '';
+        html += rankRow(c, rank, allPicks);
+      }
+      return html;
+    }
+
     function renderRanking() {
       state = loadState();
       const allPicks = new Set([
-        ...(state.selected || []),
         ...(state.shiryun || []),
         ...(state.dbr_picks || [])
       ]);
 
       const sorted = [...rankList].sort((a, b) => (b.scoreC ?? -1) - (a.scoreC ?? -1));
+      /* כל מועמד שומר את דירוג הנבחרת המקורי שלו */
+      sorted.forEach((c, i) => { c._origRank = i + 1; });
 
-      /* חתוך: מ-#1 עד 4 מועמדים אחרי הנבחר הנמוך ביותר */
-      let cutoff = sorted.length;          // ברירת מחדל — הצג הכל
-      if (!showAll && allPicks.size > 0) {
-        let lastPickIdx = -1;
-        sorted.forEach((c, i) => { if (allPicks.has(c.name)) lastPickIdx = i; });
-        if (lastPickIdx >= 0) cutoff = Math.min(sorted.length, lastPickIdx + 1 + 4);
-      }
-      /* שמור מספר דירוג מקורי לכל מועמד */
-      const visible = sorted.slice(0, cutoff);
-      visible.forEach((c, i) => { c._origRank = i + 1; });
-      const isTruncated = cutoff < sorted.length;
+      const visible = buildSlots(sorted, allPicks);
+      const isTruncated = visible.length < sorted.length;
 
       /* ריצ׳רץ — סירוג אישה/גבר */
       const display = zipperMode ? zipperSort(visible) : visible;
@@ -1206,8 +1341,8 @@
       const col1 = display.slice(0, half);
       const col2 = display.slice(half);
 
-      document.getElementById('rank-col-1').innerHTML = col1.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
-      document.getElementById('rank-col-2').innerHTML = col2.map((c, i) => rankRow(c, half + i + 1, allPicks)).join('');
+      document.getElementById('rank-col-1').innerHTML = renderCol(col1, allPicks);
+      document.getElementById('rank-col-2').innerHTML = renderCol(col2, allPicks);
 
       /* כפתור "הצג עוד" */
       document.getElementById('show-more-bar').style.display = (isTruncated && !filterPicked) ? '' : 'none';
@@ -1218,40 +1353,91 @@
       document.getElementById('stat-picked').textContent = allPicks.size;
 
       const shiryunCount = (state.shiryun || []).length;
-      document.getElementById('stat-shiryun').textContent = shiryunCount;
-      document.getElementById('shiryun-filter-btn').style.display = shiryunCount > 0 ? '' : 'none';
+      const stEl = document.getElementById('stat-shiryun');
+      if (stEl) stEl.textContent = shiryunCount;
+      const sfBtn = document.getElementById('shiryun-filter-btn');
+      if (sfBtn) sfBtn.style.display = shiryunCount > 0 ? '' : 'none';
+
+      // טקסט מידע — כמה נבחרים בתוך/מחוץ ל-20
+      const inTop = sorted.slice(0, RANK_SLOTS).filter(c => allPicks.has(c.name)).length;
+      const outTop = sorted.slice(RANK_SLOTS).filter(c => allPicks.has(c.name)).length;
+      const infoEl = document.getElementById('rank-info-text');
+      if (infoEl) {
+        if (filterPicked) {
+          infoEl.textContent = 'כך יראה פתק הבחירה שלכם, כמובן ללא השמות המוקטנים — השארנו אותם כדי להמחיש את היחס בין בחירתכם לנבחרת שבחרתם.';
+          infoEl.style.display = '';
+        } else if (allPicks.size > 0) {
+          let txt = inTop + ' מהנבחרים שלך משולבים בין 20 מומלצי הנבחרת.';
+          if (outTop > 0) txt += '\n' + outTop + ' נבחרים שלך אינם בין המומלצים.';
+          infoEl.style.whiteSpace = 'pre-line';
+          infoEl.textContent = txt;
+          infoEl.style.display = '';
+        } else {
+          infoEl.style.display = 'none';
+        }
+      }
     }
 
-    let expanded = false;
-    function toggleExpand() {
-      expanded = !expanded;
-      document.querySelector('.rank-columns').classList.toggle('expanded', expanded);
-      document.getElementById('expand-btn').textContent = expanded ? '⤡' : '⤢';
-      document.getElementById('rank-col-2').style.display = expanded ? 'none' : '';
-      if (expanded) renderRankingSingleCol();
-      else renderRanking();
+    let zoomLevel = 0; /* 0=רגיל, 1=גדול 2-עמודות, 2=גדול עמודה-אחת */
+    let expanded = false; /* backward compat לפונקציות אחרות */
+
+    function applyZoom() {
+      const cols = document.querySelector('.rank-columns');
+      cols.classList.remove('scale-1', 'scale-2', 'scale-3', 'expanded');
+      if (zoomLevel === 1) cols.classList.add('scale-1');
+      if (zoomLevel === 2) cols.classList.add('scale-2');
+      if (zoomLevel === 3) cols.classList.add('scale-3');
+
+      expanded = false;
+      document.getElementById('rank-col-2').style.display = '';
+      document.getElementById('zoom-out-btn').style.opacity = zoomLevel > 0 ? '1' : '0.3';
+      document.getElementById('zoom-in-btn').style.opacity  = zoomLevel < 3 ? '1' : '0.3';
+      const infoFontSizes = ['.85rem', '.92rem', '1rem', '1.1rem'];
+      const infoEl = document.getElementById('rank-info-text');
+      if (infoEl) infoEl.style.fontSize = infoFontSizes[zoomLevel];
+
+      renderRanking();
+    }
+
+    function zoomIn()  { if (zoomLevel < 3) { zoomLevel++; applyZoom(); } else { beepError(); } }
+    function zoomOut() { if (zoomLevel > 0) { zoomLevel--; applyZoom(); } else { beepError(); } }
+
+    function toggleExpand() { /* backward compat */
+      zoomLevel = expanded ? 0 : 2;
+      applyZoom();
     }
 
     function renderRankingSingleCol() {
       state = loadState();
       const allPicks = new Set([
-        ...(state.selected || []),
         ...(state.shiryun || []),
         ...(state.dbr_picks || [])
       ]);
       const sorted = [...rankList].sort((a, b) => (b.scoreC ?? -1) - (a.scoreC ?? -1));
-      let cutoff = sorted.length;
-      if (!showAll && allPicks.size > 0) {
-        let lastPickIdx = -1;
-        sorted.forEach((c, i) => { if (allPicks.has(c.name)) lastPickIdx = i; });
-        if (lastPickIdx >= 0) cutoff = Math.min(sorted.length, lastPickIdx + 1 + 4);
-      }
-      const visible = sorted.slice(0, cutoff);
-      visible.forEach((c, i) => { c._origRank = i + 1; });
-      const isTruncated = cutoff < sorted.length;
+      sorted.forEach((c, i) => { c._origRank = i + 1; });
+      const visible = buildSlots(sorted, allPicks);
+      const isTruncated = visible.length < sorted.length;
       const display = zipperMode ? zipperSort(visible) : visible;
-      document.getElementById('rank-col-1').innerHTML = display.map((c, i) => rankRow(c, i + 1, allPicks)).join('');
+      document.getElementById('rank-col-1').innerHTML = renderCol(display, allPicks);
       document.getElementById('show-more-bar').style.display = isTruncated ? '' : 'none';
+
+      const inTop  = sorted.slice(0, RANK_SLOTS).filter(c => allPicks.has(c.name)).length;
+      const outTop = sorted.slice(RANK_SLOTS).filter(c => allPicks.has(c.name)).length;
+      const infoEl = document.getElementById('rank-info-text');
+      if (infoEl) {
+        if (filterPicked) {
+          infoEl.textContent = 'כך יראה פתק הבחירה שלכם, כמובן ללא השמות המוקטנים — השארנו אותם כדי להמחיש את היחס בין בחירתכם לנבחרת שבחרתם.';
+          infoEl.style.display = '';
+        } else if (allPicks.size > 0) {
+          let txt = inTop + ' מהנבחרים שלך משולבים בין 20 מומלצי הנבחרת.';
+          if (outTop > 0) txt += '\n' + outTop + ' נבחרים שלך אינם בין המומלצים.';
+          infoEl.style.whiteSpace = 'pre-line';
+          infoEl.textContent = txt;
+          infoEl.style.display = '';
+        } else {
+          infoEl.style.display = 'none';
+        }
+      }
     }
 
     let zipperMode = false;
@@ -1283,10 +1469,10 @@
       return result;
     }
 
-    let filterPicked = true; /* true = הדגשת נבחרים (לא-נבחרים כנקודות), false = כל המועמדים שווים */
+    let filterPicked = false; /* false = כל המועמדים בשורה מלאה (נבחרים מודגשים), true = לא-נבחרים כנקודות */
     let filterShiryun = false;
     let filterPickedOnly = false; /* true = מציג רק את הנבחרים, מסתיר את כל השאר */
-    let preShiryunFilterPicked = true; /* שומר את מצב filterPicked לפני סינון שריון */
+    let preShiryunFilterPicked = false; /* שומר את מצב filterPicked לפני סינון שריון */
 
     function togglePickedOnlyFilter() {
       filterPickedOnly = !filterPickedOnly;
@@ -1315,9 +1501,9 @@
       }
       /* filterPicked=true → הדגשת נבחרים (נקודות), filterPicked=false → כל המועמדים שווים */
       if (filterPicked) {
-        document.getElementById('all-filter-label').textContent = 'כלל המועמדים';
+        document.getElementById('all-filter-label').textContent = 'חזור להצגת הנבחרת';
       } else {
-        document.getElementById('all-filter-label').textContent = 'הדגש נבחרים';
+        document.getElementById('all-filter-label').textContent = 'הצג את פתק הבחירה שלך';
       }
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }
@@ -1487,6 +1673,43 @@
       hosen: 'נבחרת חוסן חברתי', security: 'נבחרת ביטחון לאומי',
       environment: 'נבחרת צדק סביבתי', future: 'נבחרת דור העתיד'
     };
+    const TEAM_NAMES = {
+      dbr1: 'ועדה מסדרת ד.ב.ר', dbr2: 'ועדה מסדרת ד.ב.ר (2)', dbr3: 'ועדה מסדרת ד.ב.ר (3)',
+      lochemet: 'נבחרת לוחמת', coalition: 'נבחרת מותאמת קואליציה',
+      opposition: 'נבחרת מותאמת אופוזיציה', yair: 'נבחרת יאיר גולן',
+      bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הצפון',
+      hosen: 'נבחרת חוסן חברתי', security: 'נבחרת ביטחון לאומי',
+      environment: 'נבחרת צדק סביבתי', future: 'נבחרת דור העתיד'
+    };
+
+    let inRankingView = false;
+
+    function handleBack() {
+      if (inRankingView) {
+        inRankingView = false;
+        document.getElementById('ranking-section').style.display = 'none';
+        document.getElementById('team-picker').style.display = '';
+        const h1 = document.querySelector('.page-title h1');
+        if (h1) h1.childNodes[0].textContent = 'בחירה לפי המלצה ';
+        const desc = document.getElementById('screen-desc');
+        if (desc) desc.textContent = 'בחרו נבחרת מהתיבות למטה.';
+      } else {
+        window.location.href = 'dbr_P_01_process.html';
+      }
+    }
+
+    function selectTeam(val) {
+      inRankingView = true;
+      document.getElementById('team-picker').style.display = 'none';
+      document.getElementById('team-select').value = val;
+      document.getElementById('ranking-section').style.display = '';
+      const h1 = document.querySelector('.page-title h1');
+      if (h1) h1.childNodes[0].textContent = (TEAM_NAMES[val] || val) + ' ';
+      const desc = document.getElementById('screen-desc');
+      if (desc) desc.textContent = 'בחרתם את ' + (TEAM_NAMES[val] || val) + ' — 20 המועמדים שלה מוצגים כאן. מי שסימנתם קודם מודגש. לחצו על שורה פעם אחת — נבחר, פעמיים — ביטול. לחצו על ✏️ להוספת הסבר, ועל 📋 לכרטיס הוועדה של המועמד.';
+      onTeamChange();
+    }
+
     function onTeamChange() {
       const val = document.getElementById('team-select').value;
       const status = TEAM_STATUS[val];
@@ -1525,8 +1748,8 @@
       const eName = escapeHtml(c.name);
 
       const shiryuned = (state.shiryun || []).includes(c.name);
-      const gDot = genderDotHtml(c.gender);
-      const gDotFaded = '<span class="gender-dot" style="background:' + (c.gender==='נקבה'?'#e879a0':'#3b82f6') + ';opacity:.3"></span>';
+      const gDot = zipperMode ? genderDotHtml(c.gender) : '';
+      const gDotFaded = zipperMode ? '<span class="gender-dot" style="background:' + (c.gender==='נקבה'?'#e879a0':'#3b82f6') + ';opacity:.3"></span>' : '';
 
       /* מצב סינון שריון — רק משוריינים מוצגים, השאר מוסתרים */
       if (filterShiryun && !shiryuned) {
@@ -1550,8 +1773,8 @@
       /* מצב הדגשת נבחרים — לא נבחרים מוצגים כנקודה קטנה וחיוורה */
       if (filterPicked && !filterShiryun && !picked) {
         return '<div class="rank-row rank-dot">'
-          + '<span class="rank-num dot-num">' + rank + '</span>'
           + gDotFaded
+          + '<span class="rank-num dot-num">' + rank + '</span>'
           + '<span class="dot-name">' + eName + '</span>'
           + '</div>';
       }
@@ -1562,17 +1785,16 @@
         ? '&nbsp;<span class="pick-target ' + targetCls + '" onclick="event.stopPropagation();openReasonModal(\'' + eName + '\')" title="' + (hasReason ? 'ערוך הסבר' : 'הוסף הסבר לבחירה') + '">✏️</span>'
         : '';
 
-      /* + = שריין, ✓ = בטל שריון */
-      const pickIcon = picked ? '✓' : '';
+      /* ✓ = משוריין, ? = מתנדנד (picked אבל לא shiryuned) */
+      const pickIcon = shiryuned ? '' : (picked ? '?' : '');
       const pickTitle = shiryuned ? 'בטל שריון' : (picked ? 'שריין' : 'בחר');
       const pickCls = 'rank-pick' + (shiryuned ? ' shiryuned' : (picked ? ' picked-check' : ' empty-pick'));
 
-      var row = '<div class="rank-row" onclick="togglePick(\'' + eName + '\')">'
-        + '<span class="rank-num">' + rank + '</span>'
-        + gDot
+      var row = '<div class="rank-row' + (picked ? ' is-picked' : '') + '" onclick="togglePick(\'' + eName + '\')">'
+        + '<span style="display:inline-flex;align-items:center;gap:2px;flex-shrink:0">' + gDot + '<span class="rank-num">' + rank + '</span></span>'
         + '<span class="rank-name' + (picked ? ' picked' : ' unpicked') + '">' + eName + targetHtml + '</span>'
         + reasonToggleHtml
-        + (filterShiryun ? '' : '<span class="' + pickCls + '" onclick="event.stopPropagation();toggleShiryunState(\'' + eName + '\')" title="' + pickTitle + '">' + pickIcon + '</span>')
+        + (filterShiryun || shiryuned ? '' : '<span class="' + pickCls + '" onclick="event.stopPropagation();toggleShiryunState(\'' + eName + '\')" title="' + pickTitle + '">' + pickIcon + '</span>')
         + (filterShiryun ? '' : '<span class="rank-card" onclick="event.stopPropagation();openProfile(\'' + eName + '\')" title="כרטיס ועדה מסדרת">📋</span>')
         + '</div>';
       if (filterShiryun && shiryuned && typeof reasonHtml !== 'undefined') {
@@ -1603,19 +1825,43 @@
     }
 
     function togglePick(name) {
+      if (filterPicked && !expanded) return;
       state = loadState();
       state.selected = state.selected || [];
-      state.shiryun = state.shiryun || [];
-      const picked = state.selected.indexOf(name) >= 0;
-      if (picked) {
-        if (state.shiryun.indexOf(name) >= 0) {
-          beepError();
-          return;
-        }
-        openReasonModal(name, 'unpick');
+      state.shiryun  = state.shiryun  || [];
+      const inSelected  = state.selected.indexOf(name) >= 0;
+      const inShiryun   = state.shiryun.indexOf(name)  >= 0;
+
+      if (!inShiryun) {
+        // ריק / מתלבט → נבחר
+        if (state.shiryun.length >= MAX_SHIRYUN) { beepError(); return; }
+        if (!inSelected) state.selected.push(name);
+        state.shiryun.push(name);
+        autoLog(name, 'נבחר');
       } else {
-        openReasonModal(name, 'pick');
+        // נבחר → ביטול
+        const candidate = rankList.find(c => c.name === name);
+        const isOutside = candidate && (candidate._origRank > RANK_SLOTS);
+        if (isOutside) {
+          const ok = window.confirm(name + ' נמצא/ת מחוץ ל-20 המועמדים המובילים.\nביטול הבחירה יסיר אותו/ה מהרשימה לחלוטין.\nלהמשיך?');
+          if (!ok) return;
+        }
+        state.selected = state.selected.filter(x => x !== name);
+        state.shiryun  = state.shiryun.filter(x => x !== name);
+        autoLog(name, 'בוטל');
       }
+      saveState(state);
+      if (expanded) renderRankingSingleCol(); else renderRanking();
+    }
+
+    function autoLog(name, action) {
+      const reasons = getPickReasons();
+      const existing = reasons[name] || '';
+      const now = new Date();
+      const ts = now.toLocaleDateString('he-IL') + ' ' + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+      const entry = ts + ' — ' + action;
+      reasons[name] = existing ? existing + '\n' + SEP + '\n' + entry : entry;
+      savePickReasons(reasons);
     }
 
     const MAX_SHIRYUN = 8;
@@ -1626,14 +1872,20 @@
       state.shiryun = state.shiryun || [];
       const isShiryuned = state.shiryun.indexOf(name) >= 0;
       if (isShiryuned) {
-        openReasonModal(name, 'unapprove');
+        const i = state.shiryun.indexOf(name);
+        if (i >= 0) state.shiryun.splice(i, 1);
+        autoLog(name, 'בוטל שריון');
       } else {
         if (state.shiryun.length >= MAX_SHIRYUN) {
           beepError();
           return;
         }
-        openReasonModal(name, 'approve');
+        if (state.selected.indexOf(name) < 0) state.selected.push(name);
+        if (state.shiryun.indexOf(name) < 0) state.shiryun.push(name);
+        autoLog(name, 'שוריין');
       }
+      saveState(state);
+      if (expanded) renderRankingSingleCol(); else renderRanking();
     }
 
     function openProfile(name) {

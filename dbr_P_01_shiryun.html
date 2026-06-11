@@ -58,7 +58,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
-      padding: 18px 0 26px;
+      padding: 8px 0 6px;
     }
 
     .brand {
@@ -71,8 +71,8 @@
     }
 
     .brand-mark {
-      height: 40px;
-      padding: 0 13px;
+      height: 28px;
+      padding: 0 9px;
       border-radius: 12px;
       background: linear-gradient(135deg, #3730a3, #1e1b4b);
       display: grid;
@@ -122,7 +122,7 @@
 
     /* ============ Page header ============ */
     .page-header {
-      margin-bottom: 22px;
+      margin-bottom: 10px;
     }
 
     .page-header h1 {
@@ -152,6 +152,10 @@
       margin: -8px 0 0;
       font-size: .85rem;
       color: var(--text-muted);
+    }
+
+    .page-header .subtitle {
+      margin: 0 0 6px;
     }
 
     /* ============ Status bar ============ */
@@ -191,10 +195,10 @@
     }
 
     .continue-btn {
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: .85rem;
+      padding: 10px 26px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1rem;
       font-family: inherit;
       cursor: pointer;
       background: var(--blue-soft);
@@ -285,6 +289,13 @@
       box-shadow: var(--shadow-soft);
       transition: transform 0.18s ease;
     }
+    @keyframes card-pop {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.12); box-shadow: 0 12px 32px rgba(18,53,91,0.18); }
+      70%  { transform: scale(1.12); box-shadow: 0 12px 32px rgba(18,53,91,0.18); }
+      100% { transform: scale(1); }
+    }
+    .candidate-card.pop { animation: card-pop 0.9s ease forwards; }
 
     .candidate-card:hover { transform: translateY(-2px); }
 
@@ -311,7 +322,7 @@
     }
 
     .candidate-name {
-      font-size: 0.88rem;
+      font-size: 1.02rem;
       font-weight: 800;
       color: var(--blue-dark);
       text-align: center;
@@ -324,6 +335,9 @@
       display: flex;
       gap: 6px;
       width: 100%;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 6px;
+      margin-top: 2px;
     }
 
     .btn-pick, .btn-shiryun {
@@ -340,7 +354,12 @@
       transition: all 0.15s ease;
     }
 
-    .btn-pick.active,
+    .btn-pick.active {
+      background: #fffde7;
+      color: #b45309;
+      border-color: #f59e0b;
+    }
+
     .btn-shiryun.selected {
       background: var(--green-soft);
       color: var(--green);
@@ -381,26 +400,27 @@
 
     /* ── Picked state (photo click) ── */
     .candidate-card.picked .photo-wrap {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(46,125,79,0.2);
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.2);
     }
-    .candidate-card.picked .candidate-name { color: var(--green); }
+    .candidate-card.picked .candidate-name { color: #b45309; }
     .photo-wrap { position: relative; }
     .photo-check {
       position: absolute;
       bottom: 4px;
       left: 4px;
-      width: 22px; height: 22px;
+      width: 16px; height: 16px;
       border-radius: 50%;
-      background: var(--green);
+      background: #f59e0b;
       color: white;
-      font-size: .75rem;
+      font-size: .6rem;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 0 2px 6px rgba(0,0,0,.2);
     }
+    .photo-check-green { background: var(--green) !important; }
 
 
     /* ============ Sticky footer ============ */
@@ -508,13 +528,13 @@
         <span style="font-weight:800;color:var(--blue-dark);font-size:1.05rem">דמוקרטים בוחרים רציונלית</span>
       </div>
 
-      <h2 style="margin:0 0 6px;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--blue-dark);line-height:1.3">השלב הראשון: בניית הנבחרת הראשונית שלך</h2>
+      <h2 style="margin:0 0 6px;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--blue-dark);line-height:1.3">בחירה עצמאית</h2>
 
       <p style="margin:16px 0;color:var(--text-main);font-size:.98rem;line-height:1.75">
-        כאן מתחילים. בוחרים מתוך הרשימה את המועמדות והמועמדים שמדברים אליכם — לפי היכרות, אמון, הערכה אישית, עמדה פוליטית, או כל סיבה שחשובה לכם.
+        כאן בוחרים את המועמדות והמועמדים בעצמכם, ישירות מתוך הרשימה — לפי היכרות, אמון, הערכה אישית, עמדה פוליטית, או כל סיבה שחשובה לכם.
       </p>
       <p style="margin:0 0 22px;color:var(--text-main);font-size:.98rem;line-height:1.75">
-        זו עדיין לא ההחלטה הסופית — זו נקודת המוצא. בשלב הבא תעמידו את הנבחרת הזו למבחן.
+        על כל מועמד/ת אפשר לפתוח כרטיס ביקור עם פרופיל מלא — בלחיצה על התמונה או על השם — בכל שלב שנוח לכם.
       </p>
 
       <!-- כפתור התחלה — מופיע מיד, לחסרי הסבלנות -->
@@ -532,22 +552,18 @@
         </summary>
 
       <div style="background:white;border:1px solid var(--border-soft);border-radius:16px;padding:20px 22px;margin:10px 0 22px">
-        <div style="font-weight:800;color:var(--blue-dark);margin-bottom:12px;font-size:1rem">שתי דרכים להוסיף מועמד/ת לנבחרת:</div>
-        <p style="margin:0 0 12px;color:var(--text-main);font-size:.96rem;line-height:1.7">
-          <strong style="color:var(--green)">בחירה</strong> — לחיצה על התמונה. סימון רך, "מעניין אותי, שווה בדיקה".
-        </p>
         <p style="margin:0;color:var(--text-main);font-size:.96rem;line-height:1.7">
-          <strong style="color:var(--blue-main)">שריון זמני</strong> — כפתור "שריין". סימון חזק יותר, "אני רוצה אותו/אותה בנבחרת".
+          לחצו <strong style="color:var(--green)">בחר</strong> על מועמדים שאתם רוצים בנבחרת. לחצו <strong style="color:#c0392b">בטל</strong> לביטול.
         </p>
       </div>
 
       <p style="margin:0 0 20px;color:var(--text-muted);font-size:.93rem;line-height:1.7">
-        אין מגבלת מספר — אפשר להתחיל רחב ולצמצם בהמשך. השריון נקרא <strong>זמני</strong> כי במסך הבחינה הבא תוכלו לשנות הכול: להוסיף, להסיר, ולהשוות את הנבחרת שלכם מול נבחרות חלופיות.
+        אין מגבלת מספר, ואפשר לשנות כל סימון בכל רגע. לפני שמחליטים — כדאי לפתוח את כרטיס הביקור של המועמד/ת ולעיין בפרופיל המלא.
       </p>
 
       <div style="background:var(--blue-soft);border-radius:14px;padding:16px 20px;margin-bottom:28px">
         <p style="margin:0;color:var(--blue-dark);font-weight:700;font-size:.95rem;line-height:1.65">
-          המטרה כאן: לגבש נקודת פתיחה אישית, שתעמוד למבחן בשלב הבא — לא לסיים את הבחירה.
+          המטרה כאן: לגבש בעצמכם את הנבחרת שמדברת אליכם, לפי מה שחשוב לכם.
         </p>
       </div>
       </details>
@@ -579,31 +595,21 @@
     </header>
     <section class="page-header">
       <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px">
-        <h1 style="margin:0;font-size:clamp(1.5rem,2.8vw,2rem);color:var(--blue-dark);letter-spacing:-0.015em">הנבחרת הראשונית שלך</h1>
+        <h1 style="margin:0;font-size:clamp(1.5rem,2.8vw,2rem);color:var(--blue-dark);letter-spacing:-0.015em">בחירה עצמאית</h1>
         <button onclick="document.getElementById('shiryun-intro').style.display='block'"
                 title="הצג הסבר על המסלול"
                 style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:2px solid var(--blue-main);background:white;color:var(--blue-main);font-size:.85rem;font-weight:900;cursor:pointer;font-family:Georgia,serif;line-height:1;padding:0">i</button>
       </div>
       <p class="subtitle">
-        נקודת הפתיחה. <strong style="color:var(--green)">בחרו</strong> בלחיצה על התמונה, או <strong style="color:var(--blue-main)">שרְיינו</strong> בכפתור — ללא הגבלת מספר. בשלב הבא תעמידו את הנבחרת למבחן.
+        בחרו מועמדים שאתם בטוחים לגביהם — צפו בפרופיל שלהם בכל שלב שנוח לכם.
       </p>
     </section>
 
     <!-- אזור בקרה דביק בראש: חיפוש + סטטוס (נשאר קבוע בגלילה) -->
     <div class="sticky-controls">
       <div class="status-bar" id="status-bar" style="display:none">
-        <div class="status-pills">
-          <div class="status-pill">
-            <span>נבחרת ראשונית:</span>
-            <strong id="counter-total">0</strong>
-          </div>
-          <div class="status-divider" aria-hidden="true"></div>
-          <div class="status-pill approved">
-            <span>שריון ראשוני:</span>
-            <strong id="counter-shiryun">0</strong>
-          </div>
-        </div>
-        <button class="continue-btn" onclick="saveAndReturn()">המשך ←</button>
+        <div id="counter-summary" style="font-size:.92rem;font-weight:700;color:#12355b"></div>
+        <button class="continue-btn" onclick="saveAndReturn()">סיום ←</button>
       </div>
       <div class="search-box">
         <input
@@ -743,19 +749,13 @@
     function isDbr(id)      { return primState.dbr_picks.includes(id); }
     function isPicked(id)   { return (primState.selected || []).includes(id); }
 
-    // שורת שני כפתורים: בחר (כמו לחיצת התמונה) מימין, שריין משמאל
     function cardButtonsHTML(id) {
-      const picked = isPicked(id);
       const sh = isShiryun(id);
-      // כשיש שריון — אין צורך בכפתור "בחר", רק "משוריין" (לחיצה עליו מבטלת לגמרי)
-      if (sh) {
-        return `<div class="card-btns">`
-          + `<button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(id)}')">✓ משוריין</button>`
-          + `</div>`;
-      }
       return `<div class="card-btns">`
-        + `<button class="btn-pick${picked ? ' active' : ''}" onclick="togglePick('${escapeHtml(id)}')">${picked ? '✓ נבחר' : 'בחר'}</button>`
-        + `<button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(id)}')">שריין</button>`
+        + `<button class="btn-pick" onclick="event.stopPropagation();showCandidateModal('${escapeHtml(id)}')">פרופיל</button>`
+        + (sh
+          ? `<button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(id)}')">בטל</button>`
+          : `<button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(id)}')">בחר</button>`)
         + `</div>`;
     }
 
@@ -782,17 +782,16 @@
       const sel = isShiryun(id);
       const picked = isPicked(id);
       const dbr = isDbr(id);
-      card.className = 'candidate-card' + (sel ? ' selected' : picked ? ' picked' : dbr ? ' dbr-picked' : '');
+      card.className = 'candidate-card' + (sel ? ' selected' : dbr ? ' dbr-picked' : '');
 
-      /* עדכון סימן ✓ על התמונה */
+      /* עדכון סימן על התמונה */
       const pw = card.querySelector('.photo-wrap');
       const existingCheck = pw.querySelector('.photo-check');
-      if (picked && !existingCheck) {
-        pw.insertAdjacentHTML('beforeend', '<div class="photo-check">✓</div>');
-      } else if (!picked && existingCheck) {
-        existingCheck.remove();
+      if (existingCheck) existingCheck.remove();
+      if (sel) {
+        pw.insertAdjacentHTML('beforeend', '<div class="photo-check photo-check-green">✓</div>');
       }
-      pw.title = picked ? 'הסר מהרשימה' : 'בחר';
+      pw.title = sel ? 'הסר מהרשימה' : 'בחר';
 
       card.querySelectorAll('.card-btns, .btn-shiryun, .btn-remove, .dbr-badge').forEach(el => el.remove());
       card.insertAdjacentHTML('beforeend', cardButtonsHTML(id));
@@ -800,15 +799,29 @@
 
     function toggleShiryun(id) {
       ensureArrays();
-      if (isShiryun(id)) {
+      const wasShiryun = isShiryun(id);
+      if (wasShiryun) {
+        // ביטול — רק עדכון הכרטיס במקומו, ללא סידור מחדש
         primState.shiryun = primState.shiryun.filter(x => x !== id);
         primState.selected = (primState.selected || []).filter(x => x !== id);
+        recomputeSelected();
+        savePrimerisState(primState);
+        updateCard(id);
       } else {
-        primState.shiryun.push(id);
+        // בחירה — מביאה את הנבחר לראש ומרנדרת מחדש
+        primState.shiryun.unshift(id);
+        recomputeSelected();
+        savePrimerisState(primState);
+        renderList();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          const card = document.querySelector(`.candidate-card[data-id="${CSS.escape(id)}"]`);
+          if (card) {
+            card.classList.add('pop');
+            card.addEventListener('animationend', () => card.classList.remove('pop'), { once: true });
+          }
+        }, 350);
       }
-      recomputeSelected();
-      savePrimerisState(primState);
-      updateCard(id);
       renderCounters();
     }
 
@@ -824,7 +837,7 @@
 
     function saveAndReturn() {
       savePrimerisState(primState);
-      window.location.href = 'dbr_P_01_state.html';
+      window.location.href = 'dbr_P_01_process.html';
     }
 
     const IMAGE_OVERRIDE = {
@@ -868,6 +881,12 @@
       'רם שפע': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Ram_Shefa_%28SHL_8927%29.jpg/250px-Ram_Shefa_%28SHL_8927%29.jpg',
     };
 
+    function displayName(fullName) {
+      const words = (fullName || '').trim().split(/\s+/);
+      if (words.length <= 2 && !words[words.length - 1].includes('-')) return fullName;
+      return words[0] + ' ' + (words[1] || '').split('-')[0];
+    }
+
     function escapeHtml(s) {
       if (!s) return '';
       return String(s)
@@ -886,12 +905,12 @@
         ...primState.shiryun,
         ...primState.dbr_picks
       ]).size;
-      const elTotal   = document.getElementById('counter-total');
-      const elShiryun = document.getElementById('counter-shiryun');
-      const elFooter  = document.getElementById('footer-selected');
-      if (elTotal)   elTotal.textContent   = totalN;
-      if (elShiryun) elShiryun.textContent = shiryunN;
-      if (elFooter)  elFooter.textContent  = totalN;
+      const elSummary = document.getElementById('counter-summary');
+      if (elSummary) {
+        elSummary.innerHTML = shiryunN > 0 ? `נבחרו <strong style="color:#2e7d4f">${shiryunN}</strong> מועמדים` : '';
+      }
+      const elFooter = document.getElementById('footer-selected');
+      if (elFooter) elFooter.textContent = totalN;
       updateControls(totalN);
     }
 
@@ -979,15 +998,17 @@
         const cardCls = sel ? ' selected' : picked ? ' picked' : dbr ? ' dbr-picked' : '';
         return `
           <div class="candidate-card${cardCls}" data-id="${escapeHtml(c.id)}">
-            <div class="photo-wrap" onclick="togglePick('${escapeHtml(c.id)}')" style="cursor:pointer" title="${picked ? 'הסר מהרשימה' : 'בחר'}">
+            <div class="photo-wrap" onclick="showCandidateModal('${escapeHtml(c.id)}')" style="cursor:pointer" title="לפרופיל המועמד/ת">
               <img src="${escapeHtml(localImageUrl(c.name))}" alt="${escapeHtml(c.name)}"
                    onerror="${WIKI_PHOTOS[c.name]
                      ? `this.src='${escapeHtml(WIKI_PHOTOS[c.name])}';this.onerror=function(){this.outerHTML='<span style=\\'font-size:3rem\\'>${c.gender==='נשים'?'👩':'👨'}</span>'}`
                      : `this.outerHTML='<span style=\\'font-size:3rem\\'>${c.gender==='נשים'?'👩':'👨'}</span>'`}"
                    style="width:100%;height:100%;object-fit:cover">
-              ${picked ? '<div class="photo-check">✓</div>' : ''}
+              ${sel ? '<div class="photo-check photo-check-green">✓</div>' : picked ? '<div class="photo-check">?</div>' : ''}
             </div>
-            <div class="candidate-name">${escapeHtml(c.name)}</div>
+            <div style="display:flex;align-items:center;justify-content:center;padding:2px 8px 1px">
+              <span class="candidate-name" onclick="showCandidateModal('${escapeHtml(c.id)}')" style="margin:0;padding:0;cursor:pointer">${escapeHtml(displayName(c.name))}</span>
+            </div>
             ${cardButtonsHTML(c.id)}
           </div>
         `;
@@ -1051,7 +1072,7 @@
       .then(data => {
         candidates = (data.candidates || []).map(c => ({
           id: c['שם'], name: c['שם'], image: c['תמונה'] || '', gender: c['קטגוריה'] || '',
-          search: buildSearchBlob(c)
+          search: buildSearchBlob(c), raw: c
         }));
         shuffle(candidates);
         renderList();
@@ -1061,6 +1082,132 @@
         document.getElementById('candidates-list').innerHTML =
           `<div class="empty-state">שגיאה בטעינת רשימת המועמדים: ${escapeHtml(err.message)}</div>`;
       });
+  </script>
+
+  <!-- ══ מודל פרופיל מועמד ══ -->
+  <style>
+    #cand-modal{position:fixed;inset:0;z-index:400;background:rgba(18,53,91,.55);overflow-y:auto;padding:20px 16px 40px}
+    #cand-modal-inner{max-width:680px;margin:0 auto;background:#fff;border-radius:20px;box-shadow:0 24px 60px rgba(18,53,91,.28);overflow:hidden}
+    .cm-close{display:flex;justify-content:flex-end;padding:14px 16px 0}
+    .cm-close button{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#5f6b7a;line-height:1;padding:4px 8px;border-radius:8px}
+    .cm-close button:hover{background:#f4f8ff}
+    .cm-hero{display:grid;grid-template-columns:160px 1fr;gap:20px;padding:16px 22px 20px;border-bottom:1px solid #d7e3f3}
+    .cm-portrait{border-radius:14px;overflow:hidden;background:#eaf3ff;align-self:start}
+    .cm-portrait img{width:100%;height:auto;display:block}
+    .cm-eyebrow{font-size:.78rem;font-weight:800;color:#1d5fa7;margin-bottom:5px}
+    .cm-name{font-size:1.7rem;font-weight:900;color:#12355b;line-height:1.2;margin-bottom:8px}
+    .cm-sub{color:#5f6b7a;font-size:.92rem;margin-bottom:10px}
+    .cm-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+    .cm-tag{background:#eaf3ff;color:#12355b;border:1px solid #d7e3f3;border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:800}
+    .cm-quick{display:flex;flex-wrap:wrap;gap:7px;padding:14px 22px;border-bottom:1px solid #d7e3f3}
+    .cm-qcard{background:#fff;border:1px solid #d7e3f3;border-radius:999px;padding:5px 13px;display:flex;align-items:center;gap:5px}
+    .cm-qcard .ql{color:#5f6b7a;font-size:.76rem;font-weight:700}
+    .cm-qcard .ql::after{content:":"}
+    .cm-qcard .qv{color:#12355b;font-size:.8rem;font-weight:900}
+    .cm-body{padding:18px 22px}
+    .cm-identity{background:#f7fbff;border:1px solid #d7e3f3;border-radius:14px;padding:16px 18px;margin-bottom:14px}
+    .cm-identity h3{color:#12355b;font-size:1rem;margin:0 0 8px}
+    .cm-identity p{font-size:.93rem;line-height:1.72;color:#1f2933;margin:0}
+    .cm-section{margin-bottom:14px;border:1px solid #d7e3f3;border-radius:14px;padding:16px 18px}
+    .cm-section h3{color:#12355b;font-size:1rem;margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid #d7e3f3}
+    .cm-section p{font-size:.9rem;line-height:1.7;color:#1f2933;margin:0 0 8px}
+    .cm-actions{display:flex;gap:10px;padding:14px 22px;border-top:1px solid #d7e3f3;background:#f7fbff}
+    .cm-actions button{flex:1;padding:10px;border-radius:10px;font-weight:800;font-size:.92rem;cursor:pointer;font-family:inherit;transition:all .15s}
+    @media(max-width:560px){.cm-hero{grid-template-columns:1fr}.cm-portrait{max-width:220px;margin:0 auto}}
+  </style>
+
+  <div id="cand-modal" style="display:none" onclick="if(event.target===this)closeCandModal()">
+    <div id="cand-modal-inner">
+      <div class="cm-close"><button onclick="closeCandModal()">✕</button></div>
+      <div id="cand-modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    function showCandidateModal(id) {
+      const c = candidates.find(x => x.id === id);
+      if (!c) return;
+      const raw = c.raw || {};
+      const html = raw['דף_html'] || {};
+
+      const avatar = c.gender === 'נשים' ? '👩' : '👨';
+      const wikiSrc = WIKI_PHOTOS[c.name] || '';
+      const fallback = wikiSrc
+        ? `this.src='${wikiSrc}';this.onerror=function(){this.outerHTML='<span style="font-size:4rem">${avatar}</span>'}`
+        : `this.outerHTML='<span style="font-size:4rem">${avatar}</span>'`;
+
+      const sub = html['כותרת_משנה'] || (raw['תעודת_זהות_פוליטית'] || '').slice(0, 140) || '';
+      const tags = (html['תגיות'] || []).slice(0, 5);
+      if (!tags.length && raw['סגנון'] && raw['סגנון'] !== '—') tags.push(raw['סגנון']);
+
+      const kv = html['כרטיס_מהיר'] || {};
+      const quickHtml = Object.keys(kv).length
+        ? Object.entries(kv).map(([k,v]) => `<div class="cm-qcard"><span class="ql">${k}</span><span class="qv">${v}</span></div>`).join('')
+        : (raw['נושאים_מכוסים'] ? `<div class="cm-qcard"><span class="ql">כיסוי נושאים</span><span class="qv">${raw['נושאים_מכוסים']}</span></div>` : '');
+
+      const sections = html['פרקים'] || {};
+      const sectionsHtml = Object.values(sections).slice(0, 3).map(s =>
+        `<div class="cm-section"><h3>${s.title || ''}</h3>${s.html || '<p>'+(s.text||'')+'</p>'}</div>`
+      ).join('');
+
+      const identity = raw['תעודת_זהות_פוליטית'] || '';
+
+      const sel = isShiryun(id);
+      const picked = isPicked(id);
+
+      document.getElementById('cand-modal-body').innerHTML = `
+        <div class="cm-hero">
+          <div class="cm-portrait">
+            <img src="${escapeHtml(localImageUrl(c.name))}" alt="${escapeHtml(c.name)}" onerror="${escapeHtml(fallback)}">
+          </div>
+          <div>
+            <div class="cm-eyebrow">מועמד/ת לפריימריז</div>
+            <div class="cm-name">${escapeHtml(c.name)}</div>
+            ${sub ? `<div class="cm-sub">${escapeHtml(sub)}</div>` : ''}
+            ${tags.length ? `<div class="cm-tags">${tags.map(t=>`<span class="cm-tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
+          </div>
+        </div>
+        ${quickHtml ? `<div class="cm-quick">${quickHtml}</div>` : ''}
+        <div class="cm-body">
+          ${identity ? `<div class="cm-identity"><h3>זהות פוליטית</h3><p>${escapeHtml(identity)}</p></div>` : ''}
+          ${sectionsHtml}
+        </div>
+      `;
+
+      document.getElementById('cand-modal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCandModal() {
+      document.getElementById('cand-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function cmTogglePick(id) {
+      togglePick(id);
+      const picked = isPicked(id);
+      const b = document.getElementById('cm-btn-pick');
+      if (b) {
+        b.textContent = picked ? 'בטל מתנדנד' : 'מתנדנד';
+        b.style.background = picked ? '#fffde7' : '#fff';
+        b.style.color = picked ? '#b45309' : '#12355b';
+        b.style.borderColor = picked ? '#f59e0b' : '#d7e3f3';
+      }
+    }
+
+    function cmToggleShiryun(id) {
+      toggleShiryun(id);
+      const sel = isShiryun(id);
+      const b = document.getElementById('cm-btn-shiryun');
+      if (b) {
+        b.textContent = sel ? 'בטל בחר' : 'בחר';
+        b.style.background = sel ? '#e6f4eb' : '#fff';
+        b.style.color = sel ? '#2e7d4f' : '#12355b';
+        b.style.borderColor = sel ? '#b8dcc5' : '#d7e3f3';
+      }
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCandModal(); });
   </script>
 </body>
 </html>

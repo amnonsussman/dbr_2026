@@ -720,7 +720,6 @@
     .dbr-notice strong {
       color: var(--blue-dark);
     }
-    .rank-row:last-child { border-bottom: none; }
     .rank-row:hover { background: transparent; outline: 1px solid var(--border-soft); }
     .rank-num {
       min-width: 16px;
@@ -734,6 +733,9 @@
       flex: 1;
       font-size: clamp(.82rem, 2.5vw, 1rem);
       font-weight: 700;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       color: var(--blue-dark);
     }
     .rank-name.unpicked {
@@ -742,16 +744,18 @@
       color: var(--text-muted);
     }
     .rank-name.picked {
-      font-size: clamp(1rem, 3vw, 1.3rem);
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      font-size: clamp(1.05rem, 3.1vw, 1.28rem);
+      font-weight: 900;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.01em;
       color: var(--blue-dark);
     }
-    .rank-row.is-picked {
-      background: #eef5ff;
-      box-shadow: inset 3px 0 0 var(--blue-main);
+    .rank-name.picked.outside {
+      color: #111;
     }
-    .rank-row.is-picked:hover { background: #e3eefc; }
+    .rank-row.is-picked {
+      background: transparent;
+    }
     .beyond-separator {
       border: none;
       border-top: 2px dashed var(--blue-main);
@@ -882,6 +886,7 @@
       gap: 12px;
     }
     @media (max-width: 600px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .page { padding-inline: 8px; } }
     .team-card {
       background: white;
       border: 2px solid var(--blue-main);
@@ -964,20 +969,19 @@
     <!-- Intro overlay — first visit -->
     <div id="intro-overlay" class="intro-overlay" style="display:none">
       <div class="intro-card">
-        <h2>גיבוש הרשימה</h2>
-        <p>בשלב הזה אתם עוברים מבחירה רחבה יותר אל הרשימה הסופית.</p>
-        <p>מצד אחד נמצאת הרשימה שלכם — המועמדות והמועמדים שבחרתם לקדם. מתוך הרשימה הזו תצטרכו לבחור עד שמונה מועמדים סופיים.</p>
-        <p>מצד שני נמצא דירוג הוועדה המסדרת של ד.ב.ר — דירוג המבוסס על דיוקנאות המועמדים, על פי הרזומה שלהם והמוטיבציה שלהם לתפקידם הציבורי הבכיר.</p>
-        <p>במסך הזה תוכלו לבחון את הרשימה שבניתם, להשוות אותה לדירוג ד.ב.ר, לבצע שינויים, ולבסוף לאשר את הרשימה הסופית שלכם.</p>
-        <p>המטרה אינה להחליף את שיקול הדעת שלכם, אלא לתת לכם נקודת ייחוס נוספת לפני ההחלטה:</p>
+        <h2>בחירה לפי המלצה</h2>
+        <p>במסך הזה אתם בונים את רשימת המועמדים שלכם מתוך נבחרת מומלצת.</p>
+        <p>כל נבחרת מציגה את 20 המועמדים המובילים שלה לפי דירוג — דירוג המבוסס על דיוקנאות המועמדים, על פי הרזומה שלהם והמוטיבציה שלהם לתפקידם הציבורי הבכיר. תוכלו להחליף בין נבחרות באמצעות הרשימה הנפתחת שבראש המסך.</p>
+        <p>איך עובדים במסך:</p>
         <ul>
-          <li>מי מהמועמדים שבחרתם מדורג גבוה או נמוך בדירוג ד.ב.ר?</li>
-          <li>האם יש מועמדות או מועמדים חזקים שלא נכנסו לרשימה שלכם?</li>
-          <li>האם אתם עדיין שלמים עם הבחירה?</li>
+          <li>להוספת מועמד מהנבחרת — לחצו על שמו. שמו יופיע בכחול כהה ומודגש.</li>
+          <li>מועמדים שבחרתם ואינם כלולים בנבחרת יופיעו בסוף רשימת הדירוג, בעמודה השמאלית.</li>
+          <li>להסרת מועמד — לחצו שוב על שמו. הסרה כאן מבטלת את בחירתו בכל המסכים.</li>
+          <li>לצפייה בכרטיס המועמד של הנבחרת — לחצו על 📋.</li>
         </ul>
-        <p>בסוף התהליך תתבקשו לאשר עד שמונה מועמדות ומועמדים לרשימה הסופית.</p>
+        <p>בכל רגע תוכלו ללחוץ על «הצגת פתק הבחירה» כדי לראות כיצד תיראה הרשימה שבניתם.</p>
         <div class="intro-note">הדירוג של ד.ב.ר הוא נקודת ייחוס בלבד.<br>ההחלטה הסופית נשארת שלכם.</div>
-        <button class="intro-btn" onclick="dismissIntro()">הבנתי, נתחיל בגיבוש הרשימה</button>
+        <button class="intro-btn" onclick="dismissIntro()">הבנתי, נתחיל</button>
       </div>
     </div>
 
@@ -1079,7 +1083,8 @@
         <span id="stat-shiryun" style="display:none"></span>
         <div class="summary-pills">
           <button class="expand-btn" id="zoom-out-btn" onclick="zoomOut()" title="הקטן פונט">−</button>
-          <span class="pill" id="all-filter-btn" style="cursor:pointer;margin:0 auto" onclick="togglePickedFilter()"><span id="all-filter-label">הצג את פתק הבחירה שלך</span></span>
+          <span class="pill" id="all-filter-btn" style="cursor:pointer;margin:0 auto" onclick="togglePickedFilter()"><span id="all-filter-label">הצגת פתק הבחירה</span></span>
+          <span id="no-picks-hint" style="display:none;margin:0 auto;font-size:.85rem;color:var(--text-muted);text-align:center;font-family:inherit;">לחץ על השם לבחירה</span>
           <button class="expand-btn" id="zoom-in-btn"  onclick="zoomIn()"  title="הגדל פונט">+</button>
         </div>
         <span id="rank-meta-text" class="last-updated-text"></span>
@@ -1167,6 +1172,11 @@
 
     function candidateName(id) { return id.replace(/_/g, ' '); }
 
+    function shortName(name) {
+      const w = name.trim().split(/\s+/);
+      if (w.length <= 2) return name;
+      return w[0] + ' ' + w[1].split('-')[0];
+    }
     function escapeHtml(s) {
       return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
@@ -1352,6 +1362,17 @@
       document.getElementById('stat-total').textContent = rankList.length;
       document.getElementById('stat-picked').textContent = allPicks.size;
 
+      // כפתור פתק — מוסתר כשאין בחירות, במקומו הסבר
+      const allFilterBtn = document.getElementById('all-filter-btn');
+      const noPicksHint  = document.getElementById('no-picks-hint');
+      if (allPicks.size === 0) {
+        if (allFilterBtn) allFilterBtn.style.display = 'none';
+        if (noPicksHint)  noPicksHint.style.display  = '';
+      } else {
+        if (allFilterBtn) allFilterBtn.style.display = '';
+        if (noPicksHint)  noPicksHint.style.display  = 'none';
+      }
+
       const shiryunCount = (state.shiryun || []).length;
       const stEl = document.getElementById('stat-shiryun');
       if (stEl) stEl.textContent = shiryunCount;
@@ -1395,6 +1416,8 @@
       const infoFontSizes = ['.85rem', '.92rem', '1rem', '1.1rem'];
       const infoEl = document.getElementById('rank-info-text');
       if (infoEl) infoEl.style.fontSize = infoFontSizes[zoomLevel];
+      const hintEl = document.getElementById('no-picks-hint');
+      if (hintEl) hintEl.style.fontSize = infoFontSizes[zoomLevel];
 
       renderRanking();
     }
@@ -1503,7 +1526,7 @@
       if (filterPicked) {
         document.getElementById('all-filter-label').textContent = 'חזור להצגת הנבחרת';
       } else {
-        document.getElementById('all-filter-label').textContent = 'הצג את פתק הבחירה שלך';
+        document.getElementById('all-filter-label').textContent = 'הצגת פתק הבחירה';
       }
       if (expanded) renderRankingSingleCol(); else renderRanking();
     }
@@ -1706,7 +1729,10 @@
       const h1 = document.querySelector('.page-title h1');
       if (h1) h1.childNodes[0].textContent = (TEAM_NAMES[val] || val) + ' ';
       const desc = document.getElementById('screen-desc');
-      if (desc) desc.textContent = 'בחרתם את ' + (TEAM_NAMES[val] || val) + ' — 20 המועמדים שלה מוצגים כאן. מי שסימנתם קודם מודגש. לחצו על שורה פעם אחת — נבחר, פעמיים — ביטול. לחצו על ✏️ להוספת הסבר, ועל 📋 לכרטיס הוועדה של המועמד.';
+      if (desc) {
+        desc.style.display = '';
+        desc.innerHTML = 'בחרתם את ' + escapeHtml(TEAM_NAMES[val] || val) + ' — 20 המועמדים שלה מוצגים כאן. מי שסימנתם קודם מודגש. להוספת מועמד מהנבחרת לחצו על השם שלו, שמו מופיע בכחול כהה, מועמדים שבחרתם ואינם כלולים בנבחרת — יופיעו בסוף רשימת הדירוג בעמודה השמאלית. להסרת מועמד לחצו שוב על השם. הסרת מועמד מהרשימה כאן מבטלת את בחירתו בכל המסכים. כדי לצפות בכרטיס המועמד של הנבחרת לחץ 📋<br><span onclick="document.getElementById(\'screen-desc\').style.display=\'none\'" style="cursor:pointer;color:var(--blue-main);font-size:.85em;text-decoration:underline;font-weight:700;">לחץ כאן כדי להעלים הסבר זה.</span>';
+      }
       onTeamChange();
     }
 
@@ -1720,6 +1746,7 @@
         content.style.display = '';
       } else {
         content.style.display = 'none';
+        document.getElementById('summary-bar').style.display = 'none';
         const label = TEAM_LABELS[val] || val;
         document.getElementById('team-notice-name').textContent = label;
         document.getElementById('team-notice-text').textContent =
@@ -1746,6 +1773,7 @@
     function rankRow(c, rank, allPicks) {
       const picked = allPicks.has(c.name);
       const eName = escapeHtml(c.name);
+      const dName = escapeHtml(shortName(c.name));
 
       const shiryuned = (state.shiryun || []).includes(c.name);
       const gDot = zipperMode ? genderDotHtml(c.gender) : '';
@@ -1781,9 +1809,7 @@
       /* מצב "כל המועמדים שווים" — נופל לשורה מלאה רגילה */
       const hasReason = picked && !!(getPickReasons()[c.name] || '').trim();
       const targetCls = hasReason ? 'target-with-reason' : 'target-no-reason';
-      const targetHtml = (picked && !filterShiryun)
-        ? '&nbsp;<span class="pick-target ' + targetCls + '" onclick="event.stopPropagation();openReasonModal(\'' + eName + '\')" title="' + (hasReason ? 'ערוך הסבר' : 'הוסף הסבר לבחירה') + '">✏️</span>'
-        : '';
+      const targetHtml = '';
 
       /* ✓ = משוריין, ? = מתנדנד (picked אבל לא shiryuned) */
       const pickIcon = shiryuned ? '' : (picked ? '?' : '');
@@ -1791,11 +1817,11 @@
       const pickCls = 'rank-pick' + (shiryuned ? ' shiryuned' : (picked ? ' picked-check' : ' empty-pick'));
 
       var row = '<div class="rank-row' + (picked ? ' is-picked' : '') + '" onclick="togglePick(\'' + eName + '\')">'
-        + '<span style="display:inline-flex;align-items:center;gap:2px;flex-shrink:0">' + gDot + '<span class="rank-num">' + rank + '</span></span>'
-        + '<span class="rank-name' + (picked ? ' picked' : ' unpicked') + '">' + eName + targetHtml + '</span>'
+        + '<span style="display:inline-flex;align-items:center;gap:2px;flex-shrink:0">' + gDot + (picked ? '' : '<span class="rank-num">' + rank + '</span>') + '</span>'
+        + '<span class="rank-name' + (picked ? ' picked' : ' unpicked') + '"' + (picked ? ' style="color:' + (c._origRank > RANK_SLOTS ? '#111' : 'var(--blue-main)') + '"' : '') + '>' + eName + targetHtml + '</span>'
         + reasonToggleHtml
-        + (filterShiryun || shiryuned ? '' : '<span class="' + pickCls + '" onclick="event.stopPropagation();toggleShiryunState(\'' + eName + '\')" title="' + pickTitle + '">' + pickIcon + '</span>')
-        + (filterShiryun ? '' : '<span class="rank-card" onclick="event.stopPropagation();openProfile(\'' + eName + '\')" title="כרטיס ועדה מסדרת">📋</span>')
+        + (filterShiryun || filterPicked || shiryuned ? '' : '<span class="' + pickCls + '" onclick="event.stopPropagation();toggleShiryunState(\'' + eName + '\')" title="' + pickTitle + '">' + pickIcon + '</span>')
+        + (filterShiryun || filterPicked || picked ? '' : '<span class="rank-card" onclick="event.stopPropagation();openProfile(\'' + eName + '\')" title="כרטיס ועדה מסדרת">📋</span>')
         + '</div>';
       if (filterShiryun && shiryuned && typeof reasonHtml !== 'undefined') {
         row += reasonHtml;
@@ -2013,7 +2039,7 @@
         };
       });
       rankList.sort((a,b) => (b.scoreC??-1) - (a.scoreC??-1));
-      document.getElementById('ranking-section').style.display = '';
+      if (inRankingView) document.getElementById('ranking-section').style.display = '';
       cleanPicks();
       // DEBUG: uncomment next line to reset all picks
       // saveState({ selected: [], shiryun: [], dbr_picks: [], approved: [], meta: {} });

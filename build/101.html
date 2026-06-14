@@ -108,8 +108,8 @@
   let d, contentHtml;
   try {
     const [rJson, rContent] = await Promise.all([
-      fetch(`candidates/${code}.json`),
-      fetch(`candidates/${code}_dossier_content.html`)
+      fetch(`${code}.json`),
+      fetch(`${code}_dossier_content.html`)
     ]);
     if (!rJson.ok)    throw new Error(`${code}.json — ${rJson.status}`);
     if (!rContent.ok) throw new Error(`${code}_dossier_content.html — ${rContent.status}`);

@@ -101,7 +101,7 @@
 
   let d;
   try {
-    const res = await fetch(`candidates/${code}.json`);
+    const res = await fetch(`${code}.json`);
     if (!res.ok) throw new Error(`${code}.json — ${res.status}`);
     d = await res.json();
   } catch(e) {

@@ -95,21 +95,23 @@
 <div id="loading" class="page">טוען דף שיבוץ לנבחרות...</div>
 <script>
 (async () => {
-  const raw  = location.search.slice(1);
-  const code = raw.replace(/\d+$/, '').toUpperCase();
-  if (!code) { document.getElementById('loading').textContent = 'קוד מועמד חסר בכתובת'; return; }
+  const raw    = location.search.slice(1);
+  const digits = raw.replace(/^[a-zA-Z]+/, '');
+  const prefix = raw.replace(/\d+$/, '');
+  if (!digits) { document.getElementById('loading').textContent = 'קוד מועמד חסר בכתובת'; return; }
 
   let d;
   try {
-    const res = await fetch(`${code}.json`);
-    if (!res.ok) throw new Error(`${code}.json — ${res.status}`);
-    d = await res.json();
+    const res = await fetch('102.json');
+    if (!res.ok) throw new Error(res.status);
+    const all = await res.json();
+    d = all[digits];
+    if (!d) throw new Error(`קוד ${digits} לא נמצא`);
   } catch(e) {
-    document.getElementById('loading').textContent = 'שגיאה בטעינה: ' + e.message;
+    document.getElementById('loading').textContent = 'שגיאה: ' + e.message;
     return;
   }
 
-  const prefix    = raw.replace(/\d+$/, '');
   const introUrl  = `100.html?${prefix}${d.page_codes.intro}`;
   const dossierUrl= `101.html?${prefix}${d.page_codes.dossier}`;
 

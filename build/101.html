@@ -101,26 +101,24 @@
 <div id="loading">טוען תיק עובדתי...</div>
 <script>
 (async () => {
-  const raw  = location.search.slice(1);
-  const code = raw.replace(/\d+$/, '').toUpperCase();
-  if (!code) { document.getElementById('loading').textContent = 'קוד מועמד חסר בכתובת'; return; }
+  const raw    = location.search.slice(1);
+  const digits = raw.replace(/^[a-zA-Z]+/, '');
+  const prefix = raw.replace(/\d+$/, '');
+  if (!digits) { document.getElementById('loading').textContent = 'קוד מועמד חסר בכתובת'; return; }
 
   let d, contentHtml;
   try {
-    const [rJson, rContent] = await Promise.all([
-      fetch(`${code}.json`),
-      fetch(`${code}_dossier_content.html`)
-    ]);
-    if (!rJson.ok)    throw new Error(`${code}.json — ${rJson.status}`);
-    if (!rContent.ok) throw new Error(`${code}_dossier_content.html — ${rContent.status}`);
-    d           = await rJson.json();
-    contentHtml = await rContent.text();
+    const res = await fetch('101.json');
+    if (!res.ok) throw new Error(res.status);
+    const all = await res.json();
+    d = all[digits];
+    if (!d) throw new Error(`קוד ${digits} לא נמצא`);
+    contentHtml = d.dossier_html;
   } catch(e) {
-    document.getElementById('loading').textContent = 'שגיאה בטעינה: ' + e.message;
+    document.getElementById('loading').textContent = 'שגיאה: ' + e.message;
     return;
   }
 
-  const prefix   = raw.replace(/\d+$/, '');
   const introUrl  = `100.html?${prefix}${d.page_codes.intro}`;
   const scoresUrl = `102.html?${prefix}${d.page_codes.scores}`;
 

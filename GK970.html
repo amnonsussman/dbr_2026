@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ד.ב.ר — עיון, תיקון ומסמכי גלעד קריב</title>
+  <style>
+    :root {
+      --bg: #f4f2ec;
+      --paper: #fffaf1;
+      --ink: #18212f;
+      --muted: #5f6673;
+      --line: #ddd4c4;
+      --blue: #1f5f8b;
+      --blue-dark: #174867;
+      --green: #28745f;
+      --green-dark: #1e5949;
+      --amber: #b6781f;
+      --soft-blue: #e8f1f7;
+      --soft-green: #e8f4ef;
+      --soft-amber: #fbf0dc;
+      --shadow: 0 18px 45px rgba(28, 36, 50, 0.12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(31, 95, 139, 0.16), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(182, 120, 31, 0.13), transparent 32%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto 48px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fffaf1 0%, #f7efe0 52%, #e7f0f6 100%);
+      border: 1px solid rgba(31, 95, 139, 0.18);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: -80px;
+      top: -120px;
+      width: 260px;
+      height: 260px;
+      background: rgba(40, 116, 95, 0.12);
+      border-radius: 50%;
+    }
+
+    .hero-inner {
+      position: relative;
+      padding: 46px 46px 38px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--blue-dark);
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--blue);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: 0 10px 22px rgba(31, 95, 139, 0.25);
+    }
+
+    .stage-badge {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(31, 95, 139, 0.18);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.3rem);
+      line-height: 1.12;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      max-width: 870px;
+      margin: 18px 0 0;
+      font-size: clamp(1.05rem, 2.3vw, 1.35rem);
+      color: #354152;
+    }
+
+    .candidate-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      margin-top: 32px;
+      padding: 22px 24px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(221, 212, 196, 0.9);
+      border-radius: 22px;
+    }
+
+    .candidate-strip h2 {
+      margin: 0 0 4px;
+      font-size: 1.55rem;
+    }
+
+    .candidate-strip p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .score-mini {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini-card {
+      min-width: 105px;
+      padding: 12px 14px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 0.98rem;
+      color: var(--blue-dark);
+      line-height: 1.25;
+    }
+
+    .mini-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-top: 5px;
+    }
+
+    .section {
+      margin-top: 26px;
+      background: rgba(255, 250, 241, 0.9);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 32px rgba(28, 36, 50, 0.07);
+      padding: 30px;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 1.65rem;
+      color: var(--blue-dark);
+    }
+
+    .section p {
+      margin: 0 0 14px;
+      color: #333c4b;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .info-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .info-card .num {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: white;
+      background: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .info-card:nth-child(2) .num { background: var(--green); }
+    .info-card:nth-child(3) .num { background: var(--amber); }
+
+    .info-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .two-docs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .doc-card {
+      position: relative;
+      overflow: hidden;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 26px;
+      min-height: 318px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .doc-card::after {
+      content: "";
+      position: absolute;
+      inset-inline-start: -35px;
+      bottom: -45px;
+      width: 135px;
+      height: 135px;
+      border-radius: 50%;
+      background: rgba(31, 95, 139, 0.09);
+    }
+
+    .doc-card.green::after { background: rgba(40, 116, 95, 0.11); }
+
+    .doc-type {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      background: var(--soft-blue);
+      margin-bottom: 16px;
+    }
+
+    .doc-card.green .doc-type {
+      color: var(--green-dark);
+      background: var(--soft-green);
+    }
+
+    .doc-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.45rem;
+      color: var(--ink);
+    }
+
+    .doc-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .doc-card ul {
+      margin: 14px 0 22px;
+      padding-inline-start: 22px;
+      color: #3d4654;
+    }
+
+    .doc-card li { margin-bottom: 7px; }
+
+    .app-card {
+      margin-top: 22px;
+      padding: 26px;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(31, 95, 139, 0.12), rgba(182, 120, 31, 0.13)),
+        #fffdf8;
+      border: 1px solid rgba(31, 95, 139, 0.18);
+      box-shadow: 0 16px 34px rgba(28, 36, 50, 0.08);
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .app-card h3 {
+      margin: 8px 0 10px;
+      font-size: 1.55rem;
+      color: var(--blue-dark);
+    }
+
+    .app-card p {
+      margin: 0 0 12px;
+      color: #3d4654;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--soft-amber);
+      color: #6a4717;
+      border: 1px solid rgba(182, 120, 31, 0.24);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    a.app-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 58px;
+      padding: 16px 24px;
+      border-radius: 18px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--amber), #d08b27);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 1.08rem;
+      box-shadow: 0 14px 28px rgba(182, 120, 31, 0.28);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    a.app-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(182, 120, 31, 0.34);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 12px 20px;
+      border-radius: 14px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      background: var(--blue);
+      box-shadow: 0 10px 22px rgba(31, 95, 139, 0.2);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .green a.button {
+      background: var(--green);
+      box-shadow: 0 10px 22px rgba(40, 116, 95, 0.2);
+    }
+
+    a.button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(31, 95, 139, 0.28);
+    }
+
+    .green a.button:hover { box-shadow: 0 14px 28px rgba(40, 116, 95, 0.28); }
+
+    .secondary-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 12px 6px;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      overflow: hidden;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 15px 16px;
+      text-align: right;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .compare-table th {
+      background: #f3eadb;
+      color: var(--blue-dark);
+      font-weight: 800;
+    }
+
+    .compare-table tr:last-child td { border-bottom: none; }
+
+    .note {
+      margin-top: 20px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: var(--soft-amber);
+      border: 1px solid rgba(182, 120, 31, 0.22);
+      color: #4b3a20;
+    }
+
+    .footer {
+      margin-top: 24px;
+      padding: 22px 28px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero-inner { padding: 32px 24px; }
+      .candidate-strip { grid-template-columns: 1fr; }
+      .score-mini { justify-content: stretch; }
+      .mini-card { flex: 1 1 120px; }
+      .grid-3, .two-docs, .app-card { grid-template-columns: 1fr; }
+      .section { padding: 24px; }
+      .compare-table, .compare-table tbody, .compare-table tr, .compare-table td, .compare-table th {
+        display: block;
+      }
+      .compare-table thead { display: none; }
+      .compare-table tr { border-bottom: 1px solid var(--line); }
+      .compare-table tr:last-child { border-bottom: none; }
+      .compare-table td {
+        border-bottom: none;
+        padding: 12px 16px;
+      }
+      .compare-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 800;
+        color: var(--blue-dark);
+        margin-bottom: 3px;
+      }
+    }
+
+    @media print {
+      body { background: white; }
+      .page { width: 100%; margin: 0; }
+      .hero, .section { box-shadow: none; break-inside: avoid; }
+      a.button, .secondary-link, a.app-button { color: var(--ink); box-shadow: none; border: 1px solid var(--line); background: white !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="brand-row">
+          <div class="brand" aria-label="דמוקרטים בוחרים רציונלית">
+            <div class="brand-mark">ד.ב.ר</div>
+            <div>
+              <div>דמוקרטים בוחרים רציונלית</div>
+              <small>מערכת תומכת החלטה לפריימריז</small>
+            </div>
+          </div>
+          <div class="stage-badge">דף עיון, תיקון וניווט למועמד/ת</div>
+        </div>
+
+        <h1>גלעד קריב — מסמכי עיון לפני פרסום</h1>
+        <p class="subtitle">
+          דף זה נשלח למועמד לעיון לפני פרסום ציבורי. הוא מרכז את ההסבר על מיזם ד.ב.ר,
+          מאפשר כניסה ליישום לצורך הבנת סביבת הבחירה, ומפנה לשני מסמכים נפרדים:
+          התיק העובדתי שעליו נשען הניתוח, ודף השיבוץ לנבחרות.
+        </p>
+
+        <div class="candidate-strip">
+          <div>
+            <h2>מה מוצג כאן?</h2>
+            <p>
+              לא מדובר באישור מועמד, בהמלצה אישית או בפסק דין על התאמה כללית. זהו מסלול עיון:
+              הצגת בסיס המידע, הצגת הסיווג שנגזר ממנו, ומתן אפשרות לתיקון עובדתי,
+              להשלמת מקורות או לבקשת אי־הכללה לפני פרסום.
+            </p>
+          </div>
+          <div class="score-mini" aria-label="הערכות ליבה מתוך דף השיבוץ">
+            <div class="mini-card"><strong>ליבה מובהקת</strong><span>חוק ודמוקרטיה</span></div>
+            <div class="mini-card"><strong>ליבה מובהקת</strong><span>דת ומדינה</span></div>
+            <div class="mini-card"><strong>התאמה חזקה</strong><span>הנהגה</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>מהו מיזם ד.ב.ר?</h2>
+      <p>
+        ד.ב.ר — דמוקרטים בוחרים רציונלית — הוא מיזם עצמאי של החתום מטה לבניית יישום
+        תומך החלטה מבוסס בינות מלאכותיות, מיזם שנולד מתוך
+        ההבנה שבחירת שמונה מועמדים מתוך אוסף של מועמדות ומועמדים מצוינים ואיכותיים
+        היא תהליך בחירה מהותי וערכי, שאינו קל, ודורש תשומת לב וחשיבה מאותם בוחרים
+        שחושבים כמוהו. במקום להסתפק ברשימת שמות, המיזם מציג תמונת התאמה לפי תחומי
+        פעולה ציבוריים: דמוקרטיה, יוקר מחיה, שלום וביטחון, שותפות יהודית־ערבית,
+        דת ומדינה, הנהגה ציבורית, ועוד.
+      </p>
+      <p>
+        המטרה אינה להחליף את שיקול הדעת של הבוחר, אינה לקבוע מי “ראוי” באופן מוחלט,
+        ואינה להעריך את האדם או את מועמדותו בכללותה. ההערכות מבטאות רק את עוצמת
+        העוגן העובדתי שנמצא לשיבוץ בכל נבחרת נושאית, על בסיס החומר שנבדק.
+      </p>
+      <p>
+        לפני פרסום ציבורי, החומרים נשלחים למועמד/ת לעיון. ניתן להעיר על טעות עובדתית,
+        להציע מקור משלים, לבקש תיקון ניסוח, או לבקש שלא להיכלל בפרסום הציבורי.
+        אי־תגובה אינה נחשבת לאישור; היא תסומן רק כמצב שבו לא התקבלו הערות עד המועד שנקבע.
+      </p>
+
+      <p style="margin:0">
+        בברכה ובהצלחה,<br>
+        <strong>אמנון זוסמן</strong> · <a href="tel:0523968917" dir="ltr" style="unicode-bidi:isolate;color:var(--blue-dark);font-weight:700;text-decoration:none">052-3968917</a>
+      </p>
+      <hr style="border:none;border-top:1px solid var(--line);margin:18px 0">
+
+      <div class="note">
+        <strong>מסגרת הזמן לעיון ולתגובה:</strong>
+        מועדי הפריימריז טרם נקבעו סופית ותלויים בפיזור הכנסת ובקביעת מועד בחירות חדש.
+        כדי להבטיח זמן תגובה הוגן, ניתן להגיש פנייה לתיקון עובדתי, להשלמת מקורות
+        או לבקשת אי־הכללה <strong>בכל עת, ולא יאוחר מ־14 יום לפני מועד הפריימריז שייקבע</strong>.
+        הסיווג עשוי לשמש לצרכי המיזם <strong>רק לאחר מתן מענה לפניות שהתקבלו במועד זה</strong>.
+      </div>
+
+      <div class="grid-3">
+        <article class="info-card">
+          <div class="num">1</div>
+          <h3>איסוף עובדתי</h3>
+          <p>נבנה תיק עובדתי על פעילות, תפקידים, עמדות וסיגנלים ציבוריים, תוך הפרדה בין עובדות להערכות.</p>
+        </article>
+        <article class="info-card">
+          <div class="num">2</div>
+          <h3>סיווג לנבחרות</h3>
+          <p>כל מועמד/ת נבחן/ת מול נבחרות נושאיות, וההערכה משקפת את חוזק העוגן בתחום.</p>
+        </article>
+        <article class="info-card">
+          <div class="num">3</div>
+          <h3>עיון ותיקון</h3>
+          <p>לפני פרסום, המועמד/ת יכול/ה להעביר תיקונים, מקורות משלימים או בקשת אי־הכללה.</p>
+        </article>
+      </div>
+
+      <div class="app-card" style="grid-template-columns:1fr">
+        <div>
+          <span class="status-pill" style="background:var(--soft-blue);color:var(--blue-dark);border-color:rgba(31,95,139,.24)">מתודולוגיה</span>
+          <h3>מיזם המבוסס כולו על ארבע בינות מלאכותיות</h3>
+          <p>
+            כדי להפחית הטיה של מודל יחיד ולהצליב מידע, כל שלב במיזם נשען על בינה מלאכותית אחרת.
+            המעבר בין המודלים נועד להגביר דיוק, שקיפות ובקרה.
+          </p>
+          <div class="grid-3" style="margin-top:6px">
+            <article class="info-card">
+              <div class="num">1</div>
+              <h3>פֵּרְפלקסיטי <span style="font-weight:600;color:var(--muted)">(Perplexity)</span></h3>
+              <p>איסוף המידע העובדתי מהמקורות הציבוריים ובניית התיק העובדתי.</p>
+            </article>
+            <article class="info-card">
+              <div class="num">2</div>
+              <h3>ג'י־פי־טי <span style="font-weight:600;color:var(--muted)">(GPT)</span></h3>
+              <p>עיבוד וניתוח החומר והפיכתו למבנה מסודר לקראת הסיווג.</p>
+            </article>
+            <article class="info-card">
+              <div class="num">3</div>
+              <h3>ג'מיני <span style="font-weight:600;color:var(--muted)">(Gemini)</span></h3>
+              <p>הצלבה ובקרה נוספת על הניתוח ועל ההערכות שנגזרו ממנו.</p>
+            </article>
+          </div>
+          <p style="margin-top:14px">
+            <strong>קלוד (Claude)</strong> משמש כ<strong>ראש הצוות והמתכנת הראשי</strong> של המיזם —
+            אחראי על האינטגרציה בין השלבים, על פיתוח הקוד ועל הבקרה הכוללת.
+          </p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>מסלול העיון לפני פרסום:</strong>
+        החומר נשלח למועמד/ת כדי לאפשר בדיקה הוגנת לפני חשיפה ציבורית. ניתן לבקש תיקון עובדתי,
+        להוסיף מקור רלוונטי, להעיר על ניסוח שעלול להטעות, או לבקש שלא להיכלל בפרסום הציבורי.
+        אם לא תתקבל תגובה עד המועד שנקבע, הדבר לא יוצג כאישור, אלא רק כ"לא התקבלה תגובה".
+        גם לאחר פרסום, תיקון עובדתי מבוסס מקור יוכל להיבחן ולעדכן את המסמכים.
+      </div>
+
+      <div class="app-card">
+        <div>
+          <span class="status-pill">היישום עדיין מתעדכן</span>
+          <h3>כניסה ליישום ד.ב.ר</h3>
+          <p>
+            לצורך הבנת המערכת המלאה, ניתן להיכנס ליישום עצמו ולראות את סביבת הבחירה,
+            המסכים והאופן שבו נבחרות ומועמדים מוצגים לבוחר.
+          </p>
+          <p>
+            חשוב לדעת: היישום עדיין עובר שינויים והתאמות לקראת פעולת הסיווג המלאה,
+            ולכן ייתכנו הבדלים בין גרסת ההדגמה הנוכחית לבין הגרסה שתשמש בהמשך.
+          </p>
+        </div>
+        <div class="button-row">
+          <a class="app-button" href="https://amnonsussman.github.io/dbr_2026/dbr_P_01_index.html" target="_blank" rel="noopener">כניסה בולטת ליישום</a>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>כיצד מוצגים החומרים באתר:</strong>
+        המסמכים שלפניך — התיק העובדתי ודף ההערכות — <strong>אינם מוצגים כפי שהם בפרופיל המועמד/ת באתר</strong>.
+        הם משמשים את האלגוריתם המסווג לנבחרות. רק <strong>חלק מהנתונים</strong> מוצג לבוחר/ת בפרופיל,
+        כדי להסביר מדוע המועמד/ת דורג/ה בנבחרת מסוימת.
+        את פרופילי המועמדים כפי שהם מוצגים לבוחר ניתן לראות כאן:
+        <a href="https://amnonsussman.github.io/dbr_2026/dbr_P_01_shiryun.html" target="_blank" rel="noopener">פרופילי המועמדים באתר</a>.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>שני המסמכים</h2>
+      <p>
+        לצד היישום עצמו, ההצגה מחולקת לשני דפים נפרדים: הראשון מציג את בסיס העובדות,
+        והשני מציג את תוצאת הסיווג לנבחרות.
+      </p>
+
+      <div class="two-docs">
+        <article class="doc-card">
+          <div>
+            <span class="doc-type">מסמך בסיס</span>
+            <h3>התיק העובדתי — שלב שני</h3>
+            <p>
+              זהו הדף שמציג את חומר הגלם המעובד: תפקידים, ניסיון, עמדות מוצהרות,
+              תחומים שבהם אין מידע מספיק, טענות שדורשות בדיקה ומגבלות התיק.
+            </p>
+            <ul>
+              <li>מיועד לבדוק את בסיס העובדות.</li>
+              <li>אינו מדרג ואינו משבץ לנבחרות.</li>
+              <li>מאפשר לזהות מידע חסר או טענה שצריך לתקן.</li>
+            </ul>
+          </div>
+          <div class="button-row">
+            <a class="button" href="gk971.html">לפתיחת התיק העובדתי</a>
+            <a class="secondary-link" href="gk971.html" target="_blank" rel="noopener">פתח בלשונית חדשה</a>
+          </div>
+        </article>
+
+        <article class="doc-card green">
+          <div>
+            <span class="doc-type">תוצאת סיווג</span>
+            <h3>דף השיבוץ לנבחרות</h3>
+            <p>
+              זהו הדף שמציג את ההערכות הסופיות של גלעד קריב בכל נבחרת,
+              ואת ההסבר התמציתי למשמעות השיבוץ.
+            </p>
+            <ul>
+              <li>מציג את דירוג ההתאמה לנבחרות.</li>
+              <li>מפריד בין תחומי ליבה, התאמה חלקית והיעדר עוגן מספיק.</li>
+              <li>משמש להשוואה בהמשך מול כלל המועמדים.</li>
+            </ul>
+          </div>
+          <div class="button-row">
+            <a class="button" href="gk972.html">לפתיחת דף השיבוץ</a>
+            <a class="secondary-link" href="gk972.html" target="_blank" rel="noopener">פתח בלשונית חדשה</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>מה ההבדל בין שני הדפים?</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>שאלה</th>
+            <th>התיק העובדתי</th>
+            <th>דף השיבוץ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="שאלה">מה הוא מציג?</td>
+            <td data-label="התיק העובדתי">את בסיס המידע: תפקידים, פעילות, עמדות, מגבלות ומידע חסר.</td>
+            <td data-label="דף השיבוץ">את ההערכות הסופיות של המועמד בכל נבחרת נושאית.</td>
+          </tr>
+          <tr>
+            <td data-label="שאלה">למה הוא מיועד?</td>
+            <td data-label="התיק העובדתי">לבדיקת העובדות שעליהן נשען הסיווג.</td>
+            <td data-label="דף השיבוץ">להבנת המיקום של המועמד בתוך הנבחרות.</td>
+          </tr>
+          <tr>
+            <td data-label="שאלה">מה אפשר לערער?</td>
+            <td data-label="התיק העובדתי">עובדות חסרות, עובדות שגויות, טענות שדורשות תיקון או מידע נוסף.</td>
+            <td data-label="דף השיבוץ">את פרשנות השיבוץ או ההערכה, בעיקר כאשר מוצג מידע עובדתי נוסף.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <strong>הערה חשובה:</strong>
+        הערכה נמוכה או היעדר עוגן בנבחרת מסוימת אינה קובעת שהמועמד מתנגד לנושא, אינה קובעת שאינו מתאים,
+        ואינה מהווה הערכת איכות כללית. המשמעות היא שבחומר שנבדק לא נמצא עוגן עובדתי מספיק
+        לשיבוץ גבוה באותה נבחרת, אלא אם עודכן אחרת בעקבות מקור נוסף או תיקון עובדתי.
+      </div>
+    </section>
+
+    <footer class="footer">
+      ד.ב.ר — דמוקרטים בוחרים רציונלית · דף עיון ותיקון למועמד/ת לפני פרסום · יוני 2026
+    </footer>
+  </main>
+</body>
+</html>

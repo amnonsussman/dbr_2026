@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ד.ב.ר — תיק עובדתי</title>
+  <style>
+    :root{
+      --bg:#f4f2ec;--ink:#18212f;--muted:#5f6673;--line:#ddd4c4;
+      --blue:#1f5f8b;--blue-dark:#174867;--green:#28745f;--amber:#b6781f;
+      --soft-blue:#e8f1f7;--soft-green:#e8f4ef;--soft-amber:#fbf0dc;
+      --shadow:0 18px 45px rgba(28,36,50,.12);--radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75}
+    #loading{text-align:center;padding:80px 20px;color:var(--muted);font-size:1.2rem}
+    a{color:var(--blue)}
+    /* ── Layout ── */
+    .wrapper{display:grid;grid-template-columns:240px 1fr;gap:28px;
+      width:min(1140px,calc(100% - 32px));margin:32px auto 64px;align-items:start}
+    /* ── Sidebar ── */
+    .sidebar{position:sticky;top:24px}
+    .nav-block{background:white;border:1px solid var(--line);border-radius:20px;
+      box-shadow:0 6px 22px rgba(28,36,50,.07);overflow:hidden}
+    .nav-block header{padding:16px 18px;background:var(--soft-blue);
+      border-bottom:1px solid var(--line);font-weight:800;color:var(--blue-dark);font-size:.95rem}
+    .nav-block a{display:block;padding:11px 18px;color:#3d4654;text-decoration:none;
+      font-size:.92rem;border-bottom:1px solid var(--line);transition:background .15s}
+    .nav-block a:hover{background:var(--soft-blue)}
+    .nav-block a:last-child{border-bottom:none}
+    .nav-block .active{color:var(--blue-dark);font-weight:700;background:rgba(31,95,139,.07)}
+    .meta-block{margin-top:16px;background:white;border:1px solid var(--line);
+      border-radius:20px;padding:18px;box-shadow:0 6px 22px rgba(28,36,50,.07)}
+    .meta-card{margin-bottom:14px}
+    .meta-card span{display:block;font-size:.82rem;color:var(--muted);margin-bottom:2px}
+    .meta-card strong{font-size:.93rem}
+    .meta-card:last-child{margin-bottom:0}
+    /* ── Main content ── */
+    .main{min-width:0}
+    /* ── Hero ── */
+    .hero{background:linear-gradient(135deg,#1a3a52 0%,var(--blue-dark) 60%,#163e5c 100%);
+      color:white;border-radius:var(--radius);padding:34px 36px 28px;
+      box-shadow:0 22px 48px rgba(23,72,103,.32);margin-bottom:22px;position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;inset-inline-end:-60px;top:-70px;
+      width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.07)}
+    .hero-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;position:relative}
+    .brand-mark{width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,.2);
+      display:grid;place-items:center;font-weight:900;font-size:.95rem}
+    .stage-badge{background:rgba(255,255,255,.18);border-radius:999px;
+      padding:6px 14px;font-size:.9rem;border:1px solid rgba(255,255,255,.25)}
+    .hero h1{margin:0 0 8px;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:900;position:relative}
+    .hero .sub{font-size:1.05rem;opacity:.82;position:relative}
+    /* ── Insight cards ── */
+    .insights{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:22px}
+    .insight-card{border-radius:18px;padding:20px;border:1px solid}
+    .insight-card.blue{background:var(--soft-blue);border-color:rgba(31,95,139,.2)}
+    .insight-card.green{background:var(--soft-green);border-color:rgba(40,116,95,.2)}
+    .insight-card.amber{background:var(--soft-amber);border-color:rgba(182,120,31,.22)}
+    .insight-card h3{margin:0 0 8px;font-size:1.05rem}
+    .insight-card.blue h3{color:var(--blue-dark)}
+    .insight-card.green h3{color:#1e5949}
+    .insight-card.amber h3{color:#6a4717}
+    .insight-card p{margin:0;font-size:.97rem}
+    /* ── Notice ── */
+    .notice{background:var(--soft-amber);border:1px solid rgba(182,120,31,.22);
+      border-radius:18px;padding:18px 20px;margin-bottom:22px;
+      font-size:.97rem;color:#4b3a20}
+    /* ── Dossier content ── */
+    .content{background:white;border:1px solid var(--line);border-radius:var(--radius);
+      padding:36px;box-shadow:0 14px 32px rgba(28,36,50,.07)}
+    .content h2{font-size:1.7rem;color:var(--blue-dark);margin:0 0 16px;
+      padding-bottom:12px;border-bottom:2px solid var(--line);scroll-margin-top:80px}
+    .content h3{font-size:1.2rem;color:#233040;margin:24px 0 10px}
+    .content p{margin:0 0 14px;color:#2d3a46}
+    .content ul{padding-inline-start:22px;margin:0 0 14px}
+    .content li{margin-bottom:7px;color:#2d3a46}
+    .content table{width:100%;border-collapse:collapse;margin:18px 0;
+      border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+    .content th{background:var(--soft-blue);padding:13px 14px;
+      font-weight:800;color:var(--blue-dark);text-align:right;border-bottom:1px solid var(--line)}
+    .content td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+    .content tr:last-child td{border-bottom:none}
+    .content tr:nth-child(even) td{background:#fafaf8}
+    .content .section-label{display:inline-flex;padding:5px 12px;background:var(--soft-blue);
+      color:var(--blue-dark);border-radius:999px;font-size:.87rem;font-weight:700;margin-bottom:12px}
+    .content hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+    .footer{margin-top:24px;padding:18px 22px;color:var(--muted);text-align:center;
+      font-size:.9rem;background:white;border-radius:16px;border:1px solid var(--line)}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    a.btn{display:inline-flex;align-items:center;padding:10px 18px;border-radius:14px;
+      color:white;background:var(--blue);text-decoration:none;font-weight:700;font-size:.95rem}
+    @media(max-width:820px){
+      .wrapper{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .insights{grid-template-columns:1fr}
+      .content{padding:24px 20px}
+    }
+  </style>
+</head>
+<body>
+<div id="loading">טוען תיק עובדתי...</div>
+<script>
+(async () => {
+  const raw  = location.search.slice(1);
+  const code = raw.replace(/\d+$/, '').toUpperCase();
+  if (!code) { document.getElementById('loading').textContent = 'קוד מועמד חסר בכתובת'; return; }
+
+  let d, contentHtml;
+  try {
+    const [rJson, rContent] = await Promise.all([
+      fetch(`candidates/${code}.json`),
+      fetch(`candidates/${code}_dossier_content.html`)
+    ]);
+    if (!rJson.ok)    throw new Error(`${code}.json — ${rJson.status}`);
+    if (!rContent.ok) throw new Error(`${code}_dossier_content.html — ${rContent.status}`);
+    d           = await rJson.json();
+    contentHtml = await rContent.text();
+  } catch(e) {
+    document.getElementById('loading').textContent = 'שגיאה בטעינה: ' + e.message;
+    return;
+  }
+
+  const prefix   = raw.replace(/\d+$/, '');
+  const introUrl  = `100.html?${prefix}${d.page_codes.intro}`;
+  const scoresUrl = `102.html?${prefix}${d.page_codes.scores}`;
+
+  document.title = `ד.ב.ר — תיק עובדתי שלב שני | ${d.name}`;
+
+  const metaFields = [
+    ['שם המועמד/ת',           d.name],
+    ['מקור גולמי',            'פרפלקסיטי'],
+    ['מנוע איסוף',            'sonar-pro'],
+    ['תאריך תיק גולמי',       d.dossier_date],
+    ['עורך בכיר',             'ג\'מיני'],
+    ['מידע חדש נוסף',         d.dossier_new_info || 'לא'],
+    ['מטרת המסמך',            'תיק עובדתי שלב שני'],
+  ];
+  const metaHtml = metaFields.map(([l,v]) =>
+    `<div class="meta-card"><span>${l}</span><strong>${v}</strong></div>`
+  ).join('');
+
+  document.getElementById('loading').outerHTML = `
+<div class="wrapper">
+  <aside class="sidebar">
+    <nav class="nav-block">
+      <header>תוכן העניינים</header>
+      <a href="#פרופיל-כללי">1. פרופיל כללי</a>
+      <a href="#ניסיון-פוליטי">2. ניסיון פוליטי</a>
+      <a href="#תפקידים-ציבוריים">3. תפקידים ציבוריים</a>
+      <a href="#פעילות-לפי-תקופות">4. פעילות לפי תקופות</a>
+      <a href="#תחומי-מדיניות">5. תחומי מדיניות</a>
+      <a href="#עמדות-מוצהרות">6. עמדות מוצהרות</a>
+      <a href="#היבטים-דמוגרפיים">7. היבטים דמוגרפיים</a>
+      <a href="#שיח-ציבורי">8. שיח ציבורי</a>
+      <a href="#מקורות-ומגבלות">9. מקורות ומגבלות</a>
+      <a href="#מידע-חסר">10. מידע חסר</a>
+      <a href="#טענות-לבדיקה">11. טענות לבדיקה</a>
+      <a href="#יומן-עדכונים">12. יומן עדכונים</a>
+    </nav>
+    <div class="meta-block">${metaHtml}</div>
+    <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+      <a class="btn" href="${introUrl}">חזרה לדף עיון</a>
+      <a class="btn" style="background:var(--green)" href="${scoresUrl}">לדף השיבוץ</a>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="hero">
+      <div class="hero-top">
+        <div class="brand-mark">ד.ב.ר</div>
+        <span class="stage-badge">תיק עובדתי — שלב שני</span>
+      </div>
+      <h1>${d.name} — תיק עובדתי</h1>
+      <p class="sub">ד.ב.ר · דמוקרטים בוחרים רציונלית</p>
+    </header>
+
+    <div class="insights">
+      <div class="insight-card blue">
+        <h3>ניסיון ופעילות מרכזית</h3>
+        <p>${d.insight_core}</p>
+      </div>
+      <div class="insight-card green">
+        <h3>ניסיון רלוונטי</h3>
+        <p>${d.insight_experience}</p>
+      </div>
+      <div class="insight-card amber">
+        <h3>${d.insight_missing_title || 'מידע חסר ומגבלות'}</h3>
+        <p>${d.insight_missing}</p>
+      </div>
+      <div class="insight-card amber" style="background:#fdf3ee;border-color:rgba(180,80,40,.2)">
+        <h3 style="color:#6a3010">הערת זהירות</h3>
+        <p>${d.insight_caution || 'התיק העובדתי אינו סיווג לנבחרות ואינו דירוג; הוא בסיס לשלב הסיווג.'}</p>
+      </div>
+    </div>
+
+    <div class="notice">${d.notice_dossier}</div>
+
+    <article class="content">${contentHtml}</article>
+
+    <footer class="footer">
+      תאריך עיבוד: ${d.render_date} · מקור: ${d.dossier_source || 'פרפלקסיטי sonar-pro'} ·
+      ד.ב.ר — דמוקרטים בוחרים רציונלית
+    </footer>
+  </main>
+</div>`;
+
+  // Highlight active TOC item on scroll
+  const sections = document.querySelectorAll('.content h2[id]');
+  const navLinks  = document.querySelectorAll('.nav-block a');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const l = document.querySelector(`.nav-block a[href="#${e.target.id}"]`);
+        if (l) l.classList.add('active');
+      }
+    });
+  }, {threshold:.35});
+  sections.forEach(s => io.observe(s));
+})();
+</script>
+</body>
+</html>

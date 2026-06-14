@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ד.ב.ר — תיק עובדתי שלב שני | גלעד קריב</title>
+  <style>
+    :root {
+      --bg: #f4f2ee;
+      --paper: #fffdf8;
+      --ink: #191713;
+      --muted: #6e665b;
+      --line: #dfd6c9;
+      --accent: #183a59;
+      --accent-2: #6c4f1f;
+      --accent-soft: #e8f0f6;
+      --gold-soft: #f3ead7;
+      --green-soft: #eaf2ed;
+      --warn-soft: #fff2df;
+      --shadow: 0 18px 46px rgba(39, 31, 19, .10);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, "Noto Sans Hebrew", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(24,58,89,.14), transparent 34rem),
+        radial-gradient(circle at bottom left, rgba(108,79,31,.13), transparent 34rem),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.72;
+    }
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 28px auto 64px;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: calc(var(--radius) + 8px);
+      padding: 34px 34px 28px;
+      background:
+        linear-gradient(135deg, rgba(24,58,89,.96), rgba(24,58,89,.84) 46%, rgba(108,79,31,.78)),
+        linear-gradient(0deg, #16324d, #16324d);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .hero:before {
+      content: "";
+      position: absolute;
+      inset: -60px auto auto -70px;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.09);
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .brand {
+      font-weight: 800;
+      letter-spacing: .04em;
+      color: #f1e6ce;
+      font-size: 1.02rem;
+    }
+    .doc-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      font-size: .92rem;
+      white-space: nowrap;
+    }
+    .dot {
+      width: 9px;
+      height: 9px;
+      background: #bfe1c8;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(191,225,200,.13);
+    }
+    h1 {
+      position: relative;
+      z-index: 1;
+      margin: 22px 0 6px;
+      font-size: clamp(2.05rem, 4.2vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+    .subtitle {
+      position: relative;
+      z-index: 1;
+      max-width: 850px;
+      color: rgba(255,255,255,.88);
+      font-size: 1.1rem;
+      margin: 0;
+    }
+    .hero-actions {
+      margin-top: 26px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 8px 13px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.23);
+      color: #fff;
+      font-size: .93rem;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 22px;
+      margin-top: 22px;
+      align-items: start;
+    }
+    aside {
+      position: sticky;
+      top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+    .panel, .content {
+      background: rgba(255,253,248,.93);
+      border: 1px solid rgba(223,214,201,.85);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 34px rgba(39, 31, 19, .06);
+    }
+    .panel {
+      padding: 18px;
+    }
+    .panel h2 {
+      font-size: 1.03rem;
+      margin: 0 0 12px;
+      color: var(--accent);
+    }
+    .toc {
+      display: grid;
+      gap: 7px;
+    }
+    .toc a {
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid transparent;
+      background: #faf7ef;
+      padding: 9px 11px;
+      border-radius: 12px;
+      font-size: .92rem;
+      line-height: 1.35;
+    }
+    .toc a:hover {
+      border-color: #c8b99f;
+      background: var(--gold-soft);
+    }
+    .meta-grid {
+      display: grid;
+      gap: 10px;
+    }
+    .meta-card {
+      background: #faf7ef;
+      border: 1px solid #eadfce;
+      border-radius: 14px;
+      padding: 10px 11px;
+    }
+    .meta-card span {
+      display: block;
+      color: var(--muted);
+      font-size: .78rem;
+      margin-bottom: 2px;
+    }
+    .meta-card strong {
+      display: block;
+      font-size: .95rem;
+      line-height: 1.36;
+    }
+    .notice {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: var(--warn-soft);
+      border: 1px solid #efd5aa;
+      color: #4b3415;
+      margin-bottom: 18px;
+    }
+    .insights {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0 18px;
+    }
+    .insight-card {
+      padding: 15px 16px;
+      border-radius: 18px;
+      background: #f9f6ef;
+      border: 1px solid #e8dcc8;
+    }
+    .insight-title {
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .insight-body {
+      color: #3f382e;
+      font-size: .96rem;
+    }
+    .content {
+      padding: 28px min(5vw, 48px);
+    }
+    .content h1 {
+      display: none;
+    }
+    .content h2 {
+      margin: 38px 0 12px;
+      padding-top: 8px;
+      font-size: clamp(1.35rem, 2.7vw, 2rem);
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+      color: var(--accent);
+      border-top: 1px solid var(--line);
+    }
+    .content h2:first-of-type {
+      margin-top: 18px;
+    }
+    .content h3 {
+      color: var(--accent-2);
+      margin: 24px 0 8px;
+      font-size: 1.15rem;
+    }
+    .content p {
+      margin: 0 0 13px;
+    }
+    .content ul, .content ol {
+      padding-right: 1.25rem;
+      margin: 8px 0 16px;
+    }
+    .content li {
+      margin: 7px 0;
+    }
+    .content strong {
+      color: #111;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 16px 0 24px;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(39,31,19,.04);
+    }
+    th, td {
+      text-align: right;
+      vertical-align: top;
+      padding: 12px 13px;
+      border-bottom: 1px solid #eee6da;
+      border-left: 1px solid #eee6da;
+    }
+    th {
+      background: var(--accent-soft);
+      color: #122f49;
+      font-weight: 800;
+    }
+    tr:last-child td {
+      border-bottom: 0;
+    }
+    td:last-child, th:last-child {
+      border-left: 0;
+    }
+    blockquote {
+      margin: 18px 0;
+      padding: 14px 18px;
+      border-right: 5px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 14px;
+    }
+    .footer {
+      margin-top: 22px;
+      padding: 18px 24px;
+      border-radius: var(--radius);
+      background: #ebe4d8;
+      color: #433a2f;
+      font-size: .92rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .print-button {
+      cursor: pointer;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: white;
+      background: var(--accent);
+      font-weight: 700;
+    }
+    .print-button:hover {
+      filter: brightness(1.08);
+    }
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        position: static;
+      }
+      .insights {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: 26px 20px;
+      }
+      .content {
+        padding: 22px 18px;
+      }
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: normal;
+      }
+    }
+    @media print {
+      body {
+        background: white;
+      }
+      .page {
+        width: 100%;
+        margin: 0;
+      }
+      .hero, .panel, .content, .footer {
+        box-shadow: none;
+      }
+      aside {
+        display: none;
+      }
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .print-button {
+        display: none;
+      }
+      .content h2 {
+        page-break-after: avoid;
+      }
+      table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <div class="brand">ד.ב.ר — דמוקרטים בוחרים רציונלית</div>
+        <div class="doc-status"><span class="dot"></span> תיק עובדתי שלב שני · בסיס לסיווג</div>
+      </div>
+      <h1>תיק עובדתי שלב שני<br>גלעד קריב</h1>
+      <p class="subtitle">מסמך מקור מסודר למועמד, המציג את העובדות, העוגנים, מגבלות המידע והזהירויות שעל בסיסם ניתן לבצע סיווג לנבחרות.</p>
+      <div class="hero-actions">
+        <span class="pill">לא דירוג</span>
+        <span class="pill">לא ציון לנבחרות</span>
+        <span class="pill">כן: בסיס עובדתי לסיווג</span>
+        <button class="print-button" onclick="window.print()">הדפסה / שמירה כ־PDF</button>
+      </div>
+    </header>
+
+    <section class="layout">
+      <aside>
+        <section class="panel">
+          <h2>ניווט במסמך</h2>
+          <nav class="toc">
+            <a href="#פרטי-מקור-ובקרת-איכות">1. פרטי מקור ובקרת איכות</a>
+<a href="#תקציר-עובדתי-זהיר">2. תקציר עובדתי זהיר</a>
+<a href="#עובדות-יציבות">3. עובדות יציבות</a>
+<a href="#פעילות-ציבורית-ופוליטית-לפי-תקופות">4. פעילות ציבורית ופוליטית לפי תקופות</a>
+<a href="#תפקידים-וניסיון">5. תפקידים וניסיון</a>
+<a href="#עמדות-מוצהרות">6. עמדות מוצהרות</a>
+<a href="#תדמית-וסיגנלים-ציבוריים">7. תדמית וסיגנלים ציבוריים</a>
+<a href="#תחומים-שבהם-אין-מידע-מספיק">8. תחומים שבהם אין מידע מספיק</a>
+<a href="#טענות-שדורשות-בדיקה">9. טענות שדורשות בדיקה</a>
+<a href="#מגבלות-התיק">10. מגבלות התיק</a>
+<a href="#מוכנות-לשלב-הסיווג">11. מוכנות לשלב הסיווג</a>
+<a href="#לוג-עריכה-בכירה">12. לוג עריכה בכירה</a>
+          </nav>
+        </section>
+        <section class="panel">
+          <h2>פרטי מקור</h2>
+          <div class="meta-grid">
+            <div class="meta-card"><span>שם המועמד/ת</span><strong>גלעד קריב</strong></div>
+<div class="meta-card"><span>הקשר</span><strong>מועמד/ת בפריימריז של מפלגת הדמוקרטים לקראת הכנסת ה-26</strong></div>
+<div class="meta-card"><span>מקור התיק הגולמי</span><strong>perplexity</strong></div>
+<div class="meta-card"><span>מנוע/מודל האיסוף</span><strong>sonar-pro</strong></div>
+<div class="meta-card"><span>תאריך יצירת התיק הגולמי</span><strong>2026-06-13</strong></div>
+<div class="meta-card"><span>עורך בכיר</span><strong>ג&#x27;מיני</strong></div>
+<div class="meta-card"><span>האם נוסף מידע חדש</span><strong>כן (אימות מקורות פומביים, רמת ודאות נמוכה)</strong></div>
+<div class="meta-card"><span>מטרת המסמך</span><strong>תיק עובדתי שלב שני לקראת שלב סיווג נפרד</strong></div>
+          </div>
+        </section>
+      </aside>
+
+      <article class="content">
+        <div class="notice">
+          <strong>אופי המסמך:</strong>
+          זהו תיק עובדתי שלב שני. הוא אינו קובע אם המועמד נכנס לנבחרת מסוימת, אלא מציג את בסיס המידע שממנו ניתן לגזור סיווגים, הערכות והערות זהירות.
+          בנקודות החלשות של התיק מבחינת העוגנים, עורך שלב הסיווג ינסה לחזק או למצוא עוגנים נוספים, ולא יתבסס על ממצאי התיק בלבד.
+        </div>
+
+        <section class="insights">
+          
+        <article class="insight-card">
+          <div class="insight-title">תחומי ליבה בתיק</div>
+          <div class="insight-body">שלטון החוק והדמוקרטיה · דת ומדינה · קשר עם יהדות התפוצות</div>
+        </article>
+
+        <article class="insight-card">
+          <div class="insight-title">ניסיון מרכזי</div>
+          <div class="insight-body">מנכ״ל התנועה הרפורמית כ־12 שנים · יו״ר ועדת החוקה · יו״ר ועדת העלייה והקליטה</div>
+        </article>
+
+        <article class="insight-card">
+          <div class="insight-title">זהירות מתודולוגית</div>
+          <div class="insight-body">התיק העובדתי אינו סיווג לנבחרות ואינו דירוג; הוא בסיס לשלב הסיווג.</div>
+        </article>
+
+        <article class="insight-card">
+          <div class="insight-title">תחומים חסרים</div>
+          <div class="insight-body">יוקר המחיה · פיתוח הנגב והגליל · הדור הבא · ירוק־חברתי</div>
+        </article>
+        </section>
+
+        <h1>תיק עובדתי שלב שני — גלעד קריב</h1>
+<h2 id="פרטי-מקור-ובקרת-איכות">1. פרטי מקור ובקרת איכות</h2>
+<ul>
+<li>שם המועמד/ת: גלעד קריב</li>
+<li>הקשר: מועמד/ת בפריימריז של מפלגת הדמוקרטים לקראת הכנסת ה-26</li>
+<li>מקור התיק הגולמי: perplexity</li>
+<li>מנוע/מודל האיסוף: sonar-pro</li>
+<li>תאריך יצירת התיק הגולמי: 2026-06-13</li>
+<li>עורך בכיר: ג'מיני</li>
+<li>האם נוסף מידע חדש: כן (אימות מקורות פומביים, רמת ודאות נמוכה)</li>
+<li>מטרת המסמך: תיק עובדתי שלב שני לקראת שלב סיווג נפרד</li>
+</ul>
+<h2 id="תקציר-עובדתי-זהיר">2. תקציר עובדתי זהיר</h2>
+<p>גלעד קריב הוא חבר כנסת מכהן מטעם מפלגת הדמוקרטים, רב רפורמי ועורך דין. לפני כניסתו לכנסת בשנת 2021, כיהן במשך כ-12 שנים כמנכ&quot;ל התנועה הרפורמית בישראל. בכנסת ה-24 שימש כיושב ראש ועדת החוקה, חוק ומשפט, ובכנסת ה-25 כיושב ראש ועדת העלייה, הקליטה והתפוצות. פעילותו הציבורית והפרלמנטרית מתמקדת באופן מובהק בנושאי שלטון החוק, דמוקרטיה, יחסי דת ומדינה וקשר עם יהדות התפוצות. הוא מזוהה עם התנגדות לשינויים במערכת המשפט שהוצעו על ידי הממשלה ה-37 ועם קו אופוזיציוני מובהק.</p>
+<h2 id="עובדות-יציבות">3. עובדות יציבות</h2>
+<ul>
+<li><strong>השכלה והכשרה:</strong> עורך דין ורב מוסמך מטעם התנועה הרפורמית.</li>
+<li><strong>שיוך מפלגתי:</strong> חבר כנסת מטעם מפלגת העבודה (הכנסת ה-24 וה-25), וכיום חבר כנסת מטעם מפלגת הדמוקרטים.</li>
+<li><strong>תפקידים פרלמנטריים:</strong><ul>
+<li>חבר כנסת מאז מרץ 2021.</li>
+<li>יו&quot;ר ועדת החוקה, חוק ומשפט (הכנסת ה-24, 2021-2022).</li>
+<li>יו&quot;ר ועדת העלייה, הקליטה והתפוצות (הכנסת ה-25, מ-2022).</li>
+</ul>
+</li>
+<li><strong>תפקיד ציבורי מרכזי לפני הכנסת:</strong> מנכ&quot;ל התנועה ליהדות מתקדמת בישראל (התנועה הרפורמית) בשנים 2009–2021.</li>
+</ul>
+<h2 id="פעילות-ציבורית-ופוליטית-לפי-תקופות">4. פעילות ציבורית ופוליטית לפי תקופות</h2>
+<ul>
+<li><strong>עד 2021 (טרם כניסתו לכנסת):</strong><ul>
+<li><strong>פעילות:</strong> שימש כמנכ&quot;ל התנועה הרפורמית. במסגרת זו, הוביל מאבקים ציבוריים ומשפטיים בנושאי פלורליזם דתי, שוויון בין הזרמים ביהדות, מתווה הכותל, גיור, שוויון בנטל ונושאים נוספים של דת ומדינה.</li>
+</ul>
+</li>
+<li><strong>2021 – 2022 (הכנסת ה-24, קואליציה):</strong><ul>
+<li><strong>פעילות:</strong> נבחר לכנסת מטעם מפלגת העבודה. כיהן כיו&quot;ר ועדת החוקה, חוק ומשפט, תפקיד שבמסגרתו ניהל את הליכי החקיקה בנושאים חוקתיים ומשפטיים.</li>
+</ul>
+</li>
+<li><strong>2022 – היום (הכנסת ה-25, אופוזיציה):</strong><ul>
+<li><strong>פעילות:</strong> נבחר מחדש לכנסת. מכהן כיו&quot;ר ועדת העלייה, הקליטה והתפוצות. הפך לדמות בולטת בפעילות הפרלמנטרית והציבורית נגד הרפורמה המשפטית שהובילה הממשלה, בין היתר בדיוני ועדת החוקה ובהפגנות.</li>
+<li><strong>פעילות מפלגתית:</strong> עבר עם מפלגת העבודה למסגרת הפוליטית החדשה &quot;הדמוקרטים&quot;.</li>
+</ul>
+</li>
+</ul>
+<h2 id="תפקידים-וניסיון">5. תפקידים וניסיון</h2>
+<ul>
+<li><strong>ניסיון ניהולי מוכח:</strong><ul>
+<li><strong>מנכ&quot;ל התנועה הרפורמית (כ-12 שנים):</strong> ניהול ארגון ארצי הכולל קהילות, מוסדות חינוך ופעילות ציבורית ענפה. הניסיון כולל ניהול צוות, תקציבים, קשרי חוץ וייצוג ציבורי מול הכנסת, הממשלה ובתי המשפט.</li>
+</ul>
+</li>
+<li><strong>ניסיון ציבורי ופרלמנטרי:</strong><ul>
+<li><strong>יו&quot;ר ועדת החוקה, חוק ומשפט:</strong> ניהול דיונים פרלמנטריים מורכבים וטעונים בנושאי ליבה של המשטר הדמוקרטי בישראל.</li>
+<li><strong>יו&quot;ר ועדת העלייה, הקליטה והתפוצות:</strong> ניהול סדר היום הפרלמנטרי בנושאים הקשורים לקליטת עלייה ולקשר עם יהדות העולם.</li>
+</ul>
+</li>
+<li><strong>ניסיון מקצועי:</strong><ul>
+<li><strong>עורך דין:</strong> בעל הכשרה משפטית.</li>
+</ul>
+</li>
+<li><strong>ניסיון פוליטי:</strong><ul>
+<li>חבר כנסת מכהן, התמודד ונבחר בשתי מערכות בחירות. בעל ניסיון בעבודה קואליציונית ואופוזיציונית.</li>
+</ul>
+</li>
+<li><strong>מה לא ניתן להסיק מהמידע הקיים:</strong><ul>
+<li>לא ניתן להסיק על ניסיון בניהול מערכות ממשלתיות גדולות (כגון משרד ממשלתי).</li>
+<li>לא ניתן להסיק על ניסיון ישיר בקבלת החלטות בתחומי ביטחון לאומי או מדיניות כלכלית-פיסקלית.</li>
+</ul>
+</li>
+</ul>
+<h2 id="עמדות-מוצהרות">6. עמדות מוצהרות</h2>
+<ul>
+<li><strong>שלטון החוק והדמוקרטיה:</strong> מתנגד באופן עקבי ונחרץ לשינויים במערכת המשפט שהוצעו על ידי ממשלת נתניהו ה-37, אותם הוא מכנה &quot;הפיכה משטרית&quot;. תומך בשמירה על עצמאות בית המשפט ועל האיזונים והבלמים בין הרשויות.</li>
+<li><strong>יחס לממשלה הנוכחית:</strong> מביע עמדה אופוזיציונית חריפה. בנאום מתועד (יוני 2026) תיאר את הממשלה כ&quot;הגרועה וההרסנית ביותר בתולדות ישראל&quot; והכריז על &quot;מערכה היסטורית&quot; נגדה.</li>
+<li><strong>דת ומדינה:</strong> תומך בפלורליזם דתי, שוויון מלא בין כל זרמי היהדות, והפרדת הדת מהמדינה בנושאים אזרחיים (כגון נישואין וגיור). עמדה זו עקבית לאורך כל פעילותו הציבורית.</li>
+<li><strong>דמוקרטיה פנים-מפלגתית:</strong> מציג את מפלגת &quot;הדמוקרטים&quot; כמפלגה המחויבת לדמוקרטיה פנימית וקורא להשתתפות ציבורית בפריימריז. באחד מפרסומיו טען כי היא &quot;המפלגה הדמוקרטית היחידה בישראל&quot; (סיסמת קמפיין).</li>
+<li><strong>יחסי חוץ וביטחון:</strong><ul>
+<li>מזוהה אידאולוגית עם &quot;מחנה השלום&quot; ותומך בפתרון מדיני לסכסוך.</li>
+<li>בריאיון (אפריל 2026) טען כי &quot;השלטון הקטארי עזר לנתניהו בבחירות הקודמות&quot;. זוהי טענה פוליטית חריפה שהועלתה ללא הצגת ראיות.</li>
+</ul>
+</li>
+<li><strong>שאיפות אלקטורליות:</strong> בריאיון (פברואר 2026) הצהיר כי מפלגת הדמוקרטים &quot;מכוונת ל-15-20 מנדטים&quot; וכי זהו &quot;יעד סביר&quot;.</li>
+</ul>
+<h2 id="תדמית-וסיגנלים-ציבוריים">7. תדמית וסיגנלים ציבוריים</h2>
+<ul>
+<li><strong>&quot;לוחם למען הדמוקרטיה&quot;:</strong> מתומכיו וממפלגתו הוא ממותג כדמות מובילה במאבק הפרלמנטרי והציבורי להגנת שלטון החוק ומערכת המשפט. תדמית זו מתבססת על תפקידו לשעבר כיו&quot;ר ועדת החוקה ועל פעילותו הבולטת באופוזיציה.</li>
+<li><strong>נציג היהדות הליברלית:</strong> בשל עברו כמנכ&quot;ל התנועה הרפורמית והיותו רב רפורמי, הוא נתפס בציבור כנציג מובהק של היהדות הפלורליסטית והלא-אורתודוקסית בישראל.</li>
+<li><strong>אופוזיציונר חריף:</strong> משדר קו תקיף ובלתי מתפשר כלפי הממשלה וראש הממשלה, המבוסס על רטוריקה חריפה והאשמות פוליטיות.</li>
+<li><strong>פרלמנטר חרוץ:</strong> מפלגתו מציגה אותו כבעל נוכחות גבוהה בוועדות הכנסת, במטרה לסמן אותו כחבר כנסת רציני ופעיל. (טענה זו דורשת אימות חיצוני).</li>
+</ul>
+<h2 id="תחומים-שבהם-אין-מידע-מספיק">8. תחומים שבהם אין מידע מספיק</h2>
+<p>בדיקה שיטתית של תשע הנבחרות העלתה כי עבור התחומים הבאים אין בתיק הגולמי עוגן עובדתי ברור (עמדה מפורטת, הצעת חוק, או פעילות ייעודית):</p>
+<ol>
+<li><strong>יוקר המחיה והביטחון הכלכלי:</strong> אין מידע על משנה כלכלית סדורה או על פעילות ממוקדת בתחום זה.</li>
+<li><strong>פיתוח הנגב והגליל:</strong> אין מידע על עמדות או פעילות ספציפית בנושא פיתוח אזורי.</li>
+<li><strong>הדור הבא:</strong> מעבר לעיסוק בחינוך יהודי-פלורליסטי במסגרת התנועה הרפורמית, אין מידע על עמדות ספציפיות בנושאי חינוך ממלכתי, צעירים או השכלה גבוהה.</li>
+<li><strong>ירוק־חברתי / סביבה וחברה:</strong> בעוד שקיימת זיקה לנושאים חברתיים כלליים, אין מידע על עמדות או פעילות בתחום איכות הסביבה והמשבר האקולוגי.</li>
+</ol>
+<h2 id="טענות-שדורשות-בדיקה">9. טענות שדורשות בדיקה</h2>
+<table>
+<thead>
+<tr>
+  <th>טענה</th>
+  <th>למה דרושה בדיקה</th>
+  <th>איזה מקור או סוג מקור צריך</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>קריב דורג במקום השני באופוזיציה והשלישי בכלל הכנסת בהיקף ההגעה לוועדות בכנסת ה-25.</td>
+  <td>הטענה מגיעה ממקור מפלגתי (&quot;הדמוקרטים&quot;) ומשמשת לצרכי קמפיין. היא עובדתית וניתנת לבדיקה.</td>
+  <td>נתונים רשמיים של הכנסת על נוכחות חברי כנסת בוועדות, או בדיקה של גוף מחקר בלתי תלוי (כמו &quot;שקוף&quot; או &quot;המשמר החברתי&quot;).</td>
+</tr>
+<tr>
+  <td>&quot;השלטון הקטארי עזר לנתניהו בבחירות הקודמות&quot;.</td>
+  <td>זוהי האשמה חמורה שהועלתה בריאיון. היא מוצגת כעמדה, אך יש לה פוטנציאל עובדתי.</td>
+  <td>מקורות מודיעיניים, תחקירים עיתונאיים חוצי גבולות, או מסמכים רשמיים. סבירות נמוכה לאימות פומבי.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="מגבלות-התיק">10. מגבלות התיק</h2>
+<ul>
+<li>התיק מבוסס על מקורות פומביים, שחלקם (כמו אתר המפלגה ודפים ברשתות חברתיות) הם בעלי אופי של קידום מכירות ואינם אובייקטיביים.</li>
+<li>התיק מתמקד בפעילותו הציבורית הבולטת ואינו כולל מיפוי שיטתי של כל הצעות החוק שהיה שותף להן או של כל הצבעותיו במליאה.</li>
+<li>חסר מידע מפורט על עמדותיו בתחומים כלכליים, סביבתיים וחברתיים ספציפיים, שאינם במוקד פעילותו המוכרת.</li>
+</ul>
+<h2 id="מוכנות-לשלב-הסיווג">11. מוכנות לשלב הסיווג</h2>
+<p><strong>מוכן לסיווג עם הערות זהירות.</strong>
+התיק מספק תמונה ברורה ועובדתית על תחומי הליבה של המועמד (שלטון החוק, דת ומדינה, הנהגה ציבורית). עם זאת, יש לנקוט זהירות בסיווגו לנבחרות שבהן המידע חסר (כמו יוקר מחיה וסביבה), ולהתייחס אליהן כאל תחומים שאינם במוקד פעילותו הידועה, ולאו דווקא כהיעדר עמדה.</p>
+<h2 id="לוג-עריכה-בכירה">12. לוג עריכה בכירה</h2>
+<h3 id="טענות-שהושארו">טענות שהושארו</h3>
+<ul>
+<li>תפקידיו כמנכ&quot;ל התנועה הרפורמית וכיו&quot;ר ועדות בכנסת.</li>
+<li>עמדותיו המוצהרות בנושאי דת ומדינה, שלטון החוק והרפורמה המשפטית.</li>
+<li>ציטוטים ישירים מראיונות ונאומים, תוך ציון ההקשר.</li>
+</ul>
+<h3 id="טענות-שהוחלשו">טענות שהוחלשו</h3>
+<ul>
+<li>&quot;מנהיג המאבק בהפיכה המשטרית&quot; הוחלש ל&quot;דמות מרכזית/בולטת במאבק&quot; ו&quot;פעיל מרכזי&quot;, כדי לשקף קיומם של מובילים נוספים.</li>
+<li>&quot;איש מחנה השלום&quot; נוסח כ&quot;מזוהה אידאולוגית עם מחנה השלום&quot;, כדי להפריד בין תדמית למשנה מדינית מפורטת.</li>
+<li>&quot;יכולת ניהול&quot; הוחלשה ל&quot;ניסיון ניהולי מוכח&quot;, כדי להתבסס על עובדות (תפקיד) ולא על הערכת ביצועים.</li>
+</ul>
+<h3 id="טענות-שהוסרו-או-לא-הועברו-לגוף-המרכזי">טענות שהוסרו או לא הועברו לגוף המרכזי</h3>
+<ul>
+<li>סעיף &quot;נושאי חוזקה אפשריים&quot; מהתיק הגולמי הוסר במלואו, מכיוון שהוא כלל סיווג ודירוג (&quot;ליבה&quot;, &quot;חזקה&quot;), בניגוד להנחיות. המידע העובדתי מתוכו שולב בסעיפים הרלוונטיים.</li>
+<li>סעיף &quot;יכולת ביצוע ציבורית ופוליטית&quot; פורק. העובדות מתוכו (תפקידים) הועברו לסעיף &quot;תפקידים וניסיון&quot;, וההערכות (כמו &quot;יכולת חיבור&quot;) הוסרו.</li>
+</ul>
+<h3 id="טענות-שסומנו-דורש-בדיקה">טענות שסומנו דורש בדיקה</h3>
+<ul>
+<li>הטענה הסטטיסטית על נוכחות בוועדות, שמקורה מפלגתי, הועברה לסעיף 9.</li>
+<li>הטענה על סיוע קטארי לנתניהו צוינה בסעיף 9 כטענה חמורה הדורשת בדיקה, אך הושארה גם בסעיף &quot;עמדות מוצהרות&quot; כביטוי לקו האופוזיציוני שלו.</li>
+</ul>
+<h3 id="תחומים-שסומנו-אין-מידע-מספיק">תחומים שסומנו אין מידע מספיק</h3>
+<ul>
+<li>נבדקו כל תשע הנבחרות.</li>
+<li><strong>יוקר המחיה, פיתוח הנגב והגליל, הדור הבא, ירוק-חברתי</strong> סומנו ככאלה שאין להם עוגן עובדתי מספק בתיק הגולמי.</li>
+<li><strong>שלום וביטחון ושותפות יהודית-ערבית:</strong> נמצאה זיקה אידאולוגית כללית, אך לא נמצאו מספיק פרטים על פעילות קונקרטית או הצעות מדיניות, ולכן לא הוסרו מהבדיקה אך לא סומנו כחסרי מידע לחלוטין.</li>
+</ul>
+<h3 id="ממצאי-אימות">ממצאי אימות</h3>
+<ul>
+<li>בוצע חיפוש פומבי עבור התחומים שסומנו כ&quot;אין מידע מספיק&quot;.</li>
+<li><strong>יוקר המחיה:</strong> נמצאו התבטאויות כלליות שלו בוועדת הכספים ובמליאה הקושרות בין מדיניות הממשלה לפגיעה בשכבות החלשות, אך לא נמצאה תוכנית כלכלית סדורה או הצעת חוק מרכזית מטעמו. המידע אינו מספיק כדי להסיר את התחום מסעיף 8.</li>
+<li><strong>סביבה ופיתוח הנגב והגליל:</strong> לא נמצא מידע משמעותי בפומבי המצביע על עיסוק ממוקד בתחומים אלו.</li>
+<li>הממצאים מחזקים את ההחלטה להשאיר את התחומים הללו בסעיף 8.</li>
+</ul>
+<p>המסמך הזה הוא תיק עובדתי שלב שני. הוא אינו סיווג לנבחרות ואינו דירוג מועמד/ת.</p>
+
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>נוצר עבור ד.ב.ר · 2026-06-14</span>
+      <span>קובץ מקור: גלעד_קריב__final_dossier(2).md</span>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ד.ב.ר — אינדקס מועמדים</title>
+  <style>
+    :root{
+      --bg:#f4f2ec;--ink:#18212f;--muted:#5f6673;--line:#ddd4c4;
+      --blue:#1f5f8b;--blue-dark:#174867;--green:#28745f;
+      --soft-blue:#e8f1f7;--shadow:0 8px 24px rgba(28,36,50,.09);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+    .page{width:min(860px,calc(100% - 32px));margin:36px auto 64px}
+    header{background:linear-gradient(135deg,#1a3a52,var(--blue-dark));color:white;
+      border-radius:22px;padding:32px 36px;margin-bottom:28px;
+      box-shadow:0 18px 40px rgba(23,72,103,.28)}
+    header h1{margin:0 0 6px;font-size:2rem;font-weight:900}
+    header p{margin:0;opacity:.82;font-size:1.05rem}
+    .count{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;
+      padding:4px 14px;font-size:.9rem;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:white;border-radius:18px;
+      overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+    thead tr{background:var(--soft-blue)}
+    th{padding:14px 18px;text-align:right;font-weight:800;color:var(--blue-dark);
+      font-size:.95rem;border-bottom:2px solid var(--line)}
+    td{padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#fafaf7}
+    .code{font-family:monospace;font-size:1.05rem;font-weight:700;color:var(--blue-dark);
+      background:var(--soft-blue);padding:3px 10px;border-radius:8px;display:inline-block}
+    .name{font-weight:700;font-size:1.08rem}
+    .links{display:flex;gap:8px;flex-wrap:wrap}
+    a.lnk{display:inline-flex;align-items:center;padding:6px 13px;border-radius:10px;
+      text-decoration:none;font-size:.88rem;font-weight:700;white-space:nowrap}
+    a.lnk.intro{background:var(--soft-blue);color:var(--blue-dark)}
+    a.lnk.dossier{background:#e8f4ef;color:#1e5949}
+    a.lnk.scores{background:#fbf0dc;color:#6a4717}
+    a.lnk:hover{opacity:.8}
+    #loading{text-align:center;padding:60px 20px;color:var(--muted)}
+    .footer{margin-top:18px;text-align:center;color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>ד.ב.ר — אינדקס מועמדים</h1>
+    <p>דמוקרטים בוחרים רציונלית · מערכת תומכת החלטה לפריימריז</p>
+    <div id="count" class="count">טוען...</div>
+  </header>
+  <div id="loading">טוען נתוני מועמדים...</div>
+  <footer class="footer">הדף מתעדכן אוטומטית עם כל הרצה של render.py</footer>
+</div>
+<script>
+(async () => {
+  let all;
+  try {
+    const res = await fetch('100.json');
+    if (!res.ok) throw new Error(res.status);
+    all = await res.json();
+  } catch(e) {
+    document.getElementById('loading').textContent = 'שגיאה בטעינת 100.json: ' + e.message;
+    return;
+  }
+
+  const entries = Object.entries(all).sort((a, b) => a[1].name.localeCompare(b[1].name, 'he'));
+  document.getElementById('count').textContent = `${entries.length} מועמדים`;
+
+  const rows = entries.map(([introCode, d]) => {
+    const prefix = d.code.toLowerCase();
+    return `<tr>
+      <td><span class="code">${introCode}</span></td>
+      <td class="name">${d.name}</td>
+      <td><div class="links">
+        <a class="lnk intro"   href="100.html?${prefix}${d.page_codes.intro}">עיון</a>
+        <a class="lnk dossier" href="101.html?${prefix}${d.page_codes.dossier}">תיק עובדתי</a>
+        <a class="lnk scores"  href="102.html?${prefix}${d.page_codes.scores}">שיבוץ</a>
+      </div></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('loading').outerHTML = `
+    <table>
+      <thead><tr><th>קוד</th><th>שם מועמד/ת</th><th>דפים</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+})();
+</script>
+</body>
+</html>

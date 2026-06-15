@@ -962,7 +962,7 @@
           </a>
           <a id="back-btn" onclick="handleBack()" style="font-size:1.8rem;text-decoration:none;line-height:1;flex-shrink:0;cursor:pointer">⬅️</a>
         </div>
-        <div style="text-align:center;font-size:.72rem;color:var(--text-muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+        <div style="text-align:center;font-size:.72rem;color:var(--text-muted)">© 2026 Silvertel Online ltd | כל הזכויות שמורות | ver_p01_t02</div>
       </div>
     </header>
 
@@ -994,63 +994,74 @@
     <div class="team-picker" id="team-picker">
       <div class="team-grid">
         <div class="team-card" onclick="selectTeam('dbr1')">
-          <div class="team-card-name">ועדה מסדרת ד.ב.ר</div>
-          <div class="team-card-desc">הנבחרת הרשמית של ד.ב.ר — 20 מועמדים מובילים לפי ניקוד האלגוריתם</div>
+          <div class="team-card-name">נבחרת מטבח המפלגה</div>
+          <div class="team-card-desc">כך נראית הנבחרת כשהבינה לובשת את כובע מקבלי ההחלטות במפלגה ומאזנת בין מועמדים, ייצוג ואינטרסים.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" onclick="selectTeam('dbr2')">
-          <div class="team-card-name">ועדה מסדרת ד.ב.ר (2)</div>
-          <div class="team-card-desc">נבחרת חלופית עם הרכב שונה</div>
-          <div class="team-card-status active">✓ זמינה</div>
-        </div>
-        <div class="team-card" onclick="selectTeam('dbr3')">
+        <div class="team-card unavailable">
           <div class="team-card-name">ועדה מסדרת ד.ב.ר (3)</div>
           <div class="team-card-desc">נבחרת שלישית עם דגש על ייצוג</div>
+          <div class="team-card-status">בגיבוש</div>
+        </div>
+        <div class="team-card" onclick="selectTeam('meretz')">
+          <div class="team-card-name">נבחרת השמאל הציוני</div>
+          <div class="team-card-desc">עדשת מרכז־שמאל ערכי — זכויות, שוויון, שותפות יהודית־ערבית וסביבה</div>
+          <div class="team-card-status active">✓ זמינה</div>
+        </div>
+        <!-- נבחרות נושאיות — בגיבוש, ממתינות למשובי המועמדים עד 21.6 -->
+        <div class="team-card unavailable">
+          <div class="team-card-name">שלטון החוק והדמוקרטיה</div>
+          <div class="team-card-desc">שמירה על מערכת המשפט, איזונים ובלמים וטוהר השלטון.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">יוקר המחיה והביטחון הכלכלי</div>
+          <div class="team-card-desc">הורדת יוקר המחיה, חיזוק מעמד הביניים וביטחון כלכלי למשפחות.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">שלום וביטחון לאומי</div>
+          <div class="team-card-desc">מדיניות חוץ וביטחון — אחריות לשלום לצד הגנה על המדינה.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">שותפות יהודית-ערבית</div>
+          <div class="team-card-desc">שוויון אזרחי ושותפות אמיתית בין יהודים לערבים בחברה ובפוליטיקה.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+        </div>
+        <div class="team-card unavailable">
+          <div class="team-card-name">פיתוח הנגב והגליל</div>
+          <div class="team-card-desc">צמצום פערים, פיתוח הפריפריה וחיזוק השלטון המקומי.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+        </div>
+        <div class="team-card" onclick="selectTeam('north')">
+          <div class="team-card-name">נבחרת פיתוח הפריפריה</div>
+          <div class="team-card-desc">דגש על פיתוח, פריפריה, שלטון מקומי וניהול בכיר</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
         <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת לוחמת</div>
-          <div class="team-card-desc">דגש על ביטחון ומדיניות חוץ</div>
-          <div class="team-card-status">בגיבוש</div>
+          <div class="team-card-name">חופש, דת ומדינה</div>
+          <div class="team-card-desc">חופש דת ומצפון והפרדה הוגנת בין דת למדינה.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
         </div>
         <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת מותאמת קואליציה</div>
-          <div class="team-card-desc">מותאמת לאפשרויות קואליציוניות</div>
-          <div class="team-card-status">בגיבוש</div>
+          <div class="team-card-name">הדור הבא והצעירים</div>
+          <div class="team-card-desc">חינוך, דיור והזדמנויות לדור הצעיר ולמשפחות צעירות.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
         </div>
         <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת מותאמת אופוזיציה</div>
-          <div class="team-card-desc">מותאמת לתפקיד אופוזיציה</div>
-          <div class="team-card-status">בגיבוש</div>
+          <div class="team-card-name">דירקטורים / הנהגה / יכולת ניהול ציבורית</div>
+          <div class="team-card-desc">דגש על ניסיון ניהולי, יכולת ביצוע והנהגה ציבורית.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
         </div>
         <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת יאיר גולן</div>
-          <div class="team-card-desc">נבחרת החלומות של יאיר גולן</div>
-          <div class="team-card-status">בגיבוש</div>
+          <div class="team-card-name">ירוק-חברתי / סביבה וחברה</div>
+          <div class="team-card-desc">שילוב של צדק סביבתי, אקלים וצדק חברתי.</div>
+          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
         </div>
         <div class="team-card unavailable">
-          <div class="team-card-name">בונות אלטרנטיבה</div>
-          <div class="team-card-desc">דגש על ייצוג נשים ומגדר</div>
-          <div class="team-card-status">בגיבוש</div>
-        </div>
-        <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת פיתוח הצפון</div>
-          <div class="team-card-desc">דגש על פריפריה וצפון הארץ</div>
-          <div class="team-card-status">בגיבוש</div>
-        </div>
-        <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת חוסן חברתי</div>
-          <div class="team-card-desc">דגש על רווחה וצדק חברתי</div>
-          <div class="team-card-status">בגיבוש</div>
-        </div>
-        <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת ביטחון לאומי</div>
-          <div class="team-card-desc">דגש על ביטחון ומדיניות</div>
-          <div class="team-card-status">בגיבוש</div>
-        </div>
-        <div class="team-card unavailable">
-          <div class="team-card-name">נבחרת צדק סביבתי</div>
-          <div class="team-card-desc">דגש על אקלים וסביבה</div>
+          <div class="team-card-name">נבחרת ניקוב הבועה</div>
+          <div class="team-card-desc">לצאת מהבועה החמימה העוטפת אותנו היום ומגבילה את כוחנו, ולהגיע גם לישראל האחרת.</div>
           <div class="team-card-status">בגיבוש</div>
         </div>
       </div>
@@ -1061,19 +1072,9 @@
       <div class="rank-section-header" style="flex-direction:column;align-items:stretch;gap:0;padding-top:4px;">
         <div style="font-size:.78rem;font-weight:800;color:var(--text-muted);margin-bottom:4px">החלף נבחרת</div>
         <select id="team-select" class="team-select" onchange="onTeamChange()">
-          <option value="dbr1">הוועדה המסדרת של ד.ב.ר (1)</option>
-          <option value="dbr2">הוועדה המסדרת של ד.ב.ר (2)</option>
-          <option value="dbr3">הוועדה המסדרת של ד.ב.ר (3)</option>
-          <option value="lochemet">נבחרת לוחמת</option>
-          <option value="coalition">נבחרת מותאמת קואליציה</option>
-          <option value="opposition">נבחרת מותאמת אופוזיציה</option>
-          <option value="yair">נבחרת החלומות של יאיר גולן</option>
-          <option value="bonot">בונות אלטרנטיבה</option>
-          <option value="north">נבחרת פיתוח הצפון</option>
-          <option value="hosen">נבחרת חוסן חברתי</option>
-          <option value="security">נבחרת ביטחון לאומי</option>
-          <option value="environment">נבחרת צדק סביבתי</option>
-          <option value="future">נבחרת דור העתיד</option>
+          <option value="dbr1">נבחרת מטבח המפלגה</option>
+          <option value="meretz">נבחרת השמאל הציוני</option>
+          <option value="north">נבחרת פיתוח הפריפריה</option>
         </select>
       </div>
       <!-- Summary bar -->
@@ -1190,6 +1191,12 @@
     let flatDB      = {};   // שם → שורת CSV
     let rankList    = [];   // [{ name, gender, scoreC, scoreT }]
 
+    // ── נבחרות ועדה מסדרת — כל נבחרת = suffix בעמודות ה-CSV ──
+    // '' = ברירת מחדל (דמוקרטים/דבר1), 'p' = פיתוח הפריפריה, וכו'
+    let activeCommittee = '';
+    // שם עמודה לפי הנבחרת הפעילה: cField('zccc') → 'zccc' או 'zccc_p'
+    function cField(base) { return activeCommittee ? base + '_' + activeCommittee : base; }
+
     // ── ציון ועדה מסדרת (80% רזומה + 20% מוטיבציה) ──
     const BASE_W   = { resume: 0.80, motivation: 0.20 };
     const MOT_SCORE = {
@@ -1209,9 +1216,10 @@
     }
     function computeCommitteeScore(name) {
       const row = flatDB[name];
-      const resumeVal = (row && row['zccc'] !== '') ? parseFloat(row['zccc']) : null;
-      const motType   = row ? (row['zccd'] || 'לא_ברור') : 'לא_ברור';
-      const motScore  = motivationBaseScore(motType) * motivationConfidenceFactor(row ? row['zcce'] : null);
+      const rv  = row ? row[cField('zccc')] : '';
+      const resumeVal = (rv !== undefined && rv !== '') ? parseFloat(rv) : null;
+      const motType   = row ? (row[cField('zccd')] || 'לא_ברור') : 'לא_ברור';
+      const motScore  = motivationBaseScore(motType) * motivationConfidenceFactor(row ? row[cField('zcce')] : null);
       const base = weightedAvgAvail([
         { val: resumeVal,  w: BASE_W.resume     },
         { val: motScore,   w: BASE_W.motivation }
@@ -1223,9 +1231,9 @@
     function getResumeBreakdown(name) {
       const row = flatDB[name];
       if (!row) return { resume: null, motType: '—', motScore: null };
-      const resumeRaw = parseFloat(row['zccc']);
-      const motType   = (row['zccd'] || '').replace(/_/g, ' ') || '—';
-      const motScore  = motivationBaseScore(row['zccd'] || '') * motivationConfidenceFactor(row['zcce']);
+      const resumeRaw = parseFloat(row[cField('zccc')]);
+      const motType   = (row[cField('zccd')] || '').replace(/_/g, ' ') || '—';
+      const motScore  = motivationBaseScore(row[cField('zccd')] || '') * motivationConfidenceFactor(row[cField('zcce')]);
       return {
         resume:   isNaN(resumeRaw) ? null : Math.round(resumeRaw * 10),
         motType,
@@ -1685,22 +1693,26 @@
       dbr1: 'active',
       dbr2: 'committee_pending', dbr3: 'committee_pending',
       lochemet: 'building', coalition: 'building', opposition: 'building',
-      yair: 'building', bonot: 'building', north: 'building',
+      meretz: 'active',
+      yair: 'building', bonot: 'building', north: 'active',
       hosen: 'building', security: 'building', environment: 'building', future: 'building'
     };
+    // מיפוי נבחרת → suffix בעמודות ה-CSV. נבחרת שאינה כאן משתמשת ב-'' (דבר1).
+    const TEAM_SUFFIX = { dbr1: '', meretz: 'm', north: 'p' };
     const TEAM_LABELS = {
-      dbr2: 'ד.ב.ר (2)', dbr3: 'ד.ב.ר (3)',
+      dbr2: 'ד.ב.ר (2)', dbr3: 'ד.ב.ר (3)', meretz: 'נבחרת השמאל הציוני',
       lochemet: 'נבחרת לוחמת', coalition: 'נבחרת מותאמת קואליציה',
       opposition: 'נבחרת מותאמת אופוזיציה', yair: 'נבחרת החלומות של יאיר גולן',
-      bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הצפון',
+      bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הפריפריה',
       hosen: 'נבחרת חוסן חברתי', security: 'נבחרת ביטחון לאומי',
       environment: 'נבחרת צדק סביבתי', future: 'נבחרת דור העתיד'
     };
     const TEAM_NAMES = {
-      dbr1: 'ועדה מסדרת ד.ב.ר', dbr2: 'ועדה מסדרת ד.ב.ר (2)', dbr3: 'ועדה מסדרת ד.ב.ר (3)',
+      dbr1: 'נבחרת מטבח המפלגה', dbr2: 'ועדה מסדרת ד.ב.ר (2)', dbr3: 'ועדה מסדרת ד.ב.ר (3)',
+      meretz: 'נבחרת השמאל הציוני',
       lochemet: 'נבחרת לוחמת', coalition: 'נבחרת מותאמת קואליציה',
       opposition: 'נבחרת מותאמת אופוזיציה', yair: 'נבחרת יאיר גולן',
-      bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הצפון',
+      bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הפריפריה',
       hosen: 'נבחרת חוסן חברתי', security: 'נבחרת ביטחון לאומי',
       environment: 'נבחרת צדק סביבתי', future: 'נבחרת דור העתיד'
     };
@@ -1744,6 +1756,10 @@
       if (status === 'active') {
         notice.style.display = 'none';
         content.style.display = '';
+        // החלף את הנבחרת הפעילה ובנה מחדש את הדירוג לפי עמודות ה-suffix שלה
+        activeCommittee = TEAM_SUFFIX[val] || '';
+        buildRankList();
+        renderRanking();
       } else {
         content.style.display = 'none';
         document.getElementById('summary-bar').style.display = 'none';
@@ -1923,14 +1939,14 @@
         document.getElementById('modal').classList.add('open');
         return;
       }
-      const zccc = parseFloat(row['zccc']);
-      const zccd = (row['zccd'] || 'לא_ברור').replace(/_/g,' ');
-      const zcce = row['zcce'] || '';
-      const zccf = row['zccf'] || '';
-      const zccg = row['zccg'] || '';
-      const zs61 = row['zs61'] || '';
-      const zs62 = row['zs62'] || '';
-      const src  = row['zccsrc'] || '';
+      const zccc = parseFloat(row[cField('zccc')]);
+      const zccd = (row[cField('zccd')] || 'לא_ברור').replace(/_/g,' ');
+      const zcce = row[cField('zcce')] || '';
+      const zccf = row[cField('zccf')] || '';
+      const zccg = row[cField('zccg')] || '';
+      const zs61 = row[cField('zs61')] || '';
+      const zs62 = row[cField('zs62')] || '';
+      const src  = row[cField('zccsrc')] || '';
       const total = computeCommitteeScore(name);
 
       const resumeDisp = !isNaN(zccc) ? Math.round(zccc * 10) : null;
@@ -2021,12 +2037,23 @@
       for (const c of (jsonData.candidates || [])) {
         if (c['שם']) moachMap[c['שם']] = c;
       }
-      // בנה רשימה משותפת (ללא מסירי מועמדות)
+      window._moachMap = moachMap;   // נשמר לבנייה מחדש בהחלפת נבחרת
+      buildRankList();
+      if (inRankingView) document.getElementById('ranking-section').style.display = '';
+      cleanPicks();
+      // DEBUG: uncomment next line to reset all picks
+      // saveState({ selected: [], shiryun: [], dbr_picks: [], approved: [], meta: {} });
+      renderRanking();
+    }).catch(() => {});
+
+    // בונה את rankList לפי הנבחרת הפעילה (activeCommittee)
+    function buildRankList() {
+      const moachMap = window._moachMap || {};
       const names = new Set([...Object.keys(flatDB), ...Object.keys(moachMap)]);
       const activeNames = [...names].filter(n => (flatDB[n]?.['id5'] || '') !== 'dropped');
       rankList = activeNames.map(name => {
         const bd = getResumeBreakdown(name);
-        const srcRaw = flatDB[name]?.['zccsrc'];
+        const srcRaw = flatDB[name]?.[cField('zccsrc')];
         return {
           name,
           gender: (flatDB[name]?.['id2']) || (moachMap[name]?.['קטגוריה']==='נשים'?'נקבה':moachMap[name]?.['קטגוריה']==='גברים'?'זכר':''),
@@ -2039,12 +2066,7 @@
         };
       });
       rankList.sort((a,b) => (b.scoreC??-1) - (a.scoreC??-1));
-      if (inRankingView) document.getElementById('ranking-section').style.display = '';
-      cleanPicks();
-      // DEBUG: uncomment next line to reset all picks
-      // saveState({ selected: [], shiryun: [], dbr_picks: [], approved: [], meta: {} });
-      renderRanking();
-    }).catch(() => {});
+    }
 
     // ══════════════════════════════════════════
 

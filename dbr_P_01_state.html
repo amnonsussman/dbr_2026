@@ -691,16 +691,16 @@
     }
 
     .team-select {
-      width: auto;
-      max-width: 65%;
-      padding: 4px 4px;
-      font-size: clamp(.82rem, 2.5vw, 1rem);
+      width: 100%;
+      max-width: 100%;
+      padding: 7px 8px;
+      font-size: clamp(.92rem, 2.8vw, 1.12rem);
       font-weight: 700;
       font-family: inherit;
       color: var(--blue-dark);
       background: white;
-      border: 1.5px solid var(--blue-main);
-      border-radius: 6px;
+      border: 2px solid var(--blue-main);
+      border-radius: 8px;
       cursor: pointer;
       direction: rtl;
       appearance: auto;
@@ -790,6 +790,174 @@
     }
     .rank-row:hover .rank-card { opacity: 1; }
     /* תמיד שתי עמודות — הכל מתכווץ עם clamp */
+
+    /* ── נבחרת נושאית — עיגול זיקה, מילת התאמה, מקרא ── */
+    .squad-dot {
+      flex-shrink: 0;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      margin-inline-end: clamp(5px, 1.3vw, 10px);
+    }
+    .squad-word {
+      flex-shrink: 0;
+      margin-inline-start: auto;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .rank-row.squad-extra { opacity: .9; }
+    .squad-cell-empty { min-height: 1px; }
+    /* גבול שמאלי לשם הראשון בשורה — מפריד מהשם השני */
+    .rank-row.squad-divider {
+      border-left: 2px solid rgba(29, 95, 167, .4);
+      padding-left: clamp(6px, 1.5vw, 12px);
+    }
+
+    /* מסגרת ברורה סביב טבלת הנבחרת — גריד אחד מלא-רוחב */
+    .rank-columns.squad-framed {
+      display: block;
+      border: 1.5px solid var(--blue-main);
+      border-radius: var(--radius-medium);
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+      margin: 6px 2px 0;
+      padding: 6px clamp(6px, 1.5vw, 18px) 10px;
+    }
+    .rank-columns.squad-framed > #rank-col-1 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(10px, 2.5vw, 28px);
+    }
+    .rank-columns.squad-framed .rank-divider,
+    .rank-columns.squad-framed > #rank-col-2 { display: none; }
+    /* אין קו בין מועמדים באותה רצועה */
+    .rank-columns.squad-framed .rank-row { border-bottom: none; }
+    /* קו אחיד וברור בין הרצועות — מקצה לקצה */
+    .squad-band-sep {
+      border: none;
+      border-top: 2px solid var(--blue-main);
+      opacity: .55;
+      margin: 6px 0;
+      grid-column: 1 / -1;
+    }
+    /* גדלי פונט לתצוגה הנושאית — דרך משתנים, כדי שה-+/- ישלטו בהם */
+    .rank-table-box {
+      --sq-name: clamp(.82rem, 2.4vw, .98rem);
+      --sq-name-picked: clamp(1.12rem, 3.5vw, 1.38rem);
+    }
+    .rank-table-box.sqz-1 { font-size: 1.08rem; --sq-name: clamp(.9rem, 2.7vw, 1.08rem);   --sq-name-picked: clamp(1.22rem, 3.8vw, 1.5rem); }
+    .rank-table-box.sqz-2 { font-size: 1.18rem; --sq-name: clamp(1rem, 3vw, 1.2rem);        --sq-name-picked: clamp(1.35rem, 4.2vw, 1.65rem); }
+    .rank-table-box.sqz-3 { font-size: 1.3rem;  --sq-name: clamp(1.12rem, 3.4vw, 1.35rem);  --sq-name-picked: clamp(1.5rem, 4.6vw, 1.82rem); }
+    .rank-columns.squad-framed .rank-name.unpicked,
+    .squad-extras .rank-name.unpicked { font-size: var(--sq-name); font-weight: 400; font-family: inherit; }
+    /* הנבחר — גדול ומודגש מהמועמד הרגיל */
+    .rank-columns.squad-framed .rank-name.picked,
+    .squad-extras .rank-name.picked {
+      font-size: var(--sq-name-picked);
+      font-weight: 800;
+      font-family: inherit;
+      letter-spacing: 0;
+      color: var(--blue-dark);
+    }
+    /* קו מפריד מקווקו בבחירות שמחוץ לנבחרת */
+    .squad-extras .rank-row.squad-divider {
+      border-left-style: dashed;
+    }
+    /* כותרת נבחרת בהדר */
+    .squad-hdr-title {
+      font-size: clamp(1rem, 3vw, 1.22rem);
+      font-weight: 800;
+      color: var(--blue-dark);
+      text-align: center;
+      line-height: 1.3;
+    }
+    /* כפתור "החלף נבחרת" עם select מוסתר מעליו */
+    .squad-change-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+    .squad-change-btn {
+      font-size: .78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      background: var(--blue-card);
+      border: 1px solid var(--blue-main);
+      border-radius: 6px;
+      color: var(--blue-dark);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .squad-change-wrap select {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    /* כפתורי +/− זום — קטנים יותר */
+    #sq-zoom-out, #sq-zoom-in {
+      font-size: .85rem;
+      padding: 2px 7px;
+      min-width: 26px;
+    }
+    /* כפתורי + / − לתצוגה הנושאית (ישן — לא בשימוש) */
+    .squad-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 6px 6px 2px;
+    }
+    .squad-controls .expand-btn { font-size: 1.4rem; padding: 3px 12px; min-width: 38px; }
+
+    /* בחירות שמחוץ לנבחרת — מתחת למסגרת, בגודל פונט רגיל, במסגרת מקווקוות */
+    .squad-extras { padding: 10px 2px 0; }
+    .squad-extras-list {
+      display: grid;
+      /* grid-template-columns נקבע דינמית מ-JS לפי מספר השמות */
+      column-gap: clamp(10px, 2.5vw, 28px);
+      border: 2px dashed rgba(29, 95, 167, .45);
+      border-radius: var(--radius-medium);
+      padding: 6px clamp(6px, 1.5vw, 18px) 8px;
+      width: fit-content;
+      max-width: 100%;
+      margin-inline: auto;
+    }
+    .squad-extras .rank-row { border-bottom: none; }
+    .squad-extras .rank-name.unpicked { font-size: calc(var(--sq-name) * .9); }
+    .squad-extras .rank-name.picked   { font-size: calc(var(--sq-name-picked) * .9); }
+    .squad-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 18px;
+      padding: 12px 10px 8px;
+      margin-top: 4px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .squad-legend .lg-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .78em;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .squad-legend .lg-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      display: inline-block; box-sizing: border-box;
+    }
+    .squad-intro-note {
+      font-size: .82em;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 6px 10px 2px;
+      line-height: 1.55;
+    }
 
     /* ── Intro overlay ── */
     .intro-overlay {
@@ -915,6 +1083,9 @@
     .mhdr{display:flex;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--border-soft);margin-bottom:14px}
     .mhdr h2{font-size:1.1rem;color:var(--blue-dark)}
     .m-close{width:34px;height:34px;border:1px solid var(--border-soft);background:#fff;border-radius:11px;cursor:pointer;font-weight:900;font-size:1rem;display:grid;place-items:center}
+    .squad-confirm-box{max-width:440px;padding:24px}
+    .squad-confirm-text{white-space:pre-line;line-height:1.65;font-size:.95rem;color:var(--text-main);text-align:right}
+    .squad-confirm-actions{display:flex;justify-content:center;gap:14px;margin-top:20px}
     .sc-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
     .bar-bg{flex:1;height:7px;background:#edf1f7;border-radius:999px;overflow:hidden}
     .bar-fg{height:100%;border-radius:999px}
@@ -998,66 +1169,63 @@
           <div class="team-card-desc">כך נראית הנבחרת כשהבינה לובשת את כובע מקבלי ההחלטות במפלגה ומאזנת בין מועמדים, ייצוג ואינטרסים.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
-          <div class="team-card-name">ועדה מסדרת ד.ב.ר (3)</div>
-          <div class="team-card-desc">נבחרת שלישית עם דגש על ייצוג</div>
-          <div class="team-card-status">בגיבוש</div>
-        </div>
         <div class="team-card" onclick="selectTeam('meretz')">
           <div class="team-card-name">נבחרת השמאל הציוני</div>
+          <div style="font-size:.72rem;color:var(--text-muted);font-weight:700;margin-top:1px">(סימולציה)</div>
           <div class="team-card-desc">עדשת מרכז־שמאל ערכי — זכויות, שוויון, שותפות יהודית־ערבית וסביבה</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <!-- נבחרות נושאיות — בגיבוש, ממתינות למשובי המועמדים עד 21.6 -->
-        <div class="team-card unavailable">
+        <!-- נבחרות נושאיות — פעילות, מבוססות נתוני main_teams.csv -->
+        <div class="team-card" onclick="selectTeam('law_democracy')">
           <div class="team-card-name">שלטון החוק והדמוקרטיה</div>
           <div class="team-card-desc">שמירה על מערכת המשפט, איזונים ובלמים וטוהר השלטון.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('cost_of_living')">
           <div class="team-card-name">יוקר המחיה והביטחון הכלכלי</div>
           <div class="team-card-desc">הורדת יוקר המחיה, חיזוק מעמד הביניים וביטחון כלכלי למשפחות.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('peace_security')">
           <div class="team-card-name">שלום וביטחון לאומי</div>
           <div class="team-card-desc">מדיניות חוץ וביטחון — אחריות לשלום לצד הגנה על המדינה.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('jewish_arab')">
           <div class="team-card-name">שותפות יהודית-ערבית</div>
           <div class="team-card-desc">שוויון אזרחי ושותפות אמיתית בין יהודים לערבים בחברה ובפוליטיקה.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('negev_galil')">
           <div class="team-card-name">פיתוח הנגב והגליל</div>
           <div class="team-card-desc">צמצום פערים, פיתוח הפריפריה וחיזוק השלטון המקומי.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
         <div class="team-card" onclick="selectTeam('north')">
           <div class="team-card-name">נבחרת פיתוח הפריפריה</div>
+          <div style="font-size:.72rem;color:var(--text-muted);font-weight:700;margin-top:1px">(סימולציה)</div>
           <div class="team-card-desc">דגש על פיתוח, פריפריה, שלטון מקומי וניהול בכיר</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('religion_state')">
           <div class="team-card-name">חופש, דת ומדינה</div>
           <div class="team-card-desc">חופש דת ומצפון והפרדה הוגנת בין דת למדינה.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('next_generation')">
           <div class="team-card-name">הדור הבא והצעירים</div>
           <div class="team-card-desc">חינוך, דיור והזדמנויות לדור הצעיר ולמשפחות צעירות.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('directors')">
           <div class="team-card-name">דירקטורים / הנהגה / יכולת ניהול ציבורית</div>
           <div class="team-card-desc">דגש על ניסיון ניהולי, יכולת ביצוע והנהגה ציבורית.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card unavailable">
+        <div class="team-card" onclick="selectTeam('green_social')">
           <div class="team-card-name">ירוק-חברתי / סביבה וחברה</div>
           <div class="team-card-desc">שילוב של צדק סביבתי, אקלים וצדק חברתי.</div>
-          <div class="team-card-status">בגיבוש · ממתינה למשובי המועמדים עד 21.6</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
         <div class="team-card unavailable">
           <div class="team-card-name">נבחרת ניקוב הבועה</div>
@@ -1069,13 +1237,29 @@
 
     <!-- Ranking — two columns, all candidates -->
     <div id="ranking-section" class="rank-section" style="display:none;">
-      <div class="rank-section-header" style="flex-direction:column;align-items:stretch;gap:0;padding-top:4px;">
-        <div style="font-size:.78rem;font-weight:800;color:var(--text-muted);margin-bottom:4px">החלף נבחרת</div>
-        <select id="team-select" class="team-select" onchange="onTeamChange()">
-          <option value="dbr1">נבחרת מטבח המפלגה</option>
-          <option value="meretz">נבחרת השמאל הציוני</option>
-          <option value="north">נבחרת פיתוח הפריפריה</option>
-        </select>
+      <div class="rank-section-header" style="gap:8px;padding:8px 10px;">
+        <button class="expand-btn" id="sq-zoom-out" onclick="squadZoomOut()" title="הקטן פונט" style="display:none">−</button>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <div id="squad-hdr-title" class="squad-hdr-title"></div>
+          <div class="squad-change-wrap">
+            <button class="squad-change-btn" type="button">↕ החלף נבחרת</button>
+            <select id="team-select" onchange="onTeamChange()">
+              <option value="dbr1">נבחרת מטבח המפלגה</option>
+              <option value="meretz">נבחרת השמאל הציוני</option>
+              <option value="north">נבחרת פיתוח הפריפריה</option>
+              <option value="law_democracy">שלטון החוק והדמוקרטיה</option>
+              <option value="religion_state">חופש, דת ומדינה</option>
+              <option value="directors">דירקטורים / הנהגה</option>
+              <option value="green_social">ירוק-חברתי / סביבה וחברה</option>
+              <option value="jewish_arab">שותפות יהודית-ערבית</option>
+              <option value="cost_of_living">יוקר המחיה והביטחון הכלכלי</option>
+              <option value="peace_security">שלום וביטחון לאומי</option>
+              <option value="negev_galil">פיתוח הנגב והגליל</option>
+              <option value="next_generation">הדור הבא והצעירים</option>
+            </select>
+          </div>
+        </div>
+        <button class="expand-btn" id="sq-zoom-in" onclick="squadZoomIn()" title="הגדל פונט" style="display:none">+</button>
       </div>
       <!-- Summary bar -->
       <div id="summary-bar" class="summary-bar" style="display:none;">
@@ -1131,6 +1315,17 @@
           <button class="m-close" onclick="closeModal()">×</button>
         </div>
         <div id="m-body"></div>
+      </div>
+    </div>
+
+    <!-- Modal אישור הסרה — ממורכז וגליל -->
+    <div id="squad-confirm" class="mbk" onclick="if(event.target===this)squadConfirmClose(false)">
+      <div class="mbox squad-confirm-box" onclick="event.stopPropagation()">
+        <div id="squad-confirm-text" class="squad-confirm-text"></div>
+        <div class="squad-confirm-actions">
+          <button class="reason-cancel" onclick="squadConfirmClose(false)">ביטול</button>
+          <button class="reason-save" onclick="squadConfirmClose(true)">להמשיך</button>
+        </div>
       </div>
     </div>
 
@@ -1714,8 +1909,42 @@
       opposition: 'נבחרת מותאמת אופוזיציה', yair: 'נבחרת יאיר גולן',
       bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הפריפריה',
       hosen: 'נבחרת חוסן חברתי', security: 'נבחרת ביטחון לאומי',
-      environment: 'נבחרת צדק סביבתי', future: 'נבחרת דור העתיד'
+      environment: 'נבחרת צדק סביבתי', future: 'נבחרת דור העתיד',
+      // נבחרות נושאיות (השם הסופי נטען מ-main_teams_config.csv)
+      law_democracy: 'שלטון החוק והדמוקרטיה', religion_state: 'חופש, דת ומדינה',
+      directors: 'דירקטורים / הנהגה', green_social: 'ירוק-חברתי / סביבה וחברה',
+      jewish_arab: 'שותפות יהודית-ערבית', cost_of_living: 'יוקר המחיה והביטחון הכלכלי',
+      peace_security: 'שלום וביטחון לאומי', negev_galil: 'פיתוח הנגב והגליל',
+      next_generation: 'הדור הבא והצעירים'
     };
+
+    // ── נבחרות נושאיות — קונפיג + נתונים נטענים מ-main_teams ──
+    let squadConfig = {};   // squad_id → { title, color_family, label_100..label_20 }
+    let squadData   = {};   // שם מועמד → שורת main_teams.csv
+    let activeSquad = null;  // squad_id כשמוצגת נבחרת נושאית, אחרת null
+
+    // סולמות צבע — [core, strong, partial, touch]
+    const SQUAD_RAMPS = {
+      blue:   ["#185FA5", "#85B7EB", "#B5D4F4", "#E6F1FB"],
+      purple: ["#534AB7", "#AFA9EC", "#CECBF6", "#EEEDFE"],
+      gray:   ["#5F5E5A", "#B4B2A9", "#D3D1C7", "#F1EFE8"],
+      green:  ["#639922", "#97C459", "#C0DD97", "#EAF3DE"],
+      teal:   ["#1D9E75", "#5DCAA5", "#9FE1CB", "#E1F5EE"],
+      amber:  ["#BA7517", "#EF9F27", "#FAC775", "#FAEEDA"],
+      red:    ["#A32D2D", "#F09595", "#F7C1C1", "#FCEBEB"],
+      coral:  ["#993C1D", "#F0997B", "#F5C4B3", "#FAECE7"],
+      pink:   ["#993556", "#ED93B1", "#F4C0D1", "#FBEAF0"]
+    };
+    // ערך → אינדקס רצועה: 100→0(core) 80→1 60→2 40/20→3(touch)
+    function squadBandIndex(v) { return v >= 100 ? 0 : v >= 80 ? 1 : v >= 60 ? 2 : 3; }
+    function squadDotHtml(v, family) {
+      const ramp = SQUAD_RAMPS[family] || SQUAD_RAMPS.blue;
+      const idx  = squadBandIndex(v);
+      const border = idx === 3
+        ? '1.5px solid ' + ramp[2]              /* touch בהיר — מסגרת בגוון אחד כהה יותר */
+        : '1px solid rgba(0,0,0,.10)';
+      return '<span class="squad-dot" style="background:' + ramp[idx] + ';border:' + border + '"></span>';
+    }
 
     let inRankingView = false;
 
@@ -1737,22 +1966,50 @@
       inRankingView = true;
       document.getElementById('team-picker').style.display = 'none';
       document.getElementById('team-select').value = val;
+      updateSquadHdrTitle();
       document.getElementById('ranking-section').style.display = '';
+      const isSquad = !!squadConfig[val];
+      const title = (isSquad && squadConfig[val].title) || TEAM_NAMES[val] || val;
       const h1 = document.querySelector('.page-title h1');
-      if (h1) h1.childNodes[0].textContent = (TEAM_NAMES[val] || val) + ' ';
+      if (h1) h1.childNodes[0].textContent = title + ' ';
       const desc = document.getElementById('screen-desc');
       if (desc) {
         desc.style.display = '';
-        desc.innerHTML = 'בחרתם את ' + escapeHtml(TEAM_NAMES[val] || val) + ' — 20 המועמדים שלה מוצגים כאן. מי שסימנתם קודם מודגש. להוספת מועמד מהנבחרת לחצו על השם שלו, שמו מופיע בכחול כהה, מועמדים שבחרתם ואינם כלולים בנבחרת — יופיעו בסוף רשימת הדירוג בעמודה השמאלית. להסרת מועמד לחצו שוב על השם. הסרת מועמד מהרשימה כאן מבטלת את בחירתו בכל המסכים. כדי לצפות בכרטיס המועמד של הנבחרת לחץ 📋<br><span onclick="document.getElementById(\'screen-desc\').style.display=\'none\'" style="cursor:pointer;color:var(--blue-main);font-size:.85em;text-decoration:underline;font-weight:700;">לחץ כאן כדי להעלים הסבר זה.</span>';
+        if (isSquad) {
+          desc.innerHTML = 'בחרתם את <strong>' + escapeHtml(title) + '</strong> — עד 16 המועמדים שהנושא מרכזי להם, לפי <strong>עוצמת הזיקה</strong> (לא ציון). צבע העיגול ליד כל שם מציין את רצועת הזיקה (ראו מקרא בתחתית). לבחירה — לחצו על השורה; לחיצה נוספת מבטלת. בחירותיכם נשמרות בכל המסכים ומוצגות בכל נבחרת. לכרטיס הסבר על מי שטרם בחרתם — לחצו 📋.<br><span onclick="document.getElementById(\'screen-desc\').style.display=\'none\'" style="cursor:pointer;color:var(--blue-main);font-size:.85em;text-decoration:underline;font-weight:700;">לחץ כאן כדי להעלים הסבר זה.</span>';
+        } else {
+          desc.innerHTML = 'בחרתם את ' + escapeHtml(title) + ' — 20 המועמדים שלה מוצגים כאן. מי שסימנתם קודם מודגש. להוספת מועמד מהנבחרת לחצו על השם שלו, שמו מופיע בכחול כהה, מועמדים שבחרתם ואינם כלולים בנבחרת — יופיעו בסוף רשימת הדירוג בעמודה השמאלית. להסרת מועמד לחצו שוב על השם. הסרת מועמד מהרשימה כאן מבטלת את בחירתו בכל המסכים. כדי לצפות בכרטיס המועמד של הנבחרת לחץ 📋<br><span onclick="document.getElementById(\'screen-desc\').style.display=\'none\'" style="cursor:pointer;color:var(--blue-main);font-size:.85em;text-decoration:underline;font-weight:700;">לחץ כאן כדי להעלים הסבר זה.</span>';
+        }
       }
       onTeamChange();
     }
 
+    // סוג נבחרת: 'squad' = נושאית (בקונפיג), אחרת 'old' = סימולציה ישנה
+    function teamType(val) { return squadConfig[val] ? 'squad' : 'old'; }
+    // הצג בדרופדאון רק נבחרות מאותו סוג כמו הנבחרת הפעילה
+    function filterTeamOptions(activeVal) {
+      const type = teamType(activeVal);
+      const sel = document.getElementById('team-select');
+      Array.from(sel.options).forEach(o => { o.hidden = teamType(o.value) !== type; });
+    }
+
     function onTeamChange() {
       const val = document.getElementById('team-select').value;
-      const status = TEAM_STATUS[val];
+      filterTeamOptions(val);
+      updateSquadHdrTitle();
       const notice = document.getElementById('team-notice');
       const content = document.getElementById('dbr1-content');
+      // ── מסלול נבחרת נושאית ──
+      if (squadConfig[val]) {
+        activeSquad = val;
+        notice.style.display = 'none';
+        content.style.display = '';
+        renderSquad(val);
+        return;
+      }
+      activeSquad = null;
+      hideSquadExtras();
+      const status = TEAM_STATUS[val];
       if (status === 'active') {
         notice.style.display = 'none';
         content.style.display = '';
@@ -1771,6 +2028,310 @@
             : label + ' — נמצאת בתהליך גיבוש';
         notice.style.display = '';
       }
+    }
+
+    // ── רינדור נבחרת נושאית ──
+    // מסתיר את אלמנטי הדירוג הרגילים ומנקה את המקרא/הסבר בעת מעבר למסלול הרגיל.
+    function hideSquadExtras() {
+      const leg = document.getElementById('squad-legend');   if (leg) leg.style.display = 'none';
+      const in0 = document.getElementById('squad-intro');    if (in0) in0.style.display = 'none';
+      const ex  = document.getElementById('squad-extras');   if (ex)  ex.style.display = 'none';
+      const zOut = document.getElementById('sq-zoom-out'); if (zOut) zOut.style.display = 'none';
+      const zIn  = document.getElementById('sq-zoom-in');  if (zIn)  zIn.style.display  = 'none';
+      const cols = document.querySelector('.rank-columns');  if (cols) cols.classList.remove('squad-framed');
+      const box = document.querySelector('.rank-table-box'); if (box) box.classList.remove('sqz-1', 'sqz-2', 'sqz-3');
+    }
+
+    // זום פונט לתצוגה הנושאית (כמו +/- בתצוגה הישנה) — משנה משתני גודל בלבד
+    let squadZoom = 0;
+    function applySquadZoom() {
+      const box = document.querySelector('.rank-table-box');
+      if (!box) return;
+      box.classList.remove('sqz-1', 'sqz-2', 'sqz-3');
+      if (squadZoom > 0) box.classList.add('sqz-' + squadZoom);
+    }
+    function squadZoomIn()  { if (squadZoom < 3) { squadZoom++; applySquadZoom(); } else beepError(); }
+    function squadZoomOut() { if (squadZoom > 0) { squadZoom--; applySquadZoom(); } else beepError(); }
+
+    function updateSquadHdrTitle() {
+      const sel = document.getElementById('team-select');
+      const el  = document.getElementById('squad-hdr-title');
+      if (!el || !sel) return;
+      const opt = sel.options[sel.selectedIndex];
+      el.textContent = opt ? opt.text : '';
+    }
+
+    function ensureSquadControls() {
+      const zOut = document.getElementById('sq-zoom-out');
+      const zIn  = document.getElementById('sq-zoom-in');
+      if (zOut) zOut.style.display = '';
+      if (zIn)  zIn.style.display  = '';
+      applySquadZoom();
+    }
+
+    // הבחירות של הבוחר שאינן בנבחרת זו — בלוק נפרד מתחת למסגרת, ללא קו מקווקו
+    function renderSquadExtras(extras, cfg) {
+      const cols = document.querySelector('.rank-columns');
+      let el = document.getElementById('squad-extras');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'squad-extras';
+        el.className = 'squad-extras';
+        cols.parentNode.insertBefore(el, cols.nextSibling);
+      }
+      if (!extras.length) { el.style.display = 'none'; el.innerHTML = ''; return; }
+      el.style.display = '';
+      // כמה שמות נכנסים בשורה לפי רוחב המסך בפועל — מקסימום עמודות שמתאימות.
+      // מודדים את רוחב השם הרחב ביותר בפונט האמיתי במקום הערכה.
+      const avail = (el.clientWidth || el.parentElement.clientWidth || window.innerWidth) - 24;
+      const probe = document.createElement('span');
+      probe.className = 'rank-name picked';
+      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
+      el.appendChild(probe);
+      let maxW = 0;
+      for (const c of extras) { probe.textContent = c.name; if (probe.offsetWidth > maxW) maxW = probe.offsetWidth; }
+      el.removeChild(probe);
+      const GAP = 24, PAD = 14; // column-gap + ריווח הגבול המפריד
+      const cellW = maxW + GAP + PAD;
+      const ncols = Math.max(1, Math.min(extras.length, Math.floor(avail / cellW)));
+      // גבול שמאלי לכל שם שאינו האחרון בשורה
+      const rows = extras.map((c, i) => squadRowHtml(c, cfg, i % ncols !== ncols - 1)).join('');
+      el.innerHTML = '<div class="squad-extras-list" style="grid-template-columns:repeat(' + ncols + ',auto)">' + rows + '</div>';
+    }
+
+    function squadRowHtml(c, cfg, divider) {
+      const eName = escapeHtml(c.name);
+      // השם הראשון בשורה (עמודה ימנית, כשיש לו זוג) מקבל גבול שמאלי כמפריד מהשם השני
+      const dv = divider ? ' squad-divider' : '';
+      // מועמד שכבר נבחר — עיגול זיקה (אם בנבחרת) + שם בלבד, ללא מילת התאמה או כרטיס
+      if (c.picked) {
+        const dot = c.inSquad ? squadDotHtml(c.value, cfg.color_family) : '';
+        return '<div class="rank-row is-picked' + (c.inSquad ? '' : ' squad-extra') + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
+          + dot
+          + '<span class="rank-name picked">' + eName + '</span>'
+          + '</div>';
+      }
+      // העיגול + המקרא למטה מספרים את הרצועה — אין צורך במילת התאמה בשורה
+      const dot = squadDotHtml(c.value, cfg.color_family);
+      return '<div class="rank-row' + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
+        + dot
+        + '<span class="rank-name unpicked">' + eName + '</span>'
+        + '<span class="rank-card" style="margin-inline-start:auto" onclick="event.stopPropagation();openSquadCard(\'' + eName + '\')" title="כרטיס הסבר">📋</span>'
+        + '</div>';
+    }
+
+    // רינדור מחדש של הנבחרת בעת שינוי גודל מסך — לעדכן עמודות תיבת ה-extras
+    let _squadResizeTimer = null;
+    window.addEventListener('resize', () => {
+      if (!activeSquad) return;
+      clearTimeout(_squadResizeTimer);
+      _squadResizeTimer = setTimeout(() => { if (activeSquad) renderSquad(activeSquad); }, 150);
+    });
+
+    const SQUAD_SIZE = 16;
+    function renderSquad(squadId) {
+      const cfg = squadConfig[squadId];
+      if (!cfg) return;
+      state = loadState();
+      const allPicks = new Set([ ...(state.shiryun || []), ...(state.dbr_picks || []) ]);
+
+      // מועמדי הנבחרת — ערך>0, מיון גבוה→נמוך, עד 16
+      const inSquad = Object.values(squadData)
+        .map(r => ({ name: r.id1, value: parseInt(r[squadId] || '0', 10) }))
+        .filter(c => c.value > 0)
+        .sort((a, b) => b.value - a.value)
+        .slice(0, SQUAD_SIZE)
+        .map(c => ({ ...c, inSquad: true, picked: allPicks.has(c.name) }));
+
+      const inNames = new Set(inSquad.map(c => c.name));
+      // בחירות הבוחר שאינן בנבחרת זו (ערך 0 / לא קיים) — מתחת לקו המקווקו
+      const extras = [...allPicks]
+        .filter(n => !inNames.has(n))
+        .map(n => ({ name: n, value: 0, inSquad: false, picked: true }));
+
+      // רצועה-רצועה, שורה-שורה ימין→שמאל, בגריד אחד מלא-רוחב.
+      // קו מפריד אחיד מקצה לקצה בין הרצועות; ברצועה אי-זוגית תא ריק ליישור הבאה.
+      const byBand = {};
+      inSquad.forEach(c => { (byBand[squadBandIndex(c.value)] = byBand[squadBandIndex(c.value)] || []).push(c); });
+      const bandIdxs = Object.keys(byBand).map(Number).sort((a, b) => a - b); // 0=ליבה → 3=נגיעה
+      const cells = [];
+      bandIdxs.forEach((bi, gi) => {
+        const grp = byBand[bi];
+        // תו | בסוף השם הראשון בשורה (אינדקס זוגי) רק כשיש לו שם שני בשורה
+        grp.forEach((c, i) => cells.push(squadRowHtml(c, cfg, i % 2 === 0)));
+        if (grp.length % 2 === 1) cells.push('<div class="squad-cell-empty"></div>');
+        if (gi < bandIdxs.length - 1) cells.push('<hr class="squad-band-sep">');
+      });
+      document.getElementById('rank-col-1').innerHTML = cells.join('');
+      document.getElementById('rank-col-2').innerHTML = '';
+      document.querySelector('.rank-columns').classList.add('squad-framed');
+
+      // הבחירות שמחוץ לנבחרת — בלוק נפרד מתחת למסגרת (במקום הקו המקווקו)
+      renderSquadExtras(extras, cfg);
+
+      // מרווח שורות דינמי
+      const rowsPerCol = Math.ceil(inSquad.length / 2);
+      const rowH = Math.max(30, Math.min(46, Math.round(440 / Math.max(rowsPerCol, 1))));
+      document.querySelector('.rank-columns').style.setProperty('--row-h', rowH + 'px');
+
+      // הסתר את רכיבי הדירוג הרגילים שלא רלוונטיים לנבחרת נושאית
+      document.getElementById('summary-bar').style.display = 'none';
+      document.getElementById('show-more-bar').style.display = 'none';
+
+      // סדר מעל הטבלה: הסבר → כפתורי +/− → מקרא
+      const nPicked = inSquad.filter(c => c.picked).length;
+      renderSquadIntro(cfg, inSquad.length, extras.length, nPicked);
+      ensureSquadControls();
+      renderSquadLegend(cfg, bandIdxs);
+    }
+
+    // מספרים בעברית (לשון זכר, עד 16) — לתצוגת המלל
+    const HE_NUM_M = ['אפס', 'אחד', 'שניים', 'שלושה', 'ארבעה', 'חמישה', 'שישה', 'שבעה', 'שמונה',
+                      'תשעה', 'עשרה', 'אחד עשר', 'שנים עשר', 'שלושה עשר', 'ארבעה עשר', 'חמישה עשר', 'שישה עשר'];
+    function heMembers(n) { // "X מועמדים" עם טיפול ביחיד
+      if (n === 1) return 'מועמד אחד';
+      if (n === 2) return 'שני מועמדים';
+      return (HE_NUM_M[n] || n) + ' מועמדים';
+    }
+    function heChosen(n) { // "בחרת X"
+      if (n === 0) return 'טרם בחרת מהם';
+      if (n === 1) return 'בחרת מועמד אחד';
+      if (n === 2) return 'בחרת שניים';
+      return 'בחרת ' + (HE_NUM_M[n] || n);
+    }
+
+    function renderSquadIntro(cfg, nIn, nExtra, nPicked) {
+      let el = document.getElementById('squad-intro');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'squad-intro';
+        el.className = 'squad-intro-note';
+        const cols = document.querySelector('.rank-columns');
+        cols.parentNode.insertBefore(el, cols);
+      }
+      el.style.display = '';
+      let txt = heMembers(nIn) + ' בנבחרת · ' + heChosen(nPicked) + ' · לחיצה על שם מוסיפה/מבטלת בחירה';
+      if (nExtra > 0) txt += '<br><span style="opacity:.8">(מי שבחרת ואינו בנבחרת — בתיבה המקווקוות למטה)</span>';
+      el.innerHTML = txt;
+    }
+
+    function renderSquadLegend(cfg, activeBands) {
+      let el = document.getElementById('squad-legend');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'squad-legend';
+        el.className = 'squad-legend';
+        const cols = document.querySelector('.rank-columns');
+        cols.parentNode.insertBefore(el, cols);
+      }
+      el.style.display = '';
+      const ramp = SQUAD_RAMPS[cfg.color_family] || SQUAD_RAMPS.blue;
+      const allBands = [
+        { i: 0, w: cfg.label_100 },
+        { i: 1, w: cfg.label_80 },
+        { i: 2, w: cfg.label_60 },
+        { i: 3, w: cfg.label_40 }
+      ];
+      const bands = activeBands ? allBands.filter(b => activeBands.includes(b.i)) : allBands;
+      el.innerHTML = bands.map(b => {
+        const border = b.i === 3 ? '1.5px solid ' + ramp[2] : '1px solid rgba(0,0,0,.10)';
+        return '<span class="lg-item"><span class="lg-dot" style="background:' + ramp[b.i]
+          + ';border:' + border + '"></span>' + escapeHtml(b.w || '') + '</span>';
+      }).join('');
+    }
+
+    // שמות הנבחרת הנוכחית (16 המובילים בערך>0) — לזיהוי מי "מחוץ לנבחרת"
+    function squadInNames(squadId) {
+      return new Set(Object.values(squadData)
+        .map(r => ({ name: r.id1, value: parseInt(r[squadId] || '0', 10) }))
+        .filter(c => c.value > 0)
+        .sort((a, b) => b.value - a.value)
+        .slice(0, SQUAD_SIZE)
+        .map(c => c.name));
+    }
+
+    // הנבחרות שהמועמד מוצג בהן כחבר נבחרת (ערך>0 ובתוך 16 המובילים) — שמות לתצוגה.
+    // excludeId — נבחרת להחרגה (בד"כ הנבחרת הנוכחית), כדי לקבל רק את "האחרות".
+    function squadMembershipTitles(name, excludeId) {
+      const row = squadData[name];
+      if (!row) return [];
+      return Object.keys(squadConfig)
+        .filter(sid => sid !== excludeId && parseInt(row[sid] || '0', 10) > 0 && squadInNames(sid).has(name))
+        .map(sid => squadConfig[sid].title);
+    }
+
+    // בחירה/ביטול בנבחרת נושאית — נשמר ב-state כמו בשאר המסכים, ומרנדר מחדש את הנבחרת
+    function toggleSquadPick(name) {
+      state = loadState();
+      state.selected = state.selected || [];
+      state.shiryun  = state.shiryun  || [];
+      const inShiryun = state.shiryun.indexOf(name) >= 0;
+      if (!inShiryun) {
+        if (state.shiryun.length >= MAX_SHIRYUN) { beepError(); return; }
+        if (state.selected.indexOf(name) < 0) state.selected.push(name);
+        state.shiryun.push(name);
+        autoLog(name, 'נבחר');
+        saveState(state);
+        renderSquad(activeSquad);
+        return;
+      }
+      // ביטול בחירה — אזהרה לפי סך נוכחות המועמד בנבחרות (כולל הנוכחית)
+      const squads = squadMembershipTitles(name); // כל הנבחרות שבהן מוצג כחבר
+      let msg = 'ביטול הבחירה של ' + name + ' יסיר את סימון הנבחר בכל המסכים.\n\n';
+      if (squads.length === 0) {
+        // אינו חבר באף נבחרת — יוסר מכל מסכי הנבחרות לחלוטין
+        msg += name + ' אינו/ה מופיע/ה כחבר/ת אף נבחרת, ולכן לא יוצג/תוצג בשום מסך נבחרת.';
+        msg += '\n\nרצוי מאוד להשאירו/ה כנבחר/ת עד השלבים הסופיים של התהליך.';
+      } else {
+        // חבר/ה בנבחרות — יאבד את סימון הנבחר בהן ויוצג כחבר רגיל
+        msg += name + ' יוסר/תוסר מסימון הנבחר, ויוצג/תוצג כחבר/ת נבחרת רגיל/ה בנבחרות:\n';
+        msg += '• ' + squads.join('\n• ');
+        if (squads.length > 4) {
+          // נוכחות רחבה — המלצה חלשה
+          msg += '\n\nמאחר שהוא/היא מופיע/ה בנבחרות רבות, ההסרה פחות משמעותית.';
+        } else {
+          // נוכחות מצומצמת — המלצה בינונית
+          msg += '\n\nמומלץ לשקול להשאירו/ה, ולהחליט לגביו/ה לקראת סוף התהליך.';
+        }
+      }
+      squadConfirm(msg, () => {
+        const st = loadState();
+        st.selected = (st.selected || []).filter(x => x !== name);
+        st.shiryun  = (st.shiryun  || []).filter(x => x !== name);
+        autoLog(name, 'בוטל');
+        saveState(st);
+        state = st;
+        renderSquad(activeSquad);
+      });
+    }
+
+    // מודאל אישור מותאם — ממורכז וגליל, לא נחתך כמו window.confirm בנייד
+    function squadConfirm(message, onYes) {
+      const ov = document.getElementById('squad-confirm');
+      document.getElementById('squad-confirm-text').textContent = message;
+      ov._onYes = onYes;
+      ov.classList.add('open');
+    }
+    function squadConfirmClose(yes) {
+      const ov = document.getElementById('squad-confirm');
+      ov.classList.remove('open');
+      const fn = ov._onYes; ov._onYes = null;
+      if (yes && typeof fn === 'function') fn();
+    }
+
+    // כרטיס הסבר לנבחרת נושאית — שם, רצועת זיקה ומילת התאמה + הנימוק מ-main_teams.csv
+    function openSquadCard(name) {
+      const cfg = squadConfig[activeSquad];
+      const row = squadData[name];
+      const v = row ? parseInt(row[activeSquad] || '0', 10) : 0;
+      const note = row ? (row[activeSquad + '_note'] || '') : '';
+      document.getElementById('m-name').textContent = name;
+      document.getElementById('m-sub').textContent =
+        (cfg ? cfg.title : '') + (v ? ' — ' + (cfg['label_' + v] || '') : '');
+      document.getElementById('m-body').innerHTML = note
+        ? '<p style="line-height:1.7;font-size:.92rem">' + escapeHtml(note) + '</p>'
+        : '<p style="color:var(--text-muted)">אין נימוק זמין למועמד/ת זו בנבחרת זו.</p>';
+      document.getElementById('modal').classList.add('open');
     }
 
     let showAll = false;
@@ -2023,14 +2584,23 @@
       if (!e || e.target.id === 'modal') document.getElementById('modal').classList.remove('open');
     }
 
-    // ── טעינת שני מקורות במקביל ──
+    // ── טעינת המקורות במקביל ──
     Promise.all([
       fetch('dbr_P_01_data.csv').then(r => r.ok ? r.text() : ''),
-      fetch('data/candidates_master.json').then(r => r.ok ? r.json() : {})
-    ]).then(([csvTxt, jsonData]) => {
+      fetch('data/candidates_master.json').then(r => r.ok ? r.json() : {}),
+      fetch('main_teams.csv').then(r => r.ok ? r.text() : ''),
+      fetch('main_teams_config.csv').then(r => r.ok ? r.text() : '')
+    ]).then(([csvTxt, jsonData, teamsTxt, cfgTxt]) => {
       // CSV → flatDB
       for (const row of parseCsv(csvTxt)) {
         if (row['id1']) flatDB[row['id1']] = row;
+      }
+      // נבחרות נושאיות — קונפיג + נתונים
+      for (const r of parseCsv(cfgTxt)) {
+        if (r['squad_id']) squadConfig[r['squad_id']] = r;
+      }
+      for (const r of parseCsv(teamsTxt)) {
+        if (r['id1']) squadData[r['id1']] = r;
       }
       // JSON → מפה לפי שם
       const moachMap = {};
@@ -2070,7 +2640,10 @@
 
     // ══════════════════════════════════════════
 
-    window.addEventListener('focus', () => { if (rankList.length) renderRanking(); });
+    window.addEventListener('focus', () => {
+      if (activeSquad) { renderSquad(activeSquad); }
+      else if (rankList.length) renderRanking();
+    });
   </script>
 </body>
 </html>

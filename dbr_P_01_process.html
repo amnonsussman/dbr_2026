@@ -207,7 +207,19 @@
       gap: 6px;
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
       cursor: pointer;
+      position: relative;
     }
+
+    /* אזור מגע גדול — השליש התחתון של התיבה לחיץ כמו הכפתור */
+    .card-tap-zone {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 33%;
+      z-index: 1;
+      cursor: pointer;
+      border-radius: 0 0 var(--radius-medium) var(--radius-medium);
+    }
+    .card-tap-zone:hover { background: rgba(29,95,167,.05); }
 
     /* כרטיסי מסלול בולטים */
     a.path-card {
@@ -371,7 +383,8 @@
           <button class="card-zoom-btn" onclick="cardZoom('shiryun',1)">+</button>
         </div>
         <div class="path-desc" id="shiryun-desc">כאן בוחרים את המועמדים/ות באופן עצמאי, ישירות מתוך הרשימה המלאה — על פי שיקול הדעת שלכם בלבד.<br>אין שאלונים ואין דירוג אוטומטי: מסמנים את מי שתרצו, ואפשר לשנות בכל שלב.<br>בסיום, הרשימה שבחרתם עוברת אתכם להמשך התהליך.</div>
-        <a href="dbr_P_01_shiryun.html" onclick="event.stopPropagation();trackPath('shiryun')" style="display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
+        <a href="dbr_P_01_shiryun.html" onclick="event.stopPropagation();trackPath('shiryun')" style="position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
+        <a href="dbr_P_01_shiryun.html" onclick="trackPath('shiryun')" class="card-tap-zone" aria-label="בחירה עצמאית"></a>
       </div>
 
       <div class="path-card" style="cursor:default;border:2px solid #1d5fa7;box-shadow:0 4px 20px rgba(29,95,167,.1);">
@@ -381,7 +394,8 @@
           <button class="card-zoom-btn" onclick="cardZoom('dbr',1)">+</button>
         </div>
         <div class="path-desc" id="dbr-card-desc">כאן יוצאים מנקודת מוצא מוכנה: נבחרות שהכינו מערכות בינה מלאכותית, לפי קריטריונים של אנשי הפרויקט ויועצים נוספים.<br>כל נבחרת מציגה את 16 המועמדים המובילים שלה, לצד מי שכבר בחרתם בבחירה העצמאית.<br>תוכלו לעבור בין הנבחרות — כשהמועמדים שבחרתם עוברים אתכם — ולבחור מכל נבחרת את הראויים בעיניכם, ולבסוף להרכיב מהם את ה‑8 שלכם.</div>
-        <a href="dbr_P_01_state.html" onclick="trackPath('committee')" style="display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
+        <a href="dbr_P_01_state.html" onclick="event.stopPropagation();trackPath('committee')" style="position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
+        <a href="dbr_P_01_state.html" onclick="trackPath('committee')" class="card-tap-zone" aria-label="בחירה לפי המלצה"></a>
       </div>
 
       <div class="path-card" style="cursor:default;opacity:.7;border:2px dashed #a0b4cc;">

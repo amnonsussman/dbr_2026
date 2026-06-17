@@ -1937,9 +1937,11 @@
     };
     // ערך → אינדקס רצועה: 100→0(core) 80→1 60→2 40/20→3(touch)
     function squadBandIndex(v) { return v >= 100 ? 0 : v >= 80 ? 1 : v >= 60 ? 2 : 3; }
-    function squadDotHtml(v, family) {
+    // overflow (מעבר לנורמה) → רצועה אחת למטה
+    function displayBandIndex(v, overflow) { return overflow ? Math.min(3, squadBandIndex(v) + 1) : squadBandIndex(v); }
+    function squadDotHtml(v, family, bandIdx) {
       const ramp = SQUAD_RAMPS[family] || SQUAD_RAMPS.blue;
-      const idx  = squadBandIndex(v);
+      const idx  = (bandIdx !== undefined) ? bandIdx : squadBandIndex(v);
       const border = idx === 3
         ? '1.5px solid ' + ramp[2]              /* touch בהיר — מסגרת בגוון אחד כהה יותר */
         : '1px solid rgba(0,0,0,.10)';
@@ -2103,16 +2105,18 @@
       const eName = escapeHtml(c.name);
       // השם הראשון בשורה (עמודה ימנית, כשיש לו זוג) מקבל גבול שמאלי כמפריד מהשם השני
       const dv = divider ? ' squad-divider' : '';
+      // עיגול: מועמד overflow (מעבר לנורמה) מוצג ברצועה אחת למטה
+      const dispBand = displayBandIndex(c.value, !!c.overflow);
       // מועמד שכבר נבחר — עיגול זיקה (אם בנבחרת) + שם בלבד, ללא מילת התאמה או כרטיס
       if (c.picked) {
-        const dot = c.inSquad ? squadDotHtml(c.value, cfg.color_family) : '';
+        const dot = c.inSquad ? squadDotHtml(c.value, cfg.color_family, dispBand) : '';
         return '<div class="rank-row is-picked' + (c.inSquad ? '' : ' squad-extra') + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
           + dot
           + '<span class="rank-name picked">' + eName + '</span>'
           + '</div>';
       }
       // העיגול + המקרא למטה מספרים את הרצועה — אין צורך במילת התאמה בשורה
-      const dot = squadDotHtml(c.value, cfg.color_family);
+      const dot = squadDotHtml(c.value, cfg.color_family, dispBand);
       return '<div class="rank-row' + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
         + dot
         + '<span class="rank-name unpicked">' + eName + '</span>'
@@ -2128,20 +2132,45 @@
       _squadResizeTimer = setTimeout(() => { if (activeSquad) renderSquad(activeSquad); }, 150);
     });
 
-    const SQUAD_SIZE = 16;
+    const SQUAD_SIZE = 20;
     function renderSquad(squadId) {
       const cfg = squadConfig[squadId];
       if (!cfg) return;
       state = loadState();
       const allPicks = new Set([ ...(state.shiryun || []), ...(state.dbr_picks || []) ]);
 
-      // מועמדי הנבחרת — ערך>0, מיון גבוה→נמוך, עד 16
-      const inSquad = Object.values(squadData)
-        .map(r => ({ name: r.id1, value: parseInt(r[squadId] || '0', 10) }))
+      // מועמדי הנבחרת — ערך>0, מיון לפי דירוג שוברי שוויון (_rank), עד SQUAD_SIZE
+      const SQUAD_NORM = parseInt(cfg.squad_norm || '0', 10) || 16;  // נורמת הנבחרת
+      const squadSizeCap = parseInt(cfg.squad_size || '0', 10) || SQUAD_SIZE;
+      const sorted = Object.values(squadData)
+        .map(r => ({
+          name:  r.id1,
+          value: parseInt(r[squadId] || '0', 10),
+          rank:  parseInt(r[squadId + '_rank'] || '0', 10)
+        }))
         .filter(c => c.value > 0)
-        .sort((a, b) => b.value - a.value)
-        .slice(0, SQUAD_SIZE)
-        .map(c => ({ ...c, inSquad: true, picked: allPicks.has(c.name) }));
+        .sort((a, b) => {
+          const aHas = a.rank > 0, bHas = b.rank > 0;
+          if (aHas && bHas) return a.rank - b.rank;
+          if (aHas) return -1;
+          if (bHas) return 1;
+          return b.value - a.value;
+        });
+
+      // הרחבה אוטומטית: אם מקום NORM ו-NORM+1 חולקים ציון — כלול את כולם (עד squadSizeCap)
+      let cutoff = SQUAD_NORM;
+      if (sorted.length > SQUAD_NORM && sorted[SQUAD_NORM - 1].value === sorted[SQUAD_NORM].value) {
+        const boundaryVal = sorted[SQUAD_NORM - 1].value;
+        while (cutoff < sorted.length && cutoff < squadSizeCap && sorted[cutoff].value === boundaryVal) cutoff++;
+      }
+
+
+      const inSquad = sorted.slice(0, cutoff).map((c, i) => ({
+        ...c,
+        inSquad:  true,
+        picked:   allPicks.has(c.name),
+        overflow: i >= SQUAD_NORM   // מעבר לנורמה — הורדת רצועה
+      }));
 
       const inNames = new Set(inSquad.map(c => c.name));
       // בחירות הבוחר שאינן בנבחרת זו (ערך 0 / לא קיים) — מתחת לקו המקווקו
@@ -2152,7 +2181,10 @@
       // רצועה-רצועה, שורה-שורה ימין→שמאל, בגריד אחד מלא-רוחב.
       // קו מפריד אחיד מקצה לקצה בין הרצועות; ברצועה אי-זוגית תא ריק ליישור הבאה.
       const byBand = {};
-      inSquad.forEach(c => { (byBand[squadBandIndex(c.value)] = byBand[squadBandIndex(c.value)] || []).push(c); });
+      inSquad.forEach(c => {
+        const bi = displayBandIndex(c.value, !!c.overflow);
+        (byBand[bi] = byBand[bi] || []).push(c);
+      });
       const bandIdxs = Object.keys(byBand).map(Number).sort((a, b) => a - b); // 0=ליבה → 3=נגיעה
       const cells = [];
       bandIdxs.forEach((bi, gi) => {

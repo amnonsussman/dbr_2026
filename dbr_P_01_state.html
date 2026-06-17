@@ -2105,18 +2105,18 @@
       const eName = escapeHtml(c.name);
       // השם הראשון בשורה (עמודה ימנית, כשיש לו זוג) מקבל גבול שמאלי כמפריד מהשם השני
       const dv = divider ? ' squad-divider' : '';
-      // עיגול: מועמד overflow (מעבר לנורמה) מוצג ברצועה אחת למטה
-      const dispBand = displayBandIndex(c.value, !!c.overflow);
+      // צבע הנקודה — תמיד לפי ערך הזיקה המקורי (100/80/60/40)
+      const dotBand = displayBandIndex(c.value, false);
       // מועמד שכבר נבחר — עיגול זיקה (אם בנבחרת) + שם בלבד, ללא מילת התאמה או כרטיס
       if (c.picked) {
-        const dot = c.inSquad ? squadDotHtml(c.value, cfg.color_family, dispBand) : '';
+        const dot = c.inSquad ? squadDotHtml(c.value, cfg.color_family, dotBand) : '';
         return '<div class="rank-row is-picked' + (c.inSquad ? '' : ' squad-extra') + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
           + dot
           + '<span class="rank-name picked">' + eName + '</span>'
           + '</div>';
       }
       // העיגול + המקרא למטה מספרים את הרצועה — אין צורך במילת התאמה בשורה
-      const dot = squadDotHtml(c.value, cfg.color_family, dispBand);
+      const dot = squadDotHtml(c.value, cfg.color_family, dotBand);
       return '<div class="rank-row' + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
         + dot
         + '<span class="rank-name unpicked">' + eName + '</span>'
@@ -2139,17 +2139,21 @@
       state = loadState();
       const allPicks = new Set([ ...(state.shiryun || []), ...(state.dbr_picks || []) ]);
 
-      // מועמדי הנבחרת — ערך>0, מיון לפי דירוג שוברי שוויון (_rank), עד SQUAD_SIZE
-      const SQUAD_NORM = parseInt(cfg.squad_norm || '0', 10) || 16;  // נורמת הנבחרת
-      const squadSizeCap = parseInt(cfg.squad_size || '0', 10) || SQUAD_SIZE;
+      // מועמדי הנבחרת — ערך>0, מיון לפי combined יורד, חיתוך ב-squad_size, חלוקה ל-4 רצועות
+      const squadSize = parseInt(cfg.squad_size || '0', 10) || 16;
+      const bandSize  = Math.ceil(squadSize / 4);
+
       const sorted = Object.values(squadData)
         .map(r => ({
-          name:  r.id1,
-          value: parseInt(r[squadId] || '0', 10),
-          rank:  parseInt(r[squadId + '_rank'] || '0', 10)
+          name:     r.id1,
+          value:    parseInt(r[squadId] || '0', 10),
+          combined: parseFloat(r[squadId + '_combined'] || '0') || 0,
+          rank:     parseInt(r[squadId + '_rank'] || '0', 10)
         }))
         .filter(c => c.value > 0)
         .sort((a, b) => {
+          // combined קיים → מיון לפי combined יורד; אחרת → rank עולה → value יורד
+          if (a.combined > 0 || b.combined > 0) return b.combined - a.combined;
           const aHas = a.rank > 0, bHas = b.rank > 0;
           if (aHas && bHas) return a.rank - b.rank;
           if (aHas) return -1;
@@ -2157,19 +2161,11 @@
           return b.value - a.value;
         });
 
-      // הרחבה אוטומטית: אם מקום NORM ו-NORM+1 חולקים ציון — כלול את כולם (עד squadSizeCap)
-      let cutoff = SQUAD_NORM;
-      if (sorted.length > SQUAD_NORM && sorted[SQUAD_NORM - 1].value === sorted[SQUAD_NORM].value) {
-        const boundaryVal = sorted[SQUAD_NORM - 1].value;
-        while (cutoff < sorted.length && cutoff < squadSizeCap && sorted[cutoff].value === boundaryVal) cutoff++;
-      }
-
-
-      const inSquad = sorted.slice(0, cutoff).map((c, i) => ({
+      const inSquad = sorted.slice(0, squadSize).map((c, i) => ({
         ...c,
-        inSquad:  true,
-        picked:   allPicks.has(c.name),
-        overflow: i >= SQUAD_NORM   // מעבר לנורמה — הורדת רצועה
+        inSquad: true,
+        picked:  allPicks.has(c.name),
+        bandIdx: Math.min(3, Math.floor(i / bandSize))  // 0=ליבה 1=חזקה 2=משמעותית 3=נגיעה
       }));
 
       const inNames = new Set(inSquad.map(c => c.name));
@@ -2182,7 +2178,7 @@
       // קו מפריד אחיד מקצה לקצה בין הרצועות; ברצועה אי-זוגית תא ריק ליישור הבאה.
       const byBand = {};
       inSquad.forEach(c => {
-        const bi = displayBandIndex(c.value, !!c.overflow);
+        const bi = (c.bandIdx !== undefined) ? c.bandIdx : displayBandIndex(c.value, !!c.overflow);
         (byBand[bi] = byBand[bi] || []).push(c);
       });
       const bandIdxs = Object.keys(byBand).map(Number).sort((a, b) => a - b); // 0=ליבה → 3=נגיעה
@@ -2274,11 +2270,17 @@
 
     // שמות הנבחרת הנוכחית (16 המובילים בערך>0) — לזיהוי מי "מחוץ לנבחרת"
     function squadInNames(squadId) {
+      const cfg = squadConfig[squadId] || {};
+      const squadSize = parseInt(cfg.squad_size || '0', 10) || 16;
       return new Set(Object.values(squadData)
-        .map(r => ({ name: r.id1, value: parseInt(r[squadId] || '0', 10) }))
+        .map(r => ({
+          name:     r.id1,
+          value:    parseInt(r[squadId] || '0', 10),
+          combined: parseFloat(r[squadId + '_combined'] || '0') || 0
+        }))
         .filter(c => c.value > 0)
-        .sort((a, b) => b.value - a.value)
-        .slice(0, SQUAD_SIZE)
+        .sort((a, b) => (a.combined > 0 || b.combined > 0) ? b.combined - a.combined : b.value - a.value)
+        .slice(0, squadSize)
         .map(c => c.name));
     }
 

@@ -1440,11 +1440,11 @@
           <div class="team-card-desc">כך נראית הנבחרת כשהבינה לובשת את כובע מקבלי ההחלטות במפלגה ומאזנת בין מועמדים, ייצוג ואינטרסים.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card team-card--imitation unavailable" data-rec-type="imitation">
-          <div class="team-card-name">נבחרת השמאל הציוני</div>
-          <div style="font-size:.72rem;color:var(--text-muted);font-weight:700;margin-top:1px">(סימולציה)</div>
-          <div class="team-card-desc">עדשת מרכז־שמאל ערכי — זכויות, שוויון, שותפות יהודית־ערבית וסביבה</div>
-          <div class="team-card-status">🔧 בבנייה</div>
+        <div class="team-card team-card--imitation" data-rec-type="imitation" onclick="selectTeam('meretz')">
+          <div class="team-card-name">נבחרת הקוף של המונדיאל 🐒</div>
+          <div style="font-size:.72rem;color:var(--text-muted);font-weight:700;margin-top:1px">(הגרלה אקראית)</div>
+          <div class="team-card-desc">8 מועמדים שנבחרו על ידי קוף אקראי — ללא הטיה, ללא שיקול דעת</div>
+          <div class="team-card-status active">✓ זמינה</div>
         </div>
         <!-- נבחרות נושאיות — פעילות, מבוססות נתוני main_teams.csv -->
         <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('law_democracy')">
@@ -1511,7 +1511,7 @@
             <button class="squad-change-btn" type="button">↕ החלף נושא</button>
             <select id="team-select" onchange="onTeamChange()">
               <option value="dbr1">נבחרת מטבח המפלגה</option>
-              <option value="meretz">נבחרת השמאל הציוני</option>
+              <option value="meretz">נבחרת הקוף של המונדיאל</option>
               <option value="north">נבחרת בוחרי הצפון</option>
               <option value="law_democracy">שלטון החוק והדמוקרטיה</option>
               <option value="religion_state">חופש, דת ומדינה</option>
@@ -1554,6 +1554,7 @@
           </div>
           <div id="show-more-bar" class="show-more-bar" style="display:none;">
             <button class="show-more-btn shuffle-btn" id="zipper-btn" onclick="startShuffle()">🔀 ריצ׳רץ</button>
+            <button class="show-more-btn shuffle-btn" id="monkey-reroll-btn" onclick="rerollMonkeySquad()" style="display:none;">בחר שוב</button>
           </div>
         </div>
       </div>
@@ -1745,8 +1746,9 @@
       if (v>=50) return '#f59e0b'; return '#ef4444';
     }
     function genderDotHtml(gender) {
-      const color = gender==='נקבה'?'#e879a0':gender==='זכר'?'#3b82f6':'#aaa';
-      return `<span class="gender-dot" style="background:${color}"></span>`;
+      if (gender === 'נקבה') return '<span style="font-size:.85rem;color:#c2185b;flex-shrink:0;line-height:1;">♀</span>';
+      if (gender === 'זכר')  return '<span style="font-size:.85rem;color:#1565c0;flex-shrink:0;line-height:1;">♂</span>';
+      return '<span style="font-size:.85rem;color:var(--text-muted);flex-shrink:0;line-height:1;">—</span>';
     }
     function scorePill(v) {
       if (v===null) return `<span style="color:#ccc;font-size:.78rem">—</span>`;
@@ -2161,7 +2163,7 @@
     // מיפוי נבחרת → suffix בעמודות ה-CSV. נבחרת שאינה כאן משתמשת ב-'' (דבר1).
     const TEAM_SUFFIX = { dbr1: '', meretz: 'm', north: 'p' };
     const TEAM_LABELS = {
-      dbr2: 'ד.ב.ר (2)', dbr3: 'ד.ב.ר (3)', meretz: 'נבחרת השמאל הציוני',
+      dbr2: 'ד.ב.ר (2)', dbr3: 'ד.ב.ר (3)', meretz: 'נבחרת הקוף של המונדיאל',
       lochemet: 'נבחרת לוחמת', coalition: 'נבחרת מותאמת קואליציה',
       opposition: 'נבחרת מותאמת אופוזיציה', yair: 'נבחרת החלומות של יאיר גולן',
       bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הפריפריה',
@@ -2170,7 +2172,7 @@
     };
     const TEAM_NAMES = {
       dbr1: 'נבחרת מטבח המפלגה', dbr2: 'ועדה מסדרת ד.ב.ר (2)', dbr3: 'ועדה מסדרת ד.ב.ר (3)',
-      meretz: 'נבחרת השמאל הציוני',
+      meretz: 'נבחרת הקוף של המונדיאל',
       lochemet: 'נבחרת לוחמת', coalition: 'נבחרת מותאמת קואליציה',
       opposition: 'נבחרת מותאמת אופוזיציה', yair: 'נבחרת יאיר גולן',
       bonot: 'בונות אלטרנטיבה', north: 'נבחרת פיתוח הפריפריה',
@@ -2259,12 +2261,7 @@
       updateSquadHdrTitle();
       const rs = document.getElementById('ranking-section');
       rs.style.display = '';
-      rs.classList.remove('rank-section--ai', 'rank-section--imitation');
-      const cardEl = document.querySelector('.team-card[data-rec-type]');
-      const activeCard = document.querySelector('.team-card[onclick*="' + val + '"]');
-      const recType = activeCard ? activeCard.dataset.recType : '';
-      if (recType === 'ai_squads') rs.classList.add('rank-section--ai');
-      else if (recType === 'imitation') rs.classList.add('rank-section--imitation');
+      setRankSectionType(val);
       const isSquad = !!squadConfig[val];
       const title = (isSquad && squadConfig[val].title) || TEAM_NAMES[val] || val;
       const h1 = document.querySelector('.page-title h1');
@@ -2287,17 +2284,119 @@
 
     // סוג נבחרת: 'squad' = נושאית (בקונפיג), אחרת 'old' = סימולציה ישנה
     function teamType(val) { return squadConfig[val] ? 'squad' : 'old'; }
-    // הצג בדרופדאון רק נבחרות מאותו סוג כמו הנבחרת הפעילה
+    function setRankSectionType(val) {
+      const rs = document.getElementById('ranking-section');
+      if (!rs) return;
+      rs.classList.remove('rank-section--ai', 'rank-section--imitation');
+      const activeCard = document.querySelector('.team-card[onclick*="' + val + '"]');
+      const recType = activeCard ? activeCard.dataset.recType : '';
+      if (recType === 'ai_squads') rs.classList.add('rank-section--ai');
+      else if (recType === 'imitation') rs.classList.add('rank-section--imitation');
+    }
+    // סדר מחדש את הדרופדאון: קבוצה נוכחית ראשון, מפריד, קבוצה שנייה
     function filterTeamOptions(activeVal) {
-      const type = teamType(activeVal);
       const sel = document.getElementById('team-select');
-      Array.from(sel.options).forEach(o => { o.hidden = teamType(o.value) !== type; });
+      const type = teamType(activeVal);
+      const allOpts = Array.from(sel.options).filter(o => !o.disabled);
+      // הסר מפריד קיים
+      Array.from(sel.options).filter(o => o.disabled && o.value === '').forEach(o => sel.removeChild(o));
+      const sameGroup = allOpts.filter(o => teamType(o.value) === type);
+      const otherGroup = allOpts.filter(o => teamType(o.value) !== type);
+      // בנה מחדש את הסדר
+      sameGroup.forEach(o => sel.appendChild(o));
+      if (otherGroup.length) {
+        const sep = document.createElement('option');
+        sep.disabled = true;
+        sep.value = '';
+        sep.textContent = '──────────────';
+        sel.appendChild(sep);
+        otherGroup.forEach(o => sel.appendChild(o));
+      }
+    }
+
+    const MONKEY_KEY = 'dbr_monkey_picks';
+    let activeMonkey = false;
+
+    function monkeyGenderIcon(name) {
+      const row = flatDB[name];
+      const g = row && (row.id2 || '').trim();
+      if (g === 'נקבה') return '<span style="font-size:.85rem;color:#c2185b;flex-shrink:0;">♀</span>';
+      if (g === 'זכר')  return '<span style="font-size:.85rem;color:#1565c0;flex-shrink:0;">♂</span>';
+      return '<span style="font-size:.85rem;color:var(--text-muted);flex-shrink:0;">—</span>';
+    }
+    function monkeyRowHtml(name, picked, divider) {
+      const eName = escapeHtml(name);
+      const icon = monkeyGenderIcon(name);
+      const dv = divider ? ' squad-divider' : '';
+      if (picked) {
+        return '<div class="rank-row is-picked' + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
+          + icon
+          + '<span class="rank-name picked">' + eName + '</span>'
+          + '</div>';
+      }
+      return '<div class="rank-row' + dv + '" onclick="toggleSquadPick(\'' + eName + '\')">'
+        + icon
+        + '<span class="rank-name unpicked" style="font-size:1.05rem;">' + eName + '</span>'
+        + '<span class="rank-card" style="margin-inline-start:auto" onclick="event.stopPropagation();openSquadCard(\'' + eName + '\')" title="כרטיס הסבר">📋</span>'
+        + '</div>';
+    }
+
+    function renderMonkeySquad(forceNew) {
+      activeMonkey = true;
+      document.getElementById('team-notice').style.display = 'none';
+      document.getElementById('summary-bar').style.display = 'none';
+      const content = document.getElementById('dbr1-content');
+      content.style.display = '';
+      let picks = null;
+      if (!forceNew) { try { picks = JSON.parse(localStorage.getItem(MONKEY_KEY)); } catch(e) {} }
+      if (!picks || picks.length < 8) {
+        const pool = Object.keys(flatDB).filter(n => n && n.trim());
+        for (let i = pool.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        picks = pool.slice(0, 8);
+        localStorage.setItem(MONKEY_KEY, JSON.stringify(picks));
+      }
+      state = loadState();
+      const allPicks = new Set([...(state.shiryun || []), ...(state.dbr_picks || [])]);
+      const inNames = new Set(picks);
+      const extras = [...allPicks]
+        .filter(n => !inNames.has(n))
+        .map(n => ({ name: n, value: 0, inSquad: false, picked: true }));
+      document.getElementById('rank-col-1').innerHTML = picks.map((n, i) => monkeyRowHtml(n, allPicks.has(n), i % 2 === 0)).join('');
+      document.getElementById('rank-col-2').innerHTML = '';
+      const cols = document.querySelector('.rank-columns');
+      cols.classList.add('squad-framed');
+      cols.style.setProperty('--row-h', '34px');
+      renderSquadExtras(extras, { color_family: 'gray' });
+      let intro = document.getElementById('squad-intro');
+      if (!intro) {
+        intro = document.createElement('div');
+        intro.id = 'squad-intro';
+        intro.className = 'squad-intro-note';
+        cols.parentNode.insertBefore(intro, cols);
+      }
+      intro.style.display = '';
+      intro.innerHTML = '8 מועמדים שנבחרו אקראית · לחיצה על שם מוסיפה/מבטלת בחירה';
+      const leg = document.getElementById('squad-legend'); if (leg) leg.style.display = 'none';
+      document.getElementById('show-more-bar').style.display = '';
+      document.getElementById('zipper-btn').style.display = 'none';
+      document.getElementById('monkey-reroll-btn').style.display = '';
+    }
+    function rerollMonkeySquad() { renderMonkeySquad(true); }
+    function hideMonkeySquad() {
+      activeMonkey = false;
+      document.getElementById('zipper-btn').style.display = '';
+      document.getElementById('monkey-reroll-btn').style.display = 'none';
     }
 
     function onTeamChange() {
       const val = document.getElementById('team-select').value;
       filterTeamOptions(val);
+      setRankSectionType(val);
       updateSquadHdrTitle();
+      hideMonkeySquad();
       // העלם הסבר בהחלפת נבחרת
       const desc = document.getElementById('screen-desc');
       if (desc) desc.style.display = 'none';
@@ -2306,6 +2405,8 @@
       _rankingClickCount = 4;
       const notice = document.getElementById('team-notice');
       const content = document.getElementById('dbr1-content');
+      // ── נבחרת הקוף של המונדיאל ──
+      if (val === 'meretz') { renderMonkeySquad(false); return; }
       // ── מסלול נבחרת נושאית ──
       if (squadConfig[val]) {
         activeSquad = val;
@@ -2365,7 +2466,8 @@
       const el  = document.getElementById('squad-hdr-title');
       if (!el || !sel) return;
       const opt = sel.options[sel.selectedIndex];
-      el.textContent = opt ? opt.text : '';
+      const txt = opt ? opt.text : '';
+      el.textContent = (sel.value === 'meretz') ? '🐒 ' + txt + ' 🐒' : txt;
     }
 
     function ensureSquadControls() {
@@ -2643,7 +2745,7 @@
         state.shiryun.push(name);
         autoLog(name, 'נבחר');
         saveState(state);
-        renderSquad(activeSquad);
+        if (activeMonkey) { renderMonkeySquad(false); } else { renderSquad(activeSquad); }
         return;
       }
       // ביטול בחירה — אזהרה לפי סך נוכחות המועמד בנבחרות (כולל הנוכחית)
@@ -2672,7 +2774,7 @@
         autoLog(name, 'בוטל');
         saveState(st);
         state = st;
-        renderSquad(activeSquad);
+        if (activeMonkey) { renderMonkeySquad(false); } else { renderSquad(activeSquad); }
       });
     }
 
@@ -2783,7 +2885,7 @@
 
       const reasonHtml = note
         ? '<section class="modal-reason-card"><div class="modal-section-kicker">הנימוק לדירוג בנבחרת</div><p>' + escapeHtml(note) + '</p></section>'
-        : '<section class="modal-reason-card"><div class="modal-section-kicker">הנימוק לדירוג בנבחרת</div><p style="color:var(--text-muted)">אין נימוק זמין למועמד/ת זו בנבחרת זו.</p></section>';
+        : '<section class="modal-reason-card"><div class="modal-section-kicker">הנימוק לדירוג בנבחרת</div><p style="color:var(--text-muted)">🐒: אין נימוק זמין למועמד/ת זו בנבחרת זו.</p></section>';
 
       document.getElementById('m-body').innerHTML =
         reasonHtml + renderCandidateProfileExpansion(name);
@@ -2810,7 +2912,7 @@
 
       const shiryuned = (state.shiryun || []).includes(c.name);
       const gDot = zipperMode ? genderDotHtml(c.gender) : '';
-      const gDotFaded = zipperMode ? '<span class="gender-dot" style="background:' + (c.gender==='נקבה'?'#e879a0':'#3b82f6') + ';opacity:.3"></span>' : '';
+      const gDotFaded = zipperMode ? '<span style="font-size:.85rem;opacity:.3;flex-shrink:0;line-height:1;">' + (c.gender==='נקבה'?'♀':c.gender==='זכר'?'♂':'—') + '</span>' : '';
 
       /* מצב סינון שריון — רק משוריינים מוצגים, השאר מוסתרים */
       if (filterShiryun && !shiryuned) {

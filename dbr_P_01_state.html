@@ -138,6 +138,7 @@
     }
 
     .page-title h1 {
+      display: none;
       margin: 0 0 3px;
       font-size: 1.5rem;
       font-weight: 900;
@@ -872,7 +873,7 @@
     }
     /* כותרת נבחרת בהדר */
     .squad-hdr-title {
-      font-size: clamp(1rem, 3vw, 1.22rem);
+      font-size: clamp(1.35rem, 4vw, 1.6rem);
       font-weight: 800;
       color: var(--blue-dark);
       text-align: center;
@@ -1492,7 +1493,7 @@
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
           <div id="squad-hdr-title" class="squad-hdr-title"></div>
           <div class="squad-change-wrap">
-            <button class="squad-change-btn" type="button">↕ החלף נבחרת</button>
+            <button class="squad-change-btn" type="button">↕ החלף נושא</button>
             <select id="team-select" onchange="onTeamChange()">
               <option value="dbr1">נבחרת מטבח המפלגה</option>
               <option value="meretz">נבחרת השמאל הציוני</option>
@@ -2246,7 +2247,8 @@
       const title = (isSquad && squadConfig[val].title) || TEAM_NAMES[val] || val;
       const h1 = document.querySelector('.page-title h1');
       if (h1) h1.childNodes[0].textContent = title + ' ';
-      // הצג הסבר + ⓘ + אפס מונה קליקים
+      onTeamChange();
+      // הצג הסבר + ⓘ + אפס מונה קליקים (אחרי onTeamChange כדי לא להידרס)
       resetDescClickCount();
       const descBtn = document.getElementById('desc-toggle-btn');
       if (descBtn) { descBtn.style.display = ''; descBtn.style.color = 'var(--blue-main)'; descBtn.title = 'הסתר הסבר'; }
@@ -2254,12 +2256,11 @@
       if (desc) {
         desc.style.display = '';
         if (isSquad) {
-          desc.innerHTML = 'בחרתם את <strong>' + escapeHtml(title) + '</strong> — עד 16 המועמדים שהנושא מרכזי להם, לפי <strong>עוצמת הזיקה</strong> (לא ציון). צבע העיגול ליד כל שם מציין את רצועת הזיקה (ראו מקרא בתחתית). לבחירה — לחצו על השורה; לחיצה נוספת מבטלת. בחירותיכם נשמרות בכל המסכים ומוצגות בכל נבחרת. לכרטיס הסבר על מי שטרם בחרתם — לחצו 📋.';
+          desc.innerHTML = 'בחרתם נושא של  <strong>' + escapeHtml(title) + '</strong>, ובמסך מוצגים מועמדים שיש להם זיקה לנושא הנבחר. צבע העיגול ליד כל שם מציין את עוצמת הזיקה (ראו מקרא מעל הטבלה). לבחירת מועמד לחצו על השם שלו ולחיצה נוספת מבטלת את הבחירה. בחירותיכם נשמרות בכל המסכים ומוצגות בכל נושא/נבחרת.<br> לכרטיס ההסבר על מי שטרם בחרתם — לחצו 📋.';
         } else {
           desc.innerHTML = 'בחרתם את ' + escapeHtml(title) + ' — 20 המועמדים שלה מוצגים כאן. מי שסימנתם קודם מודגש. להוספת מועמד מהנבחרת לחצו על השם שלו, שמו מופיע בכחול כהה, מועמדים שבחרתם ואינם כלולים בנבחרת — יופיעו בסוף רשימת הדירוג בעמודה השמאלית. להסרת מועמד לחצו שוב על השם. הסרת מועמד מהרשימה כאן מבטלת את בחירתו בכל המסכים. כדי לצפות בכרטיס המועמד של הנבחרת לחץ 📋';
         }
       }
-      onTeamChange();
     }
 
     // סוג נבחרת: 'squad' = נושאית (בקונפיג), אחרת 'old' = סימולציה ישנה
@@ -2275,6 +2276,12 @@
       const val = document.getElementById('team-select').value;
       filterTeamOptions(val);
       updateSquadHdrTitle();
+      // העלם הסבר בהחלפת נבחרת
+      const desc = document.getElementById('screen-desc');
+      if (desc) desc.style.display = 'none';
+      const descBtn = document.getElementById('desc-toggle-btn');
+      if (descBtn) { descBtn.style.color = '#f59e0b'; descBtn.title = 'הצג הסבר'; }
+      _rankingClickCount = 4;
       const notice = document.getElementById('team-notice');
       const content = document.getElementById('dbr1-content');
       // ── מסלול נבחרת נושאית ──
@@ -2486,7 +2493,9 @@
       const nPicked = inSquad.filter(c => c.picked).length;
       renderSquadIntro(cfg, inSquad.length, extras.length, nPicked);
       ensureSquadControls();
-      renderSquadLegend(cfg, bandIdxs);
+      // המקרא לפי צבעי הדוטים בפועל (ציון זיקה), לא לפי חלוקת מיקום
+      const dotBandIdxs = [...new Set(inSquad.map(c => displayBandIndex(c.value, false)))].sort((a,b) => a-b);
+      renderSquadLegend(cfg, dotBandIdxs);
     }
 
     // מספרים בעברית (לשון זכר, עד 16) — לתצוגת המלל
@@ -2718,20 +2727,18 @@
             <span class="profile-icon">🔎</span>
             <span>להעמקה — כך משתקפת דמות המועמד במערכת</span>
           </h3>
-          <div class="profile-grid">
-            <div class="profile-info-card">
-              <span class="profile-info-label">תמונה כללית</span>
-              <p>${core}</p>
-            </div>
-            <div class="profile-info-card">
-              <span class="profile-info-label">ניסיון מרכזי</span>
-              <p>${experience}</p>
-            </div>
-            <div class="profile-info-card profile-wide caution">
-              <span class="profile-info-label">הקשר ומגבלת פרשנות</span>
-              <p>${caution}</p>
-            </div>
-          </div>
+          <details class="profile-details">
+            <summary>תמונה כללית</summary>
+            <div class="profile-details-body"><p>${core}</p></div>
+          </details>
+          <details class="profile-details">
+            <summary>ניסיון מרכזי</summary>
+            <div class="profile-details-body"><p>${experience}</p></div>
+          </details>
+          <details class="profile-details">
+            <summary>הקשר ומגבלת פרשנות</summary>
+            <div class="profile-details-body"><p>${caution}</p></div>
+          </details>
           <details class="profile-details">
             <summary>${missingTitle}</summary>
             <div class="profile-details-body"><p>${missing}</p></div>
@@ -3078,7 +3085,8 @@
       const rs = document.getElementById('ranking-section');
       if (rs) {
         rs.addEventListener('click', (e) => {
-          if (e.target && e.target.id === 'desc-toggle-btn') return;
+          const id = e.target && e.target.id;
+          if (id === 'desc-toggle-btn' || id === 'sq-zoom-in' || id === 'sq-zoom-out') return;
           rankingClick();
         }, true);
       }
@@ -3091,4 +3099,3 @@
   </script>
 </body>
 </html>
-

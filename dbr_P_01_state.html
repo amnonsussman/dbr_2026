@@ -1080,6 +1080,12 @@
     .rec-type-desc { font-size: .88rem; color: var(--text-muted); line-height: 1.5; flex-grow: 1; }
     .rec-type-badge { align-self: flex-start; font-size: .7rem; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: #fef3c7; color: #92400e; }
     .rec-type-arrow { position: absolute; bottom: 14px; left: 16px; font-size: 1.1rem; color: var(--blue-main); opacity: .7; }
+    /* צורות מסגרת ייחודיות לכל סוג — להסרה קלה */
+    .rec-type-card--ai { border-radius: 20px; border-width: 3px; border-color: var(--blue-main); }
+    .rec-type-card--imitation { border-radius: 4px; border-color: #7c3aed; border-left: 5px solid #7c3aed; }
+    .rec-type-card--imitation .rec-type-title { color: #5b21b6; }
+    .rec-type-card--imitation .rec-type-arrow { color: #7c3aed; }
+    .rec-type-card--imitation:hover { border-color: #5b21b6; box-shadow: 0 12px 28px rgba(124,58,237,.18); }
 
     /* ── Team picker grid ── */
     .team-picker { margin-bottom: 20px; }
@@ -1110,6 +1116,15 @@
     .team-card-desc { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
     .team-card-status { font-size: .72rem; font-weight: 800; color: var(--text-muted); margin-top: 2px; }
     .team-card-status.active { color: var(--green); }
+    /* צורות ייחודיות לפי סוג — להסרה קלה */
+    .team-card--ai { border-radius: 16px; border-width: 2.5px; border-color: var(--blue-main); }
+    .team-card--ai:hover { box-shadow: 0 8px 20px rgba(29,95,167,.18); }
+    .team-card--imitation { border-radius: 4px; border-color: #7c3aed; border-left: 4px solid #7c3aed; }
+    .team-card--imitation .team-card-name { color: #5b21b6; }
+    .team-card--imitation:hover { box-shadow: 0 8px 20px rgba(124,58,237,.18); }
+    .rank-section--ai { border-color: var(--blue-main); border-width: 2px; border-radius: 20px; }
+    .rank-section--ai .rank-section-header { border-radius: 18px 18px 0 0; }
+    .rank-section--imitation { border-color: #7c3aed; border-width: 2px; border-radius: 4px; border-left: 5px solid #7c3aed; }
 
     /* ── Modal ── */
     .mbk{display:none;position:fixed;inset:0;background:rgba(23,32,51,.45);z-index:10;align-items:center;justify-content:center;padding:16px}
@@ -1384,7 +1399,7 @@
     <div class="rec-type-picker" id="rec-type-picker">
       <div class="rec-type-grid">
 
-        <div class="rec-type-card" onclick="selectRecType('ai_squads')">
+        <div class="rec-type-card rec-type-card--ai" onclick="selectRecType('ai_squads')">
           <div class="rec-type-icon">🧠</div>
           <div class="rec-type-title">המלצות AI לפי נושאים</div>
           <div class="rec-type-desc">דירוגים שהכינו מערכות הבינה לפי תחומי ליבה — שלטון החוק, כלכלה, ביטחון ועוד. בחרו נושא וראו את המועמדים המובילים בו.</div>
@@ -1392,7 +1407,7 @@
           <div class="rec-type-arrow">←</div>
         </div>
 
-        <div class="rec-type-card" onclick="selectRecType('imitation')">
+        <div class="rec-type-card rec-type-card--imitation" onclick="selectRecType('imitation')">
           <div class="rec-type-icon">👥</div>
           <div class="rec-type-title">המלצות חיקוי מוכרות</div>
           <div class="rec-type-desc">נבחרות שמערכות הבינה הכינו כחיקוי לישויות פוליטיות מוכרות.</div>
@@ -1420,65 +1435,65 @@
     <!-- בחירת נבחרת -->
     <div class="team-picker" id="team-picker" style="display:none">
       <div class="team-grid">
-        <div class="team-card" data-rec-type="imitation" onclick="selectTeam('dbr1')">
+        <div class="team-card team-card--imitation" data-rec-type="imitation" onclick="selectTeam('dbr1')">
           <div class="team-card-name">נבחרת מטבח המפלגה</div>
           <div class="team-card-desc">כך נראית הנבחרת כשהבינה לובשת את כובע מקבלי ההחלטות במפלגה ומאזנת בין מועמדים, ייצוג ואינטרסים.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="imitation" onclick="selectTeam('meretz')">
+        <div class="team-card team-card--imitation unavailable" data-rec-type="imitation">
           <div class="team-card-name">נבחרת השמאל הציוני</div>
           <div style="font-size:.72rem;color:var(--text-muted);font-weight:700;margin-top:1px">(סימולציה)</div>
           <div class="team-card-desc">עדשת מרכז־שמאל ערכי — זכויות, שוויון, שותפות יהודית־ערבית וסביבה</div>
-          <div class="team-card-status active">✓ זמינה</div>
+          <div class="team-card-status">🔧 בבנייה</div>
         </div>
         <!-- נבחרות נושאיות — פעילות, מבוססות נתוני main_teams.csv -->
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('law_democracy')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('law_democracy')">
           <div class="team-card-name">שלטון החוק והדמוקרטיה</div>
           <div class="team-card-desc">שמירה על מערכת המשפט, איזונים ובלמים וטוהר השלטון.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('cost_of_living')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('cost_of_living')">
           <div class="team-card-name">יוקר המחיה והביטחון הכלכלי</div>
           <div class="team-card-desc">הורדת יוקר המחיה, חיזוק מעמד הביניים וביטחון כלכלי למשפחות.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('peace_security')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('peace_security')">
           <div class="team-card-name">שלום וביטחון לאומי</div>
           <div class="team-card-desc">מדיניות חוץ וביטחון — אחריות לשלום לצד הגנה על המדינה.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('jewish_arab')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('jewish_arab')">
           <div class="team-card-name">שותפות יהודית-ערבית</div>
           <div class="team-card-desc">שוויון אזרחי ושותפות אמיתית בין יהודים לערבים בחברה ובפוליטיקה.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('negev_galil')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('negev_galil')">
           <div class="team-card-name">פיתוח הנגב והגליל</div>
           <div class="team-card-desc">צמצום פערים, פיתוח הפריפריה וחיזוק השלטון המקומי.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="imitation" onclick="selectTeam('north')">
+        <div class="team-card team-card--imitation" data-rec-type="imitation" onclick="selectTeam('north')">
           <div class="team-card-name">הנבחרת של הצפון</div>
           <div style="font-size:.72rem;color:var(--text-muted);font-weight:700;margin-top:1px">(סימולציה)</div>
           <div class="team-card-desc">דגש על הצרכים הספציפים של תושבי הצפון שנשכחו</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('religion_state')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('religion_state')">
           <div class="team-card-name">חופש, דת ומדינה</div>
           <div class="team-card-desc">חופש דת ומצפון והפרדה הוגנת בין דת למדינה.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('next_generation')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('next_generation')">
           <div class="team-card-name">הדור הבא והצעירים</div>
           <div class="team-card-desc">חינוך, דיור והזדמנויות לדור הצעיר ולמשפחות צעירות.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('directors')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('directors')">
           <div class="team-card-name">דירקטורים / הנהגה / יכולת ניהול ציבורית</div>
           <div class="team-card-desc">דגש על ניסיון ניהולי, יכולת ביצוע והנהגה ציבורית.</div>
           <div class="team-card-status active">✓ זמינה</div>
         </div>
-        <div class="team-card" data-rec-type="ai_squads" onclick="selectTeam('green_social')">
+        <div class="team-card team-card--ai" data-rec-type="ai_squads" onclick="selectTeam('green_social')">
           <div class="team-card-name">ירוק-חברתי / סביבה וחברה</div>
           <div class="team-card-desc">שילוב של צדק סביבתי, אקלים וצדק חברתי.</div>
           <div class="team-card-status active">✓ זמינה</div>
@@ -2242,7 +2257,14 @@
       document.getElementById('team-picker').style.display = 'none';
       document.getElementById('team-select').value = val;
       updateSquadHdrTitle();
-      document.getElementById('ranking-section').style.display = '';
+      const rs = document.getElementById('ranking-section');
+      rs.style.display = '';
+      rs.classList.remove('rank-section--ai', 'rank-section--imitation');
+      const cardEl = document.querySelector('.team-card[data-rec-type]');
+      const activeCard = document.querySelector('.team-card[onclick*="' + val + '"]');
+      const recType = activeCard ? activeCard.dataset.recType : '';
+      if (recType === 'ai_squads') rs.classList.add('rank-section--ai');
+      else if (recType === 'imitation') rs.classList.add('rank-section--imitation');
       const isSquad = !!squadConfig[val];
       const title = (isSquad && squadConfig[val].title) || TEAM_NAMES[val] || val;
       const h1 = document.querySelector('.page-title h1');
@@ -2584,9 +2606,9 @@
     function resetDescClickCount() { _rankingClickCount = 0; }
 
     function rankingClick() {
-      if (_rankingClickCount >= 4) return;
+      if (_rankingClickCount >= 2) return;
       _rankingClickCount++;
-      if (_rankingClickCount >= 4) {
+      if (_rankingClickCount >= 2) {
         const desc = document.getElementById('screen-desc');
         if (desc && desc.style.display !== 'none') {
           desc.style.display = 'none';

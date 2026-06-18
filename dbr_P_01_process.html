@@ -379,23 +379,29 @@
       <div class="path-card" style="cursor:default;border:2px solid #2e7d32;box-shadow:0 4px 20px rgba(46,125,50,.1);">
         <div class="path-title">
           <button class="card-zoom-btn" onclick="cardZoom('shiryun',-1)">−</button>
-          <span class="title-text">בחירה עצמאית</span>
+          <span class="title-text">בחירה עצמאית ראשונית</span>
           <button class="card-zoom-btn" onclick="cardZoom('shiryun',1)">+</button>
         </div>
-        <div class="path-desc" id="shiryun-desc">כאן בוחרים את המועמדים/ות באופן עצמאי, ישירות מתוך הרשימה המלאה — על פי שיקול הדעת שלכם בלבד.<br>אין שאלונים ואין דירוג אוטומטי: מסמנים את מי שתרצו, ואפשר לשנות בכל שלב.<br>בסיום, הרשימה שבחרתם עוברת אתכם להמשך התהליך.</div>
+        <div class="path-desc" id="shiryun-desc">כאן בוחרים את המועמדים/ות באופן עצמאי, ישירות מתוך הרשימה המלאה — על פי שיקול הדעת שלכם בלבד.<br>אין הנחיה, אין דירוג אוטומטי: מאתרים את המועמד שאתם מתכוונים לבחור בן, "מציצים" בפרופיל שלו ובתמונתו ומסמנים. את הבחירות האלו אפשר לשנות בכל שלב.<br>בסיום, הרשימה שבחרתם עוברת אתכם להמשך התהליך.</div>
         <a href="dbr_P_01_shiryun.html" onclick="event.stopPropagation();trackPath('shiryun')" style="position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
-        <a href="dbr_P_01_shiryun.html" onclick="trackPath('shiryun')" class="card-tap-zone" aria-label="בחירה עצמאית"></a>
+        <a href="dbr_P_01_shiryun.html" onclick="trackPath('shiryun')" class="card-tap-zone" aria-label="בחירה עצמאית ראשונית"></a>
       </div>
 
-      <div class="path-card" style="cursor:default;border:2px solid #1d5fa7;box-shadow:0 4px 20px rgba(29,95,167,.1);">
+      <div class="path-card" id="rec-card" style="cursor:default;border:2px solid #1d5fa7;box-shadow:0 4px 20px rgba(29,95,167,.1);position:relative;">
         <div class="path-title">
           <button class="card-zoom-btn" onclick="cardZoom('dbr',-1)">−</button>
           <span class="title-text">בחירה לפי המלצה</span>
           <button class="card-zoom-btn" onclick="cardZoom('dbr',1)">+</button>
         </div>
-        <div class="path-desc" id="dbr-card-desc">כאן יוצאים מנקודת מוצא מוכנה: נבחרות שהכינו מערכות בינה מלאכותית, לפי קריטריונים של אנשי הפרויקט ויועצים נוספים.<br>כל נבחרת מציגה את 16 המועמדים המובילים שלה, לצד מי שכבר בחרתם בבחירה העצמאית.<br>תוכלו לעבור בין הנבחרות — כשהמועמדים שבחרתם עוברים אתכם — ולבחור מכל נבחרת את הראויים בעיניכם, ולבסוף להרכיב מהם את ה‑8 שלכם.</div>
-        <a href="dbr_P_01_state.html" onclick="event.stopPropagation();trackPath('committee')" style="position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
-        <a href="dbr_P_01_state.html" onclick="trackPath('committee')" class="card-tap-zone" aria-label="בחירה לפי המלצה"></a>
+        <div class="path-desc" id="dbr-card-desc">כאן יוצאים מנקודת מוצא מוכנה מראש: נושאים ( עם מועמדים מתאימים) או נבחרות שמערכות הבינה סיווגו על פי קריטריונים של אנשי הפרויקט ויועצים נוספים.<br>כל נבחרת/נושא מציגה את המועמדים המובילים שלה, כשאלה שבחרתם כבר ונמצאים בתצוגה - מודגשים. .<br>תוכלו לעבור בין הנבחרות או הנושאים השונים, כשהמועמדים שבחרתם עוברים אתכם. וכך ניתן לבחור מכל נבחרת או נושא את הראויים בעיניכם, ולבסוף להרכיב מהם את ה‑8 שלכם.</div>
+        <a href="#" onclick="event.preventDefault();event.stopPropagation();tryRecommendation()" style="position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;margin-top:10px;width:36px;height:36px;background:var(--blue-soft);color:var(--blue-main);border:2px solid var(--blue-main);border-radius:50%;font-weight:900;font-size:1.2rem;text-decoration:none;box-shadow:0 2px 8px rgba(29,95,167,.18);transition:transform .15s,box-shadow .15s,background .15s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(29,95,167,.32)';this.style.background='#dceaff'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 2px 8px rgba(29,95,167,.18)';this.style.background='var(--blue-soft)'">←</a>
+        <a href="#" onclick="event.preventDefault();tryRecommendation()" class="card-tap-zone" aria-label="בחירה לפי המלצה"></a>
+        <!-- hint חץ לבחירה עצמאית -->
+        <div id="rec-hint" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:82%;z-index:20;background:rgba(255,243,205,0.97);border:2px solid #f59e0b;border-radius:14px;padding:20px 16px 16px;text-align:center;pointer-events:none;box-shadow:0 4px 18px rgba(0,0,0,.15);flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+          <div style="font-size:1.25rem;font-weight:900;color:#92400e;line-height:1.4;">התחילו בבחירה עצמאית</div>
+          <div id="rec-hint-arrow" style="font-size:2.2rem;color:#f59e0b;">→</div>
+          <div style="font-size:.82rem;color:#78350f;line-height:1.5;margin-top:4px;">(רצוי לבחור מועמדים בבחירה עצמאית ראשונית, הן כדי להבין מהר יותר את השלבים הבאים, והן כדי להתאים את המערכת אליכם.)</div>
+        </div>
       </div>
 
       <div class="path-card" style="cursor:default;opacity:.7;border:2px dashed #a0b4cc;">
@@ -490,7 +496,7 @@
       return `נבחרו ${selectedArr.length} מועמדים/ות:<br><div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin:6px 0">${list}</div>`;
     }
 
-    const SHIRYUN_DESC_HTML = 'כאן בוחרים את המועמדים/ות באופן עצמאי, ישירות מתוך הרשימה המלאה — על פי שיקול הדעת שלכם בלבד.<br>אין שאלונים ואין דירוג אוטומטי: מסמנים את מי שתרצו, ואפשר לשנות בכל שלב.<br>בסיום, הרשימה שבחרתם עוברת אתכם להמשך התהליך.';
+    const SHIRYUN_DESC_HTML = 'כאן בוחרים את המועמדים/ות באופן עצמאי, ישירות מתוך הרשימה המלאה — על פי שיקול הדעת שלכם בלבד.<br>אין המלצה, ואין דירוג - מאתרים את המועמדים ומסמנים את מי שתרצו, כמובן שניתן לבטל את הבחירה בכל שלב.<br>בסיום, הרשימה שבחרתם עוברת אתכם להמשך התהליך ולכן רצוי שכן תבחרו מועמדים בטוחים או פונציאלים לבחירה הסופית.';
     const DBR_DESC     = 'על פי שיקול דעתכם, קובעים את מאפיינים כלליים לסגל, מבין נושאי הליבה של המפלגה בוחרים את החשובים לדעתכם, מכוונים כל נושא ומקבלים את דירוג המועמדים.';
 
     function renderAll() {
@@ -522,6 +528,30 @@
       if (dbrEl) dbrEl.innerHTML = dbrPicks.length > 0
         ? selectionText(dbrPicks)
         : DBR_DESC;
+    }
+
+    let _recHintTimer = null;
+    const REC_HINT_KEY = 'dbr_rec_hint_count';
+    function getRecHintCount() { return parseInt(localStorage.getItem(REC_HINT_KEY) || '0', 10); }
+    function incRecHintCount() { localStorage.setItem(REC_HINT_KEY, getRecHintCount() + 1); }
+
+    function tryRecommendation() {
+      const picks = (primState.shiryun || []).length + (primState.selected || []).length;
+      const showHint = picks <= 1 && getRecHintCount() < 3;
+      if (!showHint) {
+        trackPath('committee');
+        window.location.href = 'dbr_P_01_state.html';
+        return;
+      }
+      incRecHintCount();
+      const hint = document.getElementById('rec-hint');
+      const arrow = document.getElementById('rec-hint-arrow');
+      if (!hint) return;
+      const twoCol = window.innerWidth > 600;
+      if (arrow) arrow.textContent = twoCol ? '→' : '↑';
+      hint.style.display = 'flex';
+      clearTimeout(_recHintTimer);
+      _recHintTimer = setTimeout(() => { hint.style.display = 'none'; }, 10500);
     }
 
     function trackPath(path) {

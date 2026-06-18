@@ -374,6 +374,18 @@
     </header>
 
     <!-- Status bar — shown only when there are candidates -->
+
+    <!-- באנר איפוס — מוצג אם הפעילות האחרונה ישנה -->
+    <div id="reset-banner" style="display:none;background:#fff8e1;border:2px solid #f59e0b;border-radius:14px;padding:14px 18px;margin-bottom:20px;display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+      <div style="font-size:.95rem;font-weight:700;color:#92400e;flex:1;">
+        עברו יותר מ־<span id="reset-hours-label"></span> שעות מאז הפעילות האחרונה. רוצה לאפס את כל הבחירות ולהתחיל מחדש?
+      </div>
+      <div style="display:flex;gap:10px;flex-shrink:0;">
+        <button onclick="resetAllSelections()" style="background:#f59e0b;border:none;border-radius:9px;padding:8px 18px;font-weight:900;font-size:.9rem;color:#fff;cursor:pointer;">אפס הכל</button>
+        <button onclick="document.getElementById('reset-banner').style.display='none'" style="background:none;border:2px solid #f59e0b;border-radius:9px;padding:8px 14px;font-weight:700;font-size:.9rem;color:#92400e;cursor:pointer;">המשך בלי לאפס</button>
+      </div>
+    </div>
+
     <!-- Path cards -->
     <div class="paths-grid">
       <div class="path-card" style="cursor:default;border:2px solid #2e7d32;box-shadow:0 4px 20px rgba(46,125,50,.1);">
@@ -435,6 +447,10 @@
     // dbr_P_01_game.html removed from flow
 
     const STATE_KEY = 'primeris_state_v1';
+
+    // ── app config ──────────────────────────────────────────────────────────
+    let appCfg = { reset_suggest_hours: 72, rec_hint_max_clicks: 3 };
+    fetch('app_config.json').then(r => r.json()).then(j => { appCfg = Object.assign(appCfg, j); }).catch(() => {});
 
     let genderMap = {}; // name → 'נשים' | 'גברים' | 'ערבים'
 
@@ -537,7 +553,7 @@
 
     function tryRecommendation() {
       const picks = (primState.shiryun || []).length + (primState.selected || []).length;
-      const showHint = picks <= 1 && getRecHintCount() < 3;
+      const showHint = picks <= 1 && getRecHintCount() < appCfg.rec_hint_max_clicks;
       if (!showHint) {
         trackPath('committee');
         window.location.href = 'dbr_P_01_state.html';
@@ -598,6 +614,25 @@
         osc.start(); osc.stop(ctx.currentTime + 0.1);
       } catch(e) {}
     }
+
+    function checkResetSuggest() {
+      if (!appCfg.reset_suggest_hours) return;
+      const last = primState.meta && primState.meta.last_updated;
+      if (!last) return;
+      const hoursAgo = (Date.now() - new Date(last).getTime()) / 3600000;
+      if (hoursAgo < appCfg.reset_suggest_hours) return;
+      const banner = document.getElementById('reset-banner');
+      const label  = document.getElementById('reset-hours-label');
+      if (!banner) return;
+      if (label) label.textContent = Math.round(appCfg.reset_suggest_hours * 10) / 10;
+      banner.style.display = 'flex';
+    }
+
+    // טוען config ואז בודק איפוס
+    fetch('app_config.json').then(r => r.json()).then(j => {
+      appCfg = Object.assign(appCfg, j);
+      checkResetSuggest();
+    }).catch(() => { checkResetSuggest(); });
 
     loadGenderMap().then(renderAll);
     window.addEventListener('focus', renderAll);

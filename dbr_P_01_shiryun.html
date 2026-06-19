@@ -841,6 +841,7 @@
       window.location.href = 'dbr_P_01_process.html';
     }
 
+    const JPEG_NAMES = new Set(["בנימין מיניץ'"]);
     const IMAGE_OVERRIDE = {
       'אבתיסאם מראענה-מנוחין': 'אבתיסאם_מראענה-מנוחין',
       'מהרטה ברוך רון':       'מהרטה_ברוך-רון',
@@ -853,7 +854,8 @@
     };
     function localImageUrl(name) {
       const base = IMAGE_OVERRIDE[name] || name.replace(/ /g, '_');
-      return 'images_new/' + base + '.webp';
+      const ext = JPEG_NAMES.has(name) ? '.jpg' : '.webp';
+      return 'images_new/' + base + ext;
     }
 
     const WIKI_PHOTOS = {
@@ -894,7 +896,8 @@
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
     }
 
     // ============ Rendering ============

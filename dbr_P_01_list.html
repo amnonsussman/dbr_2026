@@ -167,6 +167,7 @@ function shuffle(arr) {
   return a;
 }
 
+const JPEG_NAMES = new Set(["בנימין מיניץ'"]);
 // Image name overrides for candidates whose filename doesn't match simple name→underscore
 const IMAGE_OVERRIDE = {
   'אבתיסאם מראענה-מנוחין': 'אבתיסאם_מראענה-מנוחין',
@@ -180,7 +181,8 @@ const IMAGE_OVERRIDE = {
 };
 function localImageUrl(name) {
   const base = IMAGE_OVERRIDE[name] || name.replace(/ /g, '_');
-  return 'images_new/' + base + '.webp';
+  const ext = JPEG_NAMES.has(name) ? '.jpg' : '.webp';
+  return 'images_new/' + base + ext;
 }
 
 const WIKI_PHOTOS = {

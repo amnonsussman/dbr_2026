@@ -72,6 +72,16 @@
     .dossier-fineprint .fp-h{font-weight:700;color:#7a818d;margin:12px 0 4px;font-size:.82rem}
     .dossier-fineprint p{margin:4px 0}
     .dossier-fineprint .fp-date{margin-top:14px;font-style:italic;color:#8a909a}
+    .dossier-fineprint details.fp-fold>summary{cursor:pointer;list-style:none;margin:12px 0 4px}
+    .dossier-fineprint details.fp-fold>summary::-webkit-details-marker{display:none}
+    .dossier-fineprint details.fp-fold>summary::before{content:"▸ ";font-size:.7rem}
+    .dossier-fineprint details.fp-fold[open]>summary::before{content:"▾ "}
+    .content details.fold{margin:4px 0 16px;border-top:1px solid var(--line);padding-top:4px}
+    .content details.fold>summary{cursor:pointer;list-style:none;font-weight:800;
+      font-size:1.15rem;color:var(--blue-dark);margin:8px 0;padding:2px 0}
+    .content details.fold>summary::-webkit-details-marker{display:none}
+    .content details.fold>summary::before{content:"▸ ";font-size:.8rem;color:var(--muted)}
+    .content details.fold[open]>summary::before{content:"▾ "}
     .insight-card.green h3{color:#1e5949}
     .insight-card.amber h3{color:#6a4717}
     .insight-card p{margin:0;font-size:.97rem}
@@ -154,24 +164,8 @@
   document.getElementById('loading').outerHTML = `
 <div class="wrapper">
   <aside class="sidebar">
-    <nav class="nav-block">
-      <header>תוכן העניינים</header>
-      <a href="#פרופיל-כללי">1. פרופיל כללי</a>
-      <a href="#ניסיון-פוליטי">2. ניסיון פוליטי</a>
-      <a href="#תפקידים-ציבוריים">3. תפקידים ציבוריים</a>
-      <a href="#פעילות-לפי-תקופות">4. פעילות לפי תקופות</a>
-      <a href="#תחומי-מדיניות">5. תחומי מדיניות</a>
-      <a href="#עמדות-מוצהרות">6. עמדות מוצהרות</a>
-      <a href="#היבטים-דמוגרפיים">7. היבטים דמוגרפיים</a>
-      <a href="#שיח-ציבורי">8. שיח ציבורי</a>
-      <a href="#מקורות-ומגבלות">9. מקורות ומגבלות</a>
-      <a href="#מידע-חסר">10. מידע חסר</a>
-      <a href="#טענות-לבדיקה">11. טענות לבדיקה</a>
-      <a href="#יומן-עדכונים">12. יומן עדכונים</a>
-    </nav>
     <div class="meta-block">${metaHtml}</div>
     <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
-      <a class="btn" href="${introUrl}">חזרה לדף עיון</a>
       <a class="btn" style="background:var(--green)" href="${scoresUrl}">לדף השיבוץ</a>
     </div>
   </aside>
@@ -187,23 +181,21 @@
     </header>
 
     <div class="insights">
-      <div class="insight-card blue">
+      ${d.insight_core ? `<div class="insight-card blue">
         <h3>ניסיון ופעילות מרכזית</h3>
         <p>${d.insight_core}</p>
-      </div>
-      <div class="insight-card green">
+      </div>` : ''}
+      ${d.insight_experience ? `<div class="insight-card green">
         <h3>ניסיון רלוונטי</h3>
         <p>${d.insight_experience}</p>
-      </div>
+      </div>` : ''}
     </div>
-
-    <div class="notice">${d.notice_dossier}</div>
 
     <article class="content">${contentHtml}</article>
 
     <aside class="caveats">
       <h4>הערות והסתייגויות</h4>
-      <p><strong>${d.insight_missing_title || 'תחומים חסרים'}:</strong> ${d.insight_missing}</p>
+      ${d.insight_missing ? `<p><strong>${d.insight_missing_title || 'תחומים חסרים'}:</strong> ${d.insight_missing}</p>` : ''}
       <p>${d.insight_caution || 'התיק העובדתי אינו סיווג לנבחרות ואינו דירוג; הוא בסיס לשלב הסיווג.'}</p>
     </aside>
 
@@ -214,6 +206,29 @@
     </footer>
   </main>
 </div>`;
+
+  // קיפול אוטומטי של סעיפים 8–12 (חל על כל המועמדים)
+  (function foldSections(){
+    const art = document.querySelector('.content');
+    if (!art) return;
+    [...art.querySelectorAll('h2, h3')].forEach(h => {
+      if (!/^(8|9|10|11|12)\./.test(h.textContent.trim())) return;
+      const det = document.createElement('details');
+      det.className = 'fold';
+      const sum = document.createElement('summary');
+      sum.innerHTML = h.innerHTML;
+      det.appendChild(sum);
+      const moved = [];
+      let node = h.nextSibling;
+      while (node) {
+        if (node.nodeType === 1 && node.tagName === 'H2') break;
+        moved.push(node); node = node.nextSibling;
+      }
+      h.parentNode.insertBefore(det, h);
+      moved.forEach(n => det.appendChild(n));
+      h.remove();
+    });
+  })();
 
   // Highlight active TOC item on scroll
   const sections = document.querySelectorAll('.content h2[id]');

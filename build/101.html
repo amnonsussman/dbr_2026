@@ -50,6 +50,8 @@
       padding:6px 14px;font-size:.9rem;border:1px solid rgba(255,255,255,.25)}
     .hero h1{margin:0 0 8px;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:900;position:relative}
     .hero .sub{font-size:1.05rem;opacity:.82;position:relative}
+    .hero .credit{font-size:.76rem;opacity:.58;margin:7px 0 0;position:relative;font-weight:400}
+    .footer .signature{margin-top:8px;font-weight:800;font-size:1rem;color:var(--ink);letter-spacing:.02em}
     /* ── Insight cards ── */
     .insights{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:22px}
     .insight-card{border-radius:18px;padding:20px;border:1px solid}
@@ -58,6 +60,18 @@
     .insight-card.amber{background:var(--soft-amber);border-color:rgba(182,120,31,.22)}
     .insight-card h3{margin:0 0 8px;font-size:1.05rem}
     .insight-card.blue h3{color:var(--blue-dark)}
+    /* ── הערות והסתייגויות (תחתית, אותיות קטנות) ── */
+    .caveats{margin-top:26px;padding:14px 18px;border-top:1px dashed var(--line);
+      color:var(--muted);font-size:.78rem;line-height:1.55}
+    .caveats h4{margin:0 0 6px;font-size:.82rem;color:var(--muted);font-weight:700;
+      text-transform:none;letter-spacing:.01em}
+    .caveats p{margin:4px 0}
+    .caveats strong{color:#7a818d}
+    .dossier-fineprint{margin-top:26px;padding-top:14px;border-top:1px dashed var(--line);
+      font-size:.78rem;color:var(--muted);line-height:1.55}
+    .dossier-fineprint .fp-h{font-weight:700;color:#7a818d;margin:12px 0 4px;font-size:.82rem}
+    .dossier-fineprint p{margin:4px 0}
+    .dossier-fineprint .fp-date{margin-top:14px;font-style:italic;color:#8a909a}
     .insight-card.green h3{color:#1e5949}
     .insight-card.amber h3{color:#6a4717}
     .insight-card p{margin:0;font-size:.97rem}
@@ -122,7 +136,7 @@
   const introUrl  = `100.html?${prefix}${d.page_codes.intro}`;
   const scoresUrl = `102.html?${prefix}${d.page_codes.scores}`;
 
-  document.title = `ד.ב.ר — תיק עובדתי שלב שני | ${d.name}`;
+  document.title = `ד.ב.ר — דיוקן המועמד/ת | ${d.name}`;
 
   const metaFields = [
     ['שם המועמד/ת',           d.name],
@@ -131,7 +145,7 @@
     ['תאריך תיק גולמי',       d.dossier_date],
     ['עורך בכיר',             'ג\'מיני'],
     ['מידע חדש נוסף',         d.dossier_new_info || 'לא'],
-    ['מטרת המסמך',            'תיק עובדתי שלב שני'],
+    ['מטרת המסמך',            'דיוקן המועמד/ת'],
   ];
   const metaHtml = metaFields.map(([l,v]) =>
     `<div class="meta-card"><span>${l}</span><strong>${v}</strong></div>`
@@ -165,10 +179,11 @@
     <header class="hero">
       <div class="hero-top">
         <div class="brand-mark">ד.ב.ר</div>
-        <span class="stage-badge">תיק עובדתי — שלב שני</span>
+        <span class="stage-badge">דיוקן המועמד/ת</span>
       </div>
-      <h1>${d.name} — תיק עובדתי</h1>
+      <h1>${d.name} — דיוקן</h1>
       <p class="sub">ד.ב.ר · דמוקרטים בוחרים רציונלית</p>
+      <p class="credit">נאסף, נבדק ונערך על ידי פרפלקסיטי · ג'יפיטי · ג'מיני · קלוד — בסיוע של החתום מטה</p>
     </header>
 
     <div class="insights">
@@ -180,23 +195,22 @@
         <h3>ניסיון רלוונטי</h3>
         <p>${d.insight_experience}</p>
       </div>
-      <div class="insight-card amber">
-        <h3>${d.insight_missing_title || 'מידע חסר ומגבלות'}</h3>
-        <p>${d.insight_missing}</p>
-      </div>
-      <div class="insight-card amber" style="background:#fdf3ee;border-color:rgba(180,80,40,.2)">
-        <h3 style="color:#6a3010">הערת זהירות</h3>
-        <p>${d.insight_caution || 'התיק העובדתי אינו סיווג לנבחרות ואינו דירוג; הוא בסיס לשלב הסיווג.'}</p>
-      </div>
     </div>
 
     <div class="notice">${d.notice_dossier}</div>
 
     <article class="content">${contentHtml}</article>
 
+    <aside class="caveats">
+      <h4>הערות והסתייגויות</h4>
+      <p><strong>${d.insight_missing_title || 'תחומים חסרים'}:</strong> ${d.insight_missing}</p>
+      <p>${d.insight_caution || 'התיק העובדתי אינו סיווג לנבחרות ואינו דירוג; הוא בסיס לשלב הסיווג.'}</p>
+    </aside>
+
     <footer class="footer">
       תאריך עיבוד: ${d.render_date} · מקור: ${d.dossier_source || 'פרפלקסיטי sonar-pro'} ·
       ד.ב.ר — דמוקרטים בוחרים רציונלית
+      <div class="signature">אמנון זוסמן</div>
     </footer>
   </main>
 </div>`;

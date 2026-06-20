@@ -154,6 +154,7 @@
 
 <script>
 let allCandidates = [];
+let dossierCodes = {};   // שם מועמד -> קוד דף 101
 const activeFilters = { cat:'', fam:'' };
 
 function famLevel(c) {
@@ -172,7 +173,7 @@ const JPEG_NAMES = new Set(["בנימין מיניץ'"]);
 const IMAGE_OVERRIDE = {
   'אבתיסאם מראענה-מנוחין': 'אבתיסאם_מראענה-מנוחין',
   'מהרטה ברוך רון':       'מהרטה_ברוך-רון',
-  'ענבל וורטמן שוהם':     'ענבל_וורטמן-שהם',
+  'ענבל וורטמן שהם':     'ענבל_וורטמן_שהם',
   'לי הופמן אגיב':        'לי_הופמן-אגיב',
   'אמיר חניפס':           "אמיר_ח'ניפס",
   'איילת השחר סיידוף':    'איילת-השחר_סיידוף',
@@ -226,7 +227,11 @@ function renderPickerGrid(list) {
       ? `this.src='${wiki}';this.onerror=function(){this.outerHTML='<div class=\\'c-photo-fb\\'>${avatar}</div>'}`
       : `this.outerHTML='<div class=\\'c-photo-fb\\'>${avatar}</div>'`;
     const img = `<img src="${localImageUrl(c['שם'])}" alt="${c['שם']}" onerror="${fallback}">`;
-    return `<a class="c-card" href="#" onclick="showProfile(${allCandidates.indexOf(c)});return false">
+    const code = dossierCodes[c['שם']];
+    const link = code
+      ? `href="candits/101.html?${code}"`
+      : `href="#" onclick="showProfile(${allCandidates.indexOf(c)});return false"`;
+    return `<a class="c-card" ${link}>
       <div class="c-photo">${img}</div>
       <div class="c-name">${c['שם']}</div>
     </a>`;
@@ -357,6 +362,16 @@ function renderContent(c) {
 async function init() {
   try {
     allCandidates = await loadAll();
+    // מיפוי שם -> קוד דף 101 (מתוך נתוני הדיוקנים)
+    try {
+      const rd = await fetch('candits/101.json');
+      if (rd.ok) {
+        const dd = await rd.json();
+        for (const [code, rec] of Object.entries(dd)) {
+          if (rec && rec.name) dossierCodes[rec.name] = (rec.page_codes && rec.page_codes.dossier) || code;
+        }
+      }
+    } catch(e) { /* אם אין מיפוי — ניפול לפרופיל הפנימי */ }
     renderPickerGrid(shuffle(allCandidates));
     // פרמטר ישיר לפרופיל
     const idx = new URLSearchParams(window.location.search).get('i');

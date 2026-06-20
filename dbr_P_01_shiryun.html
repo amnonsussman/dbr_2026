@@ -753,7 +753,7 @@
     function cardButtonsHTML(id) {
       const sh = isShiryun(id);
       return `<div class="card-btns">`
-        + `<button class="btn-pick" onclick="event.stopPropagation();showCandidateModal('${escapeHtml(id)}')">פרופיל</button>`
+        + `<button class="btn-pick" onclick="event.stopPropagation();openDossier('${escapeHtml(id)}')">פרופיל</button>`
         + (sh
           ? `<button class="btn-shiryun selected" onclick="toggleShiryun('${escapeHtml(id)}')">בטל</button>`
           : `<button class="btn-shiryun" onclick="toggleShiryun('${escapeHtml(id)}')">בחר</button>`)
@@ -845,7 +845,7 @@
     const IMAGE_OVERRIDE = {
       'אבתיסאם מראענה-מנוחין': 'אבתיסאם_מראענה-מנוחין',
       'מהרטה ברוך רון':       'מהרטה_ברוך-רון',
-      'ענבל וורטמן שוהם':     'ענבל_וורטמן-שהם',
+      'ענבל וורטמן שהם':     'ענבל_וורטמן_שהם',
       'לי הופמן אגיב':        'לי_הופמן-אגיב',
       'אמיר חניפס':           "אמיר_ח'ניפס",
       'איילת השחר סיידוף':    'איילת-השחר_סיידוף',
@@ -1002,7 +1002,7 @@
         const cardCls = sel ? ' selected' : picked ? ' picked' : dbr ? ' dbr-picked' : '';
         return `
           <div class="candidate-card${cardCls}" data-id="${escapeHtml(c.id)}">
-            <div class="photo-wrap" onclick="showCandidateModal('${escapeHtml(c.id)}')" style="cursor:pointer" title="לפרופיל המועמד/ת">
+            <div class="photo-wrap" onclick="openDossier('${escapeHtml(c.id)}')" style="cursor:pointer" title="לפרופיל המועמד/ת">
               <img src="${escapeHtml(localImageUrl(c.name))}" alt="${escapeHtml(c.name)}"
                    onerror="${WIKI_PHOTOS[c.name]
                      ? `this.src='${escapeHtml(WIKI_PHOTOS[c.name])}';this.onerror=function(){this.outerHTML='<span style=\\'font-size:3rem\\'>${c.gender==='נשים'?'👩':'👨'}</span>'}`
@@ -1011,7 +1011,7 @@
               ${sel ? '<div class="photo-check photo-check-green">✓</div>' : picked ? '<div class="photo-check">?</div>' : ''}
             </div>
             <div style="display:flex;align-items:center;justify-content:center;padding:2px 8px 1px">
-              <span class="candidate-name" onclick="showCandidateModal('${escapeHtml(c.id)}')" style="margin:0;padding:0;cursor:pointer">${escapeHtml(displayName(c.name))}</span>
+              <span class="candidate-name" onclick="openDossier('${escapeHtml(c.id)}')" style="margin:0;padding:0;cursor:pointer">${escapeHtml(displayName(c.name))}</span>
             </div>
             ${cardButtonsHTML(c.id)}
           </div>
@@ -1071,6 +1071,13 @@
       return arr;
     }
 
+    let dossierCodes = {};   // שם מועמד -> קוד דף 101
+    function openDossier(id) {
+      const code = dossierCodes[id];
+      if (code) window.location.href = 'candits/101.html?' + code;
+      else showCandidateModal(id);   // נפילה לאחור לפרופיל הפנימי
+    }
+
     fetch('data/candidates_master.json')
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(data => {
@@ -1079,8 +1086,11 @@
           search: buildSearchBlob(c), raw: c
         }));
         shuffle(candidates);
-        renderList();
-        renderCounters();
+        fetch('candits/101.json').then(r => r.ok ? r.json() : {}).then(dd => {
+          for (const [code, rec] of Object.entries(dd)) {
+            if (rec && rec.name) dossierCodes[rec.name] = (rec.page_codes && rec.page_codes.dossier) || code;
+          }
+        }).catch(()=>{}).finally(() => { renderList(); renderCounters(); });
       })
       .catch(err => {
         document.getElementById('candidates-list').innerHTML =

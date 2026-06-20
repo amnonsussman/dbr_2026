@@ -52,6 +52,36 @@
     .hero .sub{font-size:1.05rem;opacity:.82;position:relative}
     .hero .credit{font-size:.76rem;opacity:.58;margin:7px 0 0;position:relative;font-weight:400}
     .footer .signature{margin-top:8px;font-weight:800;font-size:1rem;color:var(--ink);letter-spacing:.02em}
+    /* ── Topbar (לוגו + חץ חזרה), בהשראת דף האם ── */
+    .topbar{position:sticky;top:0;z-index:50;margin:0;display:flex;
+      justify-content:space-between;align-items:center;gap:16px;
+      padding:12px max(16px,calc((100% - 1140px)/2));
+      background:rgba(244,242,236,.92);backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--line);box-shadow:0 2px 12px rgba(28,36,50,.06)}
+    .topbar .brand{display:flex;align-items:center;gap:10px;font-weight:800;
+      color:var(--blue-dark);font-size:1.05rem;text-decoration:none;min-width:0}
+    .topbar .brand span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .topbar .brand-mark{height:40px;padding:0 13px;border-radius:12px;
+      background:linear-gradient(135deg,#1a3a52,var(--blue-dark));display:grid;place-items:center;
+      color:#fff;font-size:.84rem;font-weight:900;letter-spacing:.06em;
+      box-shadow:0 4px 14px rgba(23,72,103,.3);flex-shrink:0}
+    .topbar .back-arrow{width:42px;height:42px;border-radius:12px;background:var(--blue);
+      color:#fff;display:grid;place-items:center;font-size:1.3rem;text-decoration:none;
+      box-shadow:0 4px 14px rgba(31,95,139,.28);transition:transform .15s;flex-shrink:0}
+    .topbar .back-arrow:hover{transform:translateY(-2px)}
+    /* ── תיבת תיק מקופלת (מטא-דאטה + זכויות) ── */
+    .meta-fold{background:white;border:1px solid var(--line);border-radius:20px;
+      padding:14px 18px;box-shadow:0 6px 22px rgba(28,36,50,.07)}
+    .meta-fold>summary{cursor:pointer;list-style:none}
+    .meta-fold>summary::-webkit-details-marker{display:none}
+    .meta-sum{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .meta-sum .meta-title{font-weight:800;color:var(--blue-dark);font-size:.95rem}
+    .meta-sum .meta-title::before{content:"▸ ";font-size:.75rem;color:var(--muted)}
+    .meta-fold[open] .meta-sum .meta-title::before{content:"▾ "}
+    .btn-disabled{background:#e6e9ee;color:#9aa2ad;border:1px solid #d7dbe2;border-radius:10px;
+      padding:6px 12px;font-size:.82rem;font-weight:700;cursor:not-allowed;white-space:nowrap}
+    .meta-fold .meta-block{margin-top:12px;padding:0;border:none;box-shadow:none;background:none}
+    .meta-fold .site-copy{margin-top:12px;font-size:.72rem;color:var(--muted);direction:ltr}
     /* ── Insight cards ── */
     .insights{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:22px}
     .insight-card{border-radius:18px;padding:20px;border:1px solid}
@@ -162,12 +192,23 @@
   ).join('');
 
   document.getElementById('loading').outerHTML = `
+<header class="topbar">
+  <a class="brand" href="dbr_P_01_index.html">
+    <span class="brand-mark">ד.ב.ר</span>
+    <span>דמוקרטים בוחרים רציונלית</span>
+  </a>
+  <a class="back-arrow" href="#" onclick="history.back();return false" title="חזרה לדף הקודם">←</a>
+</header>
 <div class="wrapper">
   <aside class="sidebar">
-    <div class="meta-block">${metaHtml}</div>
-    <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
-      <a class="btn" style="background:var(--green)" href="${scoresUrl}">לדף השיבוץ</a>
-    </div>
+    <details class="meta-fold">
+      <summary class="meta-sum">
+        <span class="meta-title">תיק מס' ${d.page_codes.dossier}</span>
+        <span class="btn-disabled" title="הדף עדיין בעריכה — בקרוב" onclick="event.preventDefault();event.stopPropagation()">לדף השיבוץ</span>
+      </summary>
+      <div class="meta-block">${metaHtml}</div>
+      <div class="site-copy">© 2026 Silvertel Online ltd | כל הזכויות שמורות</div>
+    </details>
   </aside>
   <main class="main">
     <header class="hero">
